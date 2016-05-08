@@ -10,10 +10,11 @@ let name = "World"
 let str = NSMutableAttributedString(string: "Hello \(name)!!!")
         
 str.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)],
-                range: NSMakeRange(6, 5)) //uh, hardcoding range...
+                range: NSMakeRange(6, 5)) // uh, hardcoding range...
 //-OR-
 str.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)],
-                range: NSString(string: str.string).rangeOfString(name)) //uh, what if we have many %name%, still bad, and that ugly casting to NSString...
+                range: NSString(string: str.string).rangeOfString(name)) 
+// uh, what if we have many %name%, still bad, and that ugly casting to NSString...
 // -OR- some good solution will take like 20 lines of code, and still will be not so flexible
 ```
 Actually other NSAttributedString wrappers will not help since we still have to deal with ranges.
