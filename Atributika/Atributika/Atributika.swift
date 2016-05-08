@@ -145,7 +145,7 @@ public struct Atributika {
     let tags: [String: [Attribute]]
     let baseAttributes: [Attribute]
     
-    init(text: String, tags: [String: [Attribute]], baseAttributes: [Attribute] = []) {
+    init(text: String, tags: [String: [Attribute]] = [:], baseAttributes: [Attribute] = []) {
         self.text = text
         self.tags = tags
         self.baseAttributes = baseAttributes
