@@ -6,28 +6,27 @@ NSAttributedString builder using HTML-like tags written in Swift
 NSAttributedString is really powerful but still a low level API which requires a lot of work to setup things. It is especially painful when we are dealing with template string and real content is known only in runtime. If you are dealing with localizations it is also a case to build proper NSAttributedString. 
 
 ```swift
-        let name = "World"
-        let str = NSMutableAttributedString(string: "Hello \(name)!!!")
+let name = "World"
+let str = NSMutableAttributedString(string: "Hello \(name)!!!")
         
-        str.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)],
-                          range: NSMakeRange(6, 5)) //uh, hardcoding range...
-        //-OR-
-        str.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)],
-                          range: NSString(string: str.string).rangeOfString(name)) //uh, what if we have many %name%, still bad, and that ugly casting to NSString...
-        // -OR- some good solution will take like 20 lines of code, and still will be not so flexible
+str.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)],
+                range: NSMakeRange(6, 5)) //uh, hardcoding range...
+//-OR-
+str.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)],
+                range: NSString(string: str.string).rangeOfString(name)) //uh, what if we have many %name%, still bad, and that ugly casting to NSString...
+// -OR- some good solution will take like 20 lines of code, and still will be not so flexible
 ```
 Actually other NSAttributedString wrappers will not help since we still have to deal with ranges.
 
 What to do? Use Atributika!
 
 ```swift
-        let str = Atributika(text: "Hello <bold>\(name)</bold>!!!",
-                   tags: [
-                    "bold" : [
-                        .Font(UIFont.boldSystemFontOfSize(45)),
-                    ]
-                    
-            ]).attributedText
+let str = Atributika(text: "Hello <bold>\(name)</bold>!!!",
+           tags: [
+            "bold" : [
+                .Font(UIFont.boldSystemFontOfSize(45)),
+            ]
+    ]).attributedText
 ```
 
 Yeah, that's much better. Atributika is easy, declarative, flexible and covers all the raw edges for you.
@@ -61,6 +60,8 @@ label = UILabel()
             ]).attributedText
         view.addSubview(label)
 ```
+
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/demo.png" alt="Hello Atributika!!!" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="191" height="84" />
 
 ## Available Attributes
 
