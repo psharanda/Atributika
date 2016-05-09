@@ -135,9 +135,9 @@ public enum Attribute {
 }
 
 public struct TagInfo : Equatable {
-    let name: String
-    let attributes: [String: String]
-    var range: Range<Int>
+    public let name: String
+    public let attributes: [String: String]
+    public var range: Range<Int>
 }
 
 public func ==(lhs: TagInfo, rhs: TagInfo) -> Bool {
@@ -145,11 +145,11 @@ public func ==(lhs: TagInfo, rhs: TagInfo) -> Bool {
 }
 
 public struct Atributika {
-    let text: String
-    let tags: [String: [Attribute]]
-    let baseAttributes: [Attribute]
+    public let text: String
+    public let tags: [String: [Attribute]]
+    public let baseAttributes: [Attribute]
     
-    init(text: String, tags: [String: [Attribute]] = [:], baseAttributes: [Attribute] = []) {
+    public init(text: String, tags: [String: [Attribute]] = [:], baseAttributes: [Attribute] = []) {
         self.text = text
         self.tags = tags
         self.baseAttributes = baseAttributes
@@ -181,11 +181,11 @@ public struct Atributika {
         return (attributedString, tagsInfo)
     }
     
-    func buildAttributedString() -> NSAttributedString {
+    public func buildAttributedString() -> NSAttributedString {
         return buildAttributedStringInternal().0
     }
     
-    func buildAttributedStringAndTagsInfo() -> (NSAttributedString, [TagInfo]) {
+    public func buildAttributedStringAndTagsInfo() -> (NSAttributedString, [TagInfo]) {
         return buildAttributedStringInternal()
     }
     
