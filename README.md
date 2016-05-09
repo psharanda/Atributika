@@ -38,7 +38,7 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 + leightweight and fast parser
 + swifty typesafe attributes
 + default attributes
-+ support of `&amp;amp;`, `&amp;lt;` etc 
++ support of `&amp;`, `&lt;` etc 
 + `<br>` tag
 
 ## Usage
