@@ -27,7 +27,7 @@ let str = Atributika(text: "Hello <bold>\(name)</bold>!!!",
             "bold" : [
                 .Font(UIFont.boldSystemFontOfSize(45)),
             ]
-    ]).attributedText
+    ]).buildAttributedString()
 ```
 
 Yeah, that's much better. Atributika is easy, declarative, flexible and covers all the raw edges for you.
@@ -58,7 +58,7 @@ label = UILabel()
                                                 .UnderlineStyle(.StyleSingle)
                                             ]
                                             
-            ]).attributedText
+            ]).buildAttributedString()
         view.addSubview(label)
 ```
 

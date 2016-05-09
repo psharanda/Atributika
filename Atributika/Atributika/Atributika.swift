@@ -134,10 +134,14 @@ public enum Attribute {
     }
 }
 
-private struct TagInfo {
+public struct TagInfo : Equatable {
     let name: String
     let attributes: [String: String]
     var range: Range<Int>
+}
+
+public func ==(lhs: TagInfo, rhs: TagInfo) -> Bool {
+    return lhs.name == rhs.name && lhs.attributes == rhs.attributes && lhs.range == rhs.range
 }
 
 public struct Atributika {
@@ -161,11 +165,9 @@ public struct Atributika {
         return attrs
     }
     
-    var attributedText: NSAttributedString {
+    private func buildAttributedStringInternal() -> (NSAttributedString, [TagInfo]) {
        
-        guard let (parsedText, tagsInfo) = parseText(text) else {
-            return NSAttributedString()
-        }
+        let (parsedText, tagsInfo) = parseText(text)
         
         let attributedString = NSMutableAttributedString(string: parsedText, attributes: attributesListToAttributes(baseAttributes))
         
@@ -176,7 +178,15 @@ public struct Atributika {
             }
         }
         
-        return attributedString
+        return (attributedString, tagsInfo)
+    }
+    
+    func buildAttributedString() -> NSAttributedString {
+        return buildAttributedStringInternal().0
+    }
+    
+    func buildAttributedStringAndTagsInfo() -> (NSAttributedString, [TagInfo]) {
+        return buildAttributedStringInternal()
     }
     
     private let specials = ["quot":"\"",
@@ -222,7 +232,7 @@ public struct Atributika {
         return (tagName, attrubutes)
     }
     
-    private func parseText(text: String) -> (String, [TagInfo])? {
+    private func parseText(text: String) -> (String, [TagInfo]) {
         
         let scanner = NSScanner(string: text)
         scanner.charactersToBeSkipped = nil

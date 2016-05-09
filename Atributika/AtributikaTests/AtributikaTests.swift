@@ -19,28 +19,39 @@ class AtributikaTests: XCTestCase {
                         .Font(UIFont.boldSystemFontOfSize(45)),
                     ]
                     
-            ]).attributedText
+            ]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)], range: NSMakeRange(6, 5))
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test,reference)
     }
     
     func testEmpty() {
-        let test = Atributika(text: "Hello World!!!", tags: [:]).attributedText
+        let test = Atributika(text: "Hello World!!!").buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testParams() {
+        let (test, tags) = Atributika(text: "<a href=\"http://google.com\">Hello</a> World!!!").buildAttributedStringAndTagsInfo()
+        
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        
+        XCTAssertEqual(test, reference)
+        
+        let referenceTags = [TagInfo(name: "a", attributes: ["href":"http://google.com"], range: 0..<5)]
+        XCTAssertEqual(tags, referenceTags)
     }
     
     func testBase() {
-        let test = Atributika(text: "Hello World!!!", tags: [:], baseAttributes: [.Font(UIFont.boldSystemFontOfSize(45))]).attributedText
+        let test = Atributika(text: "Hello World!!!", tags: [:], baseAttributes: [.Font(UIFont.boldSystemFontOfSize(45))]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!", attributes: [NSFontAttributeName: UIFont.boldSystemFontOfSize(45)])
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
     }
     
     func testManyTags() {
@@ -53,17 +64,33 @@ class AtributikaTests: XCTestCase {
                                     .Font(UIFont.italicSystemFontOfSize(12)),
                                 ]
                                 
-            ]).attributedText
+            ]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         reference.addAttributes([NSFontAttributeName: UIFont.italicSystemFontOfSize(12)], range: NSMakeRange(2, 3))
         reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)], range: NSMakeRange(6, 5))
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testManySameTags() {
+        let test = Atributika(text: "He<b>llo</b> <b>World</b>!!!",
+                              tags: [
+                                "b" : [
+                                    .Font(UIFont.boldSystemFontOfSize(45)),
+                                ]
+                                
+            ]).buildAttributedString()
+        
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)], range: NSMakeRange(2, 3))
+        reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)], range: NSMakeRange(6, 5))
+        
+        XCTAssertEqual(test, reference)
     }
     
     func testTagsOverlap() {
-        let test = Atributika(text: "He<red>llo <b>World</b>!!!</red>",
+        let test = Atributika(text: "Hello <b>W<red>orld</b>!!!</red>",
                               tags: [
                                 "b" : [
                                     .Font(UIFont.boldSystemFontOfSize(45)),
@@ -72,21 +99,21 @@ class AtributikaTests: XCTestCase {
                                     .ForegroundColor(UIColor.redColor()),
                                 ]
                                 
-            ]).attributedText
+            ]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)], range: NSMakeRange(6, 5))
-        reference.addAttributes([NSForegroundColorAttributeName: UIColor.redColor()], range: NSMakeRange(2, 12))
+        reference.addAttributes([NSForegroundColorAttributeName: UIColor.redColor()], range: NSMakeRange(7, 7))
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
     }
     
     func testBr() {
-        let test = Atributika(text: "Hello<br>World!!!").attributedText
+        let test = Atributika(text: "Hello<br>World!!!").buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
     }
     
     func testNotClosedTag() {
@@ -96,11 +123,11 @@ class AtributikaTests: XCTestCase {
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ]
                                 
-            ]).attributedText
+            ]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
     }
     
     func testNotOpenedTag() {
@@ -110,11 +137,11 @@ class AtributikaTests: XCTestCase {
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ]
                                 
-            ]).attributedText
+            ]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
     }
     
     func testBadTag() {
@@ -126,11 +153,11 @@ class AtributikaTests: XCTestCase {
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ]
                                 
-            ]).attributedText
+            ]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello ")
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
     }
     
     func testTagsStack() {
@@ -146,14 +173,14 @@ class AtributikaTests: XCTestCase {
                                     .UnderlineStyle(.StyleSingle)
                                 ]
                                 
-            ]).attributedText
+            ]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)], range: NSMakeRange(6, 5))
         reference.addAttributes([NSForegroundColorAttributeName: UIColor.redColor()], range: NSMakeRange(8, 3))
         reference.addAttributes([NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue], range: NSMakeRange(10, 1))
         
-        XCTAssert(test == reference)
+        XCTAssertEqual(test, reference)
     }
     
 }
