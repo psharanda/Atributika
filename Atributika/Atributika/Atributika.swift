@@ -134,68 +134,65 @@ public enum Attribute {
     }
 }
 
-public struct TagInfo : Equatable {
+public struct Tag : Equatable {
     public let name: String
     public let attributes: [String: String]
-    public var range: Range<Int>
+}
+
+public struct TagInfo: Equatable {
+    public let tag: Tag
+    public let range: Range<Int>
+}
+
+public func ==(lhs: Tag, rhs: Tag) -> Bool {
+    return lhs.name == rhs.name && lhs.attributes == rhs.attributes
 }
 
 public func ==(lhs: TagInfo, rhs: TagInfo) -> Bool {
-    return lhs.name == rhs.name && lhs.attributes == rhs.attributes && lhs.range == rhs.range
+    return lhs.tag == rhs.tag && lhs.range == rhs.range
 }
 
-public struct Atributika {
-    public let text: String
-    public let tags: [String: [Attribute]]
-    public let baseAttributes: [Attribute]
-    
-    public init(text: String, tags: [String: [Attribute]] = [:], baseAttributes: [Attribute] = []) {
-        self.text = text
-        self.tags = tags
-        self.baseAttributes = baseAttributes
-    }
+public typealias Style = [Attribute]
 
-    private func attributesListToAttributes(attributesList: [Attribute]) -> [String : AnyObject] {
-        var attrs = [String : AnyObject]()
-        
-        for  style in attributesList {
-            attrs[style.name] = style.value
-        }
-        
-        return attrs
-    }
+
+public struct Atributika {
     
-    private func buildAttributedStringInternal() -> (NSAttributedString, [TagInfo]) {
-       
-        let (parsedText, tagsInfo) = parseText(text)
-        
-        let attributedString = NSMutableAttributedString(string: parsedText, attributes: attributesListToAttributes(baseAttributes))
-        
-        for tagInfo in tagsInfo
-        {
-            if let a = tags[tagInfo.name] {
-               attributedString.addAttributes(attributesListToAttributes(a), range: NSRange(tagInfo.range))
-            }
-        }
-        
-        return (attributedString, tagsInfo)
+    public var text: String
+    public var styles: [String: Style]
+    public var baseStyle: Style
+    public var hashtags: String?
+    public var dataDetectorTypes: NSTextCheckingTypes?
+    public var dataDetectorTagName: String?
+    
+    public init(text: String = "", styles: [String: Style] = [:], baseStyle: Style = []) {
+        self.text = text
+        self.styles = styles
+        self.baseStyle = baseStyle
     }
     
     public func buildAttributedString() -> NSAttributedString {
-        return buildAttributedStringInternal().0
+        return buildAttributedStringAndTagsInfo().string
     }
     
-    public func buildAttributedStringAndTagsInfo() -> (NSAttributedString, [TagInfo]) {
-        return buildAttributedStringInternal()
+    public func buildAttributedStringAndTagsInfo() -> (string: NSAttributedString, tagsInfo: [TagInfo]) {
+        var (string, tags) = Atributika.parseTags(text)
+        
+        if let hs = hashtags {
+            tags += Atributika.detectHashTags(string, hashtags: hs)
+        }
+        
+        if let ddtypes = dataDetectorTypes, let ddTagName = dataDetectorTagName {
+            tags += Atributika.detectData(string, types: ddtypes, tagName: ddTagName)
+        }
+        
+        return (Atributika.buildAttributedString(string, tags: tags, styles: styles, baseStyle: baseStyle), tags)
     }
+}
+
+public extension Atributika {
     
-    private let specials = ["quot":"\"",
-                    "amp":"&",
-                    "apos":"'",
-                    "lt":"<",
-                    "gt":">"]
-    
-    private func parseTag(tagString: String, parseAttributes: Bool) -> (String, [String:String])? {
+    private static func parseTag(tagString: String, parseAttributes: Bool) -> Tag? {
+        
         let tagScanner = NSScanner(string: tagString)
         
         guard let tagName = tagScanner.scanCharactersFromSet(NSCharacterSet.letterCharacterSet()) else {
@@ -229,16 +226,22 @@ public struct Atributika {
             attrubutes[name] = value.stringByReplacingOccurrencesOfString("&quot;", withString: "\"")
         }
         
-        return (tagName, attrubutes)
+        return Tag(name: tagName, attributes: attrubutes)
     }
     
-    private func parseText(text: String) -> (String, [TagInfo]) {
+    private static let specials = ["quot":"\"",
+                                   "amp":"&",
+                                   "apos":"'",
+                                   "lt":"<",
+                                   "gt":">"]
+    
+    public static func parseTags(string: String) -> (string: String, tagsInfo: [TagInfo]) {
         
-        let scanner = NSScanner(string: text)
+        let scanner = NSScanner(string: string)
         scanner.charactersToBeSkipped = nil
         var resultString = String()
         var tagsResult = [TagInfo]()
-        var tagsStack = [(String, [String: String], Int)]()
+        var tagsStack = [(Tag, Int)]()
         
         while !scanner.atEnd {
             
@@ -249,19 +252,19 @@ public struct Atributika {
                     let open = scanner.scanString("/") == nil
                     if let tagString = scanner.scanUpToString(">") {
                         
-                        if let (tagName, attributes) = parseTag(tagString, parseAttributes: open) {
+                        if let tag = parseTag(tagString, parseAttributes: open) {
                             
-                            if tagName == "br" {
+                            if tag.name == "br" {
                                 resultString += "\n"
                             } else {
                                 let resultTextEndIndex = resultString.characters.count
                                 
                                 if open {
-                                    tagsStack.append((tagName, attributes, resultTextEndIndex))
+                                    tagsStack.append((tag, resultTextEndIndex))
                                 } else {
-                                    for (index, (stackTagName, attributes, startIndex)) in tagsStack.enumerate().reverse() {
-                                        if stackTagName == tagName {
-                                            tagsResult.append(TagInfo(name: stackTagName, attributes: attributes, range: startIndex..<resultTextEndIndex))
+                                    for (index, (tagInStack, startIndex)) in tagsStack.enumerate().reverse() {
+                                        if tagInStack.name == tag.name {
+                                            tagsResult.append(TagInfo(tag: tagInStack, range: startIndex..<resultTextEndIndex))
                                             tagsStack.removeAtIndex(index)
                                             break
                                         }
@@ -285,4 +288,65 @@ public struct Atributika {
         
         return (resultString, tagsResult)
     }
+    
+    public static func detectHashTags(string: String, hashtags: String = "#@") -> [TagInfo] {
+        
+        if hashtags.characters.count == 0 {
+            return []
+        }
+        
+        var tagsResult = [TagInfo]()
+        
+        let dataDetector = try? NSRegularExpression(pattern: "[\(hashtags)]\\w\\S*\\b", options: [])
+        dataDetector?.enumerateMatchesInString(string, options: [], range: NSMakeRange(0, (string as NSString).length), usingBlock: { (result, flags, _) in
+            if let r = result, let range = r.range.toRange() {
+                let tagName = (string as NSString).substringWithRange(NSMakeRange(r.range.location, 1))
+                tagsResult.append(TagInfo(tag: Tag(name: tagName, attributes: [:]), range: range))
+            }
+        })
+        
+        return tagsResult
+    }
+    
+    public static func detectData(string: String, types: NSTextCheckingTypes, tagName: String) -> [TagInfo] {
+        
+        var tagsResult = [TagInfo]()
+        
+        let dataDetector = try? NSDataDetector(types: types)
+        dataDetector?.enumerateMatchesInString(string, options: [], range: NSMakeRange(0, (string as NSString).length), usingBlock: { (result, flags, _) in
+            if let r = result, let range = r.range.toRange() {
+                tagsResult.append(TagInfo(tag: Tag(name: tagName, attributes: [:]), range: range))
+            }
+        })
+        return tagsResult
+    }
+    
+    private static func styleToAttributes(style: Style) -> [String : AnyObject] {
+        
+        var attrs = [String : AnyObject]()
+        
+        for  style in style {
+            attrs[style.name] = style.value
+        }
+        
+        return attrs
+    }
+    
+    public static func buildAttributedString(string: String,
+                                             tags: [TagInfo],
+                                             styles: [String: Style],
+                                             baseStyle: Style) -> NSAttributedString {
+        
+        let attributedString = NSMutableAttributedString(string: string, attributes: styleToAttributes(baseStyle))
+        
+        for tagInfo in tags {
+            if let a = styles[tagInfo.tag.name] {
+                attributedString.addAttributes(styleToAttributes(a), range: NSRange(tagInfo.range))
+            }
+        }
+        
+        return attributedString
+    }
 }
+
+

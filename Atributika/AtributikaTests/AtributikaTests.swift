@@ -14,7 +14,7 @@ class AtributikaTests: XCTestCase {
 
     func testHello() {
         let test = Atributika(text: "Hello <b>World</b>!!!",
-                   tags: [
+                   styles: [
                     "b" : [
                         .Font(UIFont.boldSystemFontOfSize(45)),
                     ]
@@ -42,12 +42,12 @@ class AtributikaTests: XCTestCase {
         
         XCTAssertEqual(test, reference)
         
-        let referenceTags = [TagInfo(name: "a", attributes: ["href":"http://google.com"], range: 0..<5)]
+        let referenceTags = [TagInfo(tag: Tag(name: "a", attributes: ["href":"http://google.com"]), range: 0..<5)]
         XCTAssertEqual(tags, referenceTags)
     }
     
     func testBase() {
-        let test = Atributika(text: "Hello World!!!", tags: [:], baseAttributes: [.Font(UIFont.boldSystemFontOfSize(45))]).buildAttributedString()
+        let test = Atributika(text: "Hello World!!!", styles: [:], baseStyle: [.Font(UIFont.boldSystemFontOfSize(45))]).buildAttributedString()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!", attributes: [NSFontAttributeName: UIFont.boldSystemFontOfSize(45)])
         
@@ -56,7 +56,7 @@ class AtributikaTests: XCTestCase {
     
     func testManyTags() {
         let test = Atributika(text: "He<i>llo</i> <b>World</b>!!!",
-                              tags: [
+                              styles: [
                                 "b" : [
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ],
@@ -75,7 +75,7 @@ class AtributikaTests: XCTestCase {
     
     func testManySameTags() {
         let test = Atributika(text: "He<b>llo</b> <b>World</b>!!!",
-                              tags: [
+                              styles: [
                                 "b" : [
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ]
@@ -91,7 +91,7 @@ class AtributikaTests: XCTestCase {
     
     func testTagsOverlap() {
         let test = Atributika(text: "Hello <b>W<red>orld</b>!!!</red>",
-                              tags: [
+                              styles: [
                                 "b" : [
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ],
@@ -118,7 +118,7 @@ class AtributikaTests: XCTestCase {
     
     func testNotClosedTag() {
         let test = Atributika(text: "Hello <b>World!!!",
-                              tags: [
+                              styles: [
                                 "b" : [
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ]
@@ -132,7 +132,7 @@ class AtributikaTests: XCTestCase {
     
     func testNotOpenedTag() {
         let test = Atributika(text: "Hello </b>World!!!",
-                              tags: [
+                              styles: [
                                 "b" : [
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ]
@@ -148,7 +148,7 @@ class AtributikaTests: XCTestCase {
         
         //TODO: throw error???
         let test = Atributika(text: "Hello <bWorld!!!",
-                              tags: [
+                              styles: [
                                 "b" : [
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ]
@@ -162,7 +162,7 @@ class AtributikaTests: XCTestCase {
     
     func testTagsStack() {
         let test = Atributika(text: "Hello <b>Wo<red>rl<u>d</u></red></b>!!!",
-                              tags: [
+                              styles: [
                                 "b" : [
                                     .Font(UIFont.boldSystemFontOfSize(45)),
                                 ],
@@ -183,4 +183,45 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(test, reference)
     }
     
+    func testHashCodes() {
+        
+        var a = Atributika(text: "#Hello @World!!!",
+                           styles: [
+                            "#" : [
+                                .Font(UIFont.boldSystemFontOfSize(45)),
+                            ],
+                            "@" : [
+                                .ForegroundColor(UIColor.redColor()),
+                            ]
+                            
+            ])
+        a.hashtags = "#@"
+        let test = a.buildAttributedString()
+        
+        let reference = NSMutableAttributedString(string: "#Hello @World!!!")
+        reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)], range: NSMakeRange(0, 6))
+        reference.addAttributes([NSForegroundColorAttributeName: UIColor.redColor()], range: NSMakeRange(7, 6))
+        
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testDataDetector() {
+        var a = Atributika(text: "Call me (888)555-5512",
+                           styles: [
+                            "data" : [
+                                .Font(UIFont.boldSystemFontOfSize(45)),
+                            ]
+                            
+            ])
+        let types: NSTextCheckingType = [.PhoneNumber]
+        
+        a.dataDetectorTypes = types.rawValue
+        a.dataDetectorTagName = "data"
+        let test = a.buildAttributedString()
+        
+        let reference = NSMutableAttributedString(string: "Call me (888)555-5512")
+        reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(45)], range: NSMakeRange(8, 13))
+        
+        XCTAssertEqual(test, reference)
+    }
 }
