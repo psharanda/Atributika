@@ -46,7 +46,7 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 ```swift
 label = UILabel()
         label.numberOfLines = 0
-        label.attributedText = Atributika(text: "Hello<br><b>Wo<red>rl<u>d</u></red></b>!!!",
+        label.attributedText = Atributika(text: "Hello<br><b>At<red>ribu<u>tika</u></red></b>!!!",
                                           tags: [
                                             "b" : [
                                                 .Font(UIFont.boldSystemFontOfSize(45)),
