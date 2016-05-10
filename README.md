@@ -45,21 +45,20 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 
 ```swift
 label = UILabel()
-        label.numberOfLines = 0
-        label.attributedText = Atributika(text: "Hello<br><b>At<red>ribu<u>tika</u></red></b>!!!",
-                                          tags: [
-                                            "b" : [
-                                                .Font(UIFont.boldSystemFontOfSize(45)),
-                                            ],
-                                            "red" : [
-                                                .ForegroundColor(UIColor.redColor())
-                                            ],
-                                            "u" : [
-                                                .UnderlineStyle(.StyleSingle)
-                                            ]
-                                            
-            ]).buildAttributedString()
-        view.addSubview(label)
+label.numberOfLines = 0
+label.attributedText = Atributika(text: "Hello<br><b>At<red>ribu<u>tika</u></red></b>!!!",
+                                  tags: [
+                                    "b" : [
+                                        .Font(UIFont.boldSystemFontOfSize(45)),
+                                    ],
+                                    "red" : [
+                                        .ForegroundColor(UIColor.redColor())
+                                    ],
+                                    "u" : [
+                                        .UnderlineStyle(.StyleSingle)
+                                    ]
+    ]).buildAttributedString()
+view.addSubview(label)
 ```
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/demo.png" alt="Hello Atributika!!!" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="191" height="84" />
