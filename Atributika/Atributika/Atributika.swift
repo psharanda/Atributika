@@ -185,7 +185,7 @@ public struct Atributika {
             tags += Atributika.detectData(string, types: ddtypes, tagName: ddTagName)
         }
         
-        return (Atributika.buildAttributedString(string, tags: tags, styles: styles, baseStyle: baseStyle), tags)
+        return (Atributika.createAttributedString(string, tags: tags, styles: styles, baseStyle: baseStyle), tags)
     }
 }
 
@@ -332,12 +332,17 @@ public extension Atributika {
         return attrs
     }
     
-    public static func buildAttributedString(string: String,
-                                             tags: [TagInfo],
-                                             styles: [String: Style],
-                                             baseStyle: Style) -> NSAttributedString {
+    public static func createAttributedString(string: String,
+                                              style: Style) -> NSMutableAttributedString {
+        return NSMutableAttributedString(string: string, attributes: styleToAttributes(style))
+    }
+    
+    public static func createAttributedString(string: String,
+                                              tags: [TagInfo],
+                                              styles: [String: Style],
+                                              baseStyle: Style) -> NSMutableAttributedString {
         
-        let attributedString = NSMutableAttributedString(string: string, attributes: styleToAttributes(baseStyle))
+        let attributedString = createAttributedString(string, style: baseStyle)
         
         for tagInfo in tags {
             if let a = styles[tagInfo.tag.name] {
