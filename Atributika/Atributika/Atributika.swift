@@ -9,126 +9,127 @@
 // SOFTWARE.
 
 
-import UIKit
+import Foundation
+import UIKit.UIColor
 
 public enum Attribute {
-    case Font(UIFont)
-    case ParagraphStyle(NSParagraphStyle)
-    case ForegroundColor(UIColor)
-    case BackgroundColor(UIColor)
-    case Ligature(Int)
-    case Kern(Float)
-    case StriketroughStyle(NSUnderlineStyle)
-    case UnderlineStyle(NSUnderlineStyle)
-    case StrokeColor(UIColor)
-    case StrokeWidth(Float)
-    case Shadow(NSShadow)
-    case TextEffect(String)
-    case Attachment(NSTextAttachment)
-    case LinkURL(NSURL)
-    case Link(String)
-    case BaselineOffset(Float)
-    case UnderlineColor(UIColor)
-    case StrikethroughColor(UIColor)
-    case Obliqueness(Float)
-    case Expansion(Float)
-    case WritingDirection(NSWritingDirection)
-    case VerticalGlyphForm(Int)
+    case font(UIFont)
+    case paragraphStyle(NSParagraphStyle)
+    case foregroundColor(UIColor)
+    case backgroundColor(UIColor)
+    case ligature(Int)
+    case kern(Float)
+    case striketroughStyle(NSUnderlineStyle)
+    case underlineStyle(NSUnderlineStyle)
+    case strokeColor(UIColor)
+    case strokeWidth(Float)
+    case shadow(NSShadow)
+    case textEffect(String)
+    case attachment(NSTextAttachment)
+    case linkURL(URL)
+    case link(String)
+    case baselineOffset(Float)
+    case underlineColor(UIColor)
+    case strikethroughColor(UIColor)
+    case obliqueness(Float)
+    case expansion(Float)
+    case writingDirection(NSWritingDirection)
+    case verticalGlyphForm(Int)
     
     public var name: String {
         switch self {
-        case .Font:
+        case .font:
             return NSFontAttributeName
-        case .ParagraphStyle:
+        case .paragraphStyle:
             return NSParagraphStyleAttributeName
-        case .ForegroundColor:
+        case .foregroundColor:
             return NSForegroundColorAttributeName
-        case .BackgroundColor:
+        case .backgroundColor:
             return NSBackgroundColorAttributeName
-        case .Ligature:
+        case .ligature:
             return NSLigatureAttributeName
-        case .Kern:
+        case .kern:
             return NSKernAttributeName
-        case .StriketroughStyle:
+        case .striketroughStyle:
             return NSStrikethroughStyleAttributeName
-        case .UnderlineStyle:
+        case .underlineStyle:
             return NSUnderlineStyleAttributeName
-        case .StrokeColor:
+        case .strokeColor:
             return NSStrokeColorAttributeName
-        case .StrokeWidth:
+        case .strokeWidth:
             return NSStrokeWidthAttributeName
-        case .Shadow:
+        case .shadow:
             return NSShadowAttributeName
-        case .TextEffect:
+        case .textEffect:
             return NSTextEffectAttributeName
-        case .Attachment:
+        case .attachment:
             return NSAttachmentAttributeName
-        case .LinkURL:
+        case .linkURL:
             return NSLinkAttributeName
-        case .Link:
+        case .link:
             return NSLinkAttributeName
-        case .BaselineOffset:
+        case .baselineOffset:
             return NSBaselineOffsetAttributeName
-        case .UnderlineColor:
+        case .underlineColor:
             return NSUnderlineColorAttributeName
-        case .StrikethroughColor:
+        case .strikethroughColor:
             return NSStrikethroughColorAttributeName
-        case .Obliqueness:
+        case .obliqueness:
             return NSObliquenessAttributeName
-        case .Expansion:
+        case .expansion:
             return NSExpansionAttributeName
-        case .WritingDirection:
+        case .writingDirection:
             return NSWritingDirectionAttributeName
-        case .VerticalGlyphForm:
+        case .verticalGlyphForm:
             return NSVerticalGlyphFormAttributeName
         }
     }
     
-    public var value: AnyObject {
+    public var value: Any {
         switch self {
-        case Font(let font):
+        case .font(let font):
             return font
-        case ParagraphStyle(let style):
+        case .paragraphStyle(let style):
             return style
-        case ForegroundColor(let color):
+        case .foregroundColor(let color):
             return color
-        case BackgroundColor(let color):
+        case .backgroundColor(let color):
             return color
-        case Ligature(let ligature):
+        case .ligature(let ligature):
             return ligature
-        case Kern(let kerning):
+        case .kern(let kerning):
             return kerning
-        case StriketroughStyle(let style):
+        case .striketroughStyle(let style):
             return style.rawValue
-        case UnderlineStyle(let style):
+        case .underlineStyle(let style):
             return style.rawValue
-        case StrokeColor(let color):
+        case .strokeColor(let color):
             return color
-        case StrokeWidth(let width):
+        case .strokeWidth(let width):
             return width
-        case Shadow(let shadow):
+        case .shadow(let shadow):
             return shadow
-        case TextEffect(let effect):
+        case .textEffect(let effect):
             return effect
-        case Attachment(let attachment):
+        case .attachment(let attachment):
             return attachment
-        case LinkURL(let url):
+        case .linkURL(let url):
             return url
-        case Link(let url):
+        case .link(let url):
             return url
-        case BaselineOffset(let offset):
+        case .baselineOffset(let offset):
             return offset
-        case UnderlineColor(let color):
+        case .underlineColor(let color):
             return color
-        case StrikethroughColor(let color):
+        case .strikethroughColor(let color):
             return color
-        case Obliqueness(let obliqueness):
+        case .obliqueness(let obliqueness):
             return obliqueness
-        case Expansion(let expansion):
+        case .expansion(let expansion):
             return expansion
-        case WritingDirection(let direction):
+        case .writingDirection(let direction):
             return direction.rawValue
-        case VerticalGlyphForm(let form):
+        case .verticalGlyphForm(let form):
             return form
         }
     }
@@ -191,19 +192,19 @@ public struct Atributika {
 
 public extension Atributika {
     
-    private static func parseTag(tagString: String, parseAttributes: Bool) -> Tag? {
+    fileprivate static func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
         
-        let tagScanner = NSScanner(string: tagString)
+        let tagScanner = Scanner(string: tagString)
         
-        guard let tagName = tagScanner.scanCharactersFromSet(NSCharacterSet.letterCharacterSet()) else {
+        guard let tagName = tagScanner.scanCharacters(from: CharacterSet.letters) else {
             return nil
         }
         
         var attrubutes = [String: String]()
         
-        while parseAttributes && !tagScanner.atEnd {
+        while parseAttributes && !tagScanner.isAtEnd {
             
-            guard let name = tagScanner.scanUpToString("=") else {
+            guard let name = tagScanner.scanUpTo("=") else {
                 break
             }
             
@@ -215,7 +216,7 @@ public extension Atributika {
                 break
             }
             
-            guard let value = tagScanner.scanUpToString("\"") else {
+            guard let value = tagScanner.scanUpTo("\"") else {
                 break
             }
             
@@ -223,34 +224,34 @@ public extension Atributika {
                 break
             }
             
-            attrubutes[name] = value.stringByReplacingOccurrencesOfString("&quot;", withString: "\"")
+            attrubutes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
         }
         
         return Tag(name: tagName, attributes: attrubutes)
     }
     
-    private static let specials = ["quot":"\"",
+    fileprivate static let specials = ["quot":"\"",
                                    "amp":"&",
                                    "apos":"'",
                                    "lt":"<",
                                    "gt":">"]
     
-    public static func parseTags(string: String) -> (string: String, tagsInfo: [TagInfo]) {
+    public static func parseTags(_ string: String) -> (string: String, tagsInfo: [TagInfo]) {
         
-        let scanner = NSScanner(string: string)
+        let scanner = Scanner(string: string)
         scanner.charactersToBeSkipped = nil
         var resultString = String()
         var tagsResult = [TagInfo]()
         var tagsStack = [(Tag, Int)]()
         
-        while !scanner.atEnd {
+        while !scanner.isAtEnd {
             
-            if let textString = scanner.scanUpToCharactersFromSet(NSCharacterSet(charactersInString: "<&")) {
+            if let textString = scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "<&")) {
                 resultString += textString
             } else {
                 if scanner.scanString("<") != nil {
                     let open = scanner.scanString("/") == nil
-                    if let tagString = scanner.scanUpToString(">") {
+                    if let tagString = scanner.scanUpTo(">") {
                         
                         if let tag = parseTag(tagString, parseAttributes: open) {
                             
@@ -262,10 +263,10 @@ public extension Atributika {
                                 if open {
                                     tagsStack.append((tag, resultTextEndIndex))
                                 } else {
-                                    for (index, (tagInStack, startIndex)) in tagsStack.enumerate().reverse() {
+                                    for (index, (tagInStack, startIndex)) in tagsStack.enumerated().reversed() {
                                         if tagInStack.name == tag.name {
                                             tagsResult.append(TagInfo(tag: tagInStack, range: startIndex..<resultTextEndIndex))
-                                            tagsStack.removeAtIndex(index)
+                                            tagsStack.remove(at: index)
                                             break
                                         }
                                     }
@@ -276,7 +277,7 @@ public extension Atributika {
                         scanner.scanString(">")
                     }
                 } else if scanner.scanString("&") != nil {
-                    if let specialString = scanner.scanUpToString(";") {
+                    if let specialString = scanner.scanUpTo(";") {
                         if let spec = specials[specialString] {
                             resultString += spec
                         }
@@ -289,7 +290,7 @@ public extension Atributika {
         return (resultString, tagsResult)
     }
     
-    public static func detectHashTags(string: String, hashtags: String = "#@") -> [TagInfo] {
+    public static func detectHashTags(_ string: String, hashtags: String = "#@") -> [TagInfo] {
         
         if hashtags.characters.count == 0 {
             return []
@@ -298,9 +299,9 @@ public extension Atributika {
         var tagsResult = [TagInfo]()
         
         let dataDetector = try? NSRegularExpression(pattern: "[\(hashtags)]\\w\\S*\\b", options: [])
-        dataDetector?.enumerateMatchesInString(string, options: [], range: NSMakeRange(0, (string as NSString).length), usingBlock: { (result, flags, _) in
+        dataDetector?.enumerateMatches(in: string, options: [], range: NSMakeRange(0, (string as NSString).length), using: { (result, flags, _) in
             if let r = result, let range = r.range.toRange() {
-                let tagName = (string as NSString).substringWithRange(NSMakeRange(r.range.location, 1))
+                let tagName = (string as NSString).substring(with: NSMakeRange(r.range.location, 1))
                 tagsResult.append(TagInfo(tag: Tag(name: tagName, attributes: [:]), range: range))
             }
         })
@@ -308,12 +309,12 @@ public extension Atributika {
         return tagsResult
     }
     
-    public static func detectData(string: String, types: NSTextCheckingTypes, tagName: String) -> [TagInfo] {
+    public static func detectData(_ string: String, types: NSTextCheckingTypes, tagName: String) -> [TagInfo] {
         
         var tagsResult = [TagInfo]()
         
         let dataDetector = try? NSDataDetector(types: types)
-        dataDetector?.enumerateMatchesInString(string, options: [], range: NSMakeRange(0, (string as NSString).length), usingBlock: { (result, flags, _) in
+        dataDetector?.enumerateMatches(in: string, options: [], range: NSMakeRange(0, (string as NSString).length), using: { (result, flags, _) in
             if let r = result, let range = r.range.toRange() {
                 tagsResult.append(TagInfo(tag: Tag(name: tagName, attributes: [:]), range: range))
             }
@@ -321,9 +322,9 @@ public extension Atributika {
         return tagsResult
     }
     
-    private static func styleToAttributes(style: Style) -> [String : AnyObject] {
+    fileprivate static func styleToAttributes(_ style: Style) -> [String : Any] {
         
-        var attrs = [String : AnyObject]()
+        var attrs = [String : Any]()
         
         for  style in style {
             attrs[style.name] = style.value
@@ -332,12 +333,12 @@ public extension Atributika {
         return attrs
     }
     
-    public static func createAttributedString(string: String,
+    public static func createAttributedString(_ string: String,
                                               style: Style) -> NSMutableAttributedString {
         return NSMutableAttributedString(string: string, attributes: styleToAttributes(style))
     }
     
-    public static func createAttributedString(string: String,
+    public static func createAttributedString(_ string: String,
                                               tags: [TagInfo],
                                               styles: [String: Style],
                                               baseStyle: Style) -> NSMutableAttributedString {
