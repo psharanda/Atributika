@@ -224,4 +224,47 @@ class AtributikaTests: XCTestCase {
         
         XCTAssertEqual(test, reference)
     }
+    
+    func testIssue1() {
+        
+        let bad = "<b>Save $1.00</b> on <b>any</b> order!"
+        
+        let badDesc = Atributika(text: bad,
+                                 styles: [
+                                    "b" : [.font( UIFont.boldSystemFont(ofSize: 14))]
+            ],
+                                 baseStyle: [
+                                    .font( UIFont.systemFont(ofSize: 14)), .foregroundColor(UIColor.red)
+            ])
+            .buildAttributedString()
+        
+        
+        
+        let badReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.red])
+        
+        badReference.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)], range: NSMakeRange(0, 10))
+        badReference.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)], range: NSMakeRange(14, 3))
+        
+        XCTAssertEqual(badDesc, badReference)
+        
+        
+        let good = "Save <b>$1.00</b> on <b>any</b> order!"
+        
+        
+        let goodDesc = Atributika(text: good,
+                                  styles: [
+                                    "b" : [.font( UIFont.boldSystemFont(ofSize: 14))]
+            ],
+                                  baseStyle: [
+                                    .font( UIFont.systemFont(ofSize: 14)), .foregroundColor(UIColor.red)
+            ])
+            .buildAttributedString()
+        
+        let goodReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.red])
+        goodReference.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)], range: NSMakeRange(5, 5))
+        goodReference.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)], range: NSMakeRange(14, 3))
+        
+        XCTAssertEqual(goodDesc, goodReference)
+    }
+
 }
