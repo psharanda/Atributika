@@ -26,7 +26,25 @@ class AtributikaTests: XCTestCase {
         
         XCTAssertEqual(test,reference)
     }
-    
+
+    func testHelloWithBase() {
+        let test = Atributika(text: "<b>Hello World</b>!!!",
+                              styles: [
+                                "b" : [
+                                    .font(UIFont.boldSystemFont(ofSize: 45)),
+                                ]
+
+            ],
+                              baseStyle: [.font(UIFont.systemFont(ofSize: 12))]
+            ).buildAttributedString()
+
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
+        reference.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
+
+        XCTAssertEqual(test,reference)
+    }
+
     func testEmpty() {
         let test = Atributika(text: "Hello World!!!").buildAttributedString()
         
