@@ -77,7 +77,9 @@ let str = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue, styl
 
 ```swift
 let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
-let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to ask any details (123)456-7890 #swift #nsattributedstring"
+let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is
+           called <b>Atributika</b>. Call me if you want to ask any details (123)456-7890
+           #swift #nsattributedstring"
     .styled(tags:
         Style("u").font(.boldSystemFont(ofSize: 12)).underlineStyle(.styleSingle),
         Style("b").font(.boldSystemFont(ofSize: 12))
