@@ -40,7 +40,7 @@ public struct Detection {
 }
 
 public protocol AtributikaProtocol {
-    var ax_string: String {get}
+    var string: String {get}
     var detections: [Detection] {get}
     var baseStyle: Style {get}
 }
@@ -48,7 +48,7 @@ public protocol AtributikaProtocol {
 extension AtributikaProtocol {
     
     public var attributedString: NSAttributedString {
-        let attributedString = NSMutableAttributedString(string: ax_string, attributes: baseStyle.attributes)
+        let attributedString = NSMutableAttributedString(string: string, attributes: baseStyle.attributes)
         
         for d in detections {
             if d.style.attributes.count > 0 {
@@ -60,9 +60,60 @@ extension AtributikaProtocol {
     }
 }
 
+public struct Atributika: AtributikaProtocol {
+    public let string: String
+    public let detections: [Detection]
+    public let baseStyle: Style
+    
+    public init(string: String, detections: [Detection], baseStyle: Style) {
+        self.string = string
+        self.detections = detections
+        self.baseStyle = baseStyle
+    }
+}
+
+extension AtributikaProtocol {
+    
+    /// style the whole string
+    public func styled(_ style: Style) -> Atributika {
+        return Atributika(string: string, detections: detections, baseStyle: baseStyle.merged(with: style))
+    }
+    
+    /// style things like #xcode #mentions
+    public func styledHashtags(_ style: Style) -> Atributika {
+        let ranges = string.detectHashTags()
+        let ds = ranges.map { Detection(type: .hashtag, style: style, range: $0) }
+        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+    }
+    
+    /// style things like @John @all
+    public func styledMentions(_ style: Style) -> Atributika {
+        let ranges = string.detectMentions()
+        let ds = ranges.map { Detection(type: .mention, style: style, range: $0) }
+        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+    }
+    
+    public func styled(regex: String, options: NSRegularExpression.Options = [], style: Style) -> Atributika {
+        let ranges = string.detect(regex: regex, options: options)
+        let ds = ranges.map { Detection(type: .regex(regex), style: style, range: $0) }
+        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+    }
+    
+    public func styled(textCheckingTypes: NSTextCheckingTypes, style: Style) -> Atributika {
+        let ranges = string.detect(textCheckingTypes: textCheckingTypes)
+        let ds = ranges.map { Detection(type: .textCheckingType(textCheckingTypes), style: style, range: $0) }
+        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+    }
+    
+    public func styled(range: Range<Int>, style: Style) -> Atributika {
+        let d = Detection(type: .none, style: style, range: range)
+        return Atributika(string: string, detections: detections + [d], baseStyle: baseStyle)
+    }
+}
+
 extension String: AtributikaProtocol {
     
-    public var ax_string: String {
+    public var string: String {
         return self
     }
     
@@ -98,17 +149,13 @@ extension String: AtributikaProtocol {
 
 extension NSAttributedString: AtributikaProtocol {
     
-    public var ax_string: String {
-        return string
-    }
-    
     public var detections: [Detection] {
         
         var ds: [Detection] = []
         
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attributes, range, _) in
             if let range = range.toRange() {
-                ds.append(Detection.init(type: .none, style: Style(nil, attributes), range: range))
+                ds.append(Detection(type: .none, style: Style("", attributes), range: range))
             }
         }
         
@@ -119,56 +166,3 @@ extension NSAttributedString: AtributikaProtocol {
         return Style()
     }
 }
-
-
-public struct Atributika: AtributikaProtocol {
-    public let ax_string: String
-    public let detections: [Detection]
-    public let baseStyle: Style
-    
-    public init(string: String, detections: [Detection], baseStyle: Style) {
-        ax_string = string
-        self.detections = detections
-        self.baseStyle = baseStyle
-    }
-}
-
-extension AtributikaProtocol {
-    
-    /// style the whole string
-    public func styled(_ style: Style) -> Atributika {
-        return Atributika(string: ax_string, detections: detections, baseStyle: baseStyle.merged(with: style))
-    }
-    
-    /// style things like #xcode #mentions
-    public func styledHashtags(_ style: Style) -> Atributika {
-        let ranges = ax_string.detectHashTags()
-        let ds = ranges.map { Detection(type: .hashtag, style: style, range: $0) }
-        return Atributika(string: ax_string, detections: detections + ds, baseStyle: baseStyle)
-    }
-    
-    /// style things like @John @all
-    public func styledMentions(_ style: Style) -> Atributika {
-        let ranges = ax_string.detectMentions()
-        let ds = ranges.map { Detection(type: .mention, style: style, range: $0) }
-        return Atributika(string: ax_string, detections: detections + ds, baseStyle: baseStyle)
-    }
-    
-    public func styled(regex: String, options: NSRegularExpression.Options = [], style: Style) -> Atributika {
-        let ranges = ax_string.detect(regex: regex, options: options)
-        let ds = ranges.map { Detection(type: .regex(regex), style: style, range: $0) }
-        return Atributika(string: ax_string, detections: detections + ds, baseStyle: baseStyle)
-    }
-    
-    public func styled(textCheckingTypes: NSTextCheckingTypes, style: Style) -> Atributika {
-        let ranges = ax_string.detect(textCheckingTypes: textCheckingTypes)
-        let ds = ranges.map { Detection(type: .textCheckingType(textCheckingTypes), style: style, range: $0) }
-        return Atributika(string: ax_string, detections: detections + ds, baseStyle: baseStyle)
-    }
-    
-    public func styled(range: Range<Int>, style: Style) -> Atributika {
-        let d = Detection(type: .none, style: style, range: range)
-        return Atributika(string: ax_string, detections: detections + [d], baseStyle: baseStyle)
-    }
-}
-

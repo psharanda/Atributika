@@ -21,11 +21,11 @@ import Foundation
 
 public class Style {
     
-    public let name: String?
+    public let name: String
     
     public var attributes: [String: Any]
     
-    public init(_ name: String? = nil, _ attributes: [String: Any] = [:]) {
+    public init(_ name: String = "", _ attributes: [String: Any] = [:]) {
         self.name = name
         self.attributes = attributes
     }
@@ -145,90 +145,90 @@ public class Style {
         return Style(name, attrs)
     }
     public static func font(_ value: Font) -> Style {
-        return Style(nil, [NSFontAttributeName: value])
+        return Style("", [NSFontAttributeName: value])
     }
     
     public static func paragraphStyle(_ value: NSParagraphStyle) -> Style {
-        return Style(nil, [NSParagraphStyleAttributeName: value])
+        return Style("", [NSParagraphStyleAttributeName: value])
     }
     
     public static func foregroundColor(_ value: Color) -> Style {
-        return Style(nil, [NSForegroundColorAttributeName: value])
+        return Style("", [NSForegroundColorAttributeName: value])
     }
     
     public static func backgroundColor(_ value: Color) -> Style {
-        return Style(nil, [NSBackgroundColorAttributeName: value])
+        return Style("", [NSBackgroundColorAttributeName: value])
     }
     
     public static func ligature(_ value: Int) -> Style {
-        return Style(nil, [NSLigatureAttributeName: value])
+        return Style("", [NSLigatureAttributeName: value])
     }
     
     public static func kern(_ value: Float) -> Style {
-        return Style(nil, [NSKernAttributeName: value])
+        return Style("", [NSKernAttributeName: value])
     }
     
     public static func striketroughStyle(_ value: NSUnderlineStyle) -> Style {
-        return Style(nil, [NSStrikethroughColorAttributeName : value.rawValue])
+        return Style("", [NSStrikethroughColorAttributeName : value.rawValue])
     }
     
     public static func strikethroughColor(_ value: Color) -> Style {
-        return Style(nil, [NSFontAttributeName: value])
+        return Style("", [NSFontAttributeName: value])
     }
     
     public static func underlineStyle(_ value: NSUnderlineStyle) -> Style {
-        return Style(nil, [NSUnderlineStyleAttributeName : value.rawValue])
+        return Style("", [NSUnderlineStyleAttributeName : value.rawValue])
     }
     
     public static func underlineColor(_ value: Color) -> Style {
-        return Style(nil, [NSUnderlineColorAttributeName: value])
+        return Style("", [NSUnderlineColorAttributeName: value])
     }
     
     public static func strokeColor(_ value: Color) -> Style {
-        return Style(nil, [NSStrokeColorAttributeName: value])
+        return Style("", [NSStrokeColorAttributeName: value])
     }
     
     public static func strokeWidth(_ value: Float) -> Style {
-        return Style(nil, [NSStrokeWidthAttributeName: value])
+        return Style("", [NSStrokeWidthAttributeName: value])
     }
     
     #if !os(watchOS)
     public static func shadow(_ value: NSShadow) -> Style {
-        return Style(nil, [NSShadowAttributeName: value])
+        return Style("", [NSShadowAttributeName: value])
     }
     #endif
     
     public static func textEffect(_ value: String) -> Style {
-        return Style(nil, [NSTextEffectAttributeName: value])
+        return Style("", [NSTextEffectAttributeName: value])
     }
     
     #if !os(watchOS)
     public static func attachment(_ value: NSTextAttachment) -> Style {
-        return Style(nil, [NSAttachmentAttributeName: value])
+        return Style("", [NSAttachmentAttributeName: value])
     }
     #endif
     
     public static func link(_ value: URL) -> Style {
-        return Style(nil, [NSLinkAttributeName: value])
+        return Style("", [NSLinkAttributeName: value])
     }
     
     public static func link(_ value: String) -> Style {
-        return Style(nil, [NSLinkAttributeName: value])
+        return Style("", [NSLinkAttributeName: value])
     }
     
     public static func baselineOffset(_ value: Float) -> Style {
-        return Style(nil, [NSBaselineOffsetAttributeName: value])
+        return Style("", [NSBaselineOffsetAttributeName: value])
     }
     
     public static func obliqueness(_ value: Float) -> Style {
-        return Style(nil, [NSObliquenessAttributeName: value])
+        return Style("", [NSObliquenessAttributeName: value])
     }
     
     public static func expansion(_ value: Float) -> Style {
-        return Style(nil, [NSExpansionAttributeName: value])
+        return Style("", [NSExpansionAttributeName: value])
     }
     
     public static func writingDirection(_ value: NSWritingDirection) -> Style {
-        return Style(nil, [NSWritingDirectionAttributeName: value.rawValue])
+        return Style("", [NSWritingDirectionAttributeName: value.rawValue])
     }
 }
