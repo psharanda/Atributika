@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */; };
+		1B2F83921E5C98A4009AFBCA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F83911E5C98A4009AFBCA /* ViewController.swift */; };
+		1B2F83951E5C98A4009AFBCA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83931E5C98A4009AFBCA /* Main.storyboard */; };
+		1B2F83971E5C98A4009AFBCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83961E5C98A4009AFBCA /* Assets.xcassets */; };
+		1B2F839A1E5C98A4009AFBCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */; };
+		1B2F839F1E5C98F0009AFBCA /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
+		1B2F83A01E5C98F0009AFBCA /* Atributika.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BB55AD11E5C73EF00CE6EAD /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */; };
 		1BB55AD21E5C73EF00CE6EAD /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */; };
 		1BB55AD31E5C73F000CE6EAD /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */; };
@@ -36,6 +43,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1B2F83A11E5C98F0009AFBCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52D6D9731BEFF229002C0205 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52D6D97B1BEFF229002C0205;
+			remoteInfo = "Atributika-iOS";
+		};
 		52D6D9881BEFF229002C0205 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 52D6D9731BEFF229002C0205 /* Project object */;
@@ -59,7 +73,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1B2F83A31E5C98F0009AFBCA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1B2F83A01E5C98F0009AFBCA /* Atributika.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1B2F838D1E5C98A4009AFBCA /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1B2F83911E5C98A4009AFBCA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1B2F83941E5C98A4009AFBCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1B2F83961E5C98A4009AFBCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1B2F83991E5C98A4009AFBCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1B2F839B1E5C98A4009AFBCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Atributika.swift; path = Sources/Atributika.swift; sourceTree = "<group>"; };
 		1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+Utils.swift"; path = "Sources/NSAttributedString+Utils.swift"; sourceTree = "<group>"; };
 		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScanner+Swift.swift"; path = "Sources/NSScanner+Swift.swift"; sourceTree = "<group>"; };
@@ -78,6 +113,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1B2F838A1E5C98A4009AFBCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B2F839F1E5C98F0009AFBCA /* Atributika.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52D6D9781BEFF229002C0205 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,6 +176,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B2F838E1E5C98A4009AFBCA /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */,
+				1B2F83911E5C98A4009AFBCA /* ViewController.swift */,
+				1B2F83931E5C98A4009AFBCA /* Main.storyboard */,
+				1B2F83961E5C98A4009AFBCA /* Assets.xcassets */,
+				1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */,
+				1B2F839B1E5C98A4009AFBCA /* Info.plist */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
 		1BB55AC11E5C6F2400CE6EAD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +207,7 @@
 				1BB55AD01E5C73EF00CE6EAD /* Style.swift */,
 				1BB55AC11E5C6F2400CE6EAD /* Tests */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
+				1B2F838E1E5C98A4009AFBCA /* Demo */,
 				52D6D97D1BEFF229002C0205 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,6 +222,7 @@
 				52D6DA0F1BF000BD002C0205 /* Atributika.framework */,
 				DD75027A1C68FCFC006590AF /* Atributika-macOS Tests.xctest */,
 				DD75028D1C690C7A006590AF /* Atributika-tvOS Tests.xctest */,
+				1B2F838D1E5C98A4009AFBCA /* Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -228,6 +286,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		1B2F838C1E5C98A4009AFBCA /* Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B2F839E1E5C98A4009AFBCA /* Build configuration list for PBXNativeTarget "Demo" */;
+			buildPhases = (
+				1B2F83891E5C98A4009AFBCA /* Sources */,
+				1B2F838A1E5C98A4009AFBCA /* Frameworks */,
+				1B2F838B1E5C98A4009AFBCA /* Resources */,
+				1B2F83A31E5C98F0009AFBCA /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1B2F83A21E5C98F0009AFBCA /* PBXTargetDependency */,
+			);
+			name = Demo;
+			productName = Demo;
+			productReference = 1B2F838D1E5C98A4009AFBCA /* Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		52D6D97B1BEFF229002C0205 /* Atributika-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52D6D9901BEFF229002C0205 /* Build configuration list for PBXNativeTarget "Atributika-iOS" */;
@@ -360,10 +437,14 @@
 		52D6D9731BEFF229002C0205 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Atributika;
 				TargetAttributes = {
+					1B2F838C1E5C98A4009AFBCA = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 					52D6D97B1BEFF229002C0205 = {
 						CreatedOnToolsVersion = 7.1;
 						LastSwiftMigration = 0820;
@@ -400,6 +481,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 52D6D9721BEFF229002C0205;
 			productRefGroup = 52D6D97D1BEFF229002C0205 /* Products */;
@@ -413,11 +495,22 @@
 				52D6D9851BEFF229002C0205 /* Atributika-iOS Tests */,
 				DD7502791C68FCFC006590AF /* Atributika-macOS Tests */,
 				DD75028C1C690C7A006590AF /* Atributika-tvOS Tests */,
+				1B2F838C1E5C98A4009AFBCA /* Demo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1B2F838B1E5C98A4009AFBCA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B2F839A1E5C98A4009AFBCA /* LaunchScreen.storyboard in Resources */,
+				1B2F83971E5C98A4009AFBCA /* Assets.xcassets in Resources */,
+				1B2F83951E5C98A4009AFBCA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52D6D97A1BEFF229002C0205 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -470,6 +563,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1B2F83891E5C98A4009AFBCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B2F83921E5C98A4009AFBCA /* ViewController.swift in Sources */,
+				1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52D6D9771BEFF229002C0205 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -545,6 +647,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1B2F83A21E5C98F0009AFBCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52D6D97B1BEFF229002C0205 /* Atributika-iOS */;
+			targetProxy = 1B2F83A11E5C98F0009AFBCA /* PBXContainerItemProxy */;
+		};
 		52D6D9891BEFF229002C0205 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 52D6D97B1BEFF229002C0205 /* Atributika-iOS */;
@@ -562,7 +669,60 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		1B2F83931E5C98A4009AFBCA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1B2F83941E5C98A4009AFBCA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1B2F83991E5C98A4009AFBCA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		1B2F839C1E5C98A4009AFBCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				INFOPLIST_FILE = Demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		1B2F839D1E5C98A4009AFBCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				INFOPLIST_FILE = Demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		52D6D98E1BEFF229002C0205 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -942,6 +1102,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1B2F839E1E5C98A4009AFBCA /* Build configuration list for PBXNativeTarget "Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B2F839C1E5C98A4009AFBCA /* Debug */,
+				1B2F839D1E5C98A4009AFBCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		52D6D9761BEFF229002C0205 /* Build configuration list for PBXProject "Atributika" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

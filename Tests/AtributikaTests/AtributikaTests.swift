@@ -32,7 +32,8 @@ class AtributikaTests: XCTestCase {
     func testHello() {
         
         let test = "Hello <b>World</b>!!!".styled(tags:
-            Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
+            Style("b").font(.boldSystemFont(ofSize: 45))
+        ).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
@@ -44,7 +45,6 @@ class AtributikaTests: XCTestCase {
         
         let test = "<b>Hello World</b>!!!".styled(tags: Style("b").font(.boldSystemFont(ofSize: 45)))
             .styled(.font(.systemFont(ofSize: 12)))
-            .styled(Style.font(.systemFont(ofSize: 12)))
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -88,6 +88,7 @@ class AtributikaTests: XCTestCase {
     }
     
     func testManyTags() {
+            
         let test = "He<i>llo</i> <b>World</b>!!!".styled(tags:
             Style("b").font(.boldSystemFont(ofSize: 45)),
             Style("i").font(.boldSystemFont(ofSize: 12))
@@ -197,7 +198,9 @@ class AtributikaTests: XCTestCase {
         
         let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
         
-        let test = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue, style: Style.font(.boldSystemFont(ofSize: 45))).attributedString
+        let test = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue,
+                                                  style: Style.font(.boldSystemFont(ofSize: 45)))
+            .attributedString
         
         let reference = NSMutableAttributedString(string: "Call me (888)555-5512")
         reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(8, 13))
