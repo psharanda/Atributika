@@ -89,7 +89,7 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
     .attributedString
 ```    
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test4.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="334" height="77" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test4.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="334" height="67" />
 
 ## Why Atributika does have one 't' in its name
 Because in belarusian/russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
