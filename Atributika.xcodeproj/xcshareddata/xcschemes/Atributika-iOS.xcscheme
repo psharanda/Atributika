@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1B9E4D801CDFEBC000A9A081"
+               BlueprintIdentifier = "52D6D97B1BEFF229002C0205"
                BuildableName = "Atributika.framework"
-               BlueprintName = "Atributika"
+               BlueprintName = "Atributika-iOS"
                ReferencedContainer = "container:Atributika.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,15 +26,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1B9E4D8A1CDFEBC000A9A081"
-               BuildableName = "AtributikaTests.xctest"
-               BlueprintName = "AtributikaTests"
+               BlueprintIdentifier = "52D6D9851BEFF229002C0205"
+               BuildableName = "Atributika-iOS Tests.xctest"
+               BlueprintName = "Atributika-iOS Tests"
                ReferencedContainer = "container:Atributika.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +43,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1B9E4D801CDFEBC000A9A081"
+            BlueprintIdentifier = "52D6D97B1BEFF229002C0205"
             BuildableName = "Atributika.framework"
-            BlueprintName = "Atributika"
+            BlueprintName = "Atributika-iOS"
             ReferencedContainer = "container:Atributika.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +65,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1B9E4D801CDFEBC000A9A081"
+            BlueprintIdentifier = "52D6D97B1BEFF229002C0205"
             BuildableName = "Atributika.framework"
-            BlueprintName = "Atributika"
+            BlueprintName = "Atributika-iOS"
             ReferencedContainer = "container:Atributika.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +83,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1B9E4D801CDFEBC000A9A081"
+            BlueprintIdentifier = "52D6D97B1BEFF229002C0205"
             BuildableName = "Atributika.framework"
-            BlueprintName = "Atributika"
+            BlueprintName = "Atributika-iOS"
             ReferencedContainer = "container:Atributika.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
