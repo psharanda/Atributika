@@ -62,10 +62,26 @@ let str = "#Hello @World!!!"
 
 ```swift
 let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
-let test = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue, style:
+let str = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue, style:
             Style.font(.boldSystemFont(ofSize: 45))
 ).attributedString
 ```
+
+#### Uber String
+
+```swift
+let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
+let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to ask any details (123)456-7890 #swift #nsattributedstring"
+    .styled(tags:
+        Style("u").font(.boldSystemFont(ofSize: 12)).underlineStyle(.styleSingle),
+            Style("b").font(.boldSystemFont(ofSize: 12))
+    )
+    .styled(Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray))
+    .styledMentions(Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black))
+    .styledHashtags(Style.foregroundColor(.blue))
+    .styled(textCheckingTypes: types.rawValue, style: Style.backgroundColor(.yellow))
+    .attributedString
+```            
 
 ## Why Atributika does have one 't' in its name
 Because in belarusian/russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
