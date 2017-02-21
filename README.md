@@ -49,7 +49,7 @@ let str = "Hello <b>World</b>!!!".styled(tags: Style("b").font(.boldSystemFont(o
             .attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test1.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="101" height="33" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test1.png" alt="" width="101" height="33" />
 
 #### Detect and style hashtags and mentions
 
@@ -60,7 +60,7 @@ let str = "#Hello @World!!!"
             .attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test2.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="232" height="63" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test2.png" alt="" width="232" height="63" />
 
 #### Detect and style phone numbers
 
@@ -71,7 +71,7 @@ let str = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue, styl
 ).attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test3.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="196" height="38" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test3.png" alt="" width="196" height="38" />
 
 #### Uber String
 
@@ -91,9 +91,9 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
     .attributedString
 ```    
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test4.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="334" height="67" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test4.png" alt="" width="334" height="67" />
 
-## Why Atributika does have one 't' in its name
+## Why does Atributika have one 't' in its name?
 Because in belarusian/russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
 
 ## Integration
