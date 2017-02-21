@@ -31,7 +31,7 @@ class AtributikaTests: XCTestCase {
     
     func testHello() {
         
-        let test = "Hello <b>World</b>!!!".styled(tags:
+        let test = "Hello <b>World</b>!!!".style(tags:
             Style("b").font(.boldSystemFont(ofSize: 45))
         ).attributedString
         
@@ -43,8 +43,8 @@ class AtributikaTests: XCTestCase {
     
     func testHelloWithBase() {
         
-        let test = "<b>Hello World</b>!!!".styled(tags: Style("b").font(.boldSystemFont(ofSize: 45)))
-            .styled(.font(.systemFont(ofSize: 12)))
+        let test = "<b>Hello World</b>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 45)))
+            .styleAll(.font(.systemFont(ofSize: 12)))
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -55,7 +55,7 @@ class AtributikaTests: XCTestCase {
     }
     
     func testEmpty() {
-        let test = "Hello World!!!".styled().attributedString
+        let test = "Hello World!!!".style().attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         
@@ -63,7 +63,7 @@ class AtributikaTests: XCTestCase {
     }
     
     func testParams() {
-        let a = "<a href=\"http://google.com\">Hello</a> World!!!".styled()
+        let a = "<a href=\"http://google.com\">Hello</a> World!!!".style()
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         
@@ -80,7 +80,7 @@ class AtributikaTests: XCTestCase {
     }
     
     func testBase() {
-        let test = "Hello World!!!".styled(Style.font(.boldSystemFont(ofSize: 45))).attributedString
+        let test = "Hello World!!!".styleAll(Style.font(.boldSystemFont(ofSize: 45))).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!", attributes: [NSFontAttributeName: Font.boldSystemFont(ofSize: 45)])
         
@@ -89,7 +89,7 @@ class AtributikaTests: XCTestCase {
     
     func testManyTags() {
             
-        let test = "He<i>llo</i> <b>World</b>!!!".styled(tags:
+        let test = "He<i>llo</i> <b>World</b>!!!".style(tags:
             Style("b").font(.boldSystemFont(ofSize: 45)),
             Style("i").font(.boldSystemFont(ofSize: 12))
         ).attributedString
@@ -103,7 +103,7 @@ class AtributikaTests: XCTestCase {
     
     func testManySameTags() {
         
-        let test = "He<b>llo</b> <b>World</b>!!!".styled(tags:
+        let test = "He<b>llo</b> <b>World</b>!!!".style(tags:
             Style("b").font(.boldSystemFont(ofSize: 45))
         ).attributedString
         
@@ -116,7 +116,7 @@ class AtributikaTests: XCTestCase {
     
     func testTagsOverlap() {
         
-        let test = "Hello <b>W<red>orld</b>!!!</red>".styled(tags:
+        let test = "Hello <b>W<red>orld</b>!!!</red>".style(tags:
             Style("b").font(.boldSystemFont(ofSize: 45)),
             Style("red").foregroundColor(.red)
         ).attributedString
@@ -129,7 +129,7 @@ class AtributikaTests: XCTestCase {
     }
     
     func testBr() {
-        let test = "Hello<br>World!!!".styled(tags: []).attributedString
+        let test = "Hello<br>World!!!".style(tags: []).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
         
@@ -138,7 +138,7 @@ class AtributikaTests: XCTestCase {
     
     func testNotClosedTag() {
         
-        let test = "Hello <b>World!!!".styled(tags: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
+        let test = "Hello <b>World!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         
@@ -147,7 +147,7 @@ class AtributikaTests: XCTestCase {
     
     func testNotOpenedTag() {
         
-        let test = "Hello </b>World!!!".styled(tags: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
+        let test = "Hello </b>World!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         
@@ -156,7 +156,7 @@ class AtributikaTests: XCTestCase {
     
     func testBadTag() {
         
-        let test = "Hello <World!!!".styled(tags: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
+        let test = "Hello <World!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello ")
         
@@ -166,7 +166,7 @@ class AtributikaTests: XCTestCase {
     func testTagsStack() {
         
         let test = "Hello <b>Wo<red>rl<u>d</u></red></b>!!!"
-            .styled(tags:
+            .style(tags:
                 Style("b").font(.boldSystemFont(ofSize: 45)),
                 Style("red").foregroundColor(.red),
                 Style("u").underlineStyle(.styleSingle))
@@ -183,8 +183,8 @@ class AtributikaTests: XCTestCase {
     func testHashCodes() {
         
         let test = "#Hello @World!!!"
-            .styledHashtags(Style.font(.boldSystemFont(ofSize: 45)))
-            .styledMentions(Style.foregroundColor(.red))
+            .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
+            .styleMentions(Style.foregroundColor(.red))
             .attributedString
         
         let reference = NSMutableAttributedString(string: "#Hello @World!!!")
@@ -198,7 +198,7 @@ class AtributikaTests: XCTestCase {
         
         let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
         
-        let test = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue,
+        let test = "Call me (888)555-5512".style(textCheckingTypes: types.rawValue,
                                                   style: Style.font(.boldSystemFont(ofSize: 45)))
             .attributedString
         
@@ -210,13 +210,11 @@ class AtributikaTests: XCTestCase {
     
     func testIssue1() {
         
-        let bad = "<b>Save $1.00</b> on <b>any</b> order!".styled(tags:
-            Style("b").font(.boldSystemFont(ofSize: 14))
-            ).styled(
-                Style
-                    .font(.systemFont(ofSize: 14))
-                    .foregroundColor(.red)
-            ).attributedString
+        let bad = "<b>Save $1.00</b> on <b>any</b> order!".style(tags:
+                Style("b").font(.boldSystemFont(ofSize: 14))
+            )
+            .styleAll(Style.font(.systemFont(ofSize: 14)).foregroundColor(.red))
+            .attributedString
         
         
         
@@ -227,14 +225,10 @@ class AtributikaTests: XCTestCase {
         
         XCTAssertEqual(bad, badReference)
         
-        let good = "Save <b>$1.00</b> on <b>any</b> order!".styled(tags:
-            Style("b")
-                .font(.boldSystemFont(ofSize: 14))
-            ).styled(
-                Style
-                    .font(.systemFont(ofSize: 14))
-                    .foregroundColor(.red)
-            ).attributedString
+        let good = "Save <b>$1.00</b> on <b>any</b> order!".style(tags:
+                Style("b").font(.boldSystemFont(ofSize: 14)))
+            .styleAll(Style.font(.systemFont(ofSize: 14)).foregroundColor(.red))
+            .attributedString
         
         let goodReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [NSFontAttributeName: Font.systemFont(ofSize: 14), NSForegroundColorAttributeName: Color.red])
         goodReference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(5, 5))
@@ -245,7 +239,7 @@ class AtributikaTests: XCTestCase {
     
     func testRange() {
         
-        let test = "Hello World!!!".styled(range: 0..<5, style: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
+        let test = "Hello World!!!".style(range: 0..<5, style: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 5))

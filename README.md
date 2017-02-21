@@ -16,7 +16,7 @@ NSAttributedString is really powerful but still a low level API which requires a
 Oh wait, but you can use Atributika!
 
 ```swift
-let string = "Hello <b>World</b>!!!".styled(tags:
+let string = "Hello <b>World</b>!!!".style(tags:
   Style("b").font(.boldSystemFont(ofSize: 45))
 ).attributedString
 ```
@@ -44,8 +44,8 @@ More than this Atributika:
 #### Detect and style tags, provide base style for the rest of string
 
 ```swift
-let str = "Hello <b>World</b>!!!".styled(tags: Style("b").font(.boldSystemFont(ofSize: 15)))
-            .styled(Style.font(.systemFont(ofSize: 12)))
+let str = "Hello <b>World</b>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 15)))
+            .style(Style.font(.systemFont(ofSize: 12)))
             .attributedString
 ```
 
@@ -55,8 +55,8 @@ let str = "Hello <b>World</b>!!!".styled(tags: Style("b").font(.boldSystemFont(o
 
 ```swift
 let str = "#Hello @World!!!"
-            .styledHashtags(Style.font(.boldSystemFont(ofSize: 45)))
-            .styledMentions(Style.foregroundColor(.red))
+            .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
+            .styleMentions(Style.foregroundColor(.red))
             .attributedString
 ```
 
@@ -66,7 +66,7 @@ let str = "#Hello @World!!!"
 
 ```swift
 let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
-let str = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue, style:
+let str = "Call me (888)555-5512".style(textCheckingTypes: types.rawValue, style:
             Style.foregroundColor(.red))
 ).attributedString
 ```
@@ -80,14 +80,14 @@ let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
 let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is
            called <b>Atributika</b>. Call me if you want to ask any details (123)456-7890
            #swift #nsattributedstring"
-    .styled(tags:
+    .style(tags:
         Style("u").font(.boldSystemFont(ofSize: 12)).underlineStyle(.styleSingle),
         Style("b").font(.boldSystemFont(ofSize: 12))
     )
-    .styled(Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray))
-    .styledMentions(Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black))
-    .styledHashtags(Style.foregroundColor(.blue))
-    .styled(textCheckingTypes: types.rawValue, style: Style.backgroundColor(.yellow))
+    .style(Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray))
+    .styleMentions(Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black))
+    .styleHashtags(Style.foregroundColor(.blue))
+    .style(textCheckingTypes: types.rawValue, style: Style.backgroundColor(.yellow))
     .attributedString
 ```    
 
