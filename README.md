@@ -45,7 +45,7 @@ More than this Atributika:
 
 ```swift
 let str = "Hello <b>World</b>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 15)))
-            .style(Style.font(.systemFont(ofSize: 12)))
+            .styleAll(Style.font(.systemFont(ofSize: 12)))
             .attributedString
 ```
 
@@ -84,7 +84,7 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
         Style("u").font(.boldSystemFont(ofSize: 12)).underlineStyle(.styleSingle),
         Style("b").font(.boldSystemFont(ofSize: 12))
     )
-    .style(Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray))
+    .styleAll(Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray))
     .styleMentions(Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black))
     .styleHashtags(Style.foregroundColor(.blue))
     .style(textCheckingTypes: types.rawValue, style: Style.backgroundColor(.yellow))
