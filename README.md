@@ -39,6 +39,34 @@ More than this Atributika:
 + separate set of detection utils, in case you want something special
 + `+` operator to concatenate NSAttributedString with other attributed or regular strings
 
+## Examples
+
+#### Detect and style tags, provide base style for the rest of string
+
+```swift
+let str = "Hello <b>World</b>!!!".styled(tags: Style("b").font(.boldSystemFont(ofSize: 45)))
+            .styled(Style.font(.systemFont(ofSize: 12)))
+            .attributedString
+```
+
+#### Detect and style hashtags and mentions
+
+```swift
+let str = "#Hello @World!!!"
+            .styledHashtags(Style.font(.boldSystemFont(ofSize: 45)))
+            .styledMentions(Style.foregroundColor(.red))
+            .attributedString
+```
+
+#### Detect and style phone numbers
+
+```swift
+let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
+let test = "Call me (888)555-5512".styled(textCheckingTypes: types.rawValue, style:
+            Style.font(.boldSystemFont(ofSize: 45))
+).attributedString
+```
+
 ## Why Atributika does have one 't' in its name
 Because in belarusian/russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
 
