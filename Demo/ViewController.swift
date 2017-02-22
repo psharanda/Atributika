@@ -16,14 +16,15 @@ class ViewController: UIViewController {
         
         
         label.numberOfLines = 0
-        label.attributedText =  test4()
+        label.attributedText =  test1()
         
         view.addSubview(label)
     }
     
     func test1() -> NSAttributedString {
-        let str = "Hello <b>World</b>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 15)))
-            .styleAll(Style.font(.systemFont(ofSize: 12)))
+        let b = Style("b").font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
+        let str = "Hello <b>World</b>!!!".style(tags: b)
+            .styleAll(Style.font(.systemFont(ofSize: 20)))
             .attributedString
         return str
     }
@@ -61,6 +62,20 @@ class ViewController: UIViewController {
 
         return str
     }
+    
+    func test5() -> NSAttributedString {
+        
+        let str = "<r>first</r><g>second</g><b>third</b>".style(tags:
+            Style("r").foregroundColor(.red),
+            Style("g").foregroundColor(.green),
+            Style("b").foregroundColor(.blue)).attributedString
+        
+        label.attributedText = str
+        
+        return str
+    }
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         label.frame = view.bounds.insetBy(dx: 20, dy: 100)
