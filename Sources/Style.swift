@@ -19,124 +19,107 @@ import Foundation
     public typealias Color = UIColor
 #endif
 
-public class Style {
+public struct Style {
     
     public let name: String
     
-    public var attributes: [String: Any]
+    public let attributes: [String: Any]
     
     public init(_ name: String = "", _ attributes: [String: Any] = [:]) {
         self.name = name
         self.attributes = attributes
     }
     
+    private func updated(withName: String, value: Any) -> Style {
+        return merged(with: Style("", [withName: value]))
+    }
+    
     public func font(_ value: Font) -> Style {
-        attributes[NSFontAttributeName] = value
-        return self
+        return updated(withName: NSFontAttributeName, value: value)
     }
     
     public func paragraphStyle(_ value: NSParagraphStyle) -> Style {
-        attributes[NSParagraphStyleAttributeName] = value
-        return self
+        return updated(withName: NSParagraphStyleAttributeName, value: value)
     }
     
     public func foregroundColor(_ value: Color) -> Style {
-        attributes[NSForegroundColorAttributeName] = value
-        return self
+        return updated(withName: NSForegroundColorAttributeName, value: value)
     }
     
     public func backgroundColor(_ value: Color) -> Style {
-        attributes[NSBackgroundColorAttributeName] = value
-        return self
+        return updated(withName: NSBackgroundColorAttributeName, value: value)
     }
     
     public func ligature(_ value: Int) -> Style {
-        attributes[NSLigatureAttributeName] = value
-        return self
+        return updated(withName: NSLigatureAttributeName, value: value)
     }
     
     public func kern(_ value: Float) -> Style {
-        attributes[NSKernAttributeName] = value
-        return self
+        return updated(withName: NSKernAttributeName, value: value)
     }
     
     public func striketroughStyle(_ value: NSUnderlineStyle) -> Style {
-        attributes[NSStrikethroughColorAttributeName] = value.rawValue
-        return self
+        return updated(withName: NSStrikethroughColorAttributeName, value: value.rawValue)
     }
     
     public func strikethroughColor(_ value: Color) -> Style {
-        attributes[NSFontAttributeName] = value
-        return self
+        return updated(withName: NSFontAttributeName, value: value)
     }
     
     public func underlineStyle(_ value: NSUnderlineStyle) -> Style {
-        attributes[NSUnderlineStyleAttributeName] = value.rawValue
-        return self
+        return updated(withName: NSUnderlineStyleAttributeName, value: value.rawValue)
     }
     
     func underlineColor(_ value: Color) -> Style {
-        attributes[NSUnderlineColorAttributeName] = value
-        return self
+        return updated(withName: NSUnderlineColorAttributeName, value: value)
     }
     
     public func strokeColor(_ value: Color) -> Style {
-        attributes[NSStrokeColorAttributeName] = value
-        return self
+        return updated(withName: NSStrokeColorAttributeName, value: value)
     }
     
     public func strokeWidth(_ value: Float) -> Style {
-        attributes[NSStrokeWidthAttributeName] = value
-        return self
+        return updated(withName: NSStrokeWidthAttributeName, value: value)
     }
     
     #if !os(watchOS)
     public func shadow(_ value: NSShadow) -> Style {
-        attributes[NSShadowAttributeName] = value
-        return self
+        return updated(withName: NSShadowAttributeName, value: value)
     }
     #endif
     
     public func textEffect(_ value: String) -> Style {
-        attributes[NSTextEffectAttributeName] = value
-        return self
+        return updated(withName: NSTextEffectAttributeName, value: value)
     }
     
     #if !os(watchOS)
     public func attachment(_ value: NSTextAttachment) -> Style {
-        attributes[NSAttachmentAttributeName] = value
-        return self
+        return updated(withName: NSAttachmentAttributeName, value: value)
     }
     #endif
     
     public func link(_ value: URL) -> Style {
-        attributes[NSLinkAttributeName] = value
-        return self
+        return updated(withName: NSLinkAttributeName, value: value)
     }
     
     public func link(_ value: String) -> Style {
-        attributes[NSLinkAttributeName] = value
-        return self
+        return updated(withName: NSLinkAttributeName, value: value)
     }
     
     public func baselineOffset(_ value: Float) -> Style {
-        attributes[NSBaselineOffsetAttributeName] = value
-        return self
+        return updated(withName: NSBaselineOffsetAttributeName, value: value)
     }
     
     public func obliqueness(_ value: Float) -> Style {
-        attributes[NSObliquenessAttributeName] = value
-        return self
+        return updated(withName: NSObliquenessAttributeName, value: value)
     }
     
     public func expansion(_ value: Float) -> Style {
-        attributes[NSExpansionAttributeName] = value
-        return self
+        return updated(withName: NSExpansionAttributeName, value: value)
     }
     
     public func writingDirection(_ value: NSWritingDirection) -> Style {
-        attributes[NSWritingDirectionAttributeName] = value.rawValue
-        return self
+        return updated(withName: NSWritingDirectionAttributeName, value: value.rawValue)
     }
     
     public func merged(with style: Style) -> Style {
