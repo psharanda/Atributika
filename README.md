@@ -31,12 +31,15 @@ Atributika is able to detect and style next things
 + regex
 + whatever is possible with NSDataDetector (phones, emails, addresses etc)
 + regular ranges
-+ and you can chain all this to parse some uber strings!
+
+... and you can chain all this to parse some uber strings!
 
 More than this Atributika:
-+ not just detect and style, but also provide all information about what was detected and at what range
++ works on iOS, tvOS, watchOS, macOS
++ uses high performant custom HTML-like markup parser
++ provides information about WHAT was detected and at WHERE (ranges)
 + has syntax sugar to create styles easily using chaining
-+ separate set of detection utils, in case you want something special
++ has separate set of detection utils, in case you want to use just them
 + `+` operator to concatenate NSAttributedString with other attributed or regular strings
 
 ## Examples
@@ -92,6 +95,16 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
 ```    
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test4.png" alt="" width="334" height="67" />
+
+## Requirements
+
+Current version is compatible with:
+
+* Swift 3.0+
+* iOS 8.0 or later
+* tvOS 9.0 or later
+* watchOS 2.0 or later
+* macOS 10.10 or later
 
 ## Why does Atributika have one 't' in its name?
 Because in belarusian/russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
