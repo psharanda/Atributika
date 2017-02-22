@@ -16,10 +16,15 @@ NSAttributedString is really powerful but still a low level API which requires a
 Oh wait, but you can use Atributika!
 
 ```swift
-let string = "Hello <b>World</b>!!!".style(tags:
-  Style("b").font(.boldSystemFont(ofSize: 45))
-).attributedString
+let b = Style("b").font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
+let str = "Hello <b>World</b>!!!".style(tags: b)
+              .styleAll(Style.font(.systemFont(ofSize: 20)))
+              .attributedString
+        
+label.attributedText = str
 ```
+
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/main.png" alt="" width="139" height="56" />
 
 Yeah, that's much better. Atributika is easy, declarative, flexible and covers all the raw edges for you.
 
