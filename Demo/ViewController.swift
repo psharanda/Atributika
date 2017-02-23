@@ -75,10 +75,32 @@ class ViewController: UIViewController {
         return str
     }
     
+    func test6() -> NSAttributedString {
+        
+        let calculatedCoffee: Int = 768
+        let g = Style("g").font(.boldSystemFont(ofSize: 12)).foregroundColor(.red)
+        let all = Style.font(.systemFont(ofSize: 12))
+    
+        let str = "\(calculatedCoffee)<g>g</g>".style(tags: g)
+            .styleAll(all)
+            .attributedString
+
+        return str
+    }
+    
+    func test7() -> NSAttributedString {
+        let str = "<strong>Nice</strong> try, Phil".style(tags:
+            Style("strong").font(.boldSystemFont(ofSize: 15)))
+            .attributedString
+            
+        return str
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         label.frame = view.bounds.insetBy(dx: 20, dy: 100)
     }
 }
+
+
 

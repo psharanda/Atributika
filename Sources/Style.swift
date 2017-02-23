@@ -30,96 +30,92 @@ public struct Style {
         self.attributes = attributes
     }
     
-    private func updated(withName: String, value: Any) -> Style {
-        return merged(with: Style("", [withName: value]))
-    }
-    
     public func font(_ value: Font) -> Style {
-        return updated(withName: NSFontAttributeName, value: value)
+        return merged(with: Style.font(value))
     }
     
     public func paragraphStyle(_ value: NSParagraphStyle) -> Style {
-        return updated(withName: NSParagraphStyleAttributeName, value: value)
+        return merged(with: Style.paragraphStyle(value))
     }
     
     public func foregroundColor(_ value: Color) -> Style {
-        return updated(withName: NSForegroundColorAttributeName, value: value)
+        return merged(with: Style.foregroundColor(value))
     }
     
     public func backgroundColor(_ value: Color) -> Style {
-        return updated(withName: NSBackgroundColorAttributeName, value: value)
+        return merged(with: Style.backgroundColor(value))
     }
     
     public func ligature(_ value: Int) -> Style {
-        return updated(withName: NSLigatureAttributeName, value: value)
+        return merged(with: Style.ligature(value))
     }
     
     public func kern(_ value: Float) -> Style {
-        return updated(withName: NSKernAttributeName, value: value)
+        return merged(with: Style.kern(value))
     }
     
-    public func striketroughStyle(_ value: NSUnderlineStyle) -> Style {
-        return updated(withName: NSStrikethroughColorAttributeName, value: value.rawValue)
+    public func strikethroughStyle(_ value: NSUnderlineStyle) -> Style {
+        return merged(with: Style.strikethroughStyle(value))
     }
     
     public func strikethroughColor(_ value: Color) -> Style {
-        return updated(withName: NSFontAttributeName, value: value)
+        return merged(with: Style.strikethroughColor(value))
     }
     
     public func underlineStyle(_ value: NSUnderlineStyle) -> Style {
-        return updated(withName: NSUnderlineStyleAttributeName, value: value.rawValue)
+        return merged(with: Style.underlineStyle(value))
     }
     
     func underlineColor(_ value: Color) -> Style {
-        return updated(withName: NSUnderlineColorAttributeName, value: value)
+        return merged(with: Style.underlineColor(value))
     }
     
     public func strokeColor(_ value: Color) -> Style {
-        return updated(withName: NSStrokeColorAttributeName, value: value)
+        return merged(with: Style.strokeColor(value))
     }
     
     public func strokeWidth(_ value: Float) -> Style {
-        return updated(withName: NSStrokeWidthAttributeName, value: value)
+        return merged(with: Style.strokeWidth(value))
     }
     
     #if !os(watchOS)
     public func shadow(_ value: NSShadow) -> Style {
-        return updated(withName: NSShadowAttributeName, value: value)
+        return merged(with: Style.shadow(value))
     }
     #endif
     
     public func textEffect(_ value: String) -> Style {
-        return updated(withName: NSTextEffectAttributeName, value: value)
+        return merged(with: Style.textEffect(value))
     }
     
     #if !os(watchOS)
     public func attachment(_ value: NSTextAttachment) -> Style {
-        return updated(withName: NSAttachmentAttributeName, value: value)
+        return merged(with: Style.attachment(value))
     }
     #endif
     
     public func link(_ value: URL) -> Style {
-        return updated(withName: NSLinkAttributeName, value: value)
+        return merged(with: Style.link(value))
     }
     
     public func link(_ value: String) -> Style {
-        return updated(withName: NSLinkAttributeName, value: value)
+        return merged(with: Style.link(value))
     }
     
     public func baselineOffset(_ value: Float) -> Style {
-        return updated(withName: NSBaselineOffsetAttributeName, value: value)
+        return merged(with: Style.baselineOffset(value))
     }
     
     public func obliqueness(_ value: Float) -> Style {
-        return updated(withName: NSObliquenessAttributeName, value: value)
+        return merged(with: Style.obliqueness(value))
     }
     
     public func expansion(_ value: Float) -> Style {
-        return updated(withName: NSExpansionAttributeName, value: value)
+        return merged(with: Style.expansion(value))
     }
     
     public func writingDirection(_ value: NSWritingDirection) -> Style {
-        return updated(withName: NSWritingDirectionAttributeName, value: value.rawValue)
+        return merged(with: Style.writingDirection(value))
     }
     
     public func merged(with style: Style) -> Style {
@@ -127,6 +123,7 @@ public struct Style {
         style.attributes.forEach { attrs.updateValue($1, forKey: $0) }
         return Style(name, attrs)
     }
+    
     public static func font(_ value: Font) -> Style {
         return Style("", [NSFontAttributeName: value])
     }
@@ -151,12 +148,12 @@ public struct Style {
         return Style("", [NSKernAttributeName: value])
     }
     
-    public static func striketroughStyle(_ value: NSUnderlineStyle) -> Style {
-        return Style("", [NSStrikethroughColorAttributeName : value.rawValue])
+    public static func strikethroughStyle(_ value: NSUnderlineStyle) -> Style {
+        return Style("", [NSStrikethroughStyleAttributeName : value.rawValue])
     }
     
     public static func strikethroughColor(_ value: Color) -> Style {
-        return Style("", [NSFontAttributeName: value])
+        return Style("", [NSStrikethroughColorAttributeName: value])
     }
     
     public static func underlineStyle(_ value: NSUnderlineStyle) -> Style {
