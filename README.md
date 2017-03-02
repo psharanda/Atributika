@@ -109,10 +109,12 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
 ### TTTAtributedLabel integration
 
 ```swift
+
 let all = Style.foregroundColor(.gray).font(.systemFont(ofSize: 16))
 let link = Style("a").foregroundColor(.blue)
 let activeLink = Style.foregroundColor(.brown)
 
+let label = TTTAttributedLabel(frame: CGRect())
 label.activeLinkAttributes = activeLink.attributes
 label.numberOfLines = 0
 label.delegate = self
