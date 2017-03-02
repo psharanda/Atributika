@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */; };
-		1B2F83921E5C98A4009AFBCA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F83911E5C98A4009AFBCA /* ViewController.swift */; };
-		1B2F83951E5C98A4009AFBCA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83931E5C98A4009AFBCA /* Main.storyboard */; };
+		1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */; };
 		1B2F83971E5C98A4009AFBCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83961E5C98A4009AFBCA /* Assets.xcassets */; };
 		1B2F839A1E5C98A4009AFBCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */; };
 		1B2F839F1E5C98F0009AFBCA /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
@@ -34,6 +33,9 @@
 		1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
 		1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
 		1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
+		1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5681E683A8F006374F6 /* Snippet.swift */; };
+		1BDDF56B1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */; };
+		1BDDF56F1E684227006374F6 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56E1E684227006374F6 /* TTTAttributedLabel.m */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
 		DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
@@ -90,8 +92,7 @@
 /* Begin PBXFileReference section */
 		1B2F838D1E5C98A4009AFBCA /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1B2F83911E5C98A4009AFBCA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1B2F83941E5C98A4009AFBCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsViewController.swift; sourceTree = "<group>"; };
 		1B2F83961E5C98A4009AFBCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B2F83991E5C98A4009AFBCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1B2F839B1E5C98A4009AFBCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,6 +101,11 @@
 		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScanner+Swift.swift"; path = "Sources/NSScanner+Swift.swift"; sourceTree = "<group>"; };
 		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Detection.swift"; path = "Sources/String+Detection.swift"; sourceTree = "<group>"; };
 		1BB55AD01E5C73EF00CE6EAD /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Style.swift; path = Sources/Style.swift; sourceTree = "<group>"; };
+		1BDDF5681E683A8F006374F6 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
+		1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
+		1BDDF56D1E684227006374F6 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		1BDDF56E1E684227006374F6 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		1BDDF5701E6842B9006374F6 /* Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Bridging-Header.h"; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Atributika-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atributika-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9971BEFF375002C0205 /* AtributikaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtributikaTests.swift; path = Tests/AtributikaTests/AtributikaTests.swift; sourceTree = "<group>"; };
@@ -179,12 +185,15 @@
 		1B2F838E1E5C98A4009AFBCA /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				1BDDF56C1E684227006374F6 /* TTTAttributedLabel */,
+				1BDDF5681E683A8F006374F6 /* Snippet.swift */,
+				1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */,
+				1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */,
 				1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */,
-				1B2F83911E5C98A4009AFBCA /* ViewController.swift */,
-				1B2F83931E5C98A4009AFBCA /* Main.storyboard */,
 				1B2F83961E5C98A4009AFBCA /* Assets.xcassets */,
 				1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */,
 				1B2F839B1E5C98A4009AFBCA /* Info.plist */,
+				1BDDF5701E6842B9006374F6 /* Demo-Bridging-Header.h */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -195,6 +204,15 @@
 				52D6D9971BEFF375002C0205 /* AtributikaTests.swift */,
 			);
 			name = Tests;
+			sourceTree = "<group>";
+		};
+		1BDDF56C1E684227006374F6 /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				1BDDF56D1E684227006374F6 /* TTTAttributedLabel.h */,
+				1BDDF56E1E684227006374F6 /* TTTAttributedLabel.m */,
+			);
+			path = TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
 		52D6D9721BEFF229002C0205 = {
@@ -507,7 +525,6 @@
 			files = (
 				1B2F839A1E5C98A4009AFBCA /* LaunchScreen.storyboard in Resources */,
 				1B2F83971E5C98A4009AFBCA /* Assets.xcassets in Resources */,
-				1B2F83951E5C98A4009AFBCA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,8 +584,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B2F83921E5C98A4009AFBCA /* ViewController.swift in Sources */,
+				1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */,
+				1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */,
 				1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */,
+				1BDDF56B1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift in Sources */,
+				1BDDF56F1E684227006374F6 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,14 +690,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1B2F83931E5C98A4009AFBCA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1B2F83941E5C98A4009AFBCA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -702,6 +714,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Demo/Demo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -718,6 +731,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Demo/Demo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1109,6 +1123,7 @@
 				1B2F839D1E5C98A4009AFBCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52D6D9761BEFF229002C0205 /* Build configuration list for PBXProject "Atributika" */ = {
 			isa = XCConfigurationList;

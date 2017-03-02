@@ -1,6 +1,6 @@
 //
 //  Created by Pavel Sharanda on 21.02.17.
-//  Copyright © 2017 Atributika. All rights reserved.
+//  Copyright © 2017 Pavel Sharanda. All rights reserved.
 //
 
 import UIKit
@@ -12,7 +12,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+       
+        let tbc = UITabBarController()
+        
+        let vc1 = SnippetsViewController()
+        
+        
+        
+        let vc2 = TTTAttributedLabelDemoViewController()
+       
+        
+        tbc.viewControllers = [UINavigationController(rootViewController: vc1), UINavigationController(rootViewController: vc2)]
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = tbc
+        window?.makeKeyAndVisible()
+
+        
         return true
     }
 

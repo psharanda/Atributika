@@ -33,35 +33,36 @@ label.attributedText = str
 Yeah, that's much better. Atributika is easy, declarative, flexible and covers all the raw edges for you.
 
 ## Features
-Atributika is able to detect and style next things
-+ HTML-like markup
-+ hashtags (i.e. #something)
-+ mentions (i.e. @someone)
-+ regex
-+ whatever is possible with NSDataDetector (phones, emails, addresses etc)
-+ regular ranges
 
-... and you can chain all this to parse some uber strings!
-
-More than this Atributika:
-+ works on iOS, tvOS, watchOS, macOS
-+ uses high performant custom HTML-like markup parser
-+ provides information about WHAT was detected and at WHERE (ranges)
-+ has syntax sugar to create styles easily using chaining
-+ has separate set of detection utils, in case you want to use just them
++ detect and style HTML-like markup using custom speedy parser
++ detect and style hashtags and mentions (i.e. #something and @someone)
++ detect and style regex and NSDataDetector patterns
++ style whole string or just particular ranges
++ ... and you can chain all this to parse some uber strings!
++ clean and expressive api to build styles
++ separate set of detection utils, in case you want to use just them
 + `+` operator to concatenate NSAttributedString with other attributed or regular strings
++ works on iOS, tvOS, watchOS, macOS
 
 ## Examples
 
-### Detect and style tags, provide base style for the rest of string
+### Detect and style tags, provide base style for the rest of string, don't forget about special html symbols
 
 ```swift
-let str = "Hello <b>World</b>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 15)))
-            .styleAll(Style.font(.systemFont(ofSize: 12)))
+let font = UIFont(name: "AvenirNext-Regular", size: 24)!
+
+let grayColor = UIColor(white: 0x66 / 255.0, alpha: 1)
+let redColor = UIColor(red:(0xD0 / 255.0), green: (0x02 / 255.0), blue:(0x1B / 255.0), alpha:1.0)
+
+let a = Style("a").foregroundColor(redColor)
+
+let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>".style(tags: a)
+            .styleAll(Style.font(font).foregroundColor(grayColor))
             .attributedString
+
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test1.png" alt="" width="101" height="33" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test1.png" alt="" width="136" height="56" />
 
 ### Detect and style hashtags and mentions
 
@@ -104,6 +105,51 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
 ```    
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test4.png" alt="" width="334" height="67" />
+
+### TTTAtributedLabel integration
+
+```swift
+let all = Style.foregroundColor(.gray).font(.systemFont(ofSize: 16))
+let link = Style("a").foregroundColor(.blue)
+let activeLink = Style.foregroundColor(.brown)
+
+label.activeLinkAttributes = activeLink.attributes
+label.numberOfLines = 0
+label.delegate = self
+
+let aka = "If only Bradley's arm was longer. Best photo ever. #oscars <a href=\"https://pic.twitter.com/C9U5NOtGap\">pic.twitter.com/C9U5NOtGap</a>".style(tags: link)
+    .styleAll(all)
+    .styleHashtags(link)
+
+aka.detections.forEach { detection in
+    switch detection.type {
+    case .hashtag:
+        let startIndex = aka.string.index(aka.string.startIndex, offsetBy: detection.range.lowerBound + 1)
+        let endIndex = aka.string.index(aka.string.startIndex, offsetBy: detection.range.lowerBound + detection.range.count - 1)
+
+        let hashtag = (aka.string[startIndex...endIndex])
+
+        label.addLink(to: URL(string: "https://twitter.com/hashtag/\(hashtag)"), with: NSRange(detection.range))
+    case .tag(let tag):
+        if tag.name == "a", let href = tag.attributes["href"] {
+            label.addLink(to: URL(string: href), with: NSRange(detection.range))
+        }
+    default:
+        break
+    }
+}
+
+label.attributedText = aka.attributedString
+
+...
+
+// implement TTTAttributedLabelDelegate to handle clicks
+extension XXX: TTTAttributedLabelDelegate {
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        UIApplication.shared.openURL(url)
+    }
+}
+```
 
 ## Requirements
 
