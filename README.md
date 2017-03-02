@@ -62,7 +62,7 @@ let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>".style(tags: a)
 
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test1.png" alt="" width="136" height="44" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test1.png" alt="" width="188" height="44" />
 
 ### Detect and style hashtags and mentions
 
