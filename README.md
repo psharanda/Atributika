@@ -1,4 +1,6 @@
-# Atributika
+<p align="center">
+  <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/logo@2x.png" alt="" width="392" height="45">
+</p>
 `Atributika` is an easy and painless way to build NSAttributedString. It is able to detect HTML-like tags, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc. 
 
 [![Build Status](https://travis-ci.org/oarrabi/SwiftRichString.svg?branch=master)](https://travis-ci.org/psharanda/Atributika)
@@ -49,7 +51,7 @@ More than this Atributika:
 
 ## Examples
 
-#### Detect and style tags, provide base style for the rest of string
+### Detect and style tags, provide base style for the rest of string
 
 ```swift
 let str = "Hello <b>World</b>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 15)))
@@ -59,7 +61,7 @@ let str = "Hello <b>World</b>!!!".style(tags: Style("b").font(.boldSystemFont(of
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test1.png" alt="" width="101" height="33" />
 
-#### Detect and style hashtags and mentions
+### Detect and style hashtags and mentions
 
 ```swift
 let str = "#Hello @World!!!"
@@ -70,7 +72,7 @@ let str = "#Hello @World!!!"
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test2.png" alt="" width="232" height="63" />
 
-#### Detect and style phone numbers
+### Detect and style NSDataDetector patterns
 
 ```swift
 let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
@@ -81,7 +83,7 @@ let str = "Call me (888)555-5512".style(textCheckingTypes: types.rawValue, style
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test3.png" alt="" width="196" height="38" />
 
-#### Uber String
+### Uber String
 
 ```swift
 let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
