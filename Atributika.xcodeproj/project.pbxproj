@@ -35,7 +35,7 @@
 		1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
 		1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5681E683A8F006374F6 /* Snippet.swift */; };
 		1BDDF56B1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */; };
-		1BDDF5741E6947FD006374F6 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5731E6947FD006374F6 /* TTTAttributedLabel.m */; };
+		1BDDF5781E6951D1006374F6 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5771E6951D1006374F6 /* TTTAttributedLabel.m */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
 		DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
@@ -104,8 +104,8 @@
 		1BDDF5681E683A8F006374F6 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
 		1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
 		1BDDF5701E6842B9006374F6 /* Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Bridging-Header.h"; sourceTree = "<group>"; };
-		1BDDF5721E6947FD006374F6 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
-		1BDDF5731E6947FD006374F6 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		1BDDF5761E6951D1006374F6 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		1BDDF5771E6951D1006374F6 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Atributika-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atributika-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9971BEFF375002C0205 /* AtributikaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtributikaTests.swift; path = Tests/AtributikaTests/AtributikaTests.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 		1B2F838E1E5C98A4009AFBCA /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				1BDDF5711E6947FD006374F6 /* TTTAttributedLabel */,
+				1BDDF5751E6951D1006374F6 /* TTTAttributedLabel */,
 				1BDDF5681E683A8F006374F6 /* Snippet.swift */,
 				1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */,
 				1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */,
@@ -206,14 +206,13 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
-		1BDDF5711E6947FD006374F6 /* TTTAttributedLabel */ = {
+		1BDDF5751E6951D1006374F6 /* TTTAttributedLabel */ = {
 			isa = PBXGroup;
 			children = (
-				1BDDF5721E6947FD006374F6 /* TTTAttributedLabel.h */,
-				1BDDF5731E6947FD006374F6 /* TTTAttributedLabel.m */,
+				1BDDF5761E6951D1006374F6 /* TTTAttributedLabel.h */,
+				1BDDF5771E6951D1006374F6 /* TTTAttributedLabel.m */,
 			);
-			name = TTTAttributedLabel;
-			path = TTTAttributedLabel/TTTAttributedLabel;
+			path = TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
 		52D6D9721BEFF229002C0205 = {
@@ -589,7 +588,7 @@
 				1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */,
 				1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */,
 				1BDDF56B1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift in Sources */,
-				1BDDF5741E6947FD006374F6 /* TTTAttributedLabel.m in Sources */,
+				1BDDF5781E6951D1006374F6 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
