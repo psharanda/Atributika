@@ -1,0 +1,3 @@
+[submodule "Demo/TTTAttributedLabel"]
+	path = Demo/TTTAttributedLabel
+	url = https://github.com/TTTAttributedLabel/TTTAttributedLabel
