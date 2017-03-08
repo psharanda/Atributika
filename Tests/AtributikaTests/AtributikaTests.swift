@@ -54,6 +54,32 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(test,reference)
     }
     
+    func testTagsWithNumbers() {
+        
+        let test = "<b1>Hello World</b1>!!!".style(tags: Style("b1").font(.boldSystemFont(ofSize: 45)))
+            .styleAll(.font(.systemFont(ofSize: 12)))
+            .attributedString
+        
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
+        reference.addAttributes([NSFontAttributeName: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
+        
+        XCTAssertEqual(test,reference)
+    }
+    
+    func testLines() {
+        
+        let test = "<b>Hello\nWorld</b>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 45)))
+            .styleAll(.font(.systemFont(ofSize: 12)))
+            .attributedString
+        
+        let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
+        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
+        reference.addAttributes([NSFontAttributeName: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
+        
+        XCTAssertEqual(test,reference)
+    }
+    
     func testEmpty() {
         let test = "Hello World!!!".style().attributedString
         

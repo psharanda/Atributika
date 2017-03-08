@@ -24,7 +24,7 @@ extension String {
         
         let tagScanner = Scanner(string: tagString)
         
-        guard let tagName = tagScanner.scanCharacters(from: CharacterSet.letters) else {
+        guard let tagName = tagScanner.scanCharacters(from: CharacterSet.alphanumerics) else {
             return nil
         }
         
