@@ -19,11 +19,15 @@ import Foundation
     public typealias Color = UIColor
 #endif
 
-public struct Style {
+public struct Style: AtributikaManipulationProtocol {
     
     public let name: String
     
     public let attributes: [String: Any]
+    
+    public let type: ManipulationType = .style
+    
+    public let string: String = ""
     
     public init(_ name: String = "", _ attributes: [String: Any] = [:]) {
         self.name = name

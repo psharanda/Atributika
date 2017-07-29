@@ -35,7 +35,20 @@ public enum DetectionType {
 
 public struct Detection {
     public let type: DetectionType
-    public let style: Style
+    public let style: AtributikaManipulationProtocol
+    public let range: Range<Int>
+}
+
+public enum ManipulationType {
+    case style
+    case prepend
+    case replace
+    case append
+}
+
+public struct Manipulation {
+    public let type: ManipulationType
+    public let string: String
     public let range: Range<Int>
 }
 
@@ -43,6 +56,14 @@ public protocol AtributikaProtocol {
     var string: String {get}
     var detections: [Detection] {get}
     var baseStyle: Style {get}
+    var manipulations: [Manipulation] {get}
+}
+
+public protocol AtributikaManipulationProtocol {
+    var name: String {get}
+    var attributes: [String: Any] {get}
+    var string: String {get}
+    var type: ManipulationType {get}
 }
 
 extension AtributikaProtocol {
@@ -56,6 +77,38 @@ extension AtributikaProtocol {
             }
         }
         
+        var offset = 0
+        for m in manipulations.sorted(by: { $0.range.lowerBound < $1.range.lowerBound }) {
+            let range = Range(uncheckedBounds: (lower: m.range.lowerBound + offset, upper: m.range.upperBound + offset))
+            
+            switch m.type {
+                case .prepend:
+                    let string = NSAttributedString(string: m.string, attributes: attributedString.attributes(at: range.lowerBound, longestEffectiveRange: nil, in: NSRange(range)))
+                    attributedString.insert(string, at: range.lowerBound)
+                    offset += string.length
+                
+                case .append:
+                    let location = min(range.upperBound, attributedString.length - 1)
+                    let string = NSAttributedString(string: m.string, attributes: attributedString.attributes(at: location, longestEffectiveRange: nil, in: NSRange(range)))
+                    
+                    if location == (attributedString.length - 1) {
+                        attributedString.append(string)
+                    } else {
+                        attributedString.insert(string, at: location)
+                    }
+                    offset += string.length
+                
+                case .replace:
+                    let string = NSAttributedString(string: m.string, attributes: attributedString.attributes(at: range.lowerBound, longestEffectiveRange: nil, in: NSRange(range)))
+                    attributedString.replaceCharacters(in: NSRange(range), with: string)
+                    let rangeLength = range.upperBound - range.lowerBound
+                    offset += max(rangeLength, string.length) - min(rangeLength, string.length)
+                
+                default:
+                    break
+            }
+        }
+        
         return attributedString
     }
 }
@@ -64,11 +117,13 @@ public struct Atributika: AtributikaProtocol {
     public let string: String
     public let detections: [Detection]
     public let baseStyle: Style
+    public let manipulations: [Manipulation]
     
-    public init(string: String, detections: [Detection], baseStyle: Style) {
+    public init(string: String, detections: [Detection], baseStyle: Style, manipulations: [Manipulation]) {
         self.string = string
         self.detections = detections
         self.baseStyle = baseStyle
+        self.manipulations = manipulations
     }
 }
 
@@ -76,38 +131,38 @@ extension AtributikaProtocol {
     
     /// style the whole string
     public func styleAll(_ style: Style) -> Atributika {
-        return Atributika(string: string, detections: detections, baseStyle: baseStyle.merged(with: style))
+        return Atributika(string: string, detections: detections, baseStyle: baseStyle.merged(with: style), manipulations: manipulations)
     }
     
     /// style things like #xcode #mentions
     public func styleHashtags(_ style: Style) -> Atributika {
         let ranges = string.detectHashTags()
         let ds = ranges.map { Detection(type: .hashtag, style: style, range: $0) }
-        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle, manipulations: manipulations)
     }
     
     /// style things like @John @all
     public func styleMentions(_ style: Style) -> Atributika {
         let ranges = string.detectMentions()
         let ds = ranges.map { Detection(type: .mention, style: style, range: $0) }
-        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle, manipulations: manipulations)
     }
     
     public func style(regex: String, options: NSRegularExpression.Options = [], style: Style) -> Atributika {
         let ranges = string.detect(regex: regex, options: options)
         let ds = ranges.map { Detection(type: .regex(regex), style: style, range: $0) }
-        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle, manipulations: manipulations)
     }
     
     public func style(textCheckingTypes: NSTextCheckingTypes, style: Style) -> Atributika {
         let ranges = string.detect(textCheckingTypes: textCheckingTypes)
         let ds = ranges.map { Detection(type: .textCheckingType(textCheckingTypes), style: style, range: $0) }
-        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle, manipulations: manipulations)
     }
     
     public func style(range: Range<Int>, style: Style) -> Atributika {
         let d = Detection(type: .none, style: style, range: range)
-        return Atributika(string: string, detections: detections + [d], baseStyle: baseStyle)
+        return Atributika(string: string, detections: detections + [d], baseStyle: baseStyle, manipulations: manipulations)
     }
 }
 
@@ -125,24 +180,32 @@ extension String: AtributikaProtocol {
         return Style()
     }
     
-    public func style(tags: [Style]) -> AtributikaProtocol {
+    public var manipulations: [Manipulation] {
+        return []
+    }
+    
+    public func style(tags: [AtributikaManipulationProtocol]) -> AtributikaProtocol {
         let (string, tagsInfo) = detectTags()
         
         var ds: [Detection] = []
+        var ms: [Manipulation] = []
         
         tagsInfo.forEach { t in
             
-            if let style = (tags.first { style in style.name == t.tag.name }) {
-                ds.append(Detection(type: .tag(t.tag), style: style, range: t.range))
-            } else {
-                ds.append(Detection(type: .tag(t.tag), style: Style(), range: t.range))
+            tags.filter({ mutation in mutation.name == t.tag.name }).forEach { (mutation) in
+                switch mutation.type {
+                    case .style:
+                        ds.append(Detection(type: .tag(t.tag), style: mutation, range: t.range))
+                    default:
+                        ms.append(Manipulation(type: mutation.type, string: mutation.string, range: t.range))
+                }
             }
         }
         
-        return Atributika(string: string, detections: ds, baseStyle: baseStyle)
+        return Atributika(string: string, detections: ds, baseStyle: baseStyle, manipulations: ms)
     }
     
-    public func style(tags: Style...) -> AtributikaProtocol {
+    public func style(tags: AtributikaManipulationProtocol...) -> AtributikaProtocol {
         return style(tags: tags)
     }
 }
@@ -164,5 +227,9 @@ extension NSAttributedString: AtributikaProtocol {
     
     public var baseStyle: Style {
         return Style()
+    }
+    
+    public var manipulations: [Manipulation] {
+        return []
     }
 }
