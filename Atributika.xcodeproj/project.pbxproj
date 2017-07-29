@@ -36,6 +36,10 @@
 		1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5681E683A8F006374F6 /* Snippet.swift */; };
 		1BDDF56B1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */; };
 		1BDDF5781E6951D1006374F6 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5771E6951D1006374F6 /* TTTAttributedLabel.m */; };
+		319A4F301F2BE36800EB3CCD /* Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A4F2F1F2BE36800EB3CCD /* Manipulation.swift */; };
+		319A4F311F2BE36E00EB3CCD /* Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A4F2F1F2BE36800EB3CCD /* Manipulation.swift */; };
+		319A4F321F2BE36E00EB3CCD /* Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A4F2F1F2BE36800EB3CCD /* Manipulation.swift */; };
+		319A4F331F2BE36E00EB3CCD /* Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A4F2F1F2BE36800EB3CCD /* Manipulation.swift */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
 		DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
@@ -106,6 +110,7 @@
 		1BDDF5701E6842B9006374F6 /* Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Bridging-Header.h"; sourceTree = "<group>"; };
 		1BDDF5761E6951D1006374F6 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		1BDDF5771E6951D1006374F6 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		319A4F2F1F2BE36800EB3CCD /* Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Manipulation.swift; path = Sources/Manipulation.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Atributika-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atributika-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9971BEFF375002C0205 /* AtributikaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtributikaTests.swift; path = Tests/AtributikaTests/AtributikaTests.swift; sourceTree = "<group>"; };
@@ -218,6 +223,7 @@
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
+				319A4F2F1F2BE36800EB3CCD /* Manipulation.swift */,
 				1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */,
 				1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */,
 				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */,
@@ -600,6 +606,7 @@
 				1BB55AD11E5C73EF00CE6EAD /* Atributika.swift in Sources */,
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD51E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
+				319A4F301F2BE36800EB3CCD /* Manipulation.swift in Sources */,
 				1BB55AE11E5C73F000CE6EAD /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,6 +627,7 @@
 				1BB55AD31E5C73F000CE6EAD /* Atributika.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
+				319A4F321F2BE36E00EB3CCD /* Manipulation.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -632,6 +640,7 @@
 				1BB55AD41E5C73F000CE6EAD /* Atributika.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD81E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
+				319A4F331F2BE36E00EB3CCD /* Manipulation.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -644,6 +653,7 @@
 				1BB55AD21E5C73EF00CE6EAD /* Atributika.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
+				319A4F311F2BE36E00EB3CCD /* Manipulation.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

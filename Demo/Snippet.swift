@@ -94,6 +94,46 @@ func test7() -> NSAttributedString {
     return str
 }
 
+func test8() -> NSAttributedString {
+    
+    // Makes <div> fill completely, without just the text gets colored
+    let divStyle = NSMutableParagraphStyle()
+    divStyle.headIndent = 1
+    
+    let blueBoxColor = UIColor.init(colorLiteralRed: (233/255.0), green: (242/255.0), blue: (246/255.0), alpha: 1.0)
+
+    let str = "<div>Testing prepend, and style\n<ul><li>list item 1</li>\n<li>list item 2</li>\n<li>list item 3</li>\n<li>list item 4</li>\n<li>list item 5</li>\n</ul>\n<ul></div>"
+        .style(tags: [
+            Style("div").backgroundColor(blueBoxColor).paragraphStyle(divStyle),
+            Mutation("li").prepend("\t😀\t")
+        ])
+        .attributedString
+    
+    return str
+}
+
+func test9() -> NSAttributedString {
+    
+    let str = "<div>Testing append\n<ul><li>list item 1</li><li>list item 2</li><li>list item 3</li><li>list item 4</li><li>list item 5</li></ul></div>"
+        .style(tags: [
+            Mutation("li").append(" - 😀\n")
+        ])
+        .attributedString
+    
+    return str
+}
+
+func test10() -> NSAttributedString {
+    
+    let str = "<div>Testing replace\n<ul><li>list item 1</li><li>list item 2</li><li>list item 3</li><li>list item 4</li><li>list item 5</li></ul></div>"
+        .style(tags: [
+            Mutation("li").replace("\t●\tCustom Text\n")
+            ])
+        .attributedString
+    
+    return str
+}
+
 func allSnippets() -> [NSAttributedString] {
     return [
         test0(),
@@ -103,6 +143,9 @@ func allSnippets() -> [NSAttributedString] {
         test4(),
         test5(),
         test6(),
-        test7()
+        test7(),
+        test8(),
+        test9(),
+        test10()
     ]
 }
