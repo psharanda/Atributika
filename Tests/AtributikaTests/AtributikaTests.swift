@@ -36,7 +36,7 @@ class AtributikaTests: XCTestCase {
         ).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
         
         XCTAssertEqual(test,reference)
     }
@@ -48,8 +48,8 @@ class AtributikaTests: XCTestCase {
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
-        reference.addAttributes([NSFontAttributeName: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
+        reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
         
         XCTAssertEqual(test,reference)
     }
@@ -61,8 +61,8 @@ class AtributikaTests: XCTestCase {
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
-        reference.addAttributes([NSFontAttributeName: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
+        reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
         
         XCTAssertEqual(test,reference)
     }
@@ -74,8 +74,8 @@ class AtributikaTests: XCTestCase {
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
-        reference.addAttributes([NSFontAttributeName: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
+        reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
         
         XCTAssertEqual(test,reference)
     }
@@ -108,7 +108,7 @@ class AtributikaTests: XCTestCase {
     func testBase() {
         let test = "Hello World!!!".styleAll(Style.font(.boldSystemFont(ofSize: 45))).attributedString
         
-        let reference = NSMutableAttributedString(string: "Hello World!!!", attributes: [NSFontAttributeName: Font.boldSystemFont(ofSize: 45)])
+        let reference = NSMutableAttributedString(string: "Hello World!!!", attributes: [NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)])
         
         XCTAssertEqual(test, reference)
     }
@@ -121,8 +121,8 @@ class AtributikaTests: XCTestCase {
         ).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 12)], range: NSMakeRange(2, 3))
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 12)], range: NSMakeRange(2, 3))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
         
         XCTAssertEqual(test, reference)
     }
@@ -134,8 +134,8 @@ class AtributikaTests: XCTestCase {
         ).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(2, 3))
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(2, 3))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
         
         XCTAssertEqual(test, reference)
     }
@@ -148,8 +148,8 @@ class AtributikaTests: XCTestCase {
         ).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
-        reference.addAttributes([NSForegroundColorAttributeName: Color.red], range: NSMakeRange(7, 7))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
+        reference.addAttributes([NSAttributedStringKey.foregroundColor: Color.red], range: NSMakeRange(7, 7))
         
         XCTAssertEqual(test, reference)
     }
@@ -199,9 +199,9 @@ class AtributikaTests: XCTestCase {
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
-        reference.addAttributes([NSForegroundColorAttributeName: Color.red], range: NSMakeRange(8, 3))
-        reference.addAttributes([NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(10, 1))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
+        reference.addAttributes([NSAttributedStringKey.foregroundColor: Color.red], range: NSMakeRange(8, 3))
+        reference.addAttributes([NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(10, 1))
         
         XCTAssertEqual(test, reference)
     }
@@ -214,8 +214,8 @@ class AtributikaTests: XCTestCase {
             .attributedString
         
         let reference = NSMutableAttributedString(string: "#Hello @World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 6))
-        reference.addAttributes([NSForegroundColorAttributeName: Color.red], range: NSMakeRange(7, 6))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 6))
+        reference.addAttributes([NSAttributedStringKey.foregroundColor: Color.red], range: NSMakeRange(7, 6))
         
         XCTAssertEqual(test, reference)
     }
@@ -229,7 +229,7 @@ class AtributikaTests: XCTestCase {
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Call me (888)555-5512")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(8, 13))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(8, 13))
         
         XCTAssertEqual(test, reference)
     }
@@ -244,10 +244,10 @@ class AtributikaTests: XCTestCase {
         
         
         
-        let badReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [NSFontAttributeName: Font.systemFont(ofSize: 14), NSForegroundColorAttributeName: Color.red])
+        let badReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [NSAttributedStringKey.font: Font.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: Color.red])
         
-        badReference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(0, 10))
-        badReference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(14, 3))
+        badReference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(0, 10))
+        badReference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(14, 3))
         
         XCTAssertEqual(bad, badReference)
         
@@ -256,9 +256,9 @@ class AtributikaTests: XCTestCase {
             .styleAll(Style.font(.systemFont(ofSize: 14)).foregroundColor(.red))
             .attributedString
         
-        let goodReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [NSFontAttributeName: Font.systemFont(ofSize: 14), NSForegroundColorAttributeName: Color.red])
-        goodReference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(5, 5))
-        goodReference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(14, 3))
+        let goodReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [NSAttributedStringKey.font: Font.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: Color.red])
+        goodReference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(5, 5))
+        goodReference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 14)], range: NSMakeRange(14, 3))
         
         XCTAssertEqual(good, goodReference)
     }
@@ -268,7 +268,7 @@ class AtributikaTests: XCTestCase {
         let test = "Hello World!!!".style(range: 0..<5, style: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([NSFontAttributeName: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 5))
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 5))
         
         XCTAssertEqual(test, reference)
     }

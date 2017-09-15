@@ -154,7 +154,7 @@ extension NSAttributedString: AtributikaProtocol {
         var ds: [Detection] = []
         
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attributes, range, _) in
-            if let range = range.toRange() {
+            if let range = Range(range) {
                 ds.append(Detection(type: .none, style: Style("", attributes), range: range))
             }
         }
