@@ -86,7 +86,7 @@ extension String {
                             if tag.name == "br" {
                                 resultString += "\n"
                             } else {
-                                let resultTextEndIndex = resultString.characters.count
+                                let resultTextEndIndex = resultString.unicodeScalars.count
                                 
                                 if open {
                                     tagsStack.append((tag, resultTextEndIndex))
