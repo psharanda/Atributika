@@ -128,15 +128,11 @@ let aka = "If only Bradley's arm was longer. Best photo ever. #oscars <a href=\"
 aka.detections.forEach { detection in
     switch detection.type {
     case .hashtag:
-        let startIndex = aka.string.index(aka.string.startIndex, offsetBy: detection.range.lowerBound + 1)
-        let endIndex = aka.string.index(aka.string.startIndex, offsetBy: detection.range.lowerBound + detection.range.count - 1)
-
-        let hashtag = (aka.string[startIndex...endIndex])
-
-        label.addLink(to: URL(string: "https://twitter.com/hashtag/\(hashtag)"), with: NSRange(detection.range))
+        let hashtag = (aka.string[detection.range])
+        label.addLink(to: URL(string: "https://twitter.com/hashtag/\(hashtag)"), with: NSRange(detection.range, in: aka.string))
     case .tag(let tag):
         if tag.name == "a", let href = tag.attributes["href"] {
-            label.addLink(to: URL(string: href), with: NSRange(detection.range))
+            label.addLink(to: URL(string: href), with: NSRange(detection.range, in: aka.string))
         }
     default:
         break
@@ -159,7 +155,7 @@ extension XXX: TTTAttributedLabelDelegate {
 
 Current version is compatible with:
 
-* Swift 3.0+
+* Swift 4.0+
 * iOS 8.0 or later
 * tvOS 9.0 or later
 * watchOS 2.0 or later

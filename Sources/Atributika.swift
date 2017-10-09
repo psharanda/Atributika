@@ -36,7 +36,7 @@ public enum DetectionType {
 public struct Detection {
     public let type: DetectionType
     public let style: Style
-    public let range: Range<Int>
+    public let range: Range<String.Index>
 }
 
 public protocol AtributikaProtocol {
@@ -52,7 +52,7 @@ extension AtributikaProtocol {
         
         for d in detections {
             if d.style.attributes.count > 0 {
-                attributedString.addAttributes(d.style.attributes, range: NSRange(d.range))
+                attributedString.addAttributes(d.style.attributes, range: NSRange(d.range, in: string))
             }
         }
         
@@ -105,7 +105,7 @@ extension AtributikaProtocol {
         return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
-    public func style(range: Range<Int>, style: Style) -> Atributika {
+    public func style(range: Range<String.Index>, style: Style) -> Atributika {
         let d = Detection(type: .none, style: style, range: range)
         return Atributika(string: string, detections: detections + [d], baseStyle: baseStyle)
     }
@@ -154,7 +154,7 @@ extension NSAttributedString: AtributikaProtocol {
         var ds: [Detection] = []
         
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attributes, range, _) in
-            if let range = Range(range) {
+            if let range = Range(range, in: self.string) {
                 ds.append(Detection(type: .none, style: Style("", attributes), range: range))
             }
         }

@@ -15,7 +15,7 @@ public struct Tag {
 
 public struct TagInfo {
     public let tag: Tag
-    public let range: Range<Int>
+    public let range: Range<String.Index>
 }
 
 extension String {
@@ -70,7 +70,7 @@ extension String {
         scanner.charactersToBeSkipped = nil
         var resultString = String()
         var tagsResult = [TagInfo]()
-        var tagsStack = [(Tag, Int)]()
+        var tagsStack = [(Tag, String.Index)]()
         
         while !scanner.isAtEnd {
             
@@ -86,7 +86,7 @@ extension String {
                             if tag.name == "br" {
                                 resultString += "\n"
                             } else {
-                                let resultTextEndIndex = resultString.characters.count
+                                let resultTextEndIndex = resultString.endIndex
                                 
                                 if open {
                                     tagsStack.append((tag, resultTextEndIndex))
@@ -117,23 +117,23 @@ extension String {
         return (resultString, tagsResult)
     }
     
-    public func detectHashTags() -> [Range<Int>] {
+    public func detectHashTags() -> [Range<String.Index>] {
         
         return detect(regex: "[#]\\w\\S*\\b")
     }
     
-    public func detectMentions() -> [Range<Int>] {
+    public func detectMentions() -> [Range<String.Index>] {
         
         return detect(regex: "[@]\\w\\S*\\b")
     }
     
-    public func detect(regex: String, options: NSRegularExpression.Options = []) -> [Range<Int>] {
+    public func detect(regex: String, options: NSRegularExpression.Options = []) -> [Range<String.Index>] {
         
-        var ranges = [Range<Int>]()
+        var ranges = [Range<String.Index>]()
         
         let dataDetector = try? NSRegularExpression(pattern: regex, options: options)
         dataDetector?.enumerateMatches(in: self, options: [], range: NSMakeRange(0, (self as NSString).length), using: { (result, flags, _) in
-            if let r = result, let range = Range(r.range) {
+            if let r = result, let range = Range(r.range, in: self) {
                 ranges.append(range)
             }
         })
@@ -141,13 +141,13 @@ extension String {
         return ranges
     }
     
-    public func detect(textCheckingTypes: NSTextCheckingTypes) -> [Range<Int>] {
+    public func detect(textCheckingTypes: NSTextCheckingTypes) -> [Range<String.Index>] {
         
-        var ranges = [Range<Int>]()
+        var ranges = [Range<String.Index>]()
         
         let dataDetector = try? NSDataDetector(types: textCheckingTypes)
         dataDetector?.enumerateMatches(in: self, options: [], range: NSMakeRange(0, (self as NSString).length), using: { (result, flags, _) in
-            if let r = result, let range = Range(r.range) {
+            if let r = result, let range = Range(r.range, in: self) {
                 ranges.append(range)
             }
         })

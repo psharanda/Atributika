@@ -95,7 +95,7 @@ class AtributikaTests: XCTestCase {
         
         XCTAssertEqual(a.attributedString, reference)
         
-        XCTAssertEqual(a.detections[0].range, 0..<5)
+        XCTAssertEqual(a.detections[0].range, a.string.startIndex..<a.string.index(a.string.startIndex, offsetBy: 5))
         
         if case .tag(let tag) = a.detections[0].type {
             XCTAssertEqual(tag.name, "a")
@@ -264,13 +264,26 @@ class AtributikaTests: XCTestCase {
     }
     
     func testRange() {
+        let str = "Hello World!!!"
         
-        let test = "Hello World!!!".style(range: 0..<5, style: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
+        let test = "Hello World!!!".style(range: str.startIndex..<str.index(str.startIndex, offsetBy: 5), style: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 5))
         
         XCTAssertEqual(test, reference)
+    }
+    
+    func testEmojis() {
+        
+        let test = "Hello <b>W🌎rld</b>!!!".style(tags:
+            Style("b").font(.boldSystemFont(ofSize: 45))
+            ).attributedString
+        
+        let reference = NSMutableAttributedString(string: "Hello W🌎rld!!!")
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 6))
+        
+        XCTAssertEqual(test,reference)
     }
     
 }

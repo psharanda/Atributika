@@ -43,14 +43,11 @@ class TTTAttributedLabelDemoViewController: UIViewController {
         aka.detections.forEach { detection in
             switch detection.type {
             case .hashtag:
-                let startIndex = aka.string.index(aka.string.startIndex, offsetBy: detection.range.lowerBound + 1)
-                let endIndex = aka.string.index(aka.string.startIndex, offsetBy: detection.range.lowerBound + detection.range.count - 1)
-                
-                let hashtag = (aka.string[startIndex...endIndex])
-                label.addLink(to: URL(string: "https://twitter.com/hashtag/\(hashtag)"), with: NSRange(detection.range))
+                let hashtag = (aka.string[detection.range])
+                label.addLink(to: URL(string: "https://twitter.com/hashtag/\(hashtag)"), with: NSRange(detection.range, in: aka.string))
             case .tag(let tag):
                 if tag.name == "a", let href = tag.attributes["href"] {
-                    label.addLink(to: URL(string: href), with: NSRange(detection.range))
+                    label.addLink(to: URL(string: href), with: NSRange(detection.range, in: aka.string))
                 }
             default:
                 break

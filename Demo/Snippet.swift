@@ -24,7 +24,7 @@ func test0() -> NSAttributedString {
 
 func test1() -> NSAttributedString {
     let b = Style("b").font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
-    let str = "Hello <b>World</b>!!!".style(tags: b)
+    let str = "Hello <b>W🌎rld</b>!!!".style(tags: b)
         .styleAll(Style.font(.systemFont(ofSize: 20)))
         .attributedString
     return str
@@ -66,7 +66,7 @@ func test4() -> NSAttributedString {
 
 func test5() -> NSAttributedString {
     
-    let str = "<r>first</r><g>second</g><b>third</b>".style(tags:
+    let str = "<r>first</r><g>sec⚽️nd</g><b>third</b>".style(tags:
         Style("r").foregroundColor(.red),
                                                             Style("g").foregroundColor(.green),
                                                             Style("b").foregroundColor(.blue)).attributedString
