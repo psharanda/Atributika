@@ -30,7 +30,7 @@ public enum DetectionType {
     case mention
     case regex(String)
     case textCheckingType(NSTextCheckingTypes)
-    case none
+    case range
 }
 
 public struct Detection {
@@ -106,7 +106,7 @@ extension AtributikaProtocol {
     }
     
     public func style(range: Range<String.Index>, style: Style) -> Atributika {
-        let d = Detection(type: .none, style: style, range: range)
+        let d = Detection(type: .range, style: style, range: range)
         return Atributika(string: string, detections: detections + [d], baseStyle: baseStyle)
     }
 }
@@ -155,7 +155,7 @@ extension NSAttributedString: AtributikaProtocol {
         
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attributes, range, _) in
             if let range = Range(range, in: self.string) {
-                ds.append(Detection(type: .none, style: Style("", attributes), range: range))
+                ds.append(Detection(type: .range, style: Style("", attributes), range: range))
             }
         }
         

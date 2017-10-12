@@ -128,7 +128,7 @@ let aka = "If only Bradley's arm was longer. Best photo ever. #oscars <a href=\"
 aka.detections.forEach { detection in
     switch detection.type {
     case .hashtag:
-        let hashtag = (aka.string[detection.range])
+        let hashtag = (aka.string[detection.range]).trimmingCharacters(in: CharacterSet(charactersIn: "#"))
         label.addLink(to: URL(string: "https://twitter.com/hashtag/\(hashtag)"), with: NSRange(detection.range, in: aka.string))
     case .tag(let tag):
         if tag.name == "a", let href = tag.attributes["href"] {
