@@ -125,8 +125,8 @@ extension String: AtributikaProtocol {
         return Style()
     }
     
-    public func style(tags: [Style]) -> AtributikaProtocol {
-        let (string, tagsInfo) = detectTags()
+    public func style(tags: [Style], transformers: [TagTransformer] = [TagTransformer.brTransformer]) -> AtributikaProtocol {
+        let (string, tagsInfo) = detectTags(transformers: transformers)
         
         var ds: [Detection] = []
         
@@ -142,8 +142,8 @@ extension String: AtributikaProtocol {
         return Atributika(string: string, detections: ds, baseStyle: baseStyle)
     }
     
-    public func style(tags: Style...) -> AtributikaProtocol {
-        return style(tags: tags)
+    public func style(tags: Style..., transformers: [TagTransformer] = [TagTransformer.brTransformer]) -> AtributikaProtocol {
+        return style(tags: tags, transformers: transformers)
     }
 }
 

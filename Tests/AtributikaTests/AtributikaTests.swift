@@ -286,6 +286,30 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(test,reference)
     }
     
+    func testTransformers() {
+        
+        let transformers: [TagTransformer] = [
+            TagTransformer.brTransformer,
+            TagTransformer(tagName: "li", tagType: .start, replaceValue: "- "),
+            TagTransformer(tagName: "li", tagType: .end, replaceValue: "\n")
+        ]
+        
+        let li = Style("li").font(.systemFont(ofSize: 12))
+        
+        let test = "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>"
+            .style(tags: li, transformers: transformers)
+            .attributedString
+        
+        let reference = NSMutableAttributedString(string: "TODO:\n- veni\n- vidi\n- vici\n")
+        reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(6, 6))
+        reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(13, 6))
+        reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(20, 6))
+        
+        print(test)
+        print(reference)
+        XCTAssertEqual(test,reference)
+    }
+    
 }
 
 #if os(Linux)

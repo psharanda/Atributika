@@ -18,6 +18,28 @@ public struct TagInfo {
     public let range: Range<String.Index>
 }
 
+public enum TagType {
+    case start
+    case end
+}
+
+public struct TagTransformer {
+
+    public let tagName: String
+    public let tagType: TagType
+    public let replaceValue: String
+    
+    public init(tagName: String, tagType: TagType, replaceValue: String) {
+        self.tagName = tagName
+        self.tagType = tagType
+        self.replaceValue = replaceValue
+    }
+    
+    public static var brTransformer: TagTransformer {
+        return TagTransformer(tagName: "br", tagType: .start , replaceValue: "\n")
+    }
+}
+
 extension String {
     
     private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
@@ -64,7 +86,7 @@ extension String {
                                    "lt":"<",
                                    "gt":">"]
     
-    public func detectTags() -> (string: String, tagsInfo: [TagInfo]) {
+    public func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
         
         let scanner = Scanner(string: self)
         scanner.charactersToBeSkipped = nil
@@ -78,25 +100,27 @@ extension String {
                 resultString += textString
             } else {
                 if scanner.scanString("<") != nil {
-                    let open = scanner.scanString("/") == nil
+                    let tagType = scanner.scanString("/") == nil ? TagType.start : TagType.end
                     if let tagString = scanner.scanUpTo(">") {
                         
-                        if let tag = parseTag(tagString, parseAttributes: open) {
+                        if let tag = parseTag(tagString, parseAttributes: tagType == .start ) {
                             
-                            if tag.name == "br" {
-                                resultString += "\n"
+                            let resultTextEndIndex = resultString.endIndex
+                            
+                            if let transformer = transformers.first(where: {
+                                $0.tagName == tag.name && $0.tagType == tagType
+                            }) {
+                                resultString += transformer.replaceValue
+                            }
+                            
+                            if tagType == .start {
+                                tagsStack.append((tag, resultTextEndIndex))
                             } else {
-                                let resultTextEndIndex = resultString.endIndex
-                                
-                                if open {
-                                    tagsStack.append((tag, resultTextEndIndex))
-                                } else {
-                                    for (index, (tagInStack, startIndex)) in tagsStack.enumerated().reversed() {
-                                        if tagInStack.name == tag.name {
-                                            tagsResult.append(TagInfo(tag: tagInStack, range: startIndex..<resultTextEndIndex))
-                                            tagsStack.remove(at: index)
-                                            break
-                                        }
+                                for (index, (tagInStack, startIndex)) in tagsStack.enumerated().reversed() {
+                                    if tagInStack.name == tag.name {
+                                        tagsResult.append(TagInfo(tag: tagInStack, range: startIndex..<resultTextEndIndex))
+                                        tagsStack.remove(at: index)
+                                        break
                                     }
                                 }
                             }

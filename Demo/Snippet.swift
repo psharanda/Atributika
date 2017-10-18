@@ -105,6 +105,22 @@ func test8() -> NSAttributedString {
     return result
 }
 
+func test9() -> NSAttributedString {
+    
+    let transformers: [TagTransformer] = [
+        TagTransformer.brTransformer,
+        TagTransformer(tagName: "li", tagType: .start, replaceValue: "- "),
+        TagTransformer(tagName: "li", tagType: .end, replaceValue: "\n")
+    ]
+    
+    let li = Style("li").font(.systemFont(ofSize: 12)).foregroundColor(.red)
+    
+    return "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>"
+        .style(tags: li, transformers: transformers)
+        .styleAll(Style.font(.boldSystemFont(ofSize: 14)))
+        .attributedString
+}
+
 func allSnippets() -> [NSAttributedString] {
     return [
         test0(),
@@ -115,7 +131,8 @@ func allSnippets() -> [NSAttributedString] {
         test5(),
         test6(),
         test7(),
-        test8()
+        test8(),
+        test9()
     ]
 }
 
