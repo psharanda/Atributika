@@ -3,6 +3,8 @@
 //  Copyright © 2017 Atributika. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS)
+    
 import UIKit
 
 public class AttributedLabel: UIView {
@@ -89,7 +91,7 @@ public class AttributedLabel: UIView {
         if let attributedText = attributedText  {
             
             let attributedTextString = fixedAttributedText(string: attributedText.attributedString)
-
+            
             let textContainer = NSTextContainer(size: bounds.size)
             textContainer.lineBreakMode = lineBreakMode
             textContainer.maximumNumberOfLines = numberOfLines
@@ -142,11 +144,11 @@ public class AttributedLabel: UIView {
         let button = ClickButton(detection: detection)
         button.addTarget(self, action: #selector(handleClick), for: .touchUpInside)
         clickButtons.append(button)
-    
+        
         button.onChangeIsHighlighted = { [weak self] in
             self?.update(isHighlighted: $0.isHighlighted, detection: $0.detection)
         }
-    
+        
         addSubview(button)
         button.frame = frame
     }
@@ -197,4 +199,4 @@ public class AttributedLabel: UIView {
     }
 }
 
-
+#endif
