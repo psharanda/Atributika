@@ -2,6 +2,7 @@
 //  Created by Pavel Sharanda on 18.10.17.
 //  Copyright © 2017 Atributika. All rights reserved.
 //
+import Foundation
 
 #if os(iOS) || os(tvOS)
     
