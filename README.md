@@ -36,7 +36,7 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 
 ## Features
 
-+ NEW! `AttributedLabel` is a drop-in label replacement. Make detections clickable and style them for normal/highlighted/disabled states.
++ NEW! `AttributedLabel` is a drop-in label replacement. Make detections clickable and style them for `normal/highlighted/disabled` states.
 + detect and style HTML-like markup using custom speedy parser
 + detect and style hashtags and mentions (i.e. #something and @someone)
 + detect and style regex and NSDataDetector patterns
@@ -110,7 +110,7 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test4.png" alt="" width="334" height="67" />
 
 ### AttributedLabel example
-
+`AttributedLabel` makes detections clickable, if theirs style contains any attributes for `.highlighted`
 ```swift
 
 let label = AttributedLabel()
