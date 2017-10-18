@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Atributika"
-  s.version      = "4.1.1"
+  s.version      = "4.2.1"
   s.summary      = "NSAttributedString builder using HTML-like tags written in Swift"
   s.description  = <<-DESC
     Atributika is the easiest and painless way to build NSAttributedString. It is able to detect HTML-like tags, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color etc. 
