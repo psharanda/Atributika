@@ -13,10 +13,10 @@
 		1B2F839A1E5C98A4009AFBCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */; };
 		1B2F839F1E5C98F0009AFBCA /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		1B2F83A01E5C98F0009AFBCA /* Atributika.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1BB55AD11E5C73EF00CE6EAD /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */; };
-		1BB55AD21E5C73EF00CE6EAD /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */; };
-		1BB55AD31E5C73F000CE6EAD /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */; };
-		1BB55AD41E5C73F000CE6EAD /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */; };
+		1BB55AD11E5C73EF00CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
+		1BB55AD21E5C73EF00CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
+		1BB55AD31E5C73F000CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
+		1BB55AD41E5C73F000CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
 		1BB55AD51E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */; };
 		1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */; };
 		1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */; };
@@ -34,8 +34,9 @@
 		1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
 		1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
 		1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5681E683A8F006374F6 /* Snippet.swift */; };
-		1BDDF56B1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */; };
-		1BDDF5781E6951D1006374F6 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5771E6951D1006374F6 /* TTTAttributedLabel.m */; };
+		1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */; };
+		1BF0DBAD1F9749540053C8BD /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0DBAC1F9749540053C8BD /* AttributedLabel.swift */; };
+		1BF0DBAF1F9749540053C8BD /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0DBAC1F9749540053C8BD /* AttributedLabel.swift */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
 		DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
@@ -96,16 +97,14 @@
 		1B2F83961E5C98A4009AFBCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B2F83991E5C98A4009AFBCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1B2F839B1E5C98A4009AFBCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Atributika.swift; path = Sources/Atributika.swift; sourceTree = "<group>"; };
+		1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedText.swift; path = Sources/AttributedText.swift; sourceTree = "<group>"; };
 		1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+Utils.swift"; path = "Sources/NSAttributedString+Utils.swift"; sourceTree = "<group>"; };
 		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScanner+Swift.swift"; path = "Sources/NSScanner+Swift.swift"; sourceTree = "<group>"; };
 		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Detection.swift"; path = "Sources/String+Detection.swift"; sourceTree = "<group>"; };
 		1BB55AD01E5C73EF00CE6EAD /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Style.swift; path = Sources/Style.swift; sourceTree = "<group>"; };
 		1BDDF5681E683A8F006374F6 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
-		1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
-		1BDDF5701E6842B9006374F6 /* Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Bridging-Header.h"; sourceTree = "<group>"; };
-		1BDDF5761E6951D1006374F6 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
-		1BDDF5771E6951D1006374F6 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
+		1BF0DBAC1F9749540053C8BD /* AttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedLabel.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Atributika-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atributika-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9971BEFF375002C0205 /* AtributikaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtributikaTests.swift; path = Tests/AtributikaTests/AtributikaTests.swift; sourceTree = "<group>"; };
@@ -185,15 +184,13 @@
 		1B2F838E1E5C98A4009AFBCA /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				1BDDF5751E6951D1006374F6 /* TTTAttributedLabel */,
 				1BDDF5681E683A8F006374F6 /* Snippet.swift */,
 				1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */,
-				1BDDF56A1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift */,
+				1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */,
 				1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */,
 				1B2F83961E5C98A4009AFBCA /* Assets.xcassets */,
 				1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */,
 				1B2F839B1E5C98A4009AFBCA /* Info.plist */,
-				1BDDF5701E6842B9006374F6 /* Demo-Bridging-Header.h */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -206,23 +203,15 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
-		1BDDF5751E6951D1006374F6 /* TTTAttributedLabel */ = {
-			isa = PBXGroup;
-			children = (
-				1BDDF5761E6951D1006374F6 /* TTTAttributedLabel.h */,
-				1BDDF5771E6951D1006374F6 /* TTTAttributedLabel.m */,
-			);
-			path = TTTAttributedLabel;
-			sourceTree = "<group>";
-		};
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
-				1BB55ACC1E5C73EF00CE6EAD /* Atributika.swift */,
+				1BB55AD01E5C73EF00CE6EAD /* Style.swift */,
+				1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */,
+				1BF0DBAC1F9749540053C8BD /* AttributedLabel.swift */,
 				1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */,
 				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */,
 				1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */,
-				1BB55AD01E5C73EF00CE6EAD /* Style.swift */,
 				1BB55AC11E5C6F2400CE6EAD /* Tests */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
 				1B2F838E1E5C98A4009AFBCA /* Demo */,
@@ -587,8 +576,7 @@
 				1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */,
 				1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */,
 				1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */,
-				1BDDF56B1E6841EA006374F6 /* TTTAttributedLabelDemoViewController.swift in Sources */,
-				1BDDF5781E6951D1006374F6 /* TTTAttributedLabel.m in Sources */,
+				1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,7 +585,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BB55AD91E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
-				1BB55AD11E5C73EF00CE6EAD /* Atributika.swift in Sources */,
+				1BB55AD11E5C73EF00CE6EAD /* AttributedText.swift in Sources */,
+				1BF0DBAD1F9749540053C8BD /* AttributedLabel.swift in Sources */,
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD51E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE11E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -617,7 +606,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BB55ADB1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
-				1BB55AD31E5C73F000CE6EAD /* Atributika.swift in Sources */,
+				1BB55AD31E5C73F000CE6EAD /* AttributedText.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -629,7 +618,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BB55ADC1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
-				1BB55AD41E5C73F000CE6EAD /* Atributika.swift in Sources */,
+				1BB55AD41E5C73F000CE6EAD /* AttributedText.swift in Sources */,
+				1BF0DBAF1F9749540053C8BD /* AttributedLabel.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD81E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -641,7 +631,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BB55ADA1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
-				1BB55AD21E5C73EF00CE6EAD /* Atributika.swift in Sources */,
+				1BB55AD21E5C73EF00CE6EAD /* AttributedText.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -715,7 +705,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "Demo/Demo-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -733,7 +722,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Demo/Demo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 			};

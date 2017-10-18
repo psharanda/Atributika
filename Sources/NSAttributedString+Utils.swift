@@ -22,3 +22,6 @@ public func + (lhs: NSAttributedString, rhs: String) -> NSAttributedString {
     s.append(NSAttributedString(string: rhs))
     return s
 }
+
+
+

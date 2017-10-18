@@ -19,196 +19,239 @@ import Foundation
     public typealias Color = UIColor
 #endif
 
+public enum StyleType {
+    case normal
+    case disabled
+    case highlighted
+}
+
 public struct Style {
     
     public let name: String
     
-    public let attributes: [NSAttributedStringKey: Any]
+    public var attributes: [NSAttributedStringKey: Any] {
+        return typedAttributes[.normal] ?? [:]
+    }
     
-    public init(_ name: String = "", _ attributes: [NSAttributedStringKey: Any] = [:]) {
+    public var highlightedAttributes: [NSAttributedStringKey: Any] {
+        var attrs = attributes
+        
+        typedAttributes[.highlighted]?.forEach { key, value in
+            attrs.updateValue(value, forKey: key)
+        }
+        
+        return attrs
+    }
+    
+    public var disabledAttributes: [NSAttributedStringKey: Any] {
+        var attrs = attributes
+        
+        typedAttributes[.disabled]?.forEach { key, value in
+            attrs.updateValue(value, forKey: key)
+        }
+        
+        return attrs
+    }
+    
+    public let typedAttributes: [StyleType: [NSAttributedStringKey: Any]]
+    
+    public init(_ name: String = "", _ attributes: [NSAttributedStringKey: Any] = [:], _ type: StyleType = .normal) {
         self.name = name
-        self.attributes = attributes
+        typedAttributes = [type: attributes]
     }
     
-    public func font(_ value: Font) -> Style {
-        return merged(with: Style.font(value))
-    }
-    
-    public func paragraphStyle(_ value: NSParagraphStyle) -> Style {
-        return merged(with: Style.paragraphStyle(value))
-    }
-    
-    public func foregroundColor(_ value: Color) -> Style {
-        return merged(with: Style.foregroundColor(value))
-    }
-    
-    public func backgroundColor(_ value: Color) -> Style {
-        return merged(with: Style.backgroundColor(value))
-    }
-    
-    public func ligature(_ value: Int) -> Style {
-        return merged(with: Style.ligature(value))
-    }
-    
-    public func kern(_ value: Float) -> Style {
-        return merged(with: Style.kern(value))
-    }
-    
-    public func strikethroughStyle(_ value: NSUnderlineStyle) -> Style {
-        return merged(with: Style.strikethroughStyle(value))
-    }
-    
-    public func strikethroughColor(_ value: Color) -> Style {
-        return merged(with: Style.strikethroughColor(value))
-    }
-    
-    public func underlineStyle(_ value: NSUnderlineStyle) -> Style {
-        return merged(with: Style.underlineStyle(value))
-    }
-    
-    func underlineColor(_ value: Color) -> Style {
-        return merged(with: Style.underlineColor(value))
-    }
-    
-    public func strokeColor(_ value: Color) -> Style {
-        return merged(with: Style.strokeColor(value))
-    }
-    
-    public func strokeWidth(_ value: Float) -> Style {
-        return merged(with: Style.strokeWidth(value))
-    }
-    
-    #if !os(watchOS)
-    public func shadow(_ value: NSShadow) -> Style {
-        return merged(with: Style.shadow(value))
-    }
-    #endif
-    
-    public func textEffect(_ value: String) -> Style {
-        return merged(with: Style.textEffect(value))
-    }
-    
-    #if !os(watchOS)
-    public func attachment(_ value: NSTextAttachment) -> Style {
-        return merged(with: Style.attachment(value))
-    }
-    #endif
-    
-    public func link(_ value: URL) -> Style {
-        return merged(with: Style.link(value))
-    }
-    
-    public func link(_ value: String) -> Style {
-        return merged(with: Style.link(value))
-    }
-    
-    public func baselineOffset(_ value: Float) -> Style {
-        return merged(with: Style.baselineOffset(value))
-    }
-    
-    public func obliqueness(_ value: Float) -> Style {
-        return merged(with: Style.obliqueness(value))
-    }
-    
-    public func expansion(_ value: Float) -> Style {
-        return merged(with: Style.expansion(value))
-    }
-    
-    public func writingDirection(_ value: NSWritingDirection) -> Style {
-        return merged(with: Style.writingDirection(value))
+    public init(_ name: String = "", _ typedAttributes: [StyleType: [NSAttributedStringKey: Any]] = [:]) {
+        self.name = name
+        self.typedAttributes = typedAttributes
     }
     
     public func merged(with style: Style) -> Style {
-        var attrs = attributes
-        style.attributes.forEach { attrs.updateValue($1, forKey: $0) }
+        var attrs = typedAttributes
+    
+        style.typedAttributes.forEach { type, attributes in
+            attributes.forEach { key, value in
+                attrs[type, default: [:]].updateValue(value, forKey: key)
+            }
+        }
+        
         return Style(name, attrs)
     }
     
-    public static func font(_ value: Font) -> Style {
-        return Style("", [NSAttributedStringKey.font: value])
+    public func font(_ value: Font, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.font(value, type))
     }
     
-    public static func paragraphStyle(_ value: NSParagraphStyle) -> Style {
-        return Style("", [NSAttributedStringKey.paragraphStyle: value])
+    public func paragraphStyle(_ value: NSParagraphStyle, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.paragraphStyle(value, type))
     }
     
-    public static func foregroundColor(_ value: Color) -> Style {
-        return Style("", [NSAttributedStringKey.foregroundColor: value])
+    public func foregroundColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.foregroundColor(value, type))
     }
     
-    public static func backgroundColor(_ value: Color) -> Style {
-        return Style("", [NSAttributedStringKey.backgroundColor: value])
+    public func backgroundColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.backgroundColor(value, type))
     }
     
-    public static func ligature(_ value: Int) -> Style {
-        return Style("", [NSAttributedStringKey.ligature: value])
+    public func ligature(_ value: Int, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.ligature(value, type))
     }
     
-    public static func kern(_ value: Float) -> Style {
-        return Style("", [NSAttributedStringKey.kern: value])
+    public func kern(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.kern(value, type))
     }
     
-    public static func strikethroughStyle(_ value: NSUnderlineStyle) -> Style {
-        return Style("", [NSAttributedStringKey.strikethroughStyle : value.rawValue])
+    public func strikethroughStyle(_ value: NSUnderlineStyle, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.strikethroughStyle(value, type))
     }
     
-    public static func strikethroughColor(_ value: Color) -> Style {
-        return Style("", [NSAttributedStringKey.strikethroughColor: value])
+    public func strikethroughColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.strikethroughColor(value, type))
     }
     
-    public static func underlineStyle(_ value: NSUnderlineStyle) -> Style {
-        return Style("", [NSAttributedStringKey.underlineStyle : value.rawValue])
+    public func underlineStyle(_ value: NSUnderlineStyle, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.underlineStyle(value, type))
     }
     
-    public static func underlineColor(_ value: Color) -> Style {
-        return Style("", [NSAttributedStringKey.underlineColor: value])
+    func underlineColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.underlineColor(value, type))
     }
     
-    public static func strokeColor(_ value: Color) -> Style {
-        return Style("", [NSAttributedStringKey.strokeColor: value])
+    public func strokeColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.strokeColor(value, type))
     }
     
-    public static func strokeWidth(_ value: Float) -> Style {
-        return Style("", [NSAttributedStringKey.strokeWidth: value])
-    }
-    
-    #if !os(watchOS)
-    public static func shadow(_ value: NSShadow) -> Style {
-        return Style("", [NSAttributedStringKey.shadow: value])
-    }
-    #endif
-    
-    public static func textEffect(_ value: String) -> Style {
-        return Style("", [NSAttributedStringKey.textEffect: value])
+    public func strokeWidth(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.strokeWidth(value, type))
     }
     
     #if !os(watchOS)
-    public static func attachment(_ value: NSTextAttachment) -> Style {
-        return Style("", [NSAttributedStringKey.attachment: value])
+    public func shadow(_ value: NSShadow, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.shadow(value, type))
     }
     #endif
     
-    public static func link(_ value: URL) -> Style {
-        return Style("", [NSAttributedStringKey.link: value])
+    public func textEffect(_ value: String, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.textEffect(value, type))
     }
     
-    public static func link(_ value: String) -> Style {
-        return Style("", [NSAttributedStringKey.link: value])
+    #if !os(watchOS)
+    public func attachment(_ value: NSTextAttachment, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.attachment(value, type))
+    }
+    #endif
+    
+    public func link(_ value: URL, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.link(value, type))
     }
     
-    public static func baselineOffset(_ value: Float) -> Style {
-        return Style("", [NSAttributedStringKey.baselineOffset: value])
+    public func link(_ value: String, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.link(value, type))
     }
     
-    public static func obliqueness(_ value: Float) -> Style {
-        return Style("", [NSAttributedStringKey.obliqueness: value])
+    public func baselineOffset(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.baselineOffset(value, type))
     }
     
-    public static func expansion(_ value: Float) -> Style {
-        return Style("", [NSAttributedStringKey.expansion: value])
+    public func obliqueness(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.obliqueness(value, type))
     }
     
-    public static func writingDirection(_ value: NSWritingDirection) -> Style {
-        return Style("", [NSAttributedStringKey.writingDirection: value.rawValue])
+    public func expansion(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.expansion(value, type))
+    }
+    
+    public func writingDirection(_ value: NSWritingDirection, _ type: StyleType = .normal) -> Style {
+        return merged(with: Style.writingDirection(value, type))
+    }
+    
+
+    
+    public static func font(_ value: Font, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.font: value], type)
+    }
+    
+    public static func paragraphStyle(_ value: NSParagraphStyle, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.paragraphStyle: value], type)
+    }
+    
+    public static func foregroundColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.foregroundColor: value], type)
+    }
+    
+    public static func backgroundColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.backgroundColor: value], type)
+    }
+    
+    public static func ligature(_ value: Int, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.ligature: value], type)
+    }
+    
+    public static func kern(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.kern: value], type)
+    }
+    
+    public static func strikethroughStyle(_ value: NSUnderlineStyle, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.strikethroughStyle : value.rawValue], type)
+    }
+    
+    public static func strikethroughColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.strikethroughColor: value], type)
+    }
+    
+    public static func underlineStyle(_ value: NSUnderlineStyle, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.underlineStyle : value.rawValue], type)
+    }
+    
+    public static func underlineColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.underlineColor: value], type)
+    }
+    
+    public static func strokeColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.strokeColor: value], type)
+    }
+    
+    public static func strokeWidth(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.strokeWidth: value], type)
+    }
+    
+    #if !os(watchOS)
+    public static func shadow(_ value: NSShadow, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.shadow: value], type)
+    }
+    #endif
+    
+    public static func textEffect(_ value: String, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.textEffect: value], type)
+    }
+    
+    #if !os(watchOS)
+    public static func attachment(_ value: NSTextAttachment, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.attachment: value], type)
+    }
+    #endif
+    
+    public static func link(_ value: URL, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.link: value], type)
+    }
+    
+    public static func link(_ value: String, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.link: value], type)
+    }
+    
+    public static func baselineOffset(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.baselineOffset: value], type)
+    }
+    
+    public static func obliqueness(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.obliqueness: value], type)
+    }
+    
+    public static func expansion(_ value: Float, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.expansion: value], type)
+    }
+    
+    public static func writingDirection(_ value: NSWritingDirection, _ type: StyleType = .normal) -> Style {
+        return Style("", [NSAttributedStringKey.writingDirection: value.rawValue], type)
     }
 }

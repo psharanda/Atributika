@@ -17,11 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let vc1 = SnippetsViewController()
         
-        
-        
-        let vc2 = TTTAttributedLabelDemoViewController()
+        let vc2 = AttributedLabelDemoViewController()
        
-        
         tbc.viewControllers = [UINavigationController(rootViewController: vc1), UINavigationController(rootViewController: vc2)]
         
         window = UIWindow(frame: UIScreen.main.bounds)

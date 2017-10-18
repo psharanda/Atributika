@@ -14,7 +14,7 @@
 [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://cocoapods.org/pods/Atributika)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-`Atributika` is an easy and painless way to build NSAttributedString. It is able to detect HTML-like tags, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc. 
+`Atributika` is an easy and painless way to build NSAttributedString. It is able to detect HTML-like tags, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc. `Atributika` comes with drop-in label replacement `AttributedLabel` which is able to make any detection clickable
 
 ## Intro
 NSAttributedString is really powerful but still a low level API which requires a lot of work to setup things. It is especially painful if string is template and real content is known only in runtime. If you are dealing with localizations it is also not easy to build NSAttributedString. 
@@ -36,6 +36,7 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 
 ## Features
 
++ NEW! `AttributedLabel` is a drop-in label replacement. Make detections clickable and style them for normal/highlighted/disabled states.
 + detect and style HTML-like markup using custom speedy parser
 + detect and style hashtags and mentions (i.e. #something and @someone)
 + detect and style regex and NSDataDetector patterns
@@ -108,47 +109,45 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test4.png" alt="" width="334" height="67" />
 
-### TTTAtributedLabel integration
+### AttributedLabel example
 
 ```swift
 
-let all = Style.foregroundColor(.gray).font(.systemFont(ofSize: 16))
-let link = Style("a").foregroundColor(.blue)
-let activeLink = Style.foregroundColor(.brown)
+let label = AttributedLabel()
+ 
+let all = Style.font(.systemFont(ofSize: 16))
+let link = Style("a")
+    .foregroundColor(.blue, .normal)
+    .foregroundColor(.brown, .highlighted)
+let i = Style("i").font(.italicSystemFont(ofSize: 16))
 
-let label = TTTAttributedLabel(frame: CGRect())
-label.activeLinkAttributes = activeLink.attributes
 label.numberOfLines = 0
-label.delegate = self
-
-let aka = "If only Bradley's arm was longer. Best photo ever. #oscars <a href=\"https://pic.twitter.com/C9U5NOtGap\">pic.twitter.com/C9U5NOtGap</a>".style(tags: link)
+label.attributedText = "@potus If only <i>Bradley's</i> arm was longer. Best photo ever. #oscars <a href=\"https://pic.twitter.com/C9U5NOtGap\">pic.twitter.com/C9U5NOtGap</a>"
+    .style(tags: link, i)
     .styleAll(all)
     .styleHashtags(link)
+    .styleMentions(link)
 
-aka.detections.forEach { detection in
+label.onClick = { label, detection in
     switch detection.type {
-    case .hashtag:
-        let hashtag = (aka.string[detection.range]).trimmingCharacters(in: CharacterSet(charactersIn: "#"))
-        label.addLink(to: URL(string: "https://twitter.com/hashtag/\(hashtag)"), with: NSRange(detection.range, in: aka.string))
+    case .hashtag(let tag):
+        if let url = URL(string: "https://twitter.com/hashtag/\(tag)") {
+            UIApplication.shared.openURL(url)
+        }
+    case .mention(let name):
+        if let url = URL(string: "https://twitter.com/\(name)") {
+            UIApplication.shared.openURL(url)
+        }
     case .tag(let tag):
-        if tag.name == "a", let href = tag.attributes["href"] {
-            label.addLink(to: URL(string: href), with: NSRange(detection.range, in: aka.string))
+        if tag.name == "a", let href = tag.attributes["href"], let url = URL(string: href) {
+            UIApplication.shared.openURL(url)
         }
     default:
         break
     }
 }
 
-label.attributedText = aka.attributedString
-
-...
-
-// implement TTTAttributedLabelDelegate to handle clicks
-extension XXX: TTTAttributedLabelDelegate {
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        UIApplication.shared.openURL(url)
-    }
-}
+view.addSubview(label)
 ```
 
 ## Requirements

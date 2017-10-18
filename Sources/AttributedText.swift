@@ -26,8 +26,8 @@ import Foundation
 
 public enum DetectionType {
     case tag(Tag)
-    case hashtag
-    case mention
+    case hashtag(String)
+    case mention(String)
     case regex(String)
     case textCheckingType(NSTextCheckingTypes)
     case range
@@ -39,79 +39,92 @@ public struct Detection {
     public let range: Range<String.Index>
 }
 
-public protocol AtributikaProtocol {
+public protocol AttributedTextProtocol {
     var string: String {get}
     var detections: [Detection] {get}
     var baseStyle: Style {get}
 }
 
-extension AtributikaProtocol {
+extension AttributedTextProtocol {
     
-    public var attributedString: NSAttributedString {
-        let attributedString = NSMutableAttributedString(string: string, attributes: baseStyle.attributes)
+    private func makeAttributedString(getAttributes: (Style)-> [NSAttributedStringKey: Any]) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: string, attributes: getAttributes(baseStyle))
         
         for d in detections {
-            if d.style.attributes.count > 0 {
-                attributedString.addAttributes(d.style.attributes, range: NSRange(d.range, in: string))
+            let attrs = getAttributes(d.style)
+            if attrs.count > 0 {
+                attributedString.addAttributes(attrs, range: NSRange(d.range, in: string))
             }
         }
         
         return attributedString
     }
+    
+    public var attributedString: NSAttributedString {
+        return makeAttributedString { $0.attributes }
+    }
+    
+    public var highlightedAttributedString: NSAttributedString {
+        return makeAttributedString { $0.highlightedAttributes }
+    }
+    
+    public var disabledAttributedString: NSAttributedString {
+        return makeAttributedString { $0.disabledAttributes }
+    }
 }
 
-public struct Atributika: AtributikaProtocol {
+public struct AttributedText: AttributedTextProtocol {
     public let string: String
     public let detections: [Detection]
     public let baseStyle: Style
     
-    public init(string: String, detections: [Detection], baseStyle: Style) {
+    init(string: String, detections: [Detection], baseStyle: Style) {
         self.string = string
         self.detections = detections
         self.baseStyle = baseStyle
     }
 }
 
-extension AtributikaProtocol {
+extension AttributedTextProtocol {
     
     /// style the whole string
-    public func styleAll(_ style: Style) -> Atributika {
-        return Atributika(string: string, detections: detections, baseStyle: baseStyle.merged(with: style))
+    public func styleAll(_ style: Style) -> AttributedText {
+        return AttributedText(string: string, detections: detections, baseStyle: baseStyle.merged(with: style))
     }
     
     /// style things like #xcode #mentions
-    public func styleHashtags(_ style: Style) -> Atributika {
+    public func styleHashtags(_ style: Style) -> AttributedText {
         let ranges = string.detectHashTags()
-        let ds = ranges.map { Detection(type: .hashtag, style: style, range: $0) }
-        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+        let ds = ranges.map { Detection(type: .hashtag(String(string[(string.index($0.lowerBound, offsetBy: 1))..<$0.upperBound])), style: style, range: $0) }
+        return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
     /// style things like @John @all
-    public func styleMentions(_ style: Style) -> Atributika {
+    public func styleMentions(_ style: Style) -> AttributedText {
         let ranges = string.detectMentions()
-        let ds = ranges.map { Detection(type: .mention, style: style, range: $0) }
-        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+        let ds = ranges.map { Detection(type: .mention(String(string[(string.index($0.lowerBound, offsetBy: 1))..<$0.upperBound])), style: style, range: $0) }
+        return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
-    public func style(regex: String, options: NSRegularExpression.Options = [], style: Style) -> Atributika {
+    public func style(regex: String, options: NSRegularExpression.Options = [], style: Style) -> AttributedText {
         let ranges = string.detect(regex: regex, options: options)
         let ds = ranges.map { Detection(type: .regex(regex), style: style, range: $0) }
-        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+        return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
-    public func style(textCheckingTypes: NSTextCheckingTypes, style: Style) -> Atributika {
+    public func style(textCheckingTypes: NSTextCheckingTypes, style: Style) -> AttributedText {
         let ranges = string.detect(textCheckingTypes: textCheckingTypes)
         let ds = ranges.map { Detection(type: .textCheckingType(textCheckingTypes), style: style, range: $0) }
-        return Atributika(string: string, detections: detections + ds, baseStyle: baseStyle)
+        return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
-    public func style(range: Range<String.Index>, style: Style) -> Atributika {
+    public func style(range: Range<String.Index>, style: Style) -> AttributedText {
         let d = Detection(type: .range, style: style, range: range)
-        return Atributika(string: string, detections: detections + [d], baseStyle: baseStyle)
+        return AttributedText(string: string, detections: detections + [d], baseStyle: baseStyle)
     }
 }
 
-extension String: AtributikaProtocol {
+extension String: AttributedTextProtocol {
     
     public var string: String {
         return self
@@ -125,7 +138,7 @@ extension String: AtributikaProtocol {
         return Style()
     }
     
-    public func style(tags: [Style], transformers: [TagTransformer] = [TagTransformer.brTransformer]) -> AtributikaProtocol {
+    public func style(tags: [Style], transformers: [TagTransformer] = [TagTransformer.brTransformer]) -> AttributedText {
         let (string, tagsInfo) = detectTags(transformers: transformers)
         
         var ds: [Detection] = []
@@ -139,15 +152,15 @@ extension String: AtributikaProtocol {
             }
         }
         
-        return Atributika(string: string, detections: ds, baseStyle: baseStyle)
+        return AttributedText(string: string, detections: ds, baseStyle: baseStyle)
     }
     
-    public func style(tags: Style..., transformers: [TagTransformer] = [TagTransformer.brTransformer]) -> AtributikaProtocol {
+    public func style(tags: Style..., transformers: [TagTransformer] = [TagTransformer.brTransformer]) -> AttributedTextProtocol {
         return style(tags: tags, transformers: transformers)
     }
 }
 
-extension NSAttributedString: AtributikaProtocol {
+extension NSAttributedString: AttributedTextProtocol {
     
     public var detections: [Detection] {
         

@@ -305,12 +305,42 @@ class AtributikaTests: XCTestCase {
         reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(13, 6))
         reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(20, 6))
         
-        print(test)
-        print(reference)
         XCTAssertEqual(test,reference)
     }
     
+    func testStyleBuilder() {
+        
+        let s = Style
+            .font(.boldSystemFont(ofSize: 12), .normal)
+            .font(.systemFont(ofSize: 12), .highlighted)
+            .font(.boldSystemFont(ofSize: 13), .normal)
+            .foregroundColor(.red, .normal)
+            .foregroundColor(.green, .highlighted)
+        
+        let ref = Style("", [.normal: [.font: Font.boldSystemFont(ofSize: 13) as Any, .foregroundColor: Color.red as Any],
+                   .highlighted: [.font: Font.systemFont(ofSize: 12) as Any,  .foregroundColor: Color.green as Any]])
+        
+        
+        XCTAssertEqual("test".styleAll(s).attributedString,"test".styleAll(ref).attributedString)
+    }
+    
+    func testStyleBuilder2() {
+        
+        let s = Style
+            .foregroundColor(.red, .normal)
+            .font(.boldSystemFont(ofSize: 12), .normal)
+            .font(.boldSystemFont(ofSize: 13), .normal)
+            .foregroundColor(.green, .highlighted)
+            .font(.systemFont(ofSize: 12), .highlighted)
+        
+        let ref = Style("", [.normal: [.font: Font.boldSystemFont(ofSize: 13) as Any, .foregroundColor: Color.red as Any],
+                             .highlighted: [.font: Font.systemFont(ofSize: 12) as Any,  .foregroundColor: Color.green as Any]])
+        
+        XCTAssertEqual("test".styleAll(s).attributedString,"test".styleAll(ref).attributedString)
+    }
+    
 }
+
 
 #if os(Linux)
 extension AtributikaTests {
