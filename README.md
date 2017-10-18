@@ -36,7 +36,7 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 
 ## Features
 
-+ NEW! `AttributedLabel` is a drop-in label replacement which makes detections clickable and style them for `normal/highlighted/disabled` states.
++ NEW! `AttributedLabel` is a drop-in label replacement which makes detections clickable and style them dynamically for `normal/highlighted/disabled` states.
 + detect and style HTML-like markup using custom speedy parser
 + detect and style hashtags and mentions (i.e. #something and @someone)
 + detect and style regex and NSDataDetector patterns
