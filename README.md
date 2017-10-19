@@ -149,6 +149,7 @@ label.onClick = { label, detection in
 
 view.addSubview(label)
 ```
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/attributedlabel.png" alt="" width="290" height="84" />
 
 ## Requirements
 
