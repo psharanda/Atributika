@@ -24,8 +24,6 @@ class AttributedLabelDemoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        let label = AttributedLabel()
-        
         let all = Style.font(.systemFont(ofSize: 16))
         let link = Style("a")
             .foregroundColor(.blue, .normal)

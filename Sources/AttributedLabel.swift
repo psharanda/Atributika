@@ -10,18 +10,34 @@ import UIKit
 
 public class AttributedLabel: UIView {
     
+    //MARK: - private properties
     private let label = UILabel()
-    private var clickButtons = [ClickButton]()
+    private var detectionAreaButtons = [DetectionAreaButton]()
     
+    //MARK: - public properties
     public var onClick: ((AttributedLabel, Detection)->Void)?
     
-    public var isEnabled: Bool = true {
-        didSet {
-            clickButtons.forEach { $0.isUserInteractionEnabled = isEnabled  }
-            update()
+    public var isEnabled: Bool {
+        set {
+            detectionAreaButtons.forEach { $0.isUserInteractionEnabled = newValue  }
+            state.isEnabled = newValue
+        }
+        get {
+            return state.isEnabled
         }
     }
     
+    public var attributedText: AttributedText? {
+        set {
+            state.attributedTextAndString = newValue.map { ($0, $0.attributedString) }
+            setNeedsLayout()
+        }
+        get {
+            return state.attributedTextAndString?.0
+        }
+    }
+    
+    //MARK: - public properties redirected to underlying UILabel
     public var font: UIFont {
         set { label.font = newValue }
         get { return label.font }
@@ -57,6 +73,7 @@ public class AttributedLabel: UIView {
         get { return label.shadowOffset }
     }
     
+    //MARK: - init
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -71,58 +88,57 @@ public class AttributedLabel: UIView {
         addSubview(label)
     }
     
-    public var attributedText: AttributedText? {
-        didSet {
-            label.attributedText = attributedText?.attributedString
-            setNeedsLayout()
-        }
-    }
-    
+    //MARK: - overrides
     public override func layoutSubviews() {
         super.layoutSubviews()
         
         label.frame = bounds
         
-        clickButtons.forEach {
+        detectionAreaButtons.forEach {
             $0.removeFromSuperview()
         }
         
-        clickButtons.removeAll()
+        detectionAreaButtons.removeAll()
         
-        if let attributedText = attributedText  {
+        if let (text, string) = state.attributedTextAndString {
             
-            let attributedTextString = fixedAttributedText(string: attributedText.attributedString)
+            let inheritedString = string.withInherited(font: font, textAlignment: textAlignment)
             
             let textContainer = NSTextContainer(size: bounds.size)
             textContainer.lineBreakMode = lineBreakMode
             textContainer.maximumNumberOfLines = numberOfLines
             textContainer.lineFragmentPadding = 0
             
-            let textStorage = NSTextStorage(attributedString: attributedTextString)
+            let textStorage = NSTextStorage(attributedString: inheritedString)
             
             let layoutManager = NSLayoutManager()
             layoutManager.addTextContainer(textContainer)
             
             textStorage.addLayoutManager(layoutManager)
             
-            let highlightableDetections = attributedText.detections.filter { $0.style.typedAttributes[.highlighted] != nil }
+            let highlightableDetections = text.detections.filter { $0.style.typedAttributes[.highlighted] != nil }
             
             let usedRect = layoutManager.usedRect(for: textContainer)
             let dy = max(0, (bounds.height - usedRect.height)/2)
             highlightableDetections.forEach { detection in
-                let nsrange = NSRange(detection.range, in: attributedTextString.string)
+                let nsrange = NSRange(detection.range, in: inheritedString.string)
                 layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange, withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0), in: textContainer, using: { (rect, stop) in
                     var finalRect = rect
                     finalRect.origin.y += dy
-                    self.addClickButton(frame: finalRect, detection: detection)
+                    self.addDetectionAreaButton(frame: finalRect, detection: detection)
                 })
             }
         }
     }
     
-    private class ClickButton: UIControl {
+    public override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return label.sizeThatFits(size)
+    }
+
+    //MARK: - DetectionAreaButton
+    private class DetectionAreaButton: UIControl {
         
-        var onChangeIsHighlighted: ((ClickButton)->Void)?
+        var onHighlightChanged: ((DetectionAreaButton)->Void)?
         
         let detection: Detection
         init(detection: Detection) {
@@ -132,7 +148,7 @@ public class AttributedLabel: UIView {
         
         override var isHighlighted: Bool {
             didSet {
-                onChangeIsHighlighted?(self)
+                onHighlightChanged?(self)
             }
         }
         
@@ -141,62 +157,75 @@ public class AttributedLabel: UIView {
         }
     }
     
-    private func addClickButton(frame: CGRect, detection: Detection) {
-        let button = ClickButton(detection: detection)
-        button.addTarget(self, action: #selector(handleClick), for: .touchUpInside)
-        clickButtons.append(button)
+    private func addDetectionAreaButton(frame: CGRect, detection: Detection) {
+        let button = DetectionAreaButton(detection: detection)
+        button.isUserInteractionEnabled = state.isEnabled
+        button.addTarget(self, action: #selector(handleDetectionAreaButtonClick), for: .touchUpInside)
+        detectionAreaButtons.append(button)
         
-        button.onChangeIsHighlighted = { [weak self] in
-            self?.update(isHighlighted: $0.isHighlighted, detection: $0.detection)
+        button.onHighlightChanged = { [weak self] in
+            self?.state.detection = $0.isHighlighted ? $0.detection : nil
         }
         
         addSubview(button)
         button.frame = frame
     }
     
-    private func update(isHighlighted: Bool, detection: Detection) {
-        if isHighlighted {
-            if let attributedString = attributedText?.attributedString {
-                let mutAttributedString = NSMutableAttributedString(attributedString: attributedString)
-                mutAttributedString.addAttributes(detection.style.highlightedAttributes, range: NSRange(detection.range, in: attributedString.string))
-                label.attributedText = mutAttributedString
-            }
-        } else {
-            update()
-        }
-    }
-    
-    private func update() {
-        if isEnabled {
-            label.attributedText = attributedText?.attributedString
-        } else {
-            label.attributedText = attributedText?.disabledAttributedString
-        }
-    }
-    
-    @objc private func handleClick(_ sender: ClickButton) {
+    @objc private func handleDetectionAreaButtonClick(_ sender: DetectionAreaButton) {
         onClick?(self, sender.detection)
     }
     
-    private func fixedAttributedText(string: NSAttributedString) -> NSAttributedString {
-        
-        let ps = NSMutableParagraphStyle()
-        ps.alignment = textAlignment
-        
-        let inheritedAttributes = [NSAttributedStringKey.font: font as Any, NSAttributedStringKey.paragraphStyle: ps as Any]
-        let attributedTextWithFont = NSMutableAttributedString(string: string.string, attributes: inheritedAttributes)
-        
-        attributedTextWithFont.beginEditing()
-        string.enumerateAttributes(in: NSMakeRange(0, string.length), options: .longestEffectiveRangeNotRequired, using: { (attributes, range, _) in
-            attributedTextWithFont.addAttributes(attributes, range: range)
-        })
-        attributedTextWithFont.endEditing()
-        
-        return attributedTextWithFont
+    //MARK: - state
+    
+    private struct State {
+        var attributedTextAndString: (AttributedText, NSAttributedString)?
+        var isEnabled: Bool
+        var detection: Detection?
     }
     
-    public override func sizeThatFits(_ size: CGSize) -> CGSize {
-        return label.sizeThatFits(size)
+    private var state: State = State(attributedTextAndString: nil, isEnabled: true, detection: nil) {
+        didSet {
+            updateLabel()
+        }
+    }
+    
+    private func updateLabel() {
+        if let (text, string) = state.attributedTextAndString {
+            
+            if let detection = state.detection {
+                let higlightedAttributedString = NSMutableAttributedString(attributedString: string)
+                higlightedAttributedString.addAttributes(detection.style.highlightedAttributes, range: NSRange(detection.range, in: string.string))
+                label.attributedText = higlightedAttributedString
+            } else {
+                if state.isEnabled {
+                    label.attributedText = string
+                } else {
+                    label.attributedText = text.disabledAttributedString
+                }
+            }
+        } else {
+            label.attributedText = nil
+        }
+    }
+}
+
+extension NSAttributedString {
+    
+    func withInherited(font: UIFont, textAlignment: NSTextAlignment) -> NSAttributedString {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = textAlignment
+        
+        let inheritedAttributes = [NSAttributedStringKey.font: font as Any, NSAttributedStringKey.paragraphStyle: paragraphStyle as Any]
+        let result = NSMutableAttributedString(string: string, attributes: inheritedAttributes)
+        
+        result.beginEditing()
+        enumerateAttributes(in: NSMakeRange(0, length), options: .longestEffectiveRangeNotRequired, using: { (attributes, range, _) in
+            result.addAttributes(attributes, range: range)
+        })
+        result.endEditing()
+        
+        return result
     }
 }
 
