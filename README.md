@@ -23,11 +23,8 @@ Oh wait, but you can use Atributika!
 
 ```swift
 let b = Style("b").font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
-let str = "Hello <b>World</b>!!!".style(tags: b)
-              .styleAll(Style.font(.systemFont(ofSize: 20)))
-              .attributedString
         
-label.attributedText = str
+label.attributedText = "Hello <b>World</b>!!!".style(tags: b).attributedString
 ```
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/main.png" alt="" width="139" height="56" />
