@@ -155,7 +155,7 @@ extension String: AttributedTextProtocol {
         return AttributedText(string: string, detections: ds, baseStyle: baseStyle)
     }
     
-    public func style(tags: Style..., transformers: [TagTransformer] = [TagTransformer.brTransformer]) -> AttributedTextProtocol {
+    public func style(tags: Style..., transformers: [TagTransformer] = [TagTransformer.brTransformer]) -> AttributedText {
         return style(tags: tags, transformers: transformers)
     }
 }

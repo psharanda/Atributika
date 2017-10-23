@@ -9,7 +9,9 @@ import Atributika
 
 class AttributedLabelDemoViewController: UIViewController {
     
-    let label = AttributedLabel()
+    let tweetLabel = AttributedLabel()
+    
+    let tosLabel = AttributedLabel()
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -30,14 +32,14 @@ class AttributedLabelDemoViewController: UIViewController {
             .foregroundColor(.brown, .highlighted)
         let i = Style("i").font(.italicSystemFont(ofSize: 16))
         
-        label.numberOfLines = 0
-        label.attributedText = "@potus If only <i>Bradley's</i> arm was longer. Best photo ever. #oscars <a href=\"https://pic.twitter.com/C9U5NOtGap\">pic.twitter.com/C9U5NOtGap</a>"
+        tweetLabel.numberOfLines = 0
+        tweetLabel.attributedText = "@potus If only <i>Bradley's</i> arm was longer. Best photo ever. #oscars <a href=\"https://pic.twitter.com/C9U5NOtGap\">pic.twitter.com/C9U5NOtGap</a>"
             .style(tags: link, i)
             .styleAll(all)
             .styleHashtags(link)
             .styleMentions(link)
         
-        label.onClick = { label, detection in
+        tweetLabel.onClick = { label, detection in
             switch detection.type {
             case .hashtag(let tag):
                 if let url = URL(string: "https://twitter.com/hashtag/\(tag)") {
@@ -56,12 +58,38 @@ class AttributedLabelDemoViewController: UIViewController {
             }
         }
         
-        view.addSubview(label)
+        view.addSubview(tweetLabel)
+        
+        let tos = Style("tos").font(.boldSystemFont(ofSize: 14)).foregroundColor(.black).foregroundColor(.red, .highlighted)
+        let pp = Style("pp").font(.boldSystemFont(ofSize: 14)).foregroundColor(.black).foregroundColor(.red, .highlighted)
+        let all2 = Style.font(.systemFont(ofSize: 14)).foregroundColor(.gray)
+        
+        tosLabel.textAlignment = .center
+        tosLabel.attributedText = "I agree with <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>".style(tags: tos, pp).styleAll(all2)
+            
+        tosLabel.onClick = { label, detection in
+            switch detection.type {
+            case .tag(let tag):
+                switch tag.name {
+                case "pp":
+                    print("Privacy Policy clicked")
+                case "tos":
+                    print("Terms of Service clicked")
+                default:
+                    break
+                }
+            default:
+                break
+            }
+        }
+        
+        view.addSubview(tosLabel)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        label.frame = view.bounds.insetBy(dx: 20, dy: 64)
+        tweetLabel.frame = view.bounds.insetBy(dx: 20, dy: 64)
+        tosLabel.frame = CGRect(x: 10, y: view.bounds.height - 100, width: view.bounds.width - 20, height: 40)
     }
 }
