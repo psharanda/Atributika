@@ -94,16 +94,16 @@ func test7() -> NSAttributedString {
     return str
 }
 
-func test8() -> NSAttributedString {
-    
-    let str = "<b>Hello</b> #World"
-    let data = str.data(using: .utf8)
-    let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
-    
-    let htmlAttrString = try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
-    let result = htmlAttrString.styleHashtags(Style.foregroundColor(.blue)).attributedString
-    return result
-}
+//func test8() -> NSAttributedString {
+//
+//    let str = "<b>Hello</b> #World"
+//    let data = str.data(using: .utf8)
+//    let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
+//
+//    let htmlAttrString = try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
+//    let result = htmlAttrString.styleHashtags(Style.foregroundColor(.blue)).attributedString
+//    return result
+//}
 
 func test9() -> NSAttributedString {
     
@@ -131,7 +131,7 @@ func allSnippets() -> [NSAttributedString] {
         test5(),
         test6(),
         test7(),
-        test8(),
+        //test8(),
         test9()
     ]
 }

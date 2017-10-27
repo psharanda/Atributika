@@ -217,7 +217,7 @@ extension NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = textAlignment
         
-        let inheritedAttributes = [NSAttributedStringKey.font: font as Any, NSAttributedStringKey.paragraphStyle: paragraphStyle as Any]
+        let inheritedAttributes = [NSFontAttributeName: font as Any, NSParagraphStyleAttributeName: paragraphStyle as Any]
         let result = NSMutableAttributedString(string: string, attributes: inheritedAttributes)
         
         result.beginEditing()
