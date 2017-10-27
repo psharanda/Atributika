@@ -152,14 +152,14 @@ view.addSubview(label)
 
 Current version is compatible with:
 
-* Swift 4.0+
+* Swift 4.0+ (for Swift 3.2 use 'swift-3.2' branch)
 * iOS 8.0 or later
 * tvOS 9.0 or later
 * watchOS 2.0 or later
 * macOS 10.10 or later
 
 ## Why does Atributika have one 't' in its name?
-Because in belarusian/russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
+Because in belarussian/russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
 
 ## Integration
 
