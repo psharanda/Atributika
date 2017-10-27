@@ -17,7 +17,7 @@
 `Atributika` is an easy and painless way to build NSAttributedString. It is able to detect HTML-like tags, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc. `Atributika` comes with drop-in label replacement `AttributedLabel` which is able to make any detection clickable
 
 ## Intro
-NSAttributedString is really powerful but still a low level API which requires a lot of work to setup things. It is especially painful if string is template and real content is known only in runtime. If you are dealing with localizations it is also not easy to build NSAttributedString. 
+NSAttributedString is really powerful but still a low level API which requires a lot of work to setup things. It is especially painful if string is template and real content is known only in runtime. If you are dealing with localizations, it is also not easy to build NSAttributedString. 
 
 Oh wait, but you can use Atributika!
 
@@ -152,14 +152,14 @@ view.addSubview(label)
 
 Current version is compatible with:
 
-* Swift 4.0+ (for Swift 3.2 use 'swift-3.2' branch)
+* Swift 4.0+ (for Swift 3.2 use `swift-3.2` branch)
 * iOS 8.0 or later
 * tvOS 9.0 or later
 * watchOS 2.0 or later
 * macOS 10.10 or later
 
 ## Why does Atributika have one 't' in its name?
-Because in belarussian/russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
+Because in Belarusian/Russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
 
 ## Integration
 
