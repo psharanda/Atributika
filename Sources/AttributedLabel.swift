@@ -144,6 +144,7 @@ public class AttributedLabel: UIView {
         init(detection: Detection) {
             self.detection = detection
             super.init(frame: .zero)
+            self.isExclusiveTouch = true
         }
         
         override var isHighlighted: Bool {
