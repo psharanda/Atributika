@@ -65,6 +65,15 @@ public struct Style {
         self.typedAttributes = typedAttributes
     }
     
+    public init(_ name: String, style: Style) {
+        self.name = name
+        self.typedAttributes = style.typedAttributes
+    }
+    
+    public func named(_ name: String) -> Style {
+        return Style(name, style: self)
+    }
+    
     public func merged(with style: Style) -> Style {
         var attrs = typedAttributes
     

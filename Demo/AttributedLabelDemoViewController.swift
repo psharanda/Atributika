@@ -60,13 +60,29 @@ class AttributedLabelDemoViewController: UIViewController {
         
         view.addSubview(tweetLabel)
         
-        let tos = Style("tos").font(.boldSystemFont(ofSize: 14)).foregroundColor(.black).foregroundColor(.red, .highlighted)
-        let pp = Style("pp").font(.boldSystemFont(ofSize: 14)).foregroundColor(.black).foregroundColor(.red, .highlighted)
-        let all2 = Style.font(.systemFont(ofSize: 14)).foregroundColor(.gray)
+        addTosLabel()
+    }
+    
+    private func addTosLabel() {
+        let link = Style
+            .font(.boldSystemFont(ofSize: 14))
+            .foregroundColor(.black)
+            .foregroundColor(.red, .highlighted)
+        
+        let tos = link.named("tos")
+        let pp = link.named("pp")
+        
+        let all = Style
+            .font(.systemFont(ofSize: 14))
+            .foregroundColor(.gray)
+        
+        let text = "<tos>Terms of Service</tos> and <pp>Privacy Policy</pp>"
+            .style(tags: tos, pp)
+            .styleAll(all)
         
         tosLabel.textAlignment = .center
-        tosLabel.attributedText = "I agree with <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>".style(tags: tos, pp).styleAll(all2)
-            
+        tosLabel.attributedText = text
+        
         tosLabel.onClick = { label, detection in
             switch detection.type {
             case .tag(let tag):
