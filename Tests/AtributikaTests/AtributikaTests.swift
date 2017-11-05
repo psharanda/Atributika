@@ -29,8 +29,18 @@ import Atributika
 
 class AtributikaTests: XCTestCase {    
     
-    func testHello() {
-        
+    func testHelloWithRHTMLTag() {
+        let test = "\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello World</a>".style(tags:
+            Style("a").font(.boldSystemFont(ofSize: 45))
+            ).attributedString
+
+        let reference = NSMutableAttributedString.init(string: "\r\nHello World")
+        reference.addAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, reference.string.characters.count))
+     
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testHello() {        
         let test = "Hello <b>World</b>!!!".style(tags:
             Style("b").font(.boldSystemFont(ofSize: 45))
         ).attributedString
