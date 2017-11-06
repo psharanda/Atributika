@@ -121,6 +121,12 @@ func test9() -> NSAttributedString {
         .attributedString
 }
 
+func test10() -> NSAttributedString {
+    return "Hey\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello\r\nWorld</a>s".style(tags:
+        Style("a").font(.boldSystemFont(ofSize: 45)).foregroundColor(.red)
+        ).attributedString
+}
+
 func allSnippets() -> [NSAttributedString] {
     return [
         test0(),
@@ -132,7 +138,8 @@ func allSnippets() -> [NSAttributedString] {
         test6(),
         test7(),
         test8(),
-        test9()
+        test9(),
+        test10()
     ]
 }
 

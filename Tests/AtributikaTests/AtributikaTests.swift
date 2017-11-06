@@ -27,18 +27,7 @@ import XCTest
 import Atributika
 
 
-class AtributikaTests: XCTestCase {    
-    
-    func testHelloWithRHTMLTag() {
-        let test = "\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello World</a>".style(tags:
-            Style("a").font(.boldSystemFont(ofSize: 45))
-            ).attributedString
-
-        let reference = NSMutableAttributedString.init(string: "\r\nHello World")
-        reference.addAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, reference.string.characters.count))
-     
-        XCTAssertEqual(test, reference)
-    }
+class AtributikaTests: XCTestCase {
     
     func testHello() {        
         let test = "Hello <b>World</b>!!!".style(tags:
@@ -349,6 +338,30 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual("test".styleAll(s).attributedString,"test".styleAll(ref).attributedString)
     }
     
+    func testHelloWithRHTMLTag() {
+        let test = "\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello World</a>".style(tags:
+            Style("a").font(.boldSystemFont(ofSize: 45))
+            ).attributedString
+        
+        let reference1 = NSMutableAttributedString.init(string: "Hello World")
+        
+        XCTAssertEqual(reference1.length, 11)
+        XCTAssertEqual(reference1.string.count, 11)
+        
+        let reference2 = NSMutableAttributedString.init(string: "\rHello World")
+        
+        XCTAssertEqual(reference2.length, 12)
+        XCTAssertEqual(reference2.string.count, 12)
+        
+        let reference3 = NSMutableAttributedString.init(string: "\r\nHello World")
+        
+        XCTAssertEqual(reference3.length, 13)
+        XCTAssertEqual(reference3.string.count, 12)
+        
+        reference3.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSRange(reference3.string.range(of: "Hello World")!, in: reference3.string) )
+        
+        XCTAssertEqual(test, reference3)
+    }
 }
 
 
