@@ -86,13 +86,15 @@ public class AttributedLabel: UIView {
     
     private func commonInit() {
         addSubview(label)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[label]|", options: [], metrics: nil, views: ["label": label]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[label]|", options: [], metrics: nil, views: ["label": label]))
     }
     
     //MARK: - overrides
     public override func layoutSubviews() {
         super.layoutSubviews()
-        
-        label.frame = bounds
         
         detectionAreaButtons.forEach {
             $0.removeFromSuperview()
@@ -125,7 +127,7 @@ public class AttributedLabel: UIView {
                 layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange, withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0), in: textContainer, using: { (rect, stop) in
                     var finalRect = rect
                     finalRect.origin.y += dy
-                    self.addDetectionAreaButton(frame: finalRect, detection: detection)
+                    self.addDetectionAreaButton(frame: finalRect, detection: detection, text: String(inheritedString.string[detection.range]))
                 })
             }
         }
@@ -149,7 +151,9 @@ public class AttributedLabel: UIView {
         
         override var isHighlighted: Bool {
             didSet {
-                onHighlightChanged?(self)
+                if (isHighlighted && isTracking) || !isHighlighted {
+                    onHighlightChanged?(self)
+                }
             }
         }
         
@@ -158,8 +162,11 @@ public class AttributedLabel: UIView {
         }
     }
     
-    private func addDetectionAreaButton(frame: CGRect, detection: Detection) {
+    private func addDetectionAreaButton(frame: CGRect, detection: Detection, text: String) {
         let button = DetectionAreaButton(detection: detection)
+        button.accessibilityLabel = text
+        button.isAccessibilityElement = true
+        button.accessibilityTraits = UIAccessibilityTraitButton
         button.isUserInteractionEnabled = state.isEnabled
         button.addTarget(self, action: #selector(handleDetectionAreaButtonClick), for: .touchUpInside)
         detectionAreaButtons.append(button)

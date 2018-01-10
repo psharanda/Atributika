@@ -127,6 +127,14 @@ func test10() -> NSAttributedString {
         ).attributedString
 }
 
+func test11() -> NSAttributedString {
+    let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
+    let uib = Style("uib").font(font).underlineStyle(.styleSingle)
+    let str = "<br><uib>Italicunderline</uib>".style(tags: uib)
+        .attributedString
+    return str
+}
+
 func allSnippets() -> [NSAttributedString] {
     return [
         test0(),
@@ -139,7 +147,8 @@ func allSnippets() -> [NSAttributedString] {
         test7(),
         test8(),
         test9(),
-        test10()
+        test10(),
+        test11()
     ]
 }
 

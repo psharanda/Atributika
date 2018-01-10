@@ -7,7 +7,7 @@ import UIKit
 
 class SnippetsViewController: UIViewController {
     
-    fileprivate lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(), style: .plain)
         
         tableView.delegate = self
@@ -17,7 +17,7 @@ class SnippetsViewController: UIViewController {
         return tableView
     }()
     
-    fileprivate var snippets = allSnippets()
+    private var snippets = allSnippets()
     
     init() {
         super.init(nibName: nil, bundle: nil)

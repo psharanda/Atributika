@@ -6,16 +6,34 @@
 import UIKit
 import Atributika
 
-
 class AttributedLabelDemoViewController: UIViewController {
     
-    let tweetLabel = AttributedLabel()
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: CGRect(), style: .plain)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
+        return tableView
+    }()
     
-    let tosLabel = AttributedLabel()
-
+    private var tweets: [String] = [
+        "If only <i>Bradley's</i> arm was longer. Best photo ever. #oscars <a href=\"https://pic.twitter.com/C9U5NOtGap\">pic.twitter.com/C9U5NOtGap</a>",
+        "For every retweet this gets, Pedigree will donate one bowl of dog food to dogs in need! 😊 #tweetforbowls",
+        "All the love as always. H",
+        "We got kicked out of a @Delta airplane because I spoke Arabic to my mom on the phone and with my friend slim... WTFFFFFFFF please spread",
+        "Thank you for everything. My last ask is the same as my first. I'm asking you to believe—not in my ability to create change, but in yours.",
+        "Four more years.",
+        "RT or tweet #camilahammersledge for a follow 👽",
+        "Denny JA: Dengan RT ini, anda ikut memenangkan Jokowi-JK. Pilih pemimpin yg bisa dipercaya (Jokowi) dan pengalaman (JK). #DJoJK",
+        "Always in my heart @Harry_Styles . Yours sincerely, Louis",
+        "HELP ME PLEASE. A MAN NEEDS HIS NUGGS <a href=\"https://pbs.twimg.com/media/C8sk8QlUwAAR3qI.jpg\">https://pbs.twimg.com/media/C8sk8QlUwAAR3qI.jpg</a>"
+    ]
+    
     init() {
         super.init(nibName: nil, bundle: nil)
-        title = "AttributedTextDemo"
+        title = "AttributedLabel"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -24,21 +42,39 @@ class AttributedLabelDemoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        let all = Style.font(.systemFont(ofSize: 16))
-        let link = Style("a")
-            .foregroundColor(.blue, .normal)
-            .foregroundColor(.brown, .highlighted)
-        let i = Style("i").font(.italicSystemFont(ofSize: 16))
-        
-        tweetLabel.numberOfLines = 0
-        tweetLabel.attributedText = "@potus If only <i>Bradley's</i> arm was longer. Best photo ever. #oscars <a href=\"https://pic.twitter.com/C9U5NOtGap\">pic.twitter.com/C9U5NOtGap</a>"
-            .style(tags: link, i)
-            .styleAll(all)
-            .styleHashtags(link)
-            .styleMentions(link)
-        
+        view.addSubview(tableView)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+}
+
+extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tweets.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellId = "CellId"
+        let cell = (tableView.dequeueReusableCell(withIdentifier: cellId) as? TweetCell) ?? TweetCell(style: .default, reuseIdentifier: cellId)
+        cell.tweet = tweets[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+class TweetCell: UITableViewCell {
+    private let tweetLabel = AttributedLabel()
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         tweetLabel.onClick = { label, detection in
             switch detection.type {
             case .hashtag(let tag):
@@ -57,55 +93,39 @@ class AttributedLabelDemoViewController: UIViewController {
                 break
             }
         }
+
+        contentView.addSubview(tweetLabel)
         
-        view.addSubview(tweetLabel)
+        let marginGuide = contentView.layoutMarginsGuide
         
-        addTosLabel()
+        tweetLabel.translatesAutoresizingMaskIntoConstraints = false
+        tweetLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
+        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+        tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
+        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+        tweetLabel.numberOfLines = 0
     }
     
-    private func addTosLabel() {
-        let link = Style
-            .font(.boldSystemFont(ofSize: 14))
-            .foregroundColor(.black)
-            .foregroundColor(.red, .highlighted)
-        
-        let tos = link.named("tos")
-        let pp = link.named("pp")
-        
-        let all = Style
-            .font(.systemFont(ofSize: 14))
-            .foregroundColor(.gray)
-        
-        let text = "<tos>Terms of Service</tos> and <pp>Privacy Policy</pp>"
-            .style(tags: tos, pp)
-            .styleAll(all)
-        
-        tosLabel.textAlignment = .center
-        tosLabel.attributedText = text
-        
-        tosLabel.onClick = { label, detection in
-            switch detection.type {
-            case .tag(let tag):
-                switch tag.name {
-                case "pp":
-                    print("Privacy Policy clicked")
-                case "tos":
-                    print("Terms of Service clicked")
-                default:
-                    break
-                }
-            default:
-                break
-            }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var tweet: String? {
+        didSet {
+            let all = Style.font(.systemFont(ofSize: 20))
+            let link = Style("a")
+                .foregroundColor(.blue, .normal)
+                .foregroundColor(.brown, .highlighted)
+            let i = Style("i").font(.italicSystemFont(ofSize: 20))
+
+            tweetLabel.attributedText = tweet?
+                .style(tags: link, i)
+                .styleAll(all)
+                .styleHashtags(link)
+                .styleMentions(link)
         }
-        
-        view.addSubview(tosLabel)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        tweetLabel.frame = view.bounds.insetBy(dx: 20, dy: 64)
-        tosLabel.frame = CGRect(x: 10, y: view.bounds.height - 100, width: view.bounds.width - 20, height: 40)
     }
 }
+
+
+
