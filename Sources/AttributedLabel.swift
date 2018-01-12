@@ -17,6 +17,22 @@ public class AttributedLabel: UIView {
     //MARK: - public properties
     public var onClick: ((AttributedLabel, Detection)->Void)?
     
+    public var textInsets: UIEdgeInsets = .zero {
+        didSet {
+            let prevConstraints = constraints.filter { ($0.firstItem as? UILabel) == label || ($0.secondItem as? UILabel) == label }
+            removeConstraints(prevConstraints)
+            let horizontal = "H:|-(\(textInsets.left))-[label]-(\(textInsets.right))-|"
+            let vertical = "V:|-(\(textInsets.top))-[label]-(\(textInsets.bottom))-|"
+            let newConstraints = [horizontal, vertical].map { NSLayoutConstraint.constraints(withVisualFormat: $0,
+                                                                                             options: [],
+                                                                                             metrics: nil,
+                                                                                             views: ["label": label]) }.flatMap { $0 }
+            addConstraints(newConstraints)
+            setNeedsLayout()
+            layoutIfNeeded()
+        }
+    }
+    
     public var isEnabled: Bool {
         set {
             detectionAreaButtons.forEach { $0.isUserInteractionEnabled = newValue  }
