@@ -165,11 +165,11 @@ extension String {
         return ranges
     }
     
-    public func detect(textCheckingTypes: NSTextCheckingTypes) -> [Range<String.Index>] {
+    public func detect(textCheckingTypes: NSTextCheckingResult.CheckingType) -> [Range<String.Index>] {
         
         var ranges = [Range<String.Index>]()
         
-        let dataDetector = try? NSDataDetector(types: textCheckingTypes)
+        let dataDetector = try? NSDataDetector(types: textCheckingTypes.rawValue)
         dataDetector?.enumerateMatches(in: self, options: [], range: NSMakeRange(0, (self as NSString).length), using: { (result, flags, _) in
             if let r = result, let range = Range(r.range, in: self) {
                 ranges.append(range)

@@ -7,30 +7,31 @@ import Foundation
 import UIKit
 import Atributika
 
-func test0() -> NSAttributedString {
+func stringWithAtributikaLogo() -> NSAttributedString {
     
-    let font = UIFont(name: "AvenirNext-Regular", size: 24)!
-    
-    let grayColor = UIColor(white: 0x66 / 255.0, alpha: 1)
     let redColor = UIColor(red:(0xD0 / 255.0), green: (0x02 / 255.0), blue:(0x1B / 255.0), alpha:1.0)
-    
     let a = Style("a").foregroundColor(redColor)
     
+    let font = UIFont(name: "AvenirNext-Regular", size: 24)!
+    let grayColor = UIColor(white: 0x66 / 255.0, alpha: 1)
+    let all = Style.font(font).foregroundColor(grayColor)
+    
     let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>".style(tags: a)
-        .styleAll(Style.font(font).foregroundColor(grayColor))
+        .styleAll(all)
         .attributedString
     return str
 }
 
-func test1() -> NSAttributedString {
+func stringWithTagsAndEmoji() -> NSAttributedString {
     let b = Style("b").font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
+    let all = Style.font(.systemFont(ofSize: 20))
     let str = "Hello <b>W🌎rld</b>!!!".style(tags: b)
-        .styleAll(Style.font(.systemFont(ofSize: 20)))
+        .styleAll(all)
         .attributedString
     return str
 }
 
-func test2() -> NSAttributedString {
+func stringWithHashTagAndMention() -> NSAttributedString {
     
     let str = "#Hello @World!!!"
         .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
@@ -39,32 +40,42 @@ func test2() -> NSAttributedString {
     return str
 }
 
-func test3() -> NSAttributedString {
-    let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
-    let str = "Call me (888)555-5512".style(textCheckingTypes: types.rawValue, style:
-        Style.foregroundColor(.red)
-        ).attributedString
+func stringWithPhone() -> NSAttributedString {
+    let str = "Call me (888)555-5512"
+        .stylePhoneNumbers(Style.foregroundColor(.red))
+        .attributedString
     return str
 }
 
-func test4() -> NSAttributedString {
-    let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
+func stringWithLink() -> NSAttributedString {
+    let str = "Check this http://google.com"
+        .styleLinks(Style.foregroundColor(.blue))
+        .attributedString
+    return str
+}
+
+func stringWithManyDetectables() -> NSAttributedString {
     
-    let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to ask any details (123)456-7890 #swift #nsattributedstring"
-        .style(tags:
-            Style("u").font(.boldSystemFont(ofSize: 12)).underlineStyle(.styleSingle),
-               Style("b").font(.boldSystemFont(ofSize: 12))
-        )
-        .styleAll(Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray))
-        .styleMentions(Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black))
-        .styleHashtags(Style.foregroundColor(.blue))
-        .style(textCheckingTypes: types.rawValue, style: Style.backgroundColor(.yellow))
+    let links = Style.foregroundColor(.blue)
+    let phoneNumbers = Style.backgroundColor(.yellow)
+    let mentions = Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
+    let b = Style("b").font(.boldSystemFont(ofSize: 12))
+    let u = Style("u").underlineStyle(.styleSingle)
+    let all = Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
+    
+    let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
+        .style(tags: u, b)
+        .styleMentions(mentions)
+        .styleHashtags(links)
+        .styleLinks(links)
+        .stylePhoneNumbers(phoneNumbers)
+        .styleAll(all)
         .attributedString
     
     return str
 }
 
-func test5() -> NSAttributedString {
+func stringWith3Tags() -> NSAttributedString {
     
     let str = "<r>first</r><g>sec⚽️nd</g><b>third</b>".style(tags:
         Style("r").foregroundColor(.red),
@@ -73,7 +84,7 @@ func test5() -> NSAttributedString {
     return str
 }
 
-func test6() -> NSAttributedString {
+func stringWithGrams() -> NSAttributedString {
     
     let calculatedCoffee: Int = 768
     let g = Style("g").font(.boldSystemFont(ofSize: 12)).foregroundColor(.red)
@@ -86,7 +97,7 @@ func test6() -> NSAttributedString {
     return str
 }
 
-func test7() -> NSAttributedString {
+func stringWithStrong() -> NSAttributedString {
     let str = "<strong>Nice</strong> try, Phil".style(tags:
         Style("strong").font(.boldSystemFont(ofSize: 15)))
         .attributedString
@@ -94,7 +105,7 @@ func test7() -> NSAttributedString {
     return str
 }
 
-func test8() -> NSAttributedString {
+func stringWithTagAndHashtag() -> NSAttributedString {
     
     let str = "<b>Hello</b> #World"
     let data = str.data(using: .utf8)
@@ -105,7 +116,7 @@ func test8() -> NSAttributedString {
     return result
 }
 
-func test9() -> NSAttributedString {
+func stringWithUnorderedList() -> NSAttributedString {
     
     let transformers: [TagTransformer] = [
         TagTransformer.brTransformer,
@@ -121,13 +132,13 @@ func test9() -> NSAttributedString {
         .attributedString
 }
 
-func test10() -> NSAttributedString {
+func stringWithHref() -> NSAttributedString {
     return "Hey\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello\r\nWorld</a>s".style(tags:
         Style("a").font(.boldSystemFont(ofSize: 45)).foregroundColor(.red)
         ).attributedString
 }
 
-func test11() -> NSAttributedString {
+func stringWithBoldItalicUnderline() -> NSAttributedString {
     let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
     let uib = Style("uib").font(font).underlineStyle(.styleSingle)
     let str = "<br><uib>Italicunderline</uib>".style(tags: uib)
@@ -137,18 +148,19 @@ func test11() -> NSAttributedString {
 
 func allSnippets() -> [NSAttributedString] {
     return [
-        test0(),
-        test1(),
-        test2(),
-        test3(),
-        test4(),
-        test5(),
-        test6(),
-        test7(),
-        test8(),
-        test9(),
-        test10(),
-        test11()
+        stringWithAtributikaLogo(),
+        stringWithTagsAndEmoji(),
+        stringWithHashTagAndMention(),
+        stringWithPhone(),
+        stringWithLink(),
+        stringWithManyDetectables(),
+        stringWith3Tags(),
+        stringWithGrams(),
+        stringWithStrong(),
+        stringWithTagAndHashtag(),
+        stringWithUnorderedList(),
+        stringWithHref(),
+        stringWithBoldItalicUnderline()
     ]
 }
 

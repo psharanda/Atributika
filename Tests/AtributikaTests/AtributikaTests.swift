@@ -219,16 +219,48 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(test, reference)
     }
     
-    func testDataDetector() {
+    func testDataDetectorPhoneRaw() {
         
-        let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
-        
-        let test = "Call me (888)555-5512".style(textCheckingTypes: types.rawValue,
+        let test = "Call me (888)555-5512".style(textCheckingTypes: [.phoneNumber],
                                                   style: Style.font(.boldSystemFont(ofSize: 45)))
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Call me (888)555-5512")
         reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(8, 13))
+        
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testDataDetectorLinkRaw() {
+        
+        let test = "Check this http://google.com".style(textCheckingTypes: [.link],
+                                                 style: Style.font(.boldSystemFont(ofSize: 45)))
+            .attributedString
+        
+        let reference = NSMutableAttributedString(string: "Check this http://google.com")
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(11, 17))
+        
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testDataDetectorPhone() {
+        
+        let test = "Call me (888)555-5512".stylePhoneNumbers(Style.font(.boldSystemFont(ofSize: 45)))
+            .attributedString
+        
+        let reference = NSMutableAttributedString(string: "Call me (888)555-5512")
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(8, 13))
+        
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testDataDetectorLink() {
+        
+        let test = "Check this http://google.com".styleLinks(Style.font(.boldSystemFont(ofSize: 45)))
+            .attributedString
+        
+        let reference = NSMutableAttributedString(string: "Check this http://google.com")
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(11, 17))
         
         XCTAssertEqual(test, reference)
     }
