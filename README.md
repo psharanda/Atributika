@@ -14,7 +14,7 @@
 [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://cocoapods.org/pods/Atributika)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-`Atributika` is an easy and painless way to build NSAttributedString. It is able to detect HTML-like tags, hashtags, any regex or even standard ios data detectors (phones, links, ) and style them with various attributes like font, color, etc. `Atributika` comes with drop-in label replacement `AttributedLabel` which is able to make any detection clickable
+`Atributika` is an easy and painless way to build NSAttributedString. It is able to detect HTML-like tags, links, phone numbers, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc. `Atributika` comes with drop-in label replacement `AttributedLabel` which is able to make any detection clickable
 
 ## Intro
 NSAttributedString is really powerful but still a low level API which requires a lot of work to setup things. It is especially painful if string is template and real content is known only in runtime. If you are dealing with localizations, it is also not easy to build NSAttributedString. 
@@ -33,10 +33,10 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 
 ## Features
 
-+ NEW! `AttributedLabel` is a drop-in label replacement which makes detections clickable and style them dynamically for `normal/highlighted/disabled` states.
-+ detect and style HTML-like tags using custom speedy parser
-+ detect and style hashtags and mentions (i.e. #something and @someone)
-+ detect and style links and phone numbers
++ NEW! `AttributedLabel` is a drop-in label replacement which **makes detections clickable** and style them dynamically for `normal/highlighted/disabled` states.
++ detect and style HTML-like **tags** using custom speedy parser
++ detect and style **hashtags** and **mentions** (i.e. #something and @someone)
++ detect and style **links** and **phone numbers**
 + detect and style regex and NSDataDetector patterns
 + style whole string or just particular ranges
 + ... and you can chain all above to parse some uber strings!
