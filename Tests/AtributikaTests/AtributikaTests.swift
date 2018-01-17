@@ -339,6 +339,30 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(test,reference)
     }
     
+    
+    func testOL() {
+        var counter = 0
+        let transformers: [TagTransformer] = [
+            TagTransformer.brTransformer,
+            TagTransformer(tagName: "ol", tagType: .start) { _ in
+                counter = 0
+                return ""
+            },
+            TagTransformer(tagName: "li", tagType: .start) { _ in
+                counter += 1
+                return "\(counter). "
+            },
+            TagTransformer(tagName: "li", tagType: .end) { _ in
+                return "\n"
+            }
+        ]
+        
+        let test = "<div><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol></div>".style(tags: [], transformers: transformers).string
+        let reference = "1. Coffee\n2. Tea\n3. Milk\n1. Coffee\n2. Tea\n3. Milk\n"
+        
+        XCTAssertEqual(test,reference)
+    }
+    
     func testStyleBuilder() {
         
         let s = Style

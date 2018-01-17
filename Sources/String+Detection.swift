@@ -27,12 +27,18 @@ public struct TagTransformer {
 
     public let tagName: String
     public let tagType: TagType
-    public let replaceValue: String
+    public let transform: (Tag) -> String
     
     public init(tagName: String, tagType: TagType, replaceValue: String) {
         self.tagName = tagName
         self.tagType = tagType
-        self.replaceValue = replaceValue
+        self.transform = { _ in replaceValue }
+    }
+    
+    public init(tagName: String, tagType: TagType, transform: @escaping (Tag) -> String) {
+        self.tagName = tagName
+        self.tagType = tagType
+        self.transform = transform
     }
     
     public static var brTransformer: TagTransformer {
@@ -110,7 +116,7 @@ extension String {
                             if let transformer = transformers.first(where: {
                                 $0.tagName == tag.name && $0.tagType == tagType
                             }) {
-                                resultString += transformer.replaceValue
+                                resultString += transformer.transform(tag)
                             }
                             
                             if tagType == .start {
