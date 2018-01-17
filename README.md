@@ -95,7 +95,7 @@ let str = "Call me (888)555-5512"
     .attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_phone_number.png" alt="" width="195" height="39" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_phone_numbers.png" alt="" width="195" height="39" />
 
 ### Uber String
 
@@ -117,7 +117,7 @@ let str = "Call me (888)555-5512"
         .attributedString
 ```    
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_uber.png" alt="" width="342" height="75" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_uber.png" alt="" width="342" height="65" />
 
 ## AttributedText
 `Atributika` APIs `styleXXX` produce `AttributedText` which can be converted into `NSAttributedString`. Basically `AttributedText` just contains string, base style and all the detections.
