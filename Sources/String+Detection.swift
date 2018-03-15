@@ -72,9 +72,7 @@ extension String {
                 break
             }
             
-            guard let value = tagScanner.scanUpTo("\"") else {
-                break
-            }
+            let value = tagScanner.scanUpTo("\"") ?? ""
             
             guard tagScanner.scanString("\"") != nil else {
                 break
