@@ -128,7 +128,7 @@ extension AttributedTextProtocol {
     
     public func styleLinks(_ style: Style) -> AttributedText {
         let ranges = string.detect(textCheckingTypes: [.link])
-        let ds = ranges.flatMap { range in
+        let ds = ranges.compactMap { range in
             URL(string: String(string[range])).map { Detection(type: .link($0), style: style, range: range) } }
         return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
