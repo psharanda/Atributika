@@ -174,7 +174,6 @@ public struct Style {
         return merged(with: Style.writingDirection(value, type))
     }
     
-
     
     public static func font(_ value: Font, _ type: StyleType = .normal) -> Style {
         return Style("", [NSAttributedStringKey.font: value], type)
