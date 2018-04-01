@@ -25,6 +25,9 @@ public enum StyleType {
     case highlighted
 }
 
+// workaround for https://github.com/psharanda/Atributika/issues/27
+extension NSAttributedStringKey: Hashable { }
+
 public struct Style {
     
     public let name: String
