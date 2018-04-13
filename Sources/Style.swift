@@ -26,7 +26,9 @@ public enum StyleType {
 }
 
 // workaround for https://github.com/psharanda/Atributika/issues/27
-extension NSAttributedStringKey: Hashable { }
+#if swift(>=4.1)
+	extension NSAttributedStringKey: Hashable { }
+#endif
 
 public struct Style {
     
