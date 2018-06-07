@@ -146,6 +146,33 @@ func stringWithBoldItalicUnderline() -> NSAttributedString {
     return str
 }
 
+func stringWithImage() -> NSAttributedString {
+    
+    let str = "Running with <img id=\"scissors\"></img>!".style(tags: [])
+    
+    let mutableAttrStr = NSMutableAttributedString(attributedString: str.attributedString)
+    
+    var locationShift = 0
+    for detection in str.detections {
+        switch detection.type {
+        case .tag(let tag):
+            if let imageId =  tag.attributes["id"] {
+                let textAttachment = NSTextAttachment()
+                textAttachment.image = UIImage(named: imageId)
+                let imageAttrStr = NSAttributedString(attachment: textAttachment)
+                let nsrange = NSRange.init(detection.range, in: mutableAttrStr.string)
+                mutableAttrStr.insert(imageAttrStr, at: nsrange.location + locationShift)
+                locationShift += 1
+            }
+        default:
+            break
+        }
+    }
+    
+    
+    return mutableAttrStr
+}
+
 func allSnippets() -> [NSAttributedString] {
     return [
         stringWithAtributikaLogo(),
@@ -160,7 +187,8 @@ func allSnippets() -> [NSAttributedString] {
         stringWithTagAndHashtag(),
         stringWithUnorderedList(),
         stringWithHref(),
-        stringWithBoldItalicUnderline()
+        stringWithBoldItalicUnderline(),
+        stringWithImage()
     ]
 }
 
