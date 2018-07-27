@@ -169,7 +169,7 @@ extension String: AttributedTextProtocol {
         
         tagsInfo.forEach { t in
             
-            if let style = (tags.first { style in style.name == t.tag.name }) {
+            if let style = (tags.first { style in style.name.lowercased() == t.tag.name.lowercased() }) {
                 ds.append(Detection(type: .tag(t.tag), style: style, range: t.range))
             } else {
                 ds.append(Detection(type: .tag(t.tag), style: Style(), range: t.range))

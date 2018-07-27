@@ -88,7 +88,8 @@ extension String {
                                    "amp":"&",
                                    "apos":"'",
                                    "lt":"<",
-                                   "gt":">"]
+                                   "gt":">",
+                                   "nbsp":" "] //just replacing it with space, not going to implement non-breaking logic
     
     public func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
         
@@ -104,39 +105,60 @@ extension String {
                 resultString += textString
             } else {
                 if scanner.scanString("<") != nil {
-                    let tagType = scanner.scanString("/") == nil ? TagType.start : TagType.end
-                    if let tagString = scanner.scanUpTo(">") {
-                        
-                        if let tag = parseTag(tagString, parseAttributes: tagType == .start ) {
-                            
-                            let resultTextEndIndex = resultString.endIndex
-                            
-                            if let transformer = transformers.first(where: {
-                                $0.tagName == tag.name && $0.tagType == tagType
-                            }) {
-                                resultString += transformer.transform(tag)
-                            }
-                            
-                            if tagType == .start {
-                                tagsStack.append((tag, resultTextEndIndex))
-                            } else {
-                                for (index, (tagInStack, startIndex)) in tagsStack.enumerated().reversed() {
-                                    if tagInStack.name == tag.name {
-                                        tagsResult.append(TagInfo(tag: tagInStack, range: startIndex..<resultTextEndIndex))
-                                        tagsStack.remove(at: index)
-                                        break
+                    
+                    if scanner.isAtEnd {
+                        resultString += "<"
+                    } else {
+                        let nextChar = (scanner.string as NSString).substring(with: NSRange(location: scanner.scanLocation, length: 1))
+                        if CharacterSet.letters.contains(nextChar.unicodeScalars.first!) || (nextChar == "/") {
+                            let tagType = scanner.scanString("/") == nil ? TagType.start : TagType.end
+                            if let tagString = scanner.scanUpTo(">") {
+                                
+                                if scanner.scanString(">") != nil {
+                                    if let tag = parseTag(tagString, parseAttributes: tagType == .start ) {
+                                        
+                                        let resultTextEndIndex = resultString.endIndex
+                                        
+                                        if let transformer = transformers.first(where: {
+                                            $0.tagName.lowercased() == tag.name.lowercased() && $0.tagType == tagType
+                                        }) {
+                                            resultString += transformer.transform(tag)
+                                        }
+                                        
+                                        if tagType == .start {
+                                            tagsStack.append((tag, resultTextEndIndex))
+                                        } else {
+                                            for (index, (tagInStack, startIndex)) in tagsStack.enumerated().reversed() {
+                                                if tagInStack.name.lowercased() == tag.name.lowercased() {
+                                                    tagsResult.append(TagInfo(tag: tagInStack, range: startIndex..<resultTextEndIndex))
+                                                    tagsStack.remove(at: index)
+                                                    break
+                                                }
+                                            }
+                                        }
                                     }
+                                } else {
+                                    resultString += "<"
+                                    resultString += tagString
                                 }
                             }
+                        } else {
+                            resultString += "<"
                         }
-                        scanner.scanString(">")
                     }
                 } else if scanner.scanString("&") != nil {
-                    if let specialString = scanner.scanUpTo(";") {
-                        if let spec = String.specials[specialString] {
-                            resultString += spec
+                    
+                    var foundSpecial = false
+                    for (k, v) in String.specials {
+                        if scanner.scanString(k + ";") != nil {
+                            resultString += v
+                            foundSpecial = true
+                            break
                         }
-                        scanner.scanString(";")
+                    }
+                    
+                    if !foundSpecial {
+                        resultString += "&"
                     }
                 }
             }

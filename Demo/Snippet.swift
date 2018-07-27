@@ -147,8 +147,9 @@ func stringWithBoldItalicUnderline() -> NSAttributedString {
 }
 
 func stringWithImage() -> NSAttributedString {
-    
-    let str = "Running with <img id=\"scissors\"></img>!".style(tags: [])
+    let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
+    let uib = Style("b").font(font).underlineStyle(.styleSingle)
+    let str = "<b>Running</b> with <img id=\"scissors\"></img>!".style(tags: uib)
     
     let mutableAttrStr = NSMutableAttributedString(attributedString: str.attributedString)
     
@@ -168,9 +169,20 @@ func stringWithImage() -> NSAttributedString {
             break
         }
     }
-    
-    
+
     return mutableAttrStr
+}
+
+func stringWithStrikethrough() -> NSAttributedString {
+    let all = Style.font(.systemFont(ofSize: 20))
+    let strike = Style("strike").strikethroughStyle(.styleSingle).strikethroughColor(.black)
+    let code = Style("code").foregroundColor(.red)
+    
+    let str = "<code>my code</code> <strike>test</strike> testing"
+        .style(tags: [strike,code])
+        .styleAll(all)
+        .attributedString
+    return str
 }
 
 func allSnippets() -> [NSAttributedString] {
@@ -188,7 +200,8 @@ func allSnippets() -> [NSAttributedString] {
         stringWithUnorderedList(),
         stringWithHref(),
         stringWithBoldItalicUnderline(),
-        stringWithImage()
+        stringWithImage(),
+        stringWithStrikethrough()
     ]
 }
 

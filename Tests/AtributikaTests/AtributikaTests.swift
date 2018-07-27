@@ -183,7 +183,7 @@ class AtributikaTests: XCTestCase {
         
         let test = "Hello <World!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 45))).attributedString
         
-        let reference = NSMutableAttributedString(string: "Hello ")
+        let reference = NSMutableAttributedString(string: "Hello <World!!!")
         
         XCTAssertEqual(test, reference)
     }
@@ -429,6 +429,58 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(tags[0].tag.attributes["class"], "big")
         XCTAssertEqual(tags[0].tag.attributes["target"], "")
         XCTAssertEqual(tags[0].tag.attributes["href"], "http://foo.com")
+    }
+    
+    func testSpecials() {
+        XCTAssertEqual("Hello&amp;World!!!".detectTags().string , "Hello&World!!!")
+        XCTAssertEqual("Hello&".detectTags().string , "Hello&")
+        XCTAssertEqual("Hello&World".detectTags().string , "Hello&World")
+        XCTAssertEqual("&quot;Quote&quot;".detectTags().string , "\"Quote\"")
+        XCTAssertEqual("&".detectTags().string , "&")
+        XCTAssertEqual("&&amp;".detectTags().string , "&&")
+        XCTAssertEqual("4>5".detectTags().string , "4>5")
+        XCTAssertEqual("4<5".detectTags().string , "4<5")
+        XCTAssertEqual("<".detectTags().string , "<")
+        XCTAssertEqual(">".detectTags().string , ">")
+        XCTAssertEqual("<a".detectTags().string , "<a")
+        XCTAssertEqual("<a>".detectTags().string , "")
+        XCTAssertEqual("< a>".detectTags().string , "< a>")
+    }
+    
+    func testCaseInsensitive1() {
+        
+        let test = "<B>Hello World</B>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 45)))
+            .styleAll(.font(.systemFont(ofSize: 12)))
+            .attributedString
+        
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
+        reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
+        
+        XCTAssertEqual(test,reference)
+        
+    }
+    
+    func testCaseInsensitive2() {
+        
+        let test = "<B>Hello World</b>!!!".style(tags: Style("B").font(.boldSystemFont(ofSize: 45)))
+            .styleAll(.font(.systemFont(ofSize: 12)))
+            .attributedString
+        
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.addAttributes([NSAttributedStringKey.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
+        reference.addAttributes([NSAttributedStringKey.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
+        
+        XCTAssertEqual(test,reference)
+        
+    }
+    
+    func testCaseInsensitiveBr() {
+        let test = "Hello<BR>World!!!".style(tags: []).attributedString
+        
+        let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
+        
+        XCTAssertEqual(test, reference)
     }
 }
 
