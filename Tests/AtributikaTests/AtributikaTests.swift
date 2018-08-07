@@ -482,7 +482,49 @@ class AtributikaTests: XCTestCase {
         
         XCTAssertEqual(test, reference)
     }
+    
+    func testTuner() {
+        
+        func hexStringToUIColor (hex:String) -> UIColor {
+            var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+            
+            if (cString.hasPrefix("#")) {
+                cString.remove(at: cString.startIndex)
+            }
+            
+            if ((cString.count) != 6) {
+                return UIColor.gray
+            }
+            
+            var rgbValue:UInt32 = 0
+            Scanner(string: cString).scanHexInt32(&rgbValue)
+            
+            return UIColor(
+                red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+                green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+                blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+                alpha: CGFloat(1.0)
+            )
+        }
+        
+        let font = Style("font")
+        
+        let test = "Monday - Friday:<font color=\"#6cc299\"> 8:00 - 19:00</font>".style(tags: font, tuner: { style, tag in
+            if tag.name == font.name {
+                if let colorString = tag.attributes["color"] {
+                    return style.foregroundColor(hexStringToUIColor(hex: colorString))
+                }
+            }
+            return style
+        }).attributedString
+        
+        let reference = NSMutableAttributedString(string: "Monday - Friday: 8:00 - 19:00")
+        reference.addAttributes([NSAttributedStringKey.foregroundColor: hexStringToUIColor(hex: "#6cc299")], range: NSMakeRange(16, 13))
+        XCTAssertEqual(test, reference)
+    }
 }
+
+
 
 
 #if os(Linux)
