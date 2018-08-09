@@ -49,7 +49,6 @@ public struct TagTransformer {
 extension String {
     
     private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
-        
         let tagScanner = Scanner(string: tagString)
         
         guard let tagName = tagScanner.scanCharacters(from: CharacterSet.alphanumerics) else {
@@ -68,13 +67,18 @@ extension String {
                 break
             }
             
-            guard tagScanner.scanString("\"") != nil else {
-                break
+            let startsFromSingleQuote = (tagScanner.scanString("'") != nil)
+            if !startsFromSingleQuote {
+                guard tagScanner.scanString("\"") != nil else {
+                    break
+                }
             }
             
-            let value = tagScanner.scanUpTo("\"") ?? ""
+            let quote = startsFromSingleQuote ? "'" : "\""
             
-            guard tagScanner.scanString("\"") != nil else {
+            let value = tagScanner.scanUpTo(quote) ?? ""
+            
+            guard tagScanner.scanString(quote) != nil else {
                 break
             }
             
