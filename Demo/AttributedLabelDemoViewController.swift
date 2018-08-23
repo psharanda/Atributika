@@ -19,7 +19,7 @@ class AttributedLabelDemoViewController: UIViewController {
     }()
     
     private var tweets: [String] = [
-        "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap",
+        "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>",
         "For every retweet this gets, Pedigree will donate one bowl of dog food to dogs in need! 😊 #tweetforbowls",
         "All the love as always. H",
         "We got kicked out of a @Delta airplane because I spoke Arabic to my mom on the phone and with my friend slim... WTFFFFFFFF please spread",
@@ -87,6 +87,10 @@ class TweetCell: UITableViewCell {
                 }
             case .link(let url):
                 UIApplication.shared.openURL(url)
+            case .tag(let tag):
+                if tag.name == "a", let href = tag.attributes["href"], let url = URL(string: href) {
+                    UIApplication.shared.openURL(url)
+                }
             default:
                 break
             }
@@ -111,11 +115,12 @@ class TweetCell: UITableViewCell {
     var tweet: String? {
         didSet {
             let all = Style.font(.systemFont(ofSize: 20))
-            let link = Style
+            let link = Style("a")
                 .foregroundColor(.blue, .normal)
                 .foregroundColor(.brown, .highlighted)
 
             tweetLabel.attributedText = tweet?
+                .style(tags: link)
                 .styleHashtags(link)
                 .styleMentions(link)
                 .styleLinks(link)

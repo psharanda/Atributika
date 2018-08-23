@@ -126,11 +126,12 @@ let tweetLabel = AttributedLabel()
 tweetLabel.numberOfLines = 0
 
 let all = Style.font(.systemFont(ofSize: 20))
-let link = Style
+let link = Style("a")
     .foregroundColor(.blue, .normal)
     .foregroundColor(.brown, .highlighted) // <-- detections with this style will be clickable now
 
-tweetLabel.attributedText = "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap"
+tweetLabel.attributedText = ""@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>""
+    .style(tags: link)
     .styleHashtags(link)
     .styleMentions(link)
     .styleLinks(link)
@@ -148,6 +149,10 @@ tweetLabel.onClick = { label, detection in
                 }
             case .link(let url):
                 UIApplication.shared.openURL(url)
+            case .tag(let tag):
+                if tag.name == "a", let href = tag.attributes["href"], let url = URL(string: href) {
+                    UIApplication.shared.openURL(url)
+                }
             default:
                 break
             }
@@ -155,7 +160,7 @@ tweetLabel.onClick = { label, detection in
 
 view.addSubview(tweetLabel)
 ```
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_attributedlabel.png" alt="" width="357" height="82" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_attributedlabel.png" alt="" width="361" height="98" />
 
 ## Requirements
 
