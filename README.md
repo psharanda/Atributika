@@ -130,9 +130,7 @@ let link = Style("a")
     .foregroundColor(.blue, .normal)
     .foregroundColor(.brown, .highlighted) // <-- detections with this style will be clickable now
 
-tweetLabel.attributedText = "@e2F If only Bradley's arm was longer. Best photo ever.
-😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>
-Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>"
+tweetLabel.attributedText = "@e2F If only Bradley's arm was longer. Best photo ever.😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>"
     .style(tags: link)
     .styleHashtags(link)
     .styleMentions(link)
