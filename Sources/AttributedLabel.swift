@@ -38,38 +38,46 @@ open class AttributedLabel: UIView {
     }
     
     //MARK: - public properties redirected to underlying UILabel
+    private func changeLabel(handler: (UILabel)->Void) {
+        let attributedText = label.attributedText
+        label.attributedText = nil
+        handler(label)
+        label.attributedText = attributedText
+        setNeedsLayout()
+    }
+    
     open var font: UIFont {
-        set { label.font = newValue }
+        set { changeLabel {  $0.font = newValue } }
         get { return label.font }
     }
     
     open var numberOfLines: Int {
-        set { label.numberOfLines = newValue }
+        set { changeLabel {  $0.numberOfLines = newValue } }
         get { return label.numberOfLines }
     }
     
     open var textAlignment: NSTextAlignment {
-        set { label.textAlignment = newValue }
+        set { changeLabel {  $0.textAlignment = newValue } }
         get { return label.textAlignment }
     }
     
     open var lineBreakMode: NSLineBreakMode {
-        set { label.lineBreakMode = newValue }
+        set { changeLabel {  $0.lineBreakMode = newValue } }
         get { return label.lineBreakMode }
     }
     
     open var textColor: UIColor {
-        set { label.textColor = newValue }
+        set { changeLabel {  $0.textColor = newValue } }
         get { return label.textColor }
     }
     
     open var shadowColor: UIColor? {
-        set { label.shadowColor = newValue }
+        set { changeLabel {  $0.shadowColor = newValue } }
         get { return label.shadowColor }
     }
     
     open var shadowOffset: CGSize {
-        set { label.shadowOffset = newValue }
+        set { changeLabel {  $0.shadowOffset = newValue } }
         get { return label.shadowOffset }
     }
     
@@ -135,6 +143,10 @@ open class AttributedLabel: UIView {
     
     open override func sizeThatFits(_ size: CGSize) -> CGSize {
         return label.sizeThatFits(size)
+    }
+    
+    open override var intrinsicContentSize: CGSize {
+        return label.intrinsicContentSize
     }
 
     //MARK: - DetectionAreaButton
