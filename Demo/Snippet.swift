@@ -60,7 +60,14 @@ func stringWithManyDetectables() -> NSAttributedString {
     let phoneNumbers = Style.backgroundColor(.yellow)
     let mentions = Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
     let b = Style("b").font(.boldSystemFont(ofSize: 12))
+    
+    #if swift(>=4.2)
+    let u = Style("u").underlineStyle(.single)
+    #else
     let u = Style("u").underlineStyle(.styleSingle)
+    #endif
+    
+    
     let all = Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
     
     let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
@@ -140,7 +147,12 @@ func stringWithHref() -> NSAttributedString {
 
 func stringWithBoldItalicUnderline() -> NSAttributedString {
     let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
+    #if swift(>=4.2)
+    let uib = Style("uib").font(font).underlineStyle(.single)
+    #else
     let uib = Style("uib").font(font).underlineStyle(.styleSingle)
+    #endif
+    
     let str = "<br><uib>Italicunderline</uib>".style(tags: uib)
         .attributedString
     return str
@@ -148,7 +160,12 @@ func stringWithBoldItalicUnderline() -> NSAttributedString {
 
 func stringWithImage() -> NSAttributedString {
     let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
+    
+    #if swift(>=4.2)
+    let uib = Style("b").font(font).underlineStyle(.single)
+    #else
     let uib = Style("b").font(font).underlineStyle(.styleSingle)
+    #endif
     let str = "<b>Running</b> with <img id=\"scissors\"></img>!".style(tags: uib)
     
     let mutableAttrStr = NSMutableAttributedString(attributedString: str.attributedString)
@@ -175,7 +192,12 @@ func stringWithImage() -> NSAttributedString {
 
 func stringWithStrikethrough() -> NSAttributedString {
     let all = Style.font(.systemFont(ofSize: 20))
+    #if swift(>=4.2)
+    let strike = Style("strike").strikethroughStyle(.single).strikethroughColor(.black)
+    #else
     let strike = Style("strike").strikethroughStyle(.styleSingle).strikethroughColor(.black)
+    #endif
+    
     let code = Style("code").foregroundColor(.red)
     
     let str = "<code>my code</code> <strike>test</strike> testing"
@@ -187,21 +209,21 @@ func stringWithStrikethrough() -> NSAttributedString {
 
 func allSnippets() -> [NSAttributedString] {
     return [
-        stringWithAtributikaLogo(),
-        stringWithTagsAndEmoji(),
-        stringWithHashTagAndMention(),
-        stringWithPhone(),
-        stringWithLink(),
-        stringWithManyDetectables(),
-        stringWith3Tags(),
-        stringWithGrams(),
-        stringWithStrong(),
-        stringWithTagAndHashtag(),
-        stringWithUnorderedList(),
-        stringWithHref(),
-        stringWithBoldItalicUnderline(),
-        stringWithImage(),
-        stringWithStrikethrough()
+//        stringWithAtributikaLogo(),
+//        stringWithTagsAndEmoji(),
+//        stringWithHashTagAndMention(),
+//        stringWithPhone(),
+//        stringWithLink(),
+//        stringWithManyDetectables(),
+//        stringWith3Tags(),
+//        stringWithGrams(),
+//        stringWithStrong(),
+//        stringWithTagAndHashtag(),
+//        stringWithUnorderedList(),
+//        stringWithHref(),
+//        stringWithBoldItalicUnderline(),
+//        stringWithImage(),
+//        stringWithStrikethrough()
     ]
 }
 

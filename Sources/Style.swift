@@ -25,21 +25,21 @@ public enum StyleType {
     case highlighted
 }
 
-// workaround for https://github.com/psharanda/Atributika/issues/27
-#if swift(>=4.1)
-    extension NSAttributedStringKey: Equatable { }
-	extension NSAttributedStringKey: Hashable { }
+#if swift(>=4.2)
+    public typealias AttributedStringKey = NSAttributedString.Key
+#else
+    public typealias AttributedStringKey = NSAttributedStringKey
 #endif
 
 public struct Style {
     
     public let name: String
     
-    public var attributes: [NSAttributedStringKey: Any] {
+    public var attributes: [AttributedStringKey: Any] {
         return typedAttributes[.normal] ?? [:]
     }
     
-    public var highlightedAttributes: [NSAttributedStringKey: Any] {
+    public var highlightedAttributes: [AttributedStringKey: Any] {
         var attrs = attributes
         
         typedAttributes[.highlighted]?.forEach { key, value in
@@ -49,7 +49,7 @@ public struct Style {
         return attrs
     }
     
-    public var disabledAttributes: [NSAttributedStringKey: Any] {
+    public var disabledAttributes: [AttributedStringKey: Any] {
         var attrs = attributes
         
         typedAttributes[.disabled]?.forEach { key, value in
@@ -59,21 +59,36 @@ public struct Style {
         return attrs
     }
     
-    public let typedAttributes: [StyleType: [NSAttributedStringKey: Any]]
+    public let typedAttributes: [StyleType: [AttributedStringKey: Any]]
     
-    public init(_ name: String = "", _ attributes: [NSAttributedStringKey: Any] = [:], _ type: StyleType = .normal) {
-        self.name = name
-        typedAttributes = [type: attributes]
+    public init() {
+        self.name = ""
+        self.typedAttributes = [:]
     }
     
-    public init(_ name: String = "", _ typedAttributes: [StyleType: [NSAttributedStringKey: Any]] = [:]) {
+    public init(_ name: String) {
         self.name = name
-        self.typedAttributes = typedAttributes
+        self.typedAttributes = [:]
     }
     
     public init(_ name: String, style: Style) {
         self.name = name
         self.typedAttributes = style.typedAttributes
+    }
+    
+    public init(_ name: String, _ attributes: [AttributedStringKey: Any]) {
+        self.name = name
+        typedAttributes = [.normal: attributes]
+    }
+    
+    public init(_ name: String, _ attributes: [AttributedStringKey: Any], _ type: StyleType) {
+        self.name = name
+        typedAttributes = [type: attributes]
+    }
+    
+    public init(_ name: String, _ typedAttributes: [StyleType: [AttributedStringKey: Any]]) {
+        self.name = name
+        self.typedAttributes = typedAttributes
     }
     
     public func named(_ name: String) -> Style {
@@ -182,90 +197,90 @@ public struct Style {
     
     
     public static func font(_ value: Font, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.font: value], type)
+        return Style("", [AttributedStringKey.font: value], type)
     }
     
     public static func paragraphStyle(_ value: NSParagraphStyle, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.paragraphStyle: value], type)
+        return Style("", [AttributedStringKey.paragraphStyle: value], type)
     }
     
     public static func foregroundColor(_ value: Color, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.foregroundColor: value], type)
+        return Style("", [AttributedStringKey.foregroundColor: value], type)
     }
     
     public static func backgroundColor(_ value: Color, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.backgroundColor: value], type)
+        return Style("", [AttributedStringKey.backgroundColor: value], type)
     }
     
     public static func ligature(_ value: Int, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.ligature: value], type)
+        return Style("", [AttributedStringKey.ligature: value], type)
     }
     
     public static func kern(_ value: Float, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.kern: value], type)
+        return Style("", [AttributedStringKey.kern: value], type)
     }
     
     public static func strikethroughStyle(_ value: NSUnderlineStyle, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.strikethroughStyle : value.rawValue], type)
+        return Style("", [AttributedStringKey.strikethroughStyle : value.rawValue], type)
     }
     
     public static func strikethroughColor(_ value: Color, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.strikethroughColor: value], type)
+        return Style("", [AttributedStringKey.strikethroughColor: value], type)
     }
     
     public static func underlineStyle(_ value: NSUnderlineStyle, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.underlineStyle : value.rawValue], type)
+        return Style("", [AttributedStringKey.underlineStyle : value.rawValue], type)
     }
     
     public static func underlineColor(_ value: Color, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.underlineColor: value], type)
+        return Style("", [AttributedStringKey.underlineColor: value], type)
     }
     
     public static func strokeColor(_ value: Color, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.strokeColor: value], type)
+        return Style("", [AttributedStringKey.strokeColor: value], type)
     }
     
     public static func strokeWidth(_ value: Float, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.strokeWidth: value], type)
+        return Style("", [AttributedStringKey.strokeWidth: value], type)
     }
     
     #if !os(watchOS)
     public static func shadow(_ value: NSShadow, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.shadow: value], type)
+        return Style("", [AttributedStringKey.shadow: value], type)
     }
     #endif
     
     public static func textEffect(_ value: String, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.textEffect: value], type)
+        return Style("", [AttributedStringKey.textEffect: value], type)
     }
     
     #if !os(watchOS)
     public static func attachment(_ value: NSTextAttachment, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.attachment: value], type)
+        return Style("", [AttributedStringKey.attachment: value], type)
     }
     #endif
     
     public static func link(_ value: URL, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.link: value], type)
+        return Style("", [AttributedStringKey.link: value], type)
     }
     
     public static func link(_ value: String, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.link: value], type)
+        return Style("", [AttributedStringKey.link: value], type)
     }
     
     public static func baselineOffset(_ value: Float, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.baselineOffset: value], type)
+        return Style("", [AttributedStringKey.baselineOffset: value], type)
     }
     
     public static func obliqueness(_ value: Float, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.obliqueness: value], type)
+        return Style("", [AttributedStringKey.obliqueness: value], type)
     }
     
     public static func expansion(_ value: Float, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.expansion: value], type)
+        return Style("", [AttributedStringKey.expansion: value], type)
     }
     
     public static func writingDirection(_ value: NSWritingDirection, _ type: StyleType = .normal) -> Style {
-        return Style("", [NSAttributedStringKey.writingDirection: value.rawValue], type)
+        return Style("", [AttributedStringKey.writingDirection: value.rawValue], type)
     }
 }

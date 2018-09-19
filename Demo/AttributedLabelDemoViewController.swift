@@ -6,6 +6,12 @@
 import UIKit
 import Atributika
 
+#if swift(>=4.2)
+public typealias TableViewCellStyle = UITableViewCell.CellStyle
+#else
+public typealias TableViewCellStyle = UITableViewCellStyle
+#endif
+
 class AttributedLabelDemoViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
@@ -13,7 +19,11 @@ class AttributedLabelDemoViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        #if swift(>=4.2)
+        tableView.rowHeight = UITableView.automaticDimension
+        #else
         tableView.rowHeight = UITableViewAutomaticDimension
+        #endif        
         tableView.estimatedRowHeight = 50
         return tableView
     }()
@@ -72,7 +82,7 @@ extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDat
 class TweetCell: UITableViewCell {
     private let tweetLabel = AttributedLabel()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: TableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         tweetLabel.onClick = { label, detection in

@@ -178,7 +178,12 @@ open class AttributedLabel: UIView {
         let button = DetectionAreaButton(detection: detection)
         button.accessibilityLabel = text
         button.isAccessibilityElement = true
+        #if swift(>=4.2)
+        button.accessibilityTraits = UIAccessibilityTraits.button
+        #else
         button.accessibilityTraits = UIAccessibilityTraitButton
+        #endif
+        
         button.isUserInteractionEnabled = state.isEnabled
         button.addTarget(self, action: #selector(handleDetectionAreaButtonClick), for: .touchUpInside)
         detectionAreaButtons.append(button)
@@ -236,7 +241,7 @@ extension NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = textAlignment
         
-        let inheritedAttributes = [NSAttributedStringKey.font: font as Any, NSAttributedStringKey.paragraphStyle: paragraphStyle as Any]
+        let inheritedAttributes = [AttributedStringKey.font: font as Any, AttributedStringKey.paragraphStyle: paragraphStyle as Any]
         let result = NSMutableAttributedString(string: string, attributes: inheritedAttributes)
         
         result.beginEditing()

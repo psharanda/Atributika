@@ -5,13 +5,20 @@
 
 import UIKit
 
+
+#if swift(>=4.2)
+typealias ApplicationLaunchOptionsKey = UIApplication.LaunchOptionsKey
+#else
+ typealias ApplicationLaunchOptionsKey = UIApplicationLaunchOptionsKey
+#endif
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [ApplicationLaunchOptionsKey: Any]?) -> Bool {
        
         let tbc = UITabBarController()
         

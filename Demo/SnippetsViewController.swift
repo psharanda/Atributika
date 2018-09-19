@@ -12,7 +12,11 @@ class SnippetsViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        #if swift(>=4.2)
+        tableView.rowHeight = UITableView.automaticDimension
+        #else
         tableView.rowHeight = UITableViewAutomaticDimension
+        #endif
         tableView.estimatedRowHeight = 50
         return tableView
     }()
