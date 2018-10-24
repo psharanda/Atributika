@@ -53,7 +53,7 @@ let all = Style.font(font).foregroundColor(grayColor)
 
 let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
     .style(tags: a)
-    .styleAll()
+    .styleAll(all)
     .attributedString
 ```
 
