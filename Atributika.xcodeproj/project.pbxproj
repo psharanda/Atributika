@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1B2E55D92192FC8100D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
+		1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
+		1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
+		1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
 		1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */; };
 		1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */; };
 		1B2F83971E5C98A4009AFBCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83961E5C98A4009AFBCA /* Assets.xcassets */; };
@@ -611,6 +614,7 @@
 			files = (
 				1BB55ADB1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
 				1BB55AD31E5C73F000CE6EAD /* AttributedText.swift in Sources */,
+				1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -623,6 +627,7 @@
 			files = (
 				1BB55ADC1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
 				1BB55AD41E5C73F000CE6EAD /* AttributedText.swift in Sources */,
+				1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD81E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -635,6 +640,7 @@
 			files = (
 				1BB55ADA1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
 				1BB55AD21E5C73EF00CE6EAD /* AttributedText.swift in Sources */,
+				1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */,
