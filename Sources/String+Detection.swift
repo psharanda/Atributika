@@ -88,13 +88,6 @@ extension String {
         return Tag(name: tagName, attributes: attrubutes)
     }
     
-    private static let specials = ["quot":"\"",
-                                   "amp":"&",
-                                   "apos":"'",
-                                   "lt":"<",
-                                   "gt":">",
-                                   "nbsp":" "] //just replacing it with space, not going to implement non-breaking logic
-    
     public func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
         
         let scanner = Scanner(string: self)
@@ -151,18 +144,28 @@ extension String {
                         }
                     }
                 } else if scanner.scanString("&") != nil {
-                    
-                    var foundSpecial = false
-                    for (k, v) in String.specials {
-                        if scanner.scanString(k + ";") != nil {
-                            resultString += v
-                            foundSpecial = true
-                            break
+                    if scanner.scanString("#") != nil {
+                        if let potentialSpecial = scanner.scanCharacters(from: CharacterSet.alphanumerics) {
+                            if scanner.scanString(";") != nil {
+                                resultString += potentialSpecial.unescapeAsNumber() ?? "&#\(potentialSpecial);"
+                            } else {
+                                resultString += "&#"
+                                resultString += potentialSpecial
+                            }
+                        } else {
+                            resultString += "&#"
                         }
-                    }
-                    
-                    if !foundSpecial {
-                        resultString += "&"
+                    } else {
+                        if let potentialSpecial = scanner.scanCharacters(from: CharacterSet.letters) {
+                            if scanner.scanString(";") != nil {
+                                resultString += HTMLSpecialsMap[potentialSpecial] ?? "&\(potentialSpecial);"
+                            } else {
+                                resultString += "&"
+                                resultString += potentialSpecial
+                            }
+                        } else {
+                            resultString += "&"
+                        }
                     }
                 }
             }
