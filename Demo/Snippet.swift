@@ -209,21 +209,21 @@ func stringWithStrikethrough() -> NSAttributedString {
 
 func allSnippets() -> [NSAttributedString] {
     return [
-//        stringWithAtributikaLogo(),
-//        stringWithTagsAndEmoji(),
-//        stringWithHashTagAndMention(),
-//        stringWithPhone(),
-//        stringWithLink(),
-//        stringWithManyDetectables(),
-//        stringWith3Tags(),
-//        stringWithGrams(),
-//        stringWithStrong(),
-//        stringWithTagAndHashtag(),
-//        stringWithUnorderedList(),
-//        stringWithHref(),
-//        stringWithBoldItalicUnderline(),
-//        stringWithImage(),
-//        stringWithStrikethrough()
+        stringWithAtributikaLogo(),
+        stringWithTagsAndEmoji(),
+        stringWithHashTagAndMention(),
+        stringWithPhone(),
+        stringWithLink(),
+        stringWithManyDetectables(),
+        stringWith3Tags(),
+        stringWithGrams(),
+        stringWithStrong(),
+        stringWithTagAndHashtag(),
+        stringWithUnorderedList(),
+        stringWithHref(),
+        stringWithBoldItalicUnderline(),
+        stringWithImage(),
+        stringWithStrikethrough()
     ]
 }
 
