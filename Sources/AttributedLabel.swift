@@ -150,7 +150,7 @@ open class AttributedLabel: UIView {
     }
 
     //MARK: - DetectionAreaButton
-    private class DetectionAreaButton: UIControl {
+    private class DetectionAreaButton: UIButton {
         
         var onHighlightChanged: ((DetectionAreaButton)->Void)?
         
