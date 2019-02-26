@@ -123,20 +123,28 @@ func stringWithTagAndHashtag() -> NSAttributedString {
     return result
 }
 
-func stringWithUnorderedList() -> NSAttributedString {
+func stringWithUnorderedList() -> NSAttributedString {   
+    let listMarkUpText: "TODO:<br><li>LongTextLongTextLong TextLongTextLongTextLong TextLongTextLongText</li><li>AnotherLongTextAnotherLon TextAnotherLongTextAnotherLong TextAnotherLongTextAnotherLongText</li><li>ShortTextShortText</li>"
+    let listIndentation: CGFloat = 10,
+    let listTextIndentation: CGFloat = 20 // relatively to the bullet symbol indentation
+    let lineSpacing: CGFloat = 2
+    let listItemSpacing: CGFloat = 10
     
     let transformers: [TagTransformer] = [
         TagTransformer.brTransformer,
-        TagTransformer(tagName: "li", tagType: .start, replaceValue: "- "),
+        TagTransformer(tagName: "li", tagType: .start, replaceValue: "\u{2022}\t"),
         TagTransformer(tagName: "li", tagType: .end, replaceValue: "\n")
     ]
-    
-    let li = Style("li").font(.systemFont(ofSize: 12)).foregroundColor(.red)
-    
-    return "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>"
-        .style(tags: li, transformers: transformers)
-        .styleAll(Style.font(.boldSystemFont(ofSize: 14)))
-        .attributedString
+    let pstyle = NSMutableParagraphStyle()
+    pstyle.firstLineHeadIndent = listIndentation
+    pstyle.headIndent = listTextIndentation + listIndentation
+    pstyle.lineSpacing = lineSpacing
+    pstyle.paragraphSpacing = listItemSpacing
+    pstyle.tabStops = [NSTextTab(textAlignment: .left,
+                                 location: listTextIndentation + listIndentation,
+                                 options: [NSTextTab.OptionKey: Any]())]
+    return listMarkUpText.style(tags: Style("li").paragraphStyle(pstyle),
+                                transformers: transformers).attributedString
 }
 
 func stringWithHref() -> NSAttributedString {
