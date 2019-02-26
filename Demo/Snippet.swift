@@ -124,12 +124,12 @@ func stringWithTagAndHashtag() -> NSAttributedString {
 }
 
 func stringWithUnorderedList() -> NSAttributedString {   
-    let listMarkUpText: "TODO:<br><li>LongTextLongTextLong TextLongTextLongTextLong TextLongTextLongText</li><li>AnotherLongTextAnotherLon TextAnotherLongTextAnotherLong TextAnotherLongTextAnotherLongText</li><li>ShortTextShortText</li>"
-    let listIndentation: CGFloat = 10,
+    let listMarkUpText = "TODO:<br><li>LongTextLongTextLong TextLongTextLongTextLong TextLongTextLongText</li><li>AnotherLongTextAnotherLon TextAnotherLongTextAnotherLong TextAnotherLongTextAnotherLongText</li><li>ShortTextShortText</li>"
+    let listIndentation: CGFloat = 10
     let listTextIndentation: CGFloat = 20 // relatively to the bullet symbol indentation
     let lineSpacing: CGFloat = 2
     let listItemSpacing: CGFloat = 10
-    
+
     let transformers: [TagTransformer] = [
         TagTransformer.brTransformer,
         TagTransformer(tagName: "li", tagType: .start, replaceValue: "\u{2022}\t"),
