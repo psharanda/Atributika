@@ -482,7 +482,9 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(">".detectTags().string, ">")
         XCTAssertEqual("<a".detectTags().string, "<a")
         XCTAssertEqual("<a>".detectTags().string, "")
-        XCTAssertEqual("< a>".detectTags().string, "< a>")
+        XCTAssertEqual("< a>".detectTags().string, "< a>")        
+        XCTAssertEqual("&frasl;".detectTags().string, "⁄")
+        XCTAssertEqual("&raquo;".detectTags().string, "»")
     }
     
     func testSpecialCodes() {

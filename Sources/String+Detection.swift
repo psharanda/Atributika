@@ -158,7 +158,7 @@ extension String {
                     } else {
                         if let potentialSpecial = scanner.scanCharacters(from: CharacterSet.letters) {
                             if scanner.scanString(";") != nil {
-                                resultString += HTMLSpecialsMap[potentialSpecial] ?? "&\(potentialSpecial);"
+                                resultString += HTMLSpecial(for: potentialSpecial) ?? "&\(potentialSpecial);"
                             } else {
                                 resultString += "&"
                                 resultString += potentialSpecial

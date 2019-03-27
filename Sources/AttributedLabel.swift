@@ -96,8 +96,11 @@ open class AttributedLabel: UIView {
         addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[label]|", options: [], metrics: nil, views: ["label": label]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[label]|", options: [], metrics: nil, views: ["label": label]))
+        
+        label.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        label.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
     }
     
     //MARK: - overrides
@@ -131,11 +134,11 @@ open class AttributedLabel: UIView {
             let usedRect = layoutManager.usedRect(for: textContainer)
             let dy = max(0, (bounds.height - usedRect.height)/2)
             highlightableDetections.forEach { detection in
-                let nsrange = NSRange(detection.range, in: inheritedString.string)
+                let nsrange = NSRange(detection.range, in: text.string)
                 layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange, withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0), in: textContainer, using: { (rect, stop) in
                     var finalRect = rect
                     finalRect.origin.y += dy
-                    self.addDetectionAreaButton(frame: finalRect, detection: detection, text: String(inheritedString.string[detection.range]))
+                    self.addDetectionAreaButton(frame: finalRect, detection: detection, text: String(text.string[detection.range]))
                 })
             }
         }
