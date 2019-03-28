@@ -39,6 +39,7 @@ public struct Detection {
     public let type: DetectionType
     public let style: Style
     public let range: Range<String.Index>
+    let level: Int
 }
 
 public protocol AttributedTextProtocol {
@@ -52,7 +53,11 @@ extension AttributedTextProtocol {
     private func makeAttributedString(getAttributes: (Style)-> [AttributedStringKey: Any]) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: string, attributes: getAttributes(baseStyle))
         
-        for d in detections {
+        let sortedDetections = detections.sorted {
+            $0.level < $1.level
+        }
+        
+        for d in sortedDetections {
             let attrs = getAttributes(d.style)
             if attrs.count > 0 {
                 attributedString.addAttributes(attrs, range: NSRange(d.range, in: string))
@@ -97,32 +102,32 @@ extension AttributedTextProtocol {
     /// style things like #xcode #mentions
     public func styleHashtags(_ style: Style) -> AttributedText {
         let ranges = string.detectHashTags()
-        let ds = ranges.map { Detection(type: .hashtag(String(string[(string.index($0.lowerBound, offsetBy: 1))..<$0.upperBound])), style: style, range: $0) }
+        let ds = ranges.map { Detection(type: .hashtag(String(string[(string.index($0.lowerBound, offsetBy: 1))..<$0.upperBound])), style: style, range: $0, level: Int.max) }
         return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
     /// style things like @John @all
     public func styleMentions(_ style: Style) -> AttributedText {
         let ranges = string.detectMentions()
-        let ds = ranges.map { Detection(type: .mention(String(string[(string.index($0.lowerBound, offsetBy: 1))..<$0.upperBound])), style: style, range: $0) }
+        let ds = ranges.map { Detection(type: .mention(String(string[(string.index($0.lowerBound, offsetBy: 1))..<$0.upperBound])), style: style, range: $0, level: Int.max) }
         return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
     public func style(regex: String, options: NSRegularExpression.Options = [], style: Style) -> AttributedText {
         let ranges = string.detect(regex: regex, options: options)
-        let ds = ranges.map { Detection(type: .regex(regex), style: style, range: $0) }
+        let ds = ranges.map { Detection(type: .regex(regex), style: style, range: $0, level: Int.max) }
         return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
     public func style(textCheckingTypes: NSTextCheckingResult.CheckingType, style: Style) -> AttributedText {
         let ranges = string.detect(textCheckingTypes: textCheckingTypes)
-        let ds = ranges.map { Detection(type: .textCheckingType(String(string[$0]), textCheckingTypes), style: style, range: $0) }
+        let ds = ranges.map { Detection(type: .textCheckingType(String(string[$0]), textCheckingTypes), style: style, range: $0, level: Int.max) }
         return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
     public func stylePhoneNumbers(_ style: Style) -> AttributedText {
         let ranges = string.detect(textCheckingTypes: [.phoneNumber])
-        let ds = ranges.map { Detection(type: .phoneNumber(String(string[$0])), style: style, range: $0) }
+        let ds = ranges.map { Detection(type: .phoneNumber(String(string[$0])), style: style, range: $0, level: Int.max) }
         return AttributedText(string: string, detections: detections + ds, baseStyle: baseStyle)
     }
     
@@ -131,7 +136,7 @@ extension AttributedTextProtocol {
         
         #if swift(>=4.1)
         let ds = ranges.compactMap { range in
-            URL(string: String(string[range])).map { Detection(type: .link($0), style: style, range: range) }
+            URL(string: String(string[range])).map { Detection(type: .link($0), style: style, range: range, level: Int.max) }
         }
         #else
         let ds = ranges.flatMap { range in
@@ -143,7 +148,7 @@ extension AttributedTextProtocol {
     }
     
     public func style(range: Range<String.Index>, style: Style) -> AttributedText {
-        let d = Detection(type: .range, style: style, range: range)
+        let d = Detection(type: .range, style: style, range: range, level: Int.max)
         return AttributedText(string: string, detections: detections + [d], baseStyle: baseStyle)
     }
 }
@@ -170,9 +175,9 @@ extension String: AttributedTextProtocol {
         tagsInfo.forEach { t in
             
             if let style = (tags.first { style in style.name.lowercased() == t.tag.name.lowercased() }) {
-                ds.append(Detection(type: .tag(t.tag), style: tuner(style, t.tag), range: t.range))
+                ds.append(Detection(type: .tag(t.tag), style: tuner(style, t.tag), range: t.range, level: t.level))
             } else {
-                ds.append(Detection(type: .tag(t.tag), style: Style(), range: t.range))
+                ds.append(Detection(type: .tag(t.tag), style: Style(), range: t.range, level: t.level))
             }
         }
         
@@ -192,7 +197,7 @@ extension NSAttributedString: AttributedTextProtocol {
         
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attributes, range, _) in
             if let range = Range(range, in: self.string) {
-                ds.append(Detection(type: .range, style: Style("", attributes), range: range))
+                ds.append(Detection(type: .range, style: Style("", attributes), range: range, level: Int.max))
             }
         }
         

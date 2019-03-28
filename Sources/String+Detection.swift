@@ -16,6 +16,7 @@ public struct Tag {
 public struct TagInfo {
     public let tag: Tag
     public let range: Range<String.Index>
+    public let level: Int
 }
 
 public enum TagType {
@@ -94,7 +95,7 @@ extension String {
         scanner.charactersToBeSkipped = nil
         var resultString = String()
         var tagsResult = [TagInfo]()
-        var tagsStack = [(Tag, String.Index)]()
+        var tagsStack = [(Tag, String.Index, Int)]()
         
         while !scanner.isAtEnd {
             
@@ -123,11 +124,11 @@ extension String {
                                         }
                                         
                                         if tagType == .start {
-                                            tagsStack.append((tag, resultTextEndIndex))
+                                            tagsStack.append((tag, resultTextEndIndex, (tagsStack.last?.2 ?? -1) + 1))
                                         } else {
-                                            for (index, (tagInStack, startIndex)) in tagsStack.enumerated().reversed() {
+                                            for (index, (tagInStack, startIndex, level)) in tagsStack.enumerated().reversed() {
                                                 if tagInStack.name.lowercased() == tag.name.lowercased() {
-                                                    tagsResult.append(TagInfo(tag: tagInStack, range: startIndex..<resultTextEndIndex))
+                                                    tagsResult.append(TagInfo(tag: tagInStack, range: startIndex..<resultTextEndIndex, level: level))
                                                     tagsStack.remove(at: index)
                                                     break
                                                 }
