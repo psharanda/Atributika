@@ -222,7 +222,7 @@ open class AttributedLabel: UIView {
             
             if let detection = state.detection {
                 let higlightedAttributedString = NSMutableAttributedString(attributedString: string)
-                higlightedAttributedString.addAttributes(detection.style.highlightedAttributes, range: NSRange(detection.range, in: string.string))
+                higlightedAttributedString.addAttributes(detection.style.highlightedAttributes, range: NSRange(detection.range, in: text.string))
                 label.attributedText = higlightedAttributedString
             } else {
                 if state.isEnabled {
