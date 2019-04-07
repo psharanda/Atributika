@@ -18,6 +18,9 @@
 		1B2F839F1E5C98F0009AFBCA /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		1B2F83A01E5C98F0009AFBCA /* Atributika.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
+		1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
+		1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
+		1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
 		1BB55AD11E5C73EF00CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
 		1BB55AD21E5C73EF00CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
 		1BB55AD31E5C73F000CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
@@ -627,6 +630,7 @@
 				1BB55AD31E5C73F000CE6EAD /* AttributedText.swift in Sources */,
 				1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
+				1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */,
 			);
@@ -640,6 +644,7 @@
 				1BB55AD41E5C73F000CE6EAD /* AttributedText.swift in Sources */,
 				1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
+				1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD81E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */,
 			);
@@ -653,6 +658,7 @@
 				1BB55AD21E5C73EF00CE6EAD /* AttributedText.swift in Sources */,
 				1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
+				1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */,
 			);

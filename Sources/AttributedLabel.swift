@@ -29,7 +29,7 @@ open class AttributedLabel: UIView {
     
     open var attributedText: AttributedText? {
         set {
-            state.attributedTextAndString = newValue.map { ($0, $0.attributedString) }
+            state = State(attributedTextAndString: newValue.map { ($0, $0.attributedString) }, isEnabled: state.isEnabled, detection: nil)
             setNeedsLayout()
         }
         get {
@@ -245,7 +245,16 @@ extension NSAttributedString {
         paragraphStyle.alignment = textAlignment
         
         let inheritedAttributes = [AttributedStringKey.font: font as Any, AttributedStringKey.paragraphStyle: paragraphStyle as Any]
-        let result = NSMutableAttributedString(string: string, attributes: inheritedAttributes)
+        
+        var s = string
+        
+        //since iOS 11, UILabel line break logic was changed. It tries to avoid orphaned words on last line. To mimic this we can replace last space with non-breaking space
+        let version = OperatingSystemVersion(majorVersion: 11, minorVersion: 0, patchVersion: 0)
+        if ProcessInfo.processInfo.isOperatingSystemAtLeast(version) {
+            s = s.replacingLastOccurrenceOfString(" ", with: "\u{a0}")
+        }
+        
+        let result = NSMutableAttributedString(string: s, attributes: inheritedAttributes)
         
         result.beginEditing()
         enumerateAttributes(in: NSMakeRange(0, length), options: .longestEffectiveRangeNotRequired, using: { (attributes, range, _) in
@@ -254,6 +263,22 @@ extension NSAttributedString {
         result.endEditing()
         
         return result
+    }
+}
+
+extension String
+{
+    func replacingLastOccurrenceOfString(_ searchString: String,
+                                         with replacementString: String) -> String
+    {
+        if let range = range(of: searchString,
+                                  options: [.backwards],
+                                  range: nil,
+                                  locale: nil) {
+            
+            return replacingCharacters(in: range, with: replacementString)
+        }
+        return self
     }
 }
 
