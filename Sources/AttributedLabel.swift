@@ -105,6 +105,7 @@ open class AttributedLabel: UIView {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.isSelectable = false
+        textView.backgroundColor = nil
         
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.topAnchor.constraint(equalTo: topAnchor).isActive = true
