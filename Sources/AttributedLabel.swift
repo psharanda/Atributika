@@ -29,11 +29,11 @@ open class AttributedLabel: UIView {
     
     open var attributedText: AttributedText? {
         set {
-            state = State(attributedTextAndString: newValue.map { ($0, $0.attributedString) }, isEnabled: state.isEnabled, detection: nil)
+            state = State(attributedText: newValue, isEnabled: state.isEnabled, detection: nil)
             setNeedsLayout()
         }
         get {
-            return state.attributedTextAndString?.0
+            return state.attributedText
         }
     }
     
@@ -124,7 +124,7 @@ open class AttributedLabel: UIView {
         
         detectionAreaButtons.removeAll()
         
-        if let (attributedText, _) = state.attributedTextAndString {
+        if let attributedText = state.attributedText {
             
             let highlightableDetections = attributedText.detections.filter { $0.style.typedAttributes[.highlighted] != nil }
             
@@ -199,12 +199,12 @@ open class AttributedLabel: UIView {
     //MARK: - state
     
     private struct State {
-        var attributedTextAndString: (AttributedText, NSAttributedString)?
+        var attributedText: AttributedText?
         var isEnabled: Bool
         var detection: Detection?
     }
     
-    private var state: State = State(attributedTextAndString: nil, isEnabled: true, detection: nil) {
+    private var state: State = State(attributedText: nil, isEnabled: true, detection: nil) {
         didSet {
             updateText()
         }
@@ -241,15 +241,15 @@ open class AttributedLabel: UIView {
     }
     
     private func updateText() {
-        if let (attributedText, attributedString) = state.attributedTextAndString {
+        if let attributedText = state.attributedText {
             
             if let detection = state.detection {
-                let higlightedAttributedString = NSMutableAttributedString(attributedString: attributedString)
+                let higlightedAttributedString = NSMutableAttributedString(attributedString: attributedText.attributedString)
                 higlightedAttributedString.addAttributes(detection.style.highlightedAttributes, range: NSRange(detection.range, in: attributedText.string))
                 updateAttributedTextInTextView(higlightedAttributedString)
             } else {
                 if state.isEnabled {
-                    updateAttributedTextInTextView(attributedString)
+                    updateAttributedTextInTextView(attributedText.attributedString)
                 } else {
                     updateAttributedTextInTextView(attributedText.disabledAttributedString)
                 }

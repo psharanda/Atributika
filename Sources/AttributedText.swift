@@ -50,7 +50,7 @@ public protocol AttributedTextProtocol {
 
 extension AttributedTextProtocol {
     
-    private func makeAttributedString(getAttributes: (Style)-> [AttributedStringKey: Any]) -> NSAttributedString {
+    fileprivate func makeAttributedString(getAttributes: (Style)-> [AttributedStringKey: Any]) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: string, attributes: getAttributes(baseStyle))
         
         let sortedDetections = detections.sorted {
@@ -66,21 +66,10 @@ extension AttributedTextProtocol {
         
         return attributedString
     }
-    
-    public var attributedString: NSAttributedString {
-        return makeAttributedString { $0.attributes }
-    }
-    
-    public var highlightedAttributedString: NSAttributedString {
-        return makeAttributedString { $0.highlightedAttributes }
-    }
-    
-    public var disabledAttributedString: NSAttributedString {
-        return makeAttributedString { $0.disabledAttributes }
-    }
 }
 
-public struct AttributedText: AttributedTextProtocol {
+public final class AttributedText: AttributedTextProtocol {
+
     public let string: String
     public let detections: [Detection]
     public let baseStyle: Style
@@ -90,6 +79,14 @@ public struct AttributedText: AttributedTextProtocol {
         self.detections = detections
         self.baseStyle = baseStyle
     }
+
+    public lazy private(set) var attributedString: NSAttributedString  = {
+        makeAttributedString { $0.attributes }
+    }()
+
+    public lazy private(set) var disabledAttributedString: NSAttributedString  = {
+        makeAttributedString { $0.disabledAttributes }
+    }()
 }
 
 extension AttributedTextProtocol {
@@ -187,6 +184,14 @@ extension String: AttributedTextProtocol {
     public func style(tags: Style..., transformers: [TagTransformer] = [TagTransformer.brTransformer], tuner: (Style, Tag) -> Style = { s, _ in return  s}) -> AttributedText {
         return style(tags: tags, transformers: transformers, tuner: tuner)
     }
+
+    public var attributedString: NSAttributedString {
+        return makeAttributedString { $0.attributes }
+    }
+
+    public var disabledAttributedString: NSAttributedString {
+        return makeAttributedString { $0.disabledAttributes }
+    }
 }
 
 extension NSAttributedString: AttributedTextProtocol {
@@ -206,5 +211,13 @@ extension NSAttributedString: AttributedTextProtocol {
     
     public var baseStyle: Style {
         return Style()
+    }
+
+    public var attributedString: NSAttributedString {
+        return makeAttributedString { $0.attributes }
+    }
+
+    public var disabledAttributedString: NSAttributedString {
+        return makeAttributedString { $0.disabledAttributes }
     }
 }
