@@ -99,7 +99,8 @@ open class AttributedLabel: UIView {
         
         lineBreakMode = .byTruncatingTail
         numberOfLines = 1
-        
+
+        textView.isUserInteractionEnabled = false
         textView.textContainer.lineFragmentPadding = 0;
         textView.textContainerInset = .zero;
         textView.isEditable = false
