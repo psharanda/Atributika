@@ -27,6 +27,16 @@ open class AttributedLabel: UIView {
         }
     }
     
+    open var isSelectable: Bool {
+        get {
+            return textView.isUserInteractionEnabled && textView.isSelectable
+        }
+        set {
+            textView.isSelectable = newValue
+            textView.isUserInteractionEnabled = newValue
+        }
+    }
+    
     open var attributedText: AttributedText? {
         set {
             state = State(attributedText: newValue, isEnabled: state.isEnabled, detection: nil)
