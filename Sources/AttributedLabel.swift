@@ -15,7 +15,7 @@ open class AttributedLabel: UIView {
     private var detectionAreaButtons = [DetectionAreaButton]()
     
     //MARK: - public properties
-    open var onClick: ((AttributedLabel, Detection)->Void)?
+    open var onClick: ((AttributedLabel, Detection, CGRect)->Void)?
     
     open var isEnabled: Bool {
         set {
@@ -204,7 +204,7 @@ open class AttributedLabel: UIView {
     }
     
     @objc private func handleDetectionAreaButtonClick(_ sender: DetectionAreaButton) {
-        onClick?(self, sender.detection)
+        onClick?(self, sender.detection, sender.frame)
     }
     
     //MARK: - state
