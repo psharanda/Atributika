@@ -119,10 +119,16 @@ open class AttributedLabel: UIView {
         textView.backgroundColor = nil
         
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        textView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        textView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        textView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        
+        if #available(iOS 9.0, *) {
+            textView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            textView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            textView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+            textView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        } else {
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[textView]|", options: [], metrics: nil, views: ["textView": textView]))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[textView]|", options: [], metrics: nil, views: ["textView": textView]))
+        }
     }
     
     //MARK: - overrides
