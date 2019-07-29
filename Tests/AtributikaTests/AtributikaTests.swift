@@ -590,6 +590,24 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(test, reference)
     }
     
+    func testHrefTuner() {
+        
+        let a = Style("a")
+        
+        let test = "<a href=\"https://github.com/psharanda/Atributika\">link</a>".style(tags: a, tuner: { style, tag in
+            if tag.name == a.name {
+                if let link = tag.attributes["href"] {
+                    return style.link(URL(string: link)!)
+                }
+            }
+            return style
+        }).attributedString
+        
+        let reference = NSMutableAttributedString(string: "link")
+        reference.addAttributes([AttributedStringKey.link: URL(string: "https://github.com/psharanda/Atributika")!], range: NSMakeRange(0, 4))
+        XCTAssertEqual(test, reference)
+    }
+    
     func testHTMLComment() {
         let test = "Hello <!--This is a comment. Comments are erased by Atributika-->world!"
         
