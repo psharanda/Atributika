@@ -589,6 +589,86 @@ class AtributikaTests: XCTestCase {
         reference.addAttributes([AttributedStringKey.foregroundColor: hexStringToUIColor(hex: "#6cc299")], range: NSMakeRange(16, 13))
         XCTAssertEqual(test, reference)
     }
+    
+    func testHTMLComment() {
+        let test = "Hello <!--This is a comment. Comments are erased by Atributika-->world!"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, "Hello world!")
+        XCTAssertEqual(tags.count, 0)
+    }
+    
+    func testHTMLComment2() {
+        let test = "Hello <!---->world!"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, "Hello world!")
+        XCTAssertEqual(tags.count, 0)
+    }
+    
+    func testBrokenHTMLComment() {
+        let test = "Hello <!-This is a comment. Comments are erased by Atributika-->world!"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, test)
+        XCTAssertEqual(tags.count, 0)
+    }
+    
+    func testBrokenHTMLComment2() {
+        let test = "Hello <!"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, test)
+        XCTAssertEqual(tags.count, 0)
+    }
+    
+    func testBrokenHTMLComment3() {
+        let test = "Hello <!"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, test)
+        XCTAssertEqual(tags.count, 0)
+    }
+    
+    func testBrokenHTMLComment4() {
+        let test = "Hello <!--"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, test)
+        XCTAssertEqual(tags.count, 0)
+    }
+    
+    func testBrokenHTMLComment5() {
+        let test = "Hello <!--This is a comment. Comments are erased by Atributika-d->world!"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, test)
+        XCTAssertEqual(tags.count, 0)
+    }
+    
+    func testBrokenHTMLComment6() {
+        let test = "Hello <!--f"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, test)
+        XCTAssertEqual(tags.count, 0)
+    }
 }
 
 
