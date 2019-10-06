@@ -166,7 +166,7 @@ view.addSubview(tweetLabel)
 
 Current version is compatible with:
 
-* Swift 4.0+ (for Swift 3.2 use `swift-3.2` branch)
+* Swift 5.0+ (for Swift 3.2 use `swift-3.2` branch)
 * iOS 8.0 or later
 * tvOS 9.0 or later
 * watchOS 2.0 or later
