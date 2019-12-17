@@ -44,15 +44,6 @@ class AttributedLabelDemoViewController: UIViewController {
         "Here's how a similar one was solved 😄 \nhttps://medium.com/@narcelio/solving-decred-mockingbird-puzzle-5366efeaeed7\n"
     ]
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        title = "AttributedLabel"
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
@@ -127,7 +118,7 @@ class TweetCell: UITableViewCell {
     
     var tweet: String? {
         didSet {
-            let all = Style.font(.systemFont(ofSize: 20))
+            let all = Style.font(UIFont.preferredFont(forTextStyle: .body))
             let link = Style("a")
                 .foregroundColor(.blue, .normal)
                 .foregroundColor(.brown, .highlighted)

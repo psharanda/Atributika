@@ -54,6 +54,18 @@ func stringWithLink() -> NSAttributedString {
     return str
 }
 
+func stringWithBoldItalic() -> NSAttributedString {
+    
+    let baseFont = UIFont.systemFont(ofSize: 12)
+    let descriptor = baseFont.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])
+    let font = descriptor.map { UIFont(descriptor: $0, size: baseFont.pointSize) } ?? baseFont
+    
+    let a = Style("a").font(font).foregroundColor(.blue)
+    let str = "<a href=\"https://en.wikipedia.org/wiki/World_of_Dance_(TV_series)\" target=\"_blank\">World of Dance</a>".style(tags: a)
+        .attributedString
+    return str
+}
+
 func stringWithManyDetectables() -> NSAttributedString {
     
     let links = Style.foregroundColor(.blue)
@@ -137,6 +149,23 @@ func stringWithUnorderedList() -> NSAttributedString {
         .style(tags: li, transformers: transformers)
         .styleAll(Style.font(.boldSystemFont(ofSize: 14)))
         .attributedString
+}
+
+func stringWithOrderedList() -> NSAttributedString {
+    var counter = 0
+    let transformers: [TagTransformer] = [
+        TagTransformer.brTransformer,
+        TagTransformer(tagName: "ol", tagType: .start) { _ in
+            counter = 0
+            return ""
+        },
+        TagTransformer(tagName: "li", tagType: .start) { _ in
+            counter += 1
+            return "\(counter > 1 ? "\n" : "")\(counter). "
+        }
+    ]
+    
+    return "<ol><li>Coffee</li><li>Tea</li><li>Milk</li></ol>".style(tags: [], transformers: transformers).attributedString
 }
 
 func stringWithHref() -> NSAttributedString {
@@ -227,12 +256,14 @@ func allSnippets() -> [NSAttributedString] {
         stringWithHashTagAndMention(),
         stringWithPhone(),
         stringWithLink(),
+        stringWithBoldItalic(),
         stringWithManyDetectables(),
         stringWith3Tags(),
         stringWithGrams(),
         stringWithStrong(),
         stringWithTagAndHashtag(),
         stringWithUnorderedList(),
+        stringWithOrderedList(),
         stringWithHref(),
         stringWithBoldItalicUnderline(),
         stringWithImage(),

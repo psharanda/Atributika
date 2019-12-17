@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="1UQ-0b-UMO">
+            <objects>
+                <viewController storyboardIdentifier="ib" useStoryboardIdentifierAsRestorationIdentifier="YES" id="B3p-Ka-8fb" customClass="IBViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lOE-87-mnQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vT-71-D5X">
+                                <rect key="frame" x="0.0" y="662" width="414" height="200"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="k16-by-tft" customClass="AttributedLabel" customModule="Atributika">
+                                        <rect key="frame" x="132" y="0.0" width="150" height="156"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBrownColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="k16-by-tft" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6vT-71-D5X" secondAttribute="leading" constant="30" id="cFy-da-OK3"/>
+                                    <constraint firstItem="k16-by-tft" firstAttribute="centerX" secondItem="6vT-71-D5X" secondAttribute="centerX" id="g4y-7o-aVq"/>
+                                    <constraint firstAttribute="height" constant="200" id="iQQ-GR-iNC"/>
+                                    <constraint firstItem="k16-by-tft" firstAttribute="top" secondItem="6vT-71-D5X" secondAttribute="top" id="oSm-jH-xZP"/>
+                                    <constraint firstAttribute="bottom" secondItem="k16-by-tft" secondAttribute="bottom" constant="44" id="xpB-86-C8P"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6vT-71-D5X" firstAttribute="leading" secondItem="gp0-HC-Ma7" secondAttribute="leading" id="ZsX-v7-NJK"/>
+                            <constraint firstItem="gp0-HC-Ma7" firstAttribute="bottom" secondItem="6vT-71-D5X" secondAttribute="bottom" id="hVb-jE-z7b"/>
+                            <constraint firstItem="gp0-HC-Ma7" firstAttribute="trailing" secondItem="6vT-71-D5X" secondAttribute="trailing" id="jef-Y5-H2h"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gp0-HC-Ma7"/>
+                    </view>
+                    <connections>
+                        <outlet property="attributedLabel" destination="k16-by-tft" id="1XE-iB-F5T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cof-ZH-xC1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="138"/>
+        </scene>
+    </scenes>
+</document>

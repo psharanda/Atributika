@@ -23,10 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tbc = UITabBarController()
         
         let vc1 = SnippetsViewController()
+        vc1.title = "Snippets"
         
         let vc2 = AttributedLabelDemoViewController()
+        vc2.title = "AttributedLabel"
+        
+        let vc3 = UIStoryboard(name: "IB", bundle: nil).instantiateViewController(withIdentifier: "ib")
+        vc3.title = "Storyboard"
        
-        tbc.viewControllers = [UINavigationController(rootViewController: vc1), UINavigationController(rootViewController: vc2)]
+        tbc.viewControllers = [UINavigationController(rootViewController: vc1), UINavigationController(rootViewController: vc2), UINavigationController(rootViewController: vc3),]
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tbc

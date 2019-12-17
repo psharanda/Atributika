@@ -158,10 +158,6 @@ open class AttributedLabel: UIView {
         return textView.sizeThatFits(size)
     }
     
-    open override var intrinsicContentSize: CGSize {
-        return textView.intrinsicContentSize
-    }
-    
     //MARK: - DetectionAreaButton
     private class DetectionAreaButton: UIButton {
         
