@@ -57,7 +57,7 @@ open class AttributedLabel: UIView {
         get { return textView.textContainer.lineBreakMode }
     }
     
-    @available(iOSApplicationExtension 10.0, *)
+    @available(iOS 10.0, *)
     open var adjustsFontForContentSizeCategory: Bool {
         set { textView.adjustsFontForContentSizeCategory = newValue }
         get { return textView.adjustsFontForContentSizeCategory }
