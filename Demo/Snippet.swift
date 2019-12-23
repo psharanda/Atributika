@@ -249,6 +249,65 @@ func stringWithColors() -> NSAttributedString {
     return str
 }
 
+func stringWithParagraph() -> NSAttributedString {
+    let p = Style("p").font(UIFont(name: "HelveticaNeue", size: 20)!)
+    let strong = Style("strong").font(UIFont(name: "Copperplate", size: 20)!)
+    let str = "<p>some string... <strong> string</strong></p>".style(tags: [p,strong]).attributedString
+    return str
+}
+
+func stringWithFonts() -> NSAttributedString {
+    let string =
+"""
+<p><strong>iOS</strong>, <em>Apple</em>, Swift, <u>Objective</u>-C, Mobile, <strong><em>Mobile</em></strong> <em><u>Development</u></em>, <strong><u>Cocoa</u></strong>, Cocoa Touch, Cocoapods, Carthage</p>
+
+<p><br></p>
+<ul>
+   <li>Formatted</li>
+   <li>List</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<p>Links:</p>
+<p><a href="https://www.yooture.com" target="_blank">https://www.yooture.com</a></p>
+<p><a href="http://www.yooture.com" target="_blank">www.yooture.com</a></p>
+<p><a href="https://yooture.com" target="_blank">https://yooture.com</a></p>
+<p><br></p>
+<p>Email:</p>
+<p><a href="mailto:philipp.weber@yooture.com">philipp.weber@yooture.com</a></p>
+<p><a href="mailto:philipp+corporate@yooture.com">philipp+corporate@yooture.com</a></p><p><br></p>
+<p>Phone:</p><p>+41 79 317 95 51</p><p>044 937 19 40</p><p>079 317 95 51</p>
+"""
+    let transformers: [TagTransformer] = [
+        TagTransformer.brTransformer,
+        TagTransformer(tagName: "ul", tagType: .start, transform: { _ in "" }),
+        TagTransformer(tagName: "ul", tagType: .end, transform: { _ in "" }),
+        TagTransformer(tagName: "li", tagType: .start, replaceValue: "\t- "),
+        TagTransformer(tagName: "li", tagType: .end, replaceValue: "\n"),
+        TagTransformer(tagName: "p", tagType: .start, replaceValue: "\n")
+    ]
+
+    let baseFont = Font.systemFont(ofSize: 0)
+    let fallbackFont = UIFont(name: "HelveticaNeue-Light", size: 15)!
+    let italicDescriptor = baseFont.fontDescriptor.withSymbolicTraits([.traitItalic])
+    let boldDescriptor = baseFont.fontDescriptor.withSymbolicTraits([.traitBold])
+    let boldFont = boldDescriptor.map {UIFont(descriptor: $0, size: baseFont.pointSize) } ?? fallbackFont
+    let italicFont = italicDescriptor.map {UIFont(descriptor: $0, size: baseFont.pointSize) } ?? fallbackFont
+
+    let strong = Style("strong").font(boldFont)
+    let italic = Style("em").font(italicFont)
+    let underline = Style("u").underlineStyle(.styleSingle)
+    let link = Style.foregroundColor(.blue).underlineStyle(.styleSingle)
+
+
+    return string
+    .style(tags: [strong, italic, underline], transformers: transformers)
+        .styleLinks(link)
+        .stylePhoneNumbers(link)
+        //.styleAll(Style.font(fallbackFont).foregroundColor(.white))
+        .attributedString
+}
+
 func allSnippets() -> [NSAttributedString] {
     return [
         stringWithAtributikaLogo(),
@@ -268,7 +327,9 @@ func allSnippets() -> [NSAttributedString] {
         stringWithBoldItalicUnderline(),
         stringWithImage(),
         stringWithStrikethrough(),
-        stringWithColors()
+        stringWithColors(),
+        stringWithParagraph(),
+        stringWithFonts()
     ]
 }
 

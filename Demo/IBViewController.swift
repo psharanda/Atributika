@@ -16,9 +16,7 @@ class IBViewController: UIViewController {
         
         let font: UIFont
         if #available(iOS 11.0, *) {
-            let systemFont = UIFont.systemFont(ofSize: 16)
-            let metrics = UIFontMetrics(forTextStyle: .body)
-            font = metrics.scaledFont(for: systemFont)
+            font = UIFont.preferredFont(forTextStyle: .body)
         } else {
             font = UIFont.systemFont(ofSize: 16)
         }
@@ -29,8 +27,39 @@ class IBViewController: UIViewController {
             .foregroundColor(.black, .normal)
             .foregroundColor(.red, .highlighted)
         
-        attributedLabel.attributedText = "<button>Need to register?</button>".style(tags: button)
+        attributedLabel.adjustsFontForContentSizeCategory = true
+        attributedLabel.attributedText = "Hello! <button>Need to register?</button>".style(tags: button).styleAll(.font(.systemFont(ofSize: 12)))
+        
+        
+       setupIssue101Label()
+    }
+    
+    private func setupIssue101Label() {
+        let message = "<p>Well This is a paragraph</p><a href=\"www.google.com\" target=\"_blank\">Check this out</a><br>"
+               
+        let transformers: [TagTransformer] = [
+           TagTransformer.brTransformer,
+           TagTransformer(tagName: "p", tagType: .start, replaceValue: "\n"),
+           TagTransformer(tagName: "p", tagType: .end, replaceValue: "\n")
+        ]
+        let isMymessage = false
+        
+        let p = Style("p")
+        var links = Style("a")
+        links = (isMymessage ? links.foregroundColor(.green, .normal) : links .foregroundColor(.yellow, .highlighted)).foregroundColor(.purple, .highlighted)
+        var font = Style.font(.systemFont(ofSize: 16))
+        font = isMymessage ? font.foregroundColor(.black) : font.foregroundColor(.gray)
+        issue101Label.numberOfLines = 0
+        issue101Label.attributedText = message
+            .style(tags: p, links, transformers: transformers)
+            .styleLinks(links)
+            .styleAll(font)
+        
+        issue101Label.onClick = { label, detection in
+            print(detection)
+        }
     }
     
     @IBOutlet private var attributedLabel: AttributedLabel!
+    @IBOutlet private var issue101Label: AttributedLabel!
 }

@@ -57,6 +57,12 @@ open class AttributedLabel: UIView {
         get { return textView.textContainer.lineBreakMode }
     }
     
+    @available(iOSApplicationExtension 10.0, *)
+    open var adjustsFontForContentSizeCategory: Bool {
+        set { textView.adjustsFontForContentSizeCategory = newValue }
+        get { return textView.adjustsFontForContentSizeCategory }
+    }
+    
     open var font: UIFont = .preferredFont(forTextStyle: .body) {
         didSet {
             updateText()
@@ -250,7 +256,22 @@ open class AttributedLabel: UIView {
         })
         result.endEditing()
         
-        textView.attributedText = result
+        
+        if #available(iOS 10.0, *) {
+            let shouldAdjustsFontForContentSizeCategory = textView.adjustsFontForContentSizeCategory
+            
+            if shouldAdjustsFontForContentSizeCategory {
+                textView.adjustsFontForContentSizeCategory = false
+            }
+            
+            textView.attributedText = string
+            
+            if shouldAdjustsFontForContentSizeCategory {
+                textView.adjustsFontForContentSizeCategory = true
+            }
+        } else {
+            textView.attributedText = string
+        }
     }
     
     private func updateText() {

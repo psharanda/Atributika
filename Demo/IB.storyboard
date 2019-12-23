@@ -33,9 +33,15 @@
                                     <constraint firstAttribute="bottom" secondItem="k16-by-tft" secondAttribute="bottom" constant="44" id="xpB-86-C8P"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="256" placeholderIntrinsicHeight="60" translatesAutoresizingMaskIntoConstraints="NO" id="aX5-DG-And" customClass="AttributedLabel" customModule="Atributika">
+                                <rect key="frame" x="15" y="59" width="256" height="60"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="aX5-DG-And" firstAttribute="top" secondItem="gp0-HC-Ma7" secondAttribute="top" constant="15" id="FFh-w0-o5D"/>
+                            <constraint firstItem="aX5-DG-And" firstAttribute="leading" secondItem="gp0-HC-Ma7" secondAttribute="leading" constant="15" id="HMW-oC-53d"/>
                             <constraint firstItem="6vT-71-D5X" firstAttribute="leading" secondItem="gp0-HC-Ma7" secondAttribute="leading" id="ZsX-v7-NJK"/>
                             <constraint firstItem="gp0-HC-Ma7" firstAttribute="bottom" secondItem="6vT-71-D5X" secondAttribute="bottom" id="hVb-jE-z7b"/>
                             <constraint firstItem="gp0-HC-Ma7" firstAttribute="trailing" secondItem="6vT-71-D5X" secondAttribute="trailing" id="jef-Y5-H2h"/>
@@ -44,11 +50,12 @@
                     </view>
                     <connections>
                         <outlet property="attributedLabel" destination="k16-by-tft" id="1XE-iB-F5T"/>
+                        <outlet property="issue101Label" destination="aX5-DG-And" id="ZKJ-eV-rP8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cof-ZH-xC1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="138"/>
+            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
         </scene>
     </scenes>
 </document>

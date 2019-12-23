@@ -1,7 +1,4 @@
 //
-//  Detection.swift
-//  Atributika
-//
 //  Created by Pavel Sharanda on 21.02.17.
 //  Copyright © 2017 psharanda. All rights reserved.
 //
@@ -56,7 +53,7 @@ extension String {
             return nil
         }
         
-        var attrubutes = [String: String]()
+        var attributes = [String: String]()
         
         while parseAttributes && !tagScanner.isAtEnd {
             
@@ -83,10 +80,10 @@ extension String {
                 break
             }
             
-            attrubutes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
+            attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
         }
         
-        return Tag(name: tagName, attributes: attrubutes)
+        return Tag(name: tagName, attributes: attributes)
     }
     
     public func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
