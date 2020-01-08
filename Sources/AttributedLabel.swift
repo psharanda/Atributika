@@ -164,6 +164,14 @@ open class AttributedLabel: UIView {
         return textView.sizeThatFits(size)
     }
     
+    open override var forFirstBaselineLayout: UIView {
+        return textView
+    }
+    
+    open override var forLastBaselineLayout: UIView {
+        return textView
+    }
+    
     //MARK: - DetectionAreaButton
     private class DetectionAreaButton: UIButton {
         
