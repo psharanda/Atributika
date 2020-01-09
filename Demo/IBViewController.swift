@@ -27,7 +27,9 @@ class IBViewController: UIViewController {
             .foregroundColor(.black, .normal)
             .foregroundColor(.red, .highlighted)
         
-        attributedLabel.adjustsFontForContentSizeCategory = true
+        if #available(iOS 10.0, *) {
+            attributedLabel.adjustsFontForContentSizeCategory = true
+        }
         attributedLabel.attributedText = "Hello! <button>Need to register?</button>".style(tags: button).styleAll(.font(.systemFont(ofSize: 12)))
         
         

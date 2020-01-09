@@ -272,7 +272,7 @@ open class AttributedLabel: UIView {
                 textView.adjustsFontForContentSizeCategory = false
             }
             
-            textView.attributedText = string
+            textView.attributedText = result
             
             if shouldAdjustsFontForContentSizeCategory {
                 textView.adjustsFontForContentSizeCategory = true
