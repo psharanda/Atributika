@@ -37,31 +37,24 @@ class IBViewController: UIViewController {
     }
     
     private func setupIssue101Label() {
-        let message = "<p>Well This is a paragraph</p><a href=\"www.google.com\" target=\"_blank\">Check this out</a><br>"
-               
-        let transformers: [TagTransformer] = [
-           TagTransformer.brTransformer,
-           TagTransformer(tagName: "p", tagType: .start, replaceValue: "\n"),
-           TagTransformer(tagName: "p", tagType: .end, replaceValue: "\n")
-        ]
-        let isMymessage = false
+        let message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. <button>Need to register?</button> Cras eu auctor est. Vestibulum ornare dui ut orci congue placerat. Nunc et tortor vulputate, elementum quam at, tristique nibh. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque ut mauris eu felis venenatis condimentum finibus ac nisi. Nulla id turpis libero. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam pulvinar lorem eu metus scelerisque, non lacinia ligula molestie. Vivamus vestibulum sem sit amet pellentesque tristique. Aenean hendrerit mi turpis. Mauris tempus viverra mauris, non accumsan leo aliquet nec. Suspendisse in ipsum ut arcu mollis bibendum."
+
+        let button = Style("button")
+            .underlineStyle(.styleSingle)
+            .font(.systemFont(ofSize: 30))
+            .foregroundColor(.black, .normal)
+            .foregroundColor(.red, .highlighted)
+
+        issue103Label.numberOfLines = 0
+        issue103Label.attributedText = message
+            .style(tags: button)
+            .styleAll(.font(.systemFont(ofSize: 30)))
         
-        let p = Style("p")
-        var links = Style("a")
-        links = (isMymessage ? links.foregroundColor(.green, .normal) : links .foregroundColor(.yellow, .highlighted)).foregroundColor(.purple, .highlighted)
-        var font = Style.font(.systemFont(ofSize: 16))
-        font = isMymessage ? font.foregroundColor(.black) : font.foregroundColor(.gray)
-        issue101Label.numberOfLines = 0
-        issue101Label.attributedText = message
-            .style(tags: p, links, transformers: transformers)
-            .styleLinks(links)
-            .styleAll(font)
-        
-        issue101Label.onClick = { label, detection in
+        issue103Label.onClick = { label, detection in
             print(detection)
         }
     }
     
     @IBOutlet private var attributedLabel: AttributedLabel!
-    @IBOutlet private var issue101Label: AttributedLabel!
+    @IBOutlet private var issue103Label: AttributedLabel!
 }
