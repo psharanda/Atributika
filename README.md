@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/logo@2x.png" alt="" width="392" height="45">
+  <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/logo@2x.png" alt="" width="392" />
 </p>
 <br>
 
@@ -21,7 +21,7 @@ let b = Style("b").font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
 label.attributedText = "Hello <b>World</b>!!!".style(tags: b).attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/main.png" alt="" width="139" height="56" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/main.png" alt="" width="139" />
 
 Yeah, that's much better. Atributika is easy, declarative, flexible and covers all the raw edges for you.
 
@@ -57,7 +57,7 @@ let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
     .attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_atributika_logo.png" alt="" width="188" height="44" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_atributika_logo.png" alt="" width="188" />
 
 ### Detect and style hashtags and mentions
 
@@ -68,7 +68,7 @@ let str = "#Hello @World!!!"
     .attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_hashtags_mentions.png" alt="" width="232" height="63" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_hashtags_mentions.png" alt="" width="232" />
 
 
 ### Detect and style links
@@ -79,7 +79,7 @@ let str = "Check this website http://google.com"
     .attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_links.png" alt="" width="237" height="36" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_links.png" alt="" width="237" />
 
 ### Detect and style phone numbers
 
@@ -89,7 +89,7 @@ let str = "Call me (888)555-5512"
     .attributedString
 ```
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_phone_numbers.png" alt="" width="195" height="39" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_phone_numbers.png" alt="" width="195" />
 
 ### Uber String
 
@@ -111,7 +111,7 @@ let str = "Call me (888)555-5512"
         .attributedString
 ```    
 
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_uber.png" alt="" width="342" height="65" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_uber.png" alt="" width="342" />
 
 ## AttributedText
 `Atributika` APIs `styleXXX` produce `AttributedText` which can be converted into `NSAttributedString`. Basically `AttributedText` just contains string, base style and all the detections.
@@ -160,7 +160,7 @@ tweetLabel.onClick = { label, detection in
 
 view.addSubview(tweetLabel)
 ```
-<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_attributedlabel.png" alt="" width="361" height="98" />
+<img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_attributedlabel.png" alt="" width="361" />
 
 ## Requirements
 
