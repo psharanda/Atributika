@@ -8,7 +8,15 @@ import Foundation
 
 import UIKit
 
-open class AttributedLabel: UIView {
+@IBDesignable open class AttributedLabel: UIView {
+
+    open override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        let gray = Style("gray").foregroundColor(.gray)
+        attributedText = "<gray>Attributed</gray>Label"
+            .style(tags: gray)
+        invalidateIntrinsicContentSize()
+    }
     
     //MARK: - private properties
     private let textView = UITextView()
@@ -17,7 +25,7 @@ open class AttributedLabel: UIView {
     //MARK: - public properties
     open var onClick: ((AttributedLabel, Detection)->Void)?
     
-    open var isEnabled: Bool {
+    @IBInspectable open var isEnabled: Bool {
         set {
             detectionAreaButtons.forEach { $0.isUserInteractionEnabled = newValue  }
             state.isEnabled = newValue
@@ -27,7 +35,7 @@ open class AttributedLabel: UIView {
         }
     }
     
-    open var isSelectable: Bool {
+    @IBInspectable open var isSelectable: Bool {
         get {
             return textView.isUserInteractionEnabled && textView.isSelectable
         }
@@ -47,53 +55,53 @@ open class AttributedLabel: UIView {
         }
     }
     
-    open var numberOfLines: Int {
+    @IBInspectable open var numberOfLines: Int {
         set { textView.textContainer.maximumNumberOfLines = newValue }
         get { return textView.textContainer.maximumNumberOfLines }
     }
     
-    open var lineBreakMode: NSLineBreakMode {
+    @IBInspectable open var lineBreakMode: NSLineBreakMode {
         set { textView.textContainer.lineBreakMode = newValue }
         get { return textView.textContainer.lineBreakMode }
     }
     
     @available(iOS 10.0, *)
-    open var adjustsFontForContentSizeCategory: Bool {
+    @IBInspectable open var adjustsFontForContentSizeCategory: Bool {
         set { textView.adjustsFontForContentSizeCategory = newValue }
         get { return textView.adjustsFontForContentSizeCategory }
     }
     
-    open var font: UIFont = .preferredFont(forTextStyle: .body) {
+    @IBInspectable open var font: UIFont = .preferredFont(forTextStyle: .body) {
         didSet {
             updateText()
         }
     }
     
-    open var textAlignment: NSTextAlignment = .natural {
+    @IBInspectable open var textAlignment: NSTextAlignment = .natural {
         didSet {
             updateText()
         }
     }
     
-    open var textColor: UIColor = .black {
+    @IBInspectable open var textColor: UIColor = .black {
         didSet {
             updateText()
         }
     }
     
-    open var shadowColor: UIColor? {
+    @IBInspectable open var shadowColor: UIColor? {
         didSet {
             updateText()
         }
     }
     
-    open var shadowOffset = CGSize(width: 0, height: -1) {
+    @IBInspectable open var shadowOffset = CGSize(width: 0, height: -1) {
         didSet {
             updateText()
         }
     }
     
-    open var shadowBlurRadius: CGFloat = 0 {
+    @IBInspectable open var shadowBlurRadius: CGFloat = 0 {
         didSet {
             updateText()
         }

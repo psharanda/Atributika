@@ -33,10 +33,10 @@ class IBViewController: UIViewController {
         attributedLabel.attributedText = "Hello! <button>Need to register?</button>".style(tags: button).styleAll(.font(.systemFont(ofSize: 12)))
         
         
-       setupIssue101Label()
+       setupTopLabels()
     }
     
-    private func setupIssue101Label() {
+    private func setupTopLabels() {
         let message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. <button>Need to register?</button> Cras eu auctor est. Vestibulum ornare dui ut orci congue placerat. Nunc et tortor vulputate, elementum quam at, tristique nibh. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque ut mauris eu felis venenatis condimentum finibus ac nisi. Nulla id turpis libero. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam pulvinar lorem eu metus scelerisque, non lacinia ligula molestie. Vivamus vestibulum sem sit amet pellentesque tristique. Aenean hendrerit mi turpis. Mauris tempus viverra mauris, non accumsan leo aliquet nec. Suspendisse in ipsum ut arcu mollis bibendum."
 
         let button = Style("button")
@@ -53,8 +53,11 @@ class IBViewController: UIViewController {
         issue103Label.onClick = { label, detection in
             print(detection)
         }
+
+        pinkLabel.attributedText = "Lorem ipsum dolor sit amet".styleAll(Style())
     }
     
     @IBOutlet private var attributedLabel: AttributedLabel!
     @IBOutlet private var issue103Label: AttributedLabel!
+    @IBOutlet private var pinkLabel: AttributedLabel!
 }
