@@ -24,6 +24,19 @@ import UIKit
     
     //MARK: - public properties
     open var onClick: ((AttributedLabel, Detection)->Void)?
+
+    open func rects(for detection: Detection) -> [CGRect] {
+        var result = [CGRect]()
+
+        if let attributedText = state.attributedText {
+            let nsrange = NSRange(detection.range, in: attributedText.string)
+            textView.layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange, withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0), in: textView.textContainer, using: { (rect, stop) in
+                result.append(rect)
+            })
+        }
+
+        return result
+    }
     
     @IBInspectable open var isEnabled: Bool {
         set {

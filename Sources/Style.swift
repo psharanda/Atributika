@@ -143,7 +143,7 @@ public struct Style {
         return merged(with: Style.underlineStyle(value, type))
     }
     
-    func underlineColor(_ value: Color, _ type: StyleType = .normal) -> Style {
+    public func underlineColor(_ value: Color, _ type: StyleType = .normal) -> Style {
         return merged(with: Style.underlineColor(value, type))
     }
     
