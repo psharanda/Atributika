@@ -96,7 +96,13 @@ import UIKit
         }
     }
     
-    @IBInspectable open var textColor: UIColor = .black {
+    @IBInspectable open var textColor: UIColor = {
+        if #available(iOS 13.0, *) {
+            return .label
+        } else {
+            return .black
+        }
+        }() {
         didSet {
             updateText()
         }
