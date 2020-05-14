@@ -61,32 +61,17 @@ public struct Style {
     
     public let typedAttributes: [StyleType: [AttributedStringKey: Any]]
     
-    public init() {
-        self.name = ""
-        self.typedAttributes = [:]
-    }
-    
-    public init(_ name: String) {
+    public init(_ name: String = "", style: Style? = nil) {
         self.name = name
-        self.typedAttributes = [:]
+        self.typedAttributes = style?.typedAttributes ?? [:]
     }
     
-    public init(_ name: String, style: Style) {
+    public init(_ name: String = "", _ attributes: [AttributedStringKey: Any], _ type: StyleType = .normal) {
         self.name = name
-        self.typedAttributes = style.typedAttributes
+        self.typedAttributes = [type: attributes]
     }
     
-    public init(_ name: String, _ attributes: [AttributedStringKey: Any]) {
-        self.name = name
-        typedAttributes = [.normal: attributes]
-    }
-    
-    public init(_ name: String, _ attributes: [AttributedStringKey: Any], _ type: StyleType) {
-        self.name = name
-        typedAttributes = [type: attributes]
-    }
-    
-    public init(_ name: String, _ typedAttributes: [StyleType: [AttributedStringKey: Any]]) {
+    public init(_ name: String = "", _ typedAttributes: [StyleType: [AttributedStringKey: Any]]) {
         self.name = name
         self.typedAttributes = typedAttributes
     }
