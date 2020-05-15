@@ -13,6 +13,7 @@ import Atributika
 struct AttributtedLabelView: UIViewRepresentable
 {
     var attributedText: AttributedText?
+    var configureLabel: ((AttributedLabel) -> Void)? = nil
     
     @State var maxWidth: CGFloat = 300
     
@@ -21,15 +22,14 @@ struct AttributtedLabelView: UIViewRepresentable
     func makeUIView(context: Context) -> MaxWidthAttributedLabel
     {
         let view = MaxWidthAttributedLabel()
-        view.numberOfLines = 0
-        view.textColor = .label
+        configureLabel?(view)
         return view
     }
     
     func updateUIView(_ uiView: MaxWidthAttributedLabel, context: Context)
     {
-        uiView.attributedText = self.attributedText
-        uiView.maxWidth = self.maxWidth
+        uiView.attributedText = attributedText
+        uiView.maxWidth = maxWidth
     }
     
     class MaxWidthAttributedLabel: AttributedLabel
@@ -38,7 +38,7 @@ struct AttributtedLabelView: UIViewRepresentable
         
         open override var intrinsicContentSize: CGSize
         {
-            self.sizeThatFits(CGSize(width: self.maxWidth, height: .infinity))
+            sizeThatFits(CGSize(width: maxWidth, height: .infinity))
         }
     }
 }
@@ -53,41 +53,47 @@ struct AttributtedLabelView_Previews: PreviewProvider
         let link = Style("a")
             .foregroundColor(.blue, .normal)
             .foregroundColor(.brown, .highlighted)
+        let configureLabel: ((AttributedLabel) -> Void) = { label in
+            label.numberOfLines = 0
+            label.textColor = .label
+        }
         
-        return List {
-            AttributtedLabelView(attributedText: "Denny JA: Dengan RT ini, anda ikut memenangkan Jokowi-JK. Pilih pemimpin yg bisa dipercaya (Jokowi) dan pengalaman (JK). #DJoJK"
-                .style(tags: link)
-                .styleHashtags(link)
-                .styleMentions(link)
-                .styleLinks(link)
-                .styleAll(all))
-                .fixedSize(horizontal: true, vertical: true)
-            AttributtedLabelView(attributedText: "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>"
-                .style(tags: link)
-                .styleHashtags(link)
-                .styleMentions(link)
-                .styleLinks(link)
-                .styleAll(all))
-                .fixedSize(horizontal: true, vertical: true)
-            AttributtedLabelView(attributedText: """
-            # A big message
+        return GeometryReader { geometry in
+            List {
+                AttributtedLabelView(attributedText: "Denny JA: Dengan RT ini, anda ikut memenangkan Jokowi-JK. Pilih pemimpin yg bisa dipercaya (Jokowi) dan pengalaman (JK). #DJoJK"
+                    .style(tags: link)
+                    .styleHashtags(link)
+                    .styleMentions(link)
+                    .styleLinks(link)
+                    .styleAll(all), configureLabel: configureLabel, maxWidth: geometry.size.width)
+                    .fixedSize(horizontal: true, vertical: true)
+                AttributtedLabelView(attributedText: "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>"
+                    .style(tags: link)
+                    .styleHashtags(link)
+                    .styleMentions(link)
+                    .styleLinks(link)
+                    .styleAll(all), configureLabel: configureLabel)
+                    .fixedSize(horizontal: true, vertical: true)
+                AttributtedLabelView(attributedText: """
+                # A big message
 
-            - With *mentions* [Ernesto Test Account](user://91010061)
-            - **Bold** text
+                - With *mentions* [Ernesto Test Account](user://91010061)
+                - **Bold** text
 
-            ## Also
+                ## Also
 
-            > Quotes
+                > Quotes
 
-            1. Some `code`
-            2. And data detectors  (801) 917 4444, email@dot.com and http://apple.com
-            """
-                .style(tags: link)
-                .styleHashtags(link)
-                .styleMentions(link)
-                .styleLinks(link)
-                .styleAll(all))
-                .fixedSize(horizontal: true, vertical: true)
+                1. Some `code`
+                2. And data detectors  (801) 917 4444, email@dot.com and http://apple.com
+                """
+                    .style(tags: link)
+                    .styleHashtags(link)
+                    .styleMentions(link)
+                    .styleLinks(link)
+                    .styleAll(all), configureLabel: configureLabel)
+                    .fixedSize(horizontal: true, vertical: true)
+            }
         }
     }
 }
