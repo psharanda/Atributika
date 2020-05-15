@@ -1,5 +1,5 @@
 //
-//  AttributtedLabelView.swift
+//  AttributedLabelView.swift
 //  Demo
 //
 //  Created by Ernesto Rivera on 5/14/20.
@@ -10,7 +10,7 @@ import SwiftUI
 import Atributika
 
 @available(iOS 13.0, *)
-struct AttributtedLabelView: UIViewRepresentable
+struct AttributedLabelView: UIViewRepresentable
 {
     var attributedText: AttributedText?
     var configureLabel: ((AttributedLabel) -> Void)? = nil
@@ -60,21 +60,21 @@ struct AttributtedLabelView_Previews: PreviewProvider
         
         return GeometryReader { geometry in
             List {
-                AttributtedLabelView(attributedText: "Denny JA: Dengan RT ini, anda ikut memenangkan Jokowi-JK. Pilih pemimpin yg bisa dipercaya (Jokowi) dan pengalaman (JK). #DJoJK"
+                AttributedLabelView(attributedText: "Denny JA: Dengan RT ini, anda ikut memenangkan Jokowi-JK. Pilih pemimpin yg bisa dipercaya (Jokowi) dan pengalaman (JK). #DJoJK"
                     .style(tags: link)
                     .styleHashtags(link)
                     .styleMentions(link)
                     .styleLinks(link)
                     .styleAll(all), configureLabel: configureLabel, maxWidth: geometry.size.width)
                     .fixedSize(horizontal: true, vertical: true)
-                AttributtedLabelView(attributedText: "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>"
+                AttributedLabelView(attributedText: "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>"
                     .style(tags: link)
                     .styleHashtags(link)
                     .styleMentions(link)
                     .styleLinks(link)
                     .styleAll(all), configureLabel: configureLabel)
                     .fixedSize(horizontal: true, vertical: true)
-                AttributtedLabelView(attributedText: """
+                AttributedLabelView(attributedText: """
                 # A big message
 
                 - With *mentions* [Ernesto Test Account](user://91010061)
