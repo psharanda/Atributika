@@ -47,6 +47,7 @@
 		1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
+		947F84B1246DE4B600450042 /* AttributtedLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947F84B0246DE4B600450042 /* AttributtedLabelView.swift */; };
 		DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
 		DD7502881C68FEDE006590AF /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Atributika.framework */; };
 		DD7502921C690C7A006590AF /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Atributika.framework */; };
@@ -122,6 +123,7 @@
 		52D6D9E21BEFFF6E002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		947F84B0246DE4B600450042 /* AttributtedLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributtedLabelView.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* Atributika.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Atributika.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* AtributikaTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AtributikaTests.plist; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* Atributika-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atributika-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +197,7 @@
 		1B2F838E1E5C98A4009AFBCA /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				947F84B0246DE4B600450042 /* AttributtedLabelView.swift */,
 				1BDDF5681E683A8F006374F6 /* Snippet.swift */,
 				1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */,
 				1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */,
@@ -591,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */,
+				947F84B1246DE4B600450042 /* AttributtedLabelView.swift in Sources */,
 				1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */,
 				1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */,
 				1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */,
