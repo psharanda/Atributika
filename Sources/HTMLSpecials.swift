@@ -11,7 +11,7 @@ extension String {
         let radix = isHexadecimal ? 16 : 10
         
         let numberStartIndex = index(startIndex, offsetBy: isHexadecimal ? 1 : 0)
-        let numberString = self[numberStartIndex ..< endIndex]
+        let numberString = String(self[numberStartIndex ..< endIndex])
         
         guard let codePoint = UInt32(numberString, radix: radix),
             let scalar = UnicodeScalar(codePoint) else {
