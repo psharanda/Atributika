@@ -194,12 +194,12 @@ extension String {
     
     public func detectHashTags() -> [Range<String.Index>] {
         
-        return detect(regex: "[#]\\w\\S*\\b")
+        return detect(regex: "#[^[:punct:][:space:]]+")
     }
     
     public func detectMentions() -> [Range<String.Index>] {
         
-        return detect(regex: "[@]\\w\\S*\\b")
+        return detect(regex: "@[^[:punct:][:space:]]+")
     }
     
     public func detect(regex: String, options: NSRegularExpression.Options = []) -> [Range<String.Index>] {
