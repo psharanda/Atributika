@@ -47,6 +47,13 @@ public struct TagTransformer {
 extension String {
     
     private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
+        
+        struct TagDelimiter {
+            static let singleQuote = "'"
+            static let backslash = "\""
+            static let noDelimiter = ">"
+        }
+        
         let tagScanner = Scanner(string: tagString)
         
         guard let tagName = tagScanner.scanCharacters(from: CharacterSet.alphanumerics) else {
@@ -65,22 +72,29 @@ extension String {
                 break
             }
             
-            let startsFromSingleQuote = (tagScanner.scanString("'") != nil)
-            if !startsFromSingleQuote {
-                guard tagScanner.scanString("\"") != nil else {
-                    break
+            let isHrefTag = name == "href"
+            
+            var tagDelimiter = TagDelimiter.noDelimiter
+            if tagScanner.scanString(TagDelimiter.singleQuote) != nil {
+                tagDelimiter = TagDelimiter.singleQuote
+            } else if tagScanner.scanString(TagDelimiter.backslash) != nil {
+                tagDelimiter = TagDelimiter.backslash
+            }
+            
+            let hasRegularDelimiter = tagDelimiter != TagDelimiter.noDelimiter
+            
+            if isHrefTag || hasRegularDelimiter
+            {
+                let value = tagScanner.scanUpTo(tagDelimiter) ?? ""
+                
+                if hasRegularDelimiter {
+                    guard tagScanner.scanString(tagDelimiter) != nil else {
+                        break
+                    }
                 }
+                
+                attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
             }
-            
-            let quote = startsFromSingleQuote ? "'" : "\""
-            
-            let value = tagScanner.scanUpTo(quote) ?? ""
-            
-            guard tagScanner.scanString(quote) != nil else {
-                break
-            }
-            
-            attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
         }
         
         return Tag(name: tagName, attributes: attributes)
