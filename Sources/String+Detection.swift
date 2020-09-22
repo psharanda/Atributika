@@ -51,7 +51,8 @@ extension String {
         struct TagDelimiter {
             static let singleQuote = "'"
             static let backslash = "\""
-            static let noDelimiter = ">"
+            static let whitespace = " "
+            static let majorSymbol = ">"
         }
         
         let tagScanner = Scanner(string: tagString)
@@ -74,18 +75,22 @@ extension String {
             
             let isHrefTag = name == "href"
             
-            var tagDelimiter = TagDelimiter.noDelimiter
+            var tagDelimiter = TagDelimiter.whitespace
             if tagScanner.scanString(TagDelimiter.singleQuote) != nil {
                 tagDelimiter = TagDelimiter.singleQuote
             } else if tagScanner.scanString(TagDelimiter.backslash) != nil {
                 tagDelimiter = TagDelimiter.backslash
             }
             
-            let hasRegularDelimiter = tagDelimiter != TagDelimiter.noDelimiter
+            let hasRegularDelimiter = tagDelimiter != TagDelimiter.whitespace
             
             if isHrefTag || hasRegularDelimiter
             {
-                let value = tagScanner.scanUpTo(tagDelimiter) ?? ""
+                var value = tagScanner.scanUpTo(tagDelimiter) ?? ""
+                
+                if (value == "" && isHrefTag) {
+                    value = tagScanner.scanUpTo(TagDelimiter.majorSymbol) ?? ""
+                }
                 
                 if hasRegularDelimiter {
                     guard tagScanner.scanString(tagDelimiter) != nil else {
@@ -132,6 +137,7 @@ extension String {
                             if let tagString = scanner.scanUpTo(">") {
                                 
                                 if scanner.scanString(">") != nil {
+                                    
                                     if let tag = parseTag(tagString, parseAttributes: tagType == .start ) {
                                         
                                         let resultTextEndIndex = resultString.count
