@@ -479,6 +479,28 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(tags[0].tag.attributes["href"], "http://foo.com")
     }
     
+    func testTwoTagAttributesUnescaped() {
+        let test = "Hello <a class=\"big\" target=\"\" href=http://foo.com>world</a>!"
+        
+        let (string, tags) = test.detectTags()
+        
+        XCTAssertEqual(string, "Hello world!")
+        XCTAssertEqual(tags[0].tag.attributes["class"], "big")
+        XCTAssertEqual(tags[0].tag.attributes["target"], "")
+        XCTAssertEqual(tags[0].tag.attributes["href"], "http://foo.com")
+    }
+    
+    func testEmptyTagAttributesUnescaped() {
+        let test = "Hello <a class=\"big\" target=\"\" href=>world</a>!"
+        
+        let (string, tags) = test.detectTags()
+        
+        XCTAssertEqual(string, "Hello world!")
+        XCTAssertEqual(tags[0].tag.attributes["class"], "big")
+        XCTAssertEqual(tags[0].tag.attributes["target"], "")
+        XCTAssertEqual(tags[0].tag.attributes["href"], "")
+    }
+    
     func testSpecials() {
         XCTAssertEqual("Hello&amp;World!!!".detectTags().string, "Hello&World!!!")
         XCTAssertEqual("Hello&".detectTags().string, "Hello&")
