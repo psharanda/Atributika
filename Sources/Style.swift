@@ -32,7 +32,6 @@ public enum StyleType {
 #endif
 
 public struct Style {
-    
     public let name: String
     
     public var attributes: [AttributedStringKey: Any] {

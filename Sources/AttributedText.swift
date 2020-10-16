@@ -202,7 +202,7 @@ extension String: AttributedTextProtocol {
                 return
             }
 
-            tagsInfo.forEach { t in                
+            pair.value.forEach { t in
                 if let style = (tags.first { style in style.name.lowercased() == t.tag.name.lowercased() }) {
                     ds.append(Detection(type: .tag(t.tag), style: tuner(style, t.tag), range: t.range, level: t.level))
                 } else {
