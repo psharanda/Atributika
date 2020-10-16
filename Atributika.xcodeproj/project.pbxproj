@@ -47,6 +47,10 @@
 		1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
+		A7096F212539DE5D00F71AFA /* GroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096F202539DE4000F71AFA /* GroupedStyle.swift */; };
+		A7096F292539DE5D00F71AFA /* GroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096F202539DE4000F71AFA /* GroupedStyle.swift */; };
+		A7096F2A2539DE5E00F71AFA /* GroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096F202539DE4000F71AFA /* GroupedStyle.swift */; };
+		A7096F322539DE5E00F71AFA /* GroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096F202539DE4000F71AFA /* GroupedStyle.swift */; };
 		DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
 		DD7502881C68FEDE006590AF /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Atributika.framework */; };
 		DD7502921C690C7A006590AF /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Atributika.framework */; };
@@ -122,6 +126,7 @@
 		52D6D9E21BEFFF6E002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7096F202539DE4000F71AFA /* GroupedStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedStyle.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* Atributika.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Atributika.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* AtributikaTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AtributikaTests.plist; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* Atributika-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atributika-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -221,6 +226,7 @@
 			children = (
 				1B38369F1F97C224001DB333 /* AttributedLabel.swift */,
 				1BB55AD01E5C73EF00CE6EAD /* Style.swift */,
+				A7096F202539DE4000F71AFA /* GroupedStyle.swift */,
 				1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */,
 				1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */,
 				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */,
@@ -606,6 +612,7 @@
 				1BB55AD91E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
 				1BB55AD11E5C73EF00CE6EAD /* AttributedText.swift in Sources */,
 				1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */,
+				A7096F212539DE5D00F71AFA /* GroupedStyle.swift in Sources */,
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD51E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE11E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -628,6 +635,7 @@
 				1BB55AD31E5C73F000CE6EAD /* AttributedText.swift in Sources */,
 				1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
+				A7096F2A2539DE5E00F71AFA /* GroupedStyle.swift in Sources */,
 				1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -642,6 +650,7 @@
 				1BB55AD41E5C73F000CE6EAD /* AttributedText.swift in Sources */,
 				1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
+				A7096F322539DE5E00F71AFA /* GroupedStyle.swift in Sources */,
 				1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD81E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */,
@@ -656,6 +665,7 @@
 				1BB55AD21E5C73EF00CE6EAD /* AttributedText.swift in Sources */,
 				1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
+				A7096F292539DE5D00F71AFA /* GroupedStyle.swift in Sources */,
 				1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */,
