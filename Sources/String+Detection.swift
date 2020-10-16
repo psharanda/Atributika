@@ -47,6 +47,14 @@ public struct TagTransformer {
 extension String {
     
     private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
+        
+        struct TagDelimiter {
+            static let singleQuote = "'"
+            static let backslash = "\""
+            static let whitespace = " "
+            static let majorSymbol = ">"
+        }
+        
         let tagScanner = Scanner(string: tagString)
         
         guard let tagName = tagScanner.scanCharacters(from: CharacterSet.alphanumerics) else {
@@ -65,22 +73,33 @@ extension String {
                 break
             }
             
-            let startsFromSingleQuote = (tagScanner.scanString("'") != nil)
-            if !startsFromSingleQuote {
-                guard tagScanner.scanString("\"") != nil else {
-                    break
+            let isHrefTag = name == "href"
+            
+            var tagDelimiter = TagDelimiter.whitespace
+            if tagScanner.scanString(TagDelimiter.singleQuote) != nil {
+                tagDelimiter = TagDelimiter.singleQuote
+            } else if tagScanner.scanString(TagDelimiter.backslash) != nil {
+                tagDelimiter = TagDelimiter.backslash
+            }
+            
+            let hasRegularDelimiter = tagDelimiter != TagDelimiter.whitespace
+            
+            if isHrefTag || hasRegularDelimiter
+            {
+                var value = tagScanner.scanUpTo(tagDelimiter) ?? ""
+                
+                if (value == "" && isHrefTag) {
+                    value = tagScanner.scanUpTo(TagDelimiter.majorSymbol) ?? ""
                 }
+                
+                if hasRegularDelimiter {
+                    guard tagScanner.scanString(tagDelimiter) != nil else {
+                        break
+                    }
+                }
+                
+                attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
             }
-            
-            let quote = startsFromSingleQuote ? "'" : "\""
-            
-            let value = tagScanner.scanUpTo(quote) ?? ""
-            
-            guard tagScanner.scanString(quote) != nil else {
-                break
-            }
-            
-            attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
         }
         
         return Tag(name: tagName, attributes: attributes)
@@ -118,6 +137,7 @@ extension String {
                             if let tagString = scanner.scanUpTo(">") {
                                 
                                 if scanner.scanString(">") != nil {
+                                    
                                     if let tag = parseTag(tagString, parseAttributes: tagType == .start ) {
                                         
                                         let resultTextEndIndex = resultString.count
