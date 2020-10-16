@@ -69,3 +69,23 @@ public struct GroupedStyle {
         return .init(styles: styles, typedAttributes)
     }
 }
+
+extension GroupedStyle {
+    func marches(styleNames: [String]) -> Bool {
+        return styleNames.map { $0.lowercased() }.sorted() == styles.map { $0.name.lowercased() }.sorted()
+    }
+    
+    func fetchStyleWithAttribures() -> Style {
+        return .init(styles.map { $0.name }.joined(separator: "-"), typedAttributes)
+    }
+}
+
+extension GroupedStyle {
+    static public func < (left: GroupedStyle, right: GroupedStyle) -> Bool {
+        return left.styles.count < right.styles.count
+    }
+    
+    static public func > (left: GroupedStyle, right: GroupedStyle) -> Bool {
+        return left.styles.count > right.styles.count
+    }
+}

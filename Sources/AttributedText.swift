@@ -164,21 +164,58 @@ extension String: AttributedTextProtocol {
         return Style()
     }
     
-    public func style(tags: [Style], transformers: [TagTransformer] = [TagTransformer.brTransformer], tuner: (Style, Tag) -> Style = { s, _ in return  s}) -> AttributedText {
-        let (string, tagsInfo) = detectTags(transformers: transformers)
+    public func style(tags: [Style], groupedTags: [GroupedStyle] = [], transformers: [TagTransformer] = [TagTransformer.brTransformer], tuner: (Style, Tag) -> Style = { s, _ in return  s}) -> AttributedText {
+        var groupedAnchors: [[String]: GroupedStyle] = [:]
         
+        groupedTags.forEach {
+            let anchors = $0.styles.map { $0.name.lowercased() }.sorted()
+            groupedAnchors[anchors] = $0
+        }
+        let anchorsNames = groupedAnchors.keys.sorted { $0.count > $1.count }
+        
+        let items = detectTags(transformers: transformers)
+        let (string, tagsInfo) = items
         var ds: [Detection] = []
         
-        tagsInfo.forEach { t in
+        var elements: [Range<String.Index>: [TagInfo]] = [:]
+        tagsInfo.forEach { tagInfo in
+            var tags = elements[tagInfo.range] ?? []
+            tags.append(tagInfo)
             
-            if let style = (tags.first { style in style.name.lowercased() == t.tag.name.lowercased() }) {
-                ds.append(Detection(type: .tag(t.tag), style: tuner(style, t.tag), range: t.range, level: t.level))
-            } else {
-                ds.append(Detection(type: .tag(t.tag), style: Style(), range: t.range, level: t.level))
+            elements[tagInfo.range] = tags
+        }
+        
+        elements.forEach { pair in
+            guard let firstTag = pair.value.first else {
+                return
+            }
+            
+            let foundedTags = pair.value.map { $0.tag.name.lowercased() }.sorted()
+            
+            for groupedTagNames in anchorsNames {
+                guard groupedTagNames == foundedTags, let group = groupedAnchors[groupedTagNames] else {
+                    continue
+                }
+                
+                let style = group.fetchStyleWithAttribures()
+                ds.append(.init(type: .tag(firstTag.tag), style: style, range: pair.key, level: firstTag.level))
+                return
+            }
+
+            tagsInfo.forEach { t in                
+                if let style = (tags.first { style in style.name.lowercased() == t.tag.name.lowercased() }) {
+                    ds.append(Detection(type: .tag(t.tag), style: tuner(style, t.tag), range: t.range, level: t.level))
+                } else {
+                    ds.append(Detection(type: .tag(t.tag), style: Style(), range: t.range, level: t.level))
+                }
             }
         }
         
         return AttributedText(string: string, detections: ds, baseStyle: baseStyle)
+    }
+    
+    public func style(tags: Style..., groupedTags: [GroupedStyle] = [], transformers: [TagTransformer] = [TagTransformer.brTransformer], tuner: (Style, Tag) -> Style = { s, _ in return  s}) -> AttributedText {
+        return style(tags: tags, groupedTags: groupedTags, transformers: transformers, tuner: tuner)
     }
     
     public func style(tags: Style..., transformers: [TagTransformer] = [TagTransformer.brTransformer], tuner: (Style, Tag) -> Style = { s, _ in return  s}) -> AttributedText {
