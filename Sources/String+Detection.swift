@@ -17,7 +17,7 @@ public struct TagInfo {
 }
 
 public enum TagType {
-    case start
+    case start  //includes self-closing tags like <img />
     case end
 }
 
@@ -127,9 +127,13 @@ extension String {
                                         }) {
                                             resultString.append(transformer.transform(tag))
                                         }
-                                        
-                                        if tagType == .start {
-                                            tagsStack.append((tag, resultTextEndIndex, (tagsStack.last?.2 ?? -1) + 1))
+
+                                        let nextLevel = (tagsStack.last?.2 ?? -1) + 1
+
+                                        if tagString.last == "/" {
+                                            tagsResult.append(TagInfoInternal(tag: tag, rangeStart: resultTextEndIndex, rangeEnd: resultTextEndIndex, level: nextLevel))
+                                        } else if tagType == .start {
+                                            tagsStack.append((tag, resultTextEndIndex, nextLevel))
                                         } else {
                                             for (index, (tagInStack, startIndex, level)) in tagsStack.enumerated().reversed() {
                                                 if tagInStack.name.lowercased() == tag.name.lowercased() {

@@ -456,6 +456,28 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(tags[0].tag.attributes["target"], "")
         XCTAssertEqual(tags[0].tag.attributes["href"], "http://foo.com")
     }
+
+    func testSelfClosingTagAttributes() {
+        let test = "Hello <img href=\"http://foo.com/image.jpg\"/>!"
+
+        let (string, tags) = test.detectTags()
+
+        XCTAssertEqual(string, "Hello !")
+
+        XCTAssertEqual(tags[0].tag.name, "img")
+        XCTAssertEqual(tags[0].tag.attributes["href"], "http://foo.com/image.jpg")
+    }
+
+    func testInnerSelfClosingTagAttributes() {
+        let test = "Hello <b>bold<img href=\"http://foo.com/image.jpg\"/>!</b>"
+
+        let (string, tags) = test.detectTags()
+
+        XCTAssertEqual(string, "Hello bold!")
+
+        XCTAssertEqual(tags[0].tag.name, "img")
+        XCTAssertEqual(tags[0].tag.attributes["href"], "http://foo.com/image.jpg")
+    }
     
     func testTagAttributesWithSingleQuote() {
         let test = "Hello <a class='big' target='' href=\"http://foo.com\">world</a>!"
