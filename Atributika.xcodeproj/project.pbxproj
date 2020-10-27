@@ -46,15 +46,18 @@
 		1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5681E683A8F006374F6 /* Snippet.swift */; };
 		1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
-		52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
+		52D6D99B1BEFF375002C0205 /* GroupAtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* GroupAtributikaTests.swift */; };
+		843A73892548CC370050DFC1 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A73882548CC370050DFC1 /* AtributikaTests.swift */; };
+		843A738A2548CC370050DFC1 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A73882548CC370050DFC1 /* AtributikaTests.swift */; };
+		843A738B2548CC370050DFC1 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A73882548CC370050DFC1 /* AtributikaTests.swift */; };
 		A7096FB12539E83200F71AFA /* GroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096FB02539E83200F71AFA /* GroupedStyle.swift */; };
 		A7096FB22539E83200F71AFA /* GroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096FB02539E83200F71AFA /* GroupedStyle.swift */; };
 		A7096FB32539E83200F71AFA /* GroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096FB02539E83200F71AFA /* GroupedStyle.swift */; };
 		A7096FB42539E83200F71AFA /* GroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096FB02539E83200F71AFA /* GroupedStyle.swift */; };
-		DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
+		DD7502861C68FDDC006590AF /* GroupAtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* GroupAtributikaTests.swift */; };
 		DD7502881C68FEDE006590AF /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Atributika.framework */; };
 		DD7502921C690C7A006590AF /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Atributika.framework */; };
-		DD75029A1C690CBE006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
+		DD75029A1C690CBE006590AF /* GroupAtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* GroupAtributikaTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,10 +125,11 @@
 		1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Atributika-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atributika-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		52D6D9971BEFF375002C0205 /* AtributikaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtributikaTests.swift; path = Tests/AtributikaTests/AtributikaTests.swift; sourceTree = "<group>"; };
+		52D6D9971BEFF375002C0205 /* GroupAtributikaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupAtributikaTests.swift; path = Tests/AtributikaTests/GroupAtributikaTests.swift; sourceTree = "<group>"; };
 		52D6D9E21BEFFF6E002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		843A73882548CC370050DFC1 /* AtributikaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtributikaTests.swift; sourceTree = "<group>"; };
 		A7096FB02539E83200F71AFA /* GroupedStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupedStyle.swift; path = Sources/GroupedStyle.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* Atributika.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Atributika.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* AtributikaTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AtributikaTests.plist; sourceTree = "<group>"; };
@@ -216,7 +220,8 @@
 		1BB55AC11E5C6F2400CE6EAD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				52D6D9971BEFF375002C0205 /* AtributikaTests.swift */,
+				843A73882548CC370050DFC1 /* AtributikaTests.swift */,
+				52D6D9971BEFF375002C0205 /* GroupAtributikaTests.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -623,7 +628,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */,
+				52D6D99B1BEFF375002C0205 /* GroupAtributikaTests.swift in Sources */,
+				843A738A2548CC370050DFC1 /* AtributikaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,7 +682,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */,
+				DD7502861C68FDDC006590AF /* GroupAtributikaTests.swift in Sources */,
+				843A73892548CC370050DFC1 /* AtributikaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,7 +691,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD75029A1C690CBE006590AF /* AtributikaTests.swift in Sources */,
+				DD75029A1C690CBE006590AF /* GroupAtributikaTests.swift in Sources */,
+				843A738B2548CC370050DFC1 /* AtributikaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
