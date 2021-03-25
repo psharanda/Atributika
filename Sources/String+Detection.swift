@@ -51,8 +51,6 @@ extension String {
         struct TagDelimiter {
             static let singleQuote = "'"
             static let backslash = "\""
-            static let whitespace = " "
-            static let majorSymbol = ">"
         }
         
         let tagScanner = Scanner(string: tagString)
@@ -63,42 +61,25 @@ extension String {
         
         var attributes = [String: String]()
         
-        while parseAttributes && !tagScanner.isAtEnd {
-            
-            guard let name = tagScanner.scanUpTo("=") else {
-                break
-            }
-            
-            guard tagScanner.scanString("=") != nil else {
-                break
-            }
-            
-            let isHrefTag = name == "href"
-            
-            var tagDelimiter = TagDelimiter.whitespace
-            if tagScanner.scanString(TagDelimiter.singleQuote) != nil {
-                tagDelimiter = TagDelimiter.singleQuote
-            } else if tagScanner.scanString(TagDelimiter.backslash) != nil {
-                tagDelimiter = TagDelimiter.backslash
-            }
-            
-            let hasRegularDelimiter = tagDelimiter != TagDelimiter.whitespace
-            
-            if isHrefTag || hasRegularDelimiter
+        let splittedTagString = tagString.split(separator: " ")
+        
+        for splittedString in splittedTagString
+        {
+            if splittedString != tagName && splittedString.contains("=")
             {
-                var value = tagScanner.scanUpTo(tagDelimiter) ?? ""
+                let splittedAttributeString = splittedString.split(separator: "=").map { String($0) }
                 
-                if (value == "" && isHrefTag) {
-                    value = tagScanner.scanUpTo(TagDelimiter.majorSymbol) ?? ""
+                if splittedAttributeString.count == 0 {
+                    break
                 }
                 
-                if hasRegularDelimiter {
-                    guard tagScanner.scanString(tagDelimiter) != nil else {
-                        break
-                    }
-                }
+                let attributeName = splittedAttributeString[0]
+                let attributeValue = splittedAttributeString.count > 1 ? splittedAttributeString[1]
+                    .replacingOccurrences(of: "&quot;", with: "\"")
+                    .replacingOccurrences(of: TagDelimiter.singleQuote, with: "")
+                    .replacingOccurrences(of: TagDelimiter.backslash, with: "") : ""
                 
-                attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
+                attributes[attributeName] = attributeValue
             }
         }
         
