@@ -1,0 +1,10 @@
+platform :ios, '11.0'
+
+target 'CocoaPodsDemo' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  pod 'Atributika', :path => '../../Atributika.podspec'
+  pod 'AtributikaViews', :path => '../../AtributikaViews.podspec'
+
+end

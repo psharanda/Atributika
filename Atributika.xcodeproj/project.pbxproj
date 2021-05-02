@@ -3,48 +3,64 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 47;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B2E55D92192FC8100D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
-		1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
-		1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
-		1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
-		1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */; };
-		1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */; };
-		1B2F83971E5C98A4009AFBCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83961E5C98A4009AFBCA /* Assets.xcassets */; };
-		1B2F839A1E5C98A4009AFBCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */; };
 		1B2F839F1E5C98F0009AFBCA /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		1B2F83A01E5C98F0009AFBCA /* Atributika.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
-		1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
-		1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
-		1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
-		1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B80548923A8ACDF002DCA63 /* IBViewController.swift */; };
-		1B80548C23A8ACF1002DCA63 /* IB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B80548B23A8ACF1002DCA63 /* IB.storyboard */; };
-		1BB55AD11E5C73EF00CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
-		1BB55AD21E5C73EF00CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
-		1BB55AD31E5C73F000CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
-		1BB55AD41E5C73F000CE6EAD /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */; };
-		1BB55AD51E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */; };
-		1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */; };
-		1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */; };
-		1BB55AD81E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */; };
-		1BB55AD91E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */; };
-		1BB55ADA1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */; };
-		1BB55ADB1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */; };
-		1BB55ADC1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */; };
-		1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
-		1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
-		1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
-		1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
-		1BB55AE11E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
-		1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
-		1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
-		1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
-		1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5681E683A8F006374F6 /* Snippet.swift */; };
-		1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */; };
+		1B3A5E572A07C3C60097D721 /* AtributikaViews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3A5E532A07C2A00097D721 /* AtributikaViews.framework */; };
+		1B3A5E582A07C3C60097D721 /* AtributikaViews.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3A5E532A07C2A00097D721 /* AtributikaViews.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1B3A5E6D2A07C4AB0097D721 /* Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6A2A07C4A60097D721 /* Detection.swift */; };
+		1B3A5E6E2A07C4AB0097D721 /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6B2A07C4A60097D721 /* String+Detection.swift */; };
+		1B3A5E6F2A07C4AB0097D721 /* Attrs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6C2A07C4A60097D721 /* Attrs.swift */; };
+		1B3A5E702A07C4AB0097D721 /* String+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E652A07C4A60097D721 /* String+Style.swift */; };
+		1B3A5E712A07C4AB0097D721 /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E662A07C4A60097D721 /* AttributedStringBuilder.swift */; };
+		1B3A5E722A07C4AB0097D721 /* NSScanner+Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E672A07C4A60097D721 /* NSScanner+Compat.swift */; };
+		1B3A5E732A07C4AB0097D721 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E682A07C4A60097D721 /* String+HTML.swift */; };
+		1B3A5E742A07C4AB0097D721 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E692A07C4A60097D721 /* Tag.swift */; };
+		1B3A5E7D2A07C4AC0097D721 /* Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6A2A07C4A60097D721 /* Detection.swift */; };
+		1B3A5E7E2A07C4AC0097D721 /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6B2A07C4A60097D721 /* String+Detection.swift */; };
+		1B3A5E7F2A07C4AC0097D721 /* Attrs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6C2A07C4A60097D721 /* Attrs.swift */; };
+		1B3A5E802A07C4AC0097D721 /* String+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E652A07C4A60097D721 /* String+Style.swift */; };
+		1B3A5E812A07C4AC0097D721 /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E662A07C4A60097D721 /* AttributedStringBuilder.swift */; };
+		1B3A5E822A07C4AC0097D721 /* NSScanner+Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E672A07C4A60097D721 /* NSScanner+Compat.swift */; };
+		1B3A5E832A07C4AC0097D721 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E682A07C4A60097D721 /* String+HTML.swift */; };
+		1B3A5E842A07C4AC0097D721 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E692A07C4A60097D721 /* Tag.swift */; };
+		1B3A5E852A07C4AC0097D721 /* Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6A2A07C4A60097D721 /* Detection.swift */; };
+		1B3A5E862A07C4AD0097D721 /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6B2A07C4A60097D721 /* String+Detection.swift */; };
+		1B3A5E872A07C4AD0097D721 /* Attrs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6C2A07C4A60097D721 /* Attrs.swift */; };
+		1B3A5E882A07C4AD0097D721 /* String+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E652A07C4A60097D721 /* String+Style.swift */; };
+		1B3A5E892A07C4AD0097D721 /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E662A07C4A60097D721 /* AttributedStringBuilder.swift */; };
+		1B3A5E8A2A07C4AD0097D721 /* NSScanner+Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E672A07C4A60097D721 /* NSScanner+Compat.swift */; };
+		1B3A5E8B2A07C4AD0097D721 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E682A07C4A60097D721 /* String+HTML.swift */; };
+		1B3A5E8C2A07C4AD0097D721 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E692A07C4A60097D721 /* Tag.swift */; };
+		1B3A5E8D2A07C4B10097D721 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E602A07C4A60097D721 /* AttributedLabel.swift */; };
+		1B3A5E8E2A07C4B10097D721 /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E612A07C4A60097D721 /* AttributedTextView.swift */; };
+		1B3A5E8F2A07C4B10097D721 /* BaseAttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E632A07C4A60097D721 /* BaseAttributedTextView.swift */; };
+		1B3A5E902A07C4B10097D721 /* RectsAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E622A07C4A60097D721 /* RectsAccessibilityElement.swift */; };
+		1B3A5E912A07C4B10097D721 /* LinkHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E5F2A07C4A60097D721 /* LinkHighlight.swift */; };
+		1B3A5E922A07C4B10097D721 /* TextUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E5E2A07C4A60097D721 /* TextUtils.swift */; };
+		1B3A5E932A07C4B50097D721 /* NSScanner+Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E672A07C4A60097D721 /* NSScanner+Compat.swift */; };
+		1B3A5E942A07C4B50097D721 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E682A07C4A60097D721 /* String+HTML.swift */; };
+		1B3A5E952A07C4B50097D721 /* Attrs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6C2A07C4A60097D721 /* Attrs.swift */; };
+		1B3A5E962A07C4B50097D721 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E692A07C4A60097D721 /* Tag.swift */; };
+		1B3A5E972A07C4B50097D721 /* Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6A2A07C4A60097D721 /* Detection.swift */; };
+		1B3A5E982A07C4B50097D721 /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E6B2A07C4A60097D721 /* String+Detection.swift */; };
+		1B3A5E992A07C4B50097D721 /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E662A07C4A60097D721 /* AttributedStringBuilder.swift */; };
+		1B3A5E9A2A07C4B50097D721 /* String+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E652A07C4A60097D721 /* String+Style.swift */; };
+		1BA6407F2A07AAEC000A7D32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BA640732A07AAEC000A7D32 /* LaunchScreen.storyboard */; };
+		1BA640802A07AAEC000A7D32 /* AttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA640742A07AAEC000A7D32 /* AttributedLabelDemoViewController.swift */; };
+		1BA640812A07AAEC000A7D32 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA640752A07AAEC000A7D32 /* Snippet.swift */; };
+		1BA640822A07AAEC000A7D32 /* SwiftUIDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA640762A07AAEC000A7D32 /* SwiftUIDemoViewController.swift */; };
+		1BA640832A07AAEC000A7D32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BA640772A07AAEC000A7D32 /* Assets.xcassets */; };
+		1BA640852A07AAEC000A7D32 /* IBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA640792A07AAEC000A7D32 /* IBViewController.swift */; };
+		1BA640862A07AAEC000A7D32 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA6407A2A07AAEC000A7D32 /* BrowserViewController.swift */; };
+		1BA640872A07AAEC000A7D32 /* SnippetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA6407B2A07AAEC000A7D32 /* SnippetsViewController.swift */; };
+		1BA640882A07AAEC000A7D32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA6407C2A07AAEC000A7D32 /* AppDelegate.swift */; };
+		1BA6408A2A07AAEC000A7D32 /* IB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BA6407E2A07AAEC000A7D32 /* IB.storyboard */; };
+		1BCBD0EE2A193B48001BA6DF /* MarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBD0ED2A193B48001BA6DF /* MarkdownViewController.swift */; };
+		1BCBD0F32A193B7F001BA6DF /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 1BCBD0F22A193B7F001BA6DF /* Markdown */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
 		52D6D99B1BEFF375002C0205 /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
 		DD7502861C68FDDC006590AF /* AtributikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* AtributikaTests.swift */; };
@@ -60,6 +76,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 52D6D97B1BEFF229002C0205;
 			remoteInfo = "Atributika-iOS";
+		};
+		1B3A5E592A07C3C60097D721 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52D6D9731BEFF229002C0205 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1B3A5E3D2A07C2A00097D721;
+			remoteInfo = "AtributikaViews-iOS";
 		};
 		52D6D9881BEFF229002C0205 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -92,6 +115,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				1B2F83A01E5C98F0009AFBCA /* Atributika.framework in Embed Frameworks */,
+				1B3A5E582A07C3C60097D721 /* AtributikaViews.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -99,23 +123,36 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTMLSpecials.swift; path = Sources/HTMLSpecials.swift; sourceTree = "<group>"; };
 		1B2F838D1E5C98A4009AFBCA /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsViewController.swift; sourceTree = "<group>"; };
-		1B2F83961E5C98A4009AFBCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1B2F83991E5C98A4009AFBCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1B2F839B1E5C98A4009AFBCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1B38369F1F97C224001DB333 /* AttributedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedLabel.swift; path = Sources/AttributedLabel.swift; sourceTree = "<group>"; };
-		1B80548923A8ACDF002DCA63 /* IBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
-		1B80548B23A8ACF1002DCA63 /* IB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
-		1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedText.swift; path = Sources/AttributedText.swift; sourceTree = "<group>"; };
-		1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+Utils.swift"; path = "Sources/NSAttributedString+Utils.swift"; sourceTree = "<group>"; };
-		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScanner+Swift.swift"; path = "Sources/NSScanner+Swift.swift"; sourceTree = "<group>"; };
-		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Detection.swift"; path = "Sources/String+Detection.swift"; sourceTree = "<group>"; };
-		1BB55AD01E5C73EF00CE6EAD /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Style.swift; path = Sources/Style.swift; sourceTree = "<group>"; };
-		1BDDF5681E683A8F006374F6 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
-		1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
+		1B3A5E532A07C2A00097D721 /* AtributikaViews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AtributikaViews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B3A5E542A07C2A00097D721 /* Atributika-iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Atributika-iOS copy-Info.plist"; path = "/Users/psharanda/Github/Atributika/Atributika-iOS copy-Info.plist"; sourceTree = "<absolute>"; };
+		1B3A5E552A07C3730097D721 /* AtributikaViews.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AtributikaViews.plist; sourceTree = "<group>"; };
+		1B3A5E5E2A07C4A60097D721 /* TextUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextUtils.swift; sourceTree = "<group>"; };
+		1B3A5E5F2A07C4A60097D721 /* LinkHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHighlight.swift; sourceTree = "<group>"; };
+		1B3A5E602A07C4A60097D721 /* AttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedLabel.swift; sourceTree = "<group>"; };
+		1B3A5E612A07C4A60097D721 /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
+		1B3A5E622A07C4A60097D721 /* RectsAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectsAccessibilityElement.swift; sourceTree = "<group>"; };
+		1B3A5E632A07C4A60097D721 /* BaseAttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAttributedTextView.swift; sourceTree = "<group>"; };
+		1B3A5E652A07C4A60097D721 /* String+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Style.swift"; sourceTree = "<group>"; };
+		1B3A5E662A07C4A60097D721 /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
+		1B3A5E672A07C4A60097D721 /* NSScanner+Compat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSScanner+Compat.swift"; sourceTree = "<group>"; };
+		1B3A5E682A07C4A60097D721 /* String+HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTML.swift"; sourceTree = "<group>"; };
+		1B3A5E692A07C4A60097D721 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		1B3A5E6A2A07C4A60097D721 /* Detection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Detection.swift; sourceTree = "<group>"; };
+		1B3A5E6B2A07C4A60097D721 /* String+Detection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Detection.swift"; sourceTree = "<group>"; };
+		1B3A5E6C2A07C4A60097D721 /* Attrs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attrs.swift; sourceTree = "<group>"; };
+		1BA640732A07AAEC000A7D32 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1BA640742A07AAEC000A7D32 /* AttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
+		1BA640752A07AAEC000A7D32 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
+		1BA640762A07AAEC000A7D32 /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
+		1BA640772A07AAEC000A7D32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1BA640792A07AAEC000A7D32 /* IBViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
+		1BA6407A2A07AAEC000A7D32 /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
+		1BA6407B2A07AAEC000A7D32 /* SnippetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnippetsViewController.swift; sourceTree = "<group>"; };
+		1BA6407C2A07AAEC000A7D32 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1BA6407D2A07AAEC000A7D32 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BA6407E2A07AAEC000A7D32 /* IB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
+		1BCBD0ED2A193B48001BA6DF /* MarkdownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownViewController.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Atributika-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atributika-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9971BEFF375002C0205 /* AtributikaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtributikaTests.swift; path = Tests/AtributikaTests/AtributikaTests.swift; sourceTree = "<group>"; };
@@ -133,7 +170,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BCBD0F32A193B7F001BA6DF /* Markdown in Frameworks */,
 				1B2F839F1E5C98F0009AFBCA /* Atributika.framework in Frameworks */,
+				1B3A5E572A07C3C60097D721 /* AtributikaViews.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1B3A5E4D2A07C2A00097D721 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,17 +241,63 @@
 		1B2F838E1E5C98A4009AFBCA /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				1BDDF5681E683A8F006374F6 /* Snippet.swift */,
-				1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */,
-				1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */,
-				1B80548923A8ACDF002DCA63 /* IBViewController.swift */,
-				1B80548B23A8ACF1002DCA63 /* IB.storyboard */,
-				1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */,
-				1B2F83961E5C98A4009AFBCA /* Assets.xcassets */,
-				1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */,
-				1B2F839B1E5C98A4009AFBCA /* Info.plist */,
+				1BA640722A07AAEC000A7D32 /* Sources */,
 			);
 			path = Demo;
+			sourceTree = "<group>";
+		};
+		1B3A5E562A07C3C60097D721 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1B3A5E5D2A07C4A60097D721 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1B3A5E5E2A07C4A60097D721 /* TextUtils.swift */,
+				1B3A5E5F2A07C4A60097D721 /* LinkHighlight.swift */,
+				1B3A5E602A07C4A60097D721 /* AttributedLabel.swift */,
+				1B3A5E612A07C4A60097D721 /* AttributedTextView.swift */,
+				1B3A5E622A07C4A60097D721 /* RectsAccessibilityElement.swift */,
+				1B3A5E632A07C4A60097D721 /* BaseAttributedTextView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1B3A5E642A07C4A60097D721 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1B3A5E652A07C4A60097D721 /* String+Style.swift */,
+				1B3A5E662A07C4A60097D721 /* AttributedStringBuilder.swift */,
+				1B3A5E672A07C4A60097D721 /* NSScanner+Compat.swift */,
+				1B3A5E682A07C4A60097D721 /* String+HTML.swift */,
+				1B3A5E692A07C4A60097D721 /* Tag.swift */,
+				1B3A5E6A2A07C4A60097D721 /* Detection.swift */,
+				1B3A5E6B2A07C4A60097D721 /* String+Detection.swift */,
+				1B3A5E6C2A07C4A60097D721 /* Attrs.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		1BA640722A07AAEC000A7D32 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				1BCBD0ED2A193B48001BA6DF /* MarkdownViewController.swift */,
+				1BA640732A07AAEC000A7D32 /* LaunchScreen.storyboard */,
+				1BA640742A07AAEC000A7D32 /* AttributedLabelDemoViewController.swift */,
+				1BA640752A07AAEC000A7D32 /* Snippet.swift */,
+				1BA640762A07AAEC000A7D32 /* SwiftUIDemoViewController.swift */,
+				1BA640772A07AAEC000A7D32 /* Assets.xcassets */,
+				1BA640792A07AAEC000A7D32 /* IBViewController.swift */,
+				1BA6407A2A07AAEC000A7D32 /* BrowserViewController.swift */,
+				1BA6407B2A07AAEC000A7D32 /* SnippetsViewController.swift */,
+				1BA6407C2A07AAEC000A7D32 /* AppDelegate.swift */,
+				1BA6407D2A07AAEC000A7D32 /* Info.plist */,
+				1BA6407E2A07AAEC000A7D32 /* IB.storyboard */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		1BB55AC11E5C6F2400CE6EAD /* Tests */ = {
@@ -216,20 +308,25 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
+		1BC1BE5229F5DB2E0044609C /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				1B3A5E642A07C4A60097D721 /* Core */,
+				1B3A5E5D2A07C4A60097D721 /* Views */,
+			);
+			path = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
-				1B38369F1F97C224001DB333 /* AttributedLabel.swift */,
-				1BB55AD01E5C73EF00CE6EAD /* Style.swift */,
-				1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */,
-				1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */,
-				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */,
-				1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */,
-				1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */,
-				1BB55AC11E5C6F2400CE6EAD /* Tests */,
+				1BC1BE5229F5DB2E0044609C /* Sources */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
 				1B2F838E1E5C98A4009AFBCA /* Demo */,
 				52D6D97D1BEFF229002C0205 /* Products */,
+				1BB55AC11E5C6F2400CE6EAD /* Tests */,
+				1B3A5E542A07C2A00097D721 /* Atributika-iOS copy-Info.plist */,
+				1B3A5E562A07C3C60097D721 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -244,6 +341,7 @@
 				DD75027A1C68FCFC006590AF /* Atributika-macOS Tests.xctest */,
 				DD75028D1C690C7A006590AF /* Atributika-tvOS Tests.xctest */,
 				1B2F838D1E5C98A4009AFBCA /* Demo.app */,
+				1B3A5E532A07C2A00097D721 /* AtributikaViews.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -260,6 +358,7 @@
 		DD7502721C68FC1B006590AF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B3A5E552A07C3730097D721 /* AtributikaViews.plist */,
 				AD2FAA261CD0B6D800659CF4 /* Atributika.plist */,
 			);
 			name = Frameworks;
@@ -276,6 +375,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		1B3A5E4E2A07C2A00097D721 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52D6D9791BEFF229002C0205 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -320,11 +426,33 @@
 			);
 			dependencies = (
 				1B2F83A21E5C98F0009AFBCA /* PBXTargetDependency */,
+				1B3A5E5A2A07C3C60097D721 /* PBXTargetDependency */,
 			);
 			name = Demo;
+			packageProductDependencies = (
+				1BCBD0F22A193B7F001BA6DF /* Markdown */,
+			);
 			productName = Demo;
 			productReference = 1B2F838D1E5C98A4009AFBCA /* Demo.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1B3A5E3D2A07C2A00097D721 /* AtributikaViews-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B3A5E502A07C2A00097D721 /* Build configuration list for PBXNativeTarget "AtributikaViews-iOS" */;
+			buildPhases = (
+				1B3A5E3E2A07C2A00097D721 /* Sources */,
+				1B3A5E4D2A07C2A00097D721 /* Frameworks */,
+				1B3A5E4E2A07C2A00097D721 /* Headers */,
+				1B3A5E4F2A07C2A00097D721 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AtributikaViews-iOS";
+			productName = Atributika;
+			productReference = 1B3A5E532A07C2A00097D721 /* AtributikaViews.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		52D6D97B1BEFF229002C0205 /* Atributika-iOS */ = {
 			isa = PBXNativeTarget;
@@ -340,6 +468,8 @@
 			dependencies = (
 			);
 			name = "Atributika-iOS";
+			packageProductDependencies = (
+			);
 			productName = Atributika;
 			productReference = 52D6D97C1BEFF229002C0205 /* Atributika.framework */;
 			productType = "com.apple.product-type.framework";
@@ -459,12 +589,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1410;
 				ORGANIZATIONNAME = Atributika;
 				TargetAttributes = {
 					1B2F838C1E5C98A4009AFBCA = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 6UG65RB759;
+						DevelopmentTeam = QXF4AH2XT9;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
@@ -507,11 +637,15 @@
 				Base,
 			);
 			mainGroup = 52D6D9721BEFF229002C0205;
+			packageReferences = (
+				1BCBD0EF2A193B70001BA6DF /* XCRemoteSwiftPackageReference "swift-markdown" */,
+			);
 			productRefGroup = 52D6D97D1BEFF229002C0205 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				52D6D97B1BEFF229002C0205 /* Atributika-iOS */,
+				1B3A5E3D2A07C2A00097D721 /* AtributikaViews-iOS */,
 				52D6DA0E1BF000BD002C0205 /* Atributika-macOS */,
 				52D6D9E11BEFFF6E002C0205 /* Atributika-watchOS */,
 				52D6D9EF1BEFFFBE002C0205 /* Atributika-tvOS */,
@@ -528,9 +662,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B2F839A1E5C98A4009AFBCA /* LaunchScreen.storyboard in Resources */,
-				1B80548C23A8ACF1002DCA63 /* IB.storyboard in Resources */,
-				1B2F83971E5C98A4009AFBCA /* Assets.xcassets in Resources */,
+				1BA640832A07AAEC000A7D32 /* Assets.xcassets in Resources */,
+				1BA6407F2A07AAEC000A7D32 /* LaunchScreen.storyboard in Resources */,
+				1BA6408A2A07AAEC000A7D32 /* IB.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1B3A5E4F2A07C2A00097D721 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,11 +731,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */,
-				1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */,
-				1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */,
-				1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */,
-				1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */,
+				1BA640882A07AAEC000A7D32 /* AppDelegate.swift in Sources */,
+				1BCBD0EE2A193B48001BA6DF /* MarkdownViewController.swift in Sources */,
+				1BA640852A07AAEC000A7D32 /* IBViewController.swift in Sources */,
+				1BA640862A07AAEC000A7D32 /* BrowserViewController.swift in Sources */,
+				1BA640872A07AAEC000A7D32 /* SnippetsViewController.swift in Sources */,
+				1BA640802A07AAEC000A7D32 /* AttributedLabelDemoViewController.swift in Sources */,
+				1BA640822A07AAEC000A7D32 /* SwiftUIDemoViewController.swift in Sources */,
+				1BA640812A07AAEC000A7D32 /* Snippet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1B3A5E3E2A07C2A00097D721 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B3A5E902A07C4B10097D721 /* RectsAccessibilityElement.swift in Sources */,
+				1B3A5E8E2A07C4B10097D721 /* AttributedTextView.swift in Sources */,
+				1B3A5E8F2A07C4B10097D721 /* BaseAttributedTextView.swift in Sources */,
+				1B3A5E922A07C4B10097D721 /* TextUtils.swift in Sources */,
+				1B3A5E8D2A07C4B10097D721 /* AttributedLabel.swift in Sources */,
+				1B3A5E912A07C4B10097D721 /* LinkHighlight.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,13 +759,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B2E55D92192FC8100D2B934 /* HTMLSpecials.swift in Sources */,
-				1BB55AD91E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
-				1BB55AD11E5C73EF00CE6EAD /* AttributedText.swift in Sources */,
-				1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */,
-				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
-				1BB55AD51E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
-				1BB55AE11E5C73F000CE6EAD /* Style.swift in Sources */,
+				1B3A5E742A07C4AB0097D721 /* Tag.swift in Sources */,
+				1B3A5E712A07C4AB0097D721 /* AttributedStringBuilder.swift in Sources */,
+				1B3A5E702A07C4AB0097D721 /* String+Style.swift in Sources */,
+				1B3A5E6E2A07C4AB0097D721 /* String+Detection.swift in Sources */,
+				1B3A5E6F2A07C4AB0097D721 /* Attrs.swift in Sources */,
+				1B3A5E732A07C4AB0097D721 /* String+HTML.swift in Sources */,
+				1B3A5E6D2A07C4AB0097D721 /* Detection.swift in Sources */,
+				1B3A5E722A07C4AB0097D721 /* NSScanner+Compat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,13 +782,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BB55ADB1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
-				1BB55AD31E5C73F000CE6EAD /* AttributedText.swift in Sources */,
-				1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
-				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
-				1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
-				1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
-				1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */,
+				1B3A5E842A07C4AC0097D721 /* Tag.swift in Sources */,
+				1B3A5E812A07C4AC0097D721 /* AttributedStringBuilder.swift in Sources */,
+				1B3A5E802A07C4AC0097D721 /* String+Style.swift in Sources */,
+				1B3A5E7E2A07C4AC0097D721 /* String+Detection.swift in Sources */,
+				1B3A5E7F2A07C4AC0097D721 /* Attrs.swift in Sources */,
+				1B3A5E832A07C4AC0097D721 /* String+HTML.swift in Sources */,
+				1B3A5E7D2A07C4AC0097D721 /* Detection.swift in Sources */,
+				1B3A5E822A07C4AC0097D721 /* NSScanner+Compat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,13 +797,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BB55ADC1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
-				1BB55AD41E5C73F000CE6EAD /* AttributedText.swift in Sources */,
-				1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
-				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
-				1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
-				1BB55AD81E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
-				1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */,
+				1B3A5E9A2A07C4B50097D721 /* String+Style.swift in Sources */,
+				1B3A5E982A07C4B50097D721 /* String+Detection.swift in Sources */,
+				1B3A5E962A07C4B50097D721 /* Tag.swift in Sources */,
+				1B3A5E972A07C4B50097D721 /* Detection.swift in Sources */,
+				1B3A5E992A07C4B50097D721 /* AttributedStringBuilder.swift in Sources */,
+				1B3A5E932A07C4B50097D721 /* NSScanner+Compat.swift in Sources */,
+				1B3A5E952A07C4B50097D721 /* Attrs.swift in Sources */,
+				1B3A5E942A07C4B50097D721 /* String+HTML.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,13 +812,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BB55ADA1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
-				1BB55AD21E5C73EF00CE6EAD /* AttributedText.swift in Sources */,
-				1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
-				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
-				1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
-				1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
-				1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */,
+				1B3A5E8C2A07C4AD0097D721 /* Tag.swift in Sources */,
+				1B3A5E892A07C4AD0097D721 /* AttributedStringBuilder.swift in Sources */,
+				1B3A5E882A07C4AD0097D721 /* String+Style.swift in Sources */,
+				1B3A5E862A07C4AD0097D721 /* String+Detection.swift in Sources */,
+				1B3A5E872A07C4AD0097D721 /* Attrs.swift in Sources */,
+				1B3A5E8B2A07C4AD0097D721 /* String+HTML.swift in Sources */,
+				1B3A5E852A07C4AC0097D721 /* Detection.swift in Sources */,
+				1B3A5E8A2A07C4AD0097D721 /* NSScanner+Compat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +847,11 @@
 			target = 52D6D97B1BEFF229002C0205 /* Atributika-iOS */;
 			targetProxy = 1B2F83A11E5C98F0009AFBCA /* PBXContainerItemProxy */;
 		};
+		1B3A5E5A2A07C3C60097D721 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1B3A5E3D2A07C2A00097D721 /* AtributikaViews-iOS */;
+			targetProxy = 1B3A5E592A07C3C60097D721 /* PBXContainerItemProxy */;
+		};
 		52D6D9891BEFF229002C0205 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 52D6D97B1BEFF229002C0205 /* Atributika-iOS */;
@@ -703,17 +869,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1B2F83991E5C98A4009AFBCA /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		1B2F839C1E5C98A4009AFBCA /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -723,14 +878,17 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 6UG65RB759;
-				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Atributika.Demo;
+				DEVELOPMENT_TEAM = QXF4AH2XT9;
+				INFOPLIST_FILE = Demo/Sources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = test.psharanda.Atributika.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -742,14 +900,74 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 6UG65RB759;
-				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Atributika.Demo;
+				DEVELOPMENT_TEAM = QXF4AH2XT9;
+				INFOPLIST_FILE = Demo/Sources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = test.psharanda.Atributika.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		1B3A5E512A07C2A00097D721 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_CODE_COVERAGE = NO;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Configs/AtributikaViews.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.AtributikaViews-iOS";
+				PRODUCT_NAME = AtributikaViews;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		1B3A5E522A07C2A00097D721 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_CODE_COVERAGE = NO;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Configs/AtributikaViews.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.AtributikaViews-iOS";
+				PRODUCT_NAME = AtributikaViews;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -775,6 +993,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -834,6 +1053,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -877,14 +1097,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/Atributika.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-iOS";
 				PRODUCT_NAME = Atributika;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -901,13 +1125,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/Atributika.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-iOS";
 				PRODUCT_NAME = Atributika;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -918,12 +1147,16 @@
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Configs/AtributikaTests.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -934,12 +1167,17 @@
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Configs/AtributikaTests.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -956,15 +1194,19 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/Atributika.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-watchOS";
 				PRODUCT_NAME = Atributika;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Debug;
 		};
@@ -981,15 +1223,20 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/Atributika.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-watchOS";
 				PRODUCT_NAME = Atributika;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Release;
 		};
@@ -1006,15 +1253,19 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/Atributika.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-tvOS";
 				PRODUCT_NAME = Atributika;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -1031,15 +1282,20 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/Atributika.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-tvOS";
 				PRODUCT_NAME = Atributika;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -1051,6 +1307,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1058,14 +1315,18 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Configs/Atributika.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-macOS";
 				PRODUCT_NAME = Atributika;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1077,6 +1338,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1084,14 +1346,19 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Configs/Atributika.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-macOS";
 				PRODUCT_NAME = Atributika;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1102,13 +1369,18 @@
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Configs/AtributikaTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1119,14 +1391,20 @@
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Configs/AtributikaTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1137,12 +1415,16 @@
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				INFOPLIST_FILE = Configs/AtributikaTests.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 4.0;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				SWIFT_VERSION = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -1153,13 +1435,18 @@
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				INFOPLIST_FILE = Configs/AtributikaTests.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -1171,6 +1458,15 @@
 			buildConfigurations = (
 				1B2F839C1E5C98A4009AFBCA /* Debug */,
 				1B2F839D1E5C98A4009AFBCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1B3A5E502A07C2A00097D721 /* Build configuration list for PBXNativeTarget "AtributikaViews-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B3A5E512A07C2A00097D721 /* Debug */,
+				1B3A5E522A07C2A00097D721 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1248,6 +1544,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1BCBD0EF2A193B70001BA6DF /* XCRemoteSwiftPackageReference "swift-markdown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-markdown.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1BCBD0F22A193B7F001BA6DF /* Markdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BCBD0EF2A193B70001BA6DF /* XCRemoteSwiftPackageReference "swift-markdown" */;
+			productName = Markdown;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 52D6D9731BEFF229002C0205 /* Project object */;
 }
