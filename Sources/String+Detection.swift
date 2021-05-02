@@ -47,6 +47,12 @@ public struct TagTransformer {
 extension String {
     
     private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
+        
+        struct TagDelimiter {
+            static let singleQuote = "'"
+            static let backslash = "\""
+        }
+        
         let tagScanner = Scanner(string: tagString)
         
         guard let tagName = tagScanner.scanCharacters(from: CharacterSet.alphanumerics) else {
@@ -55,32 +61,26 @@ extension String {
         
         var attributes = [String: String]()
         
-        while parseAttributes && !tagScanner.isAtEnd {
-            
-            guard let name = tagScanner.scanUpTo("=") else {
-                break
-            }
-            
-            guard tagScanner.scanString("=") != nil else {
-                break
-            }
-            
-            let startsFromSingleQuote = (tagScanner.scanString("'") != nil)
-            if !startsFromSingleQuote {
-                guard tagScanner.scanString("\"") != nil else {
+        let splittedTagString = tagString.split(separator: " ")
+        
+        for splittedString in splittedTagString
+        {
+            if splittedString != tagName && splittedString.contains("=")
+            {
+                let splittedAttributeString = splittedString.split(separator: "=").map { String($0) }
+                
+                if splittedAttributeString.count == 0 {
                     break
                 }
+                
+                let attributeName = splittedAttributeString[0]
+                let attributeValue = splittedAttributeString.count > 1 ? splittedAttributeString[1]
+                    .replacingOccurrences(of: "&quot;", with: "\"")
+                    .replacingOccurrences(of: TagDelimiter.singleQuote, with: "")
+                    .replacingOccurrences(of: TagDelimiter.backslash, with: "") : ""
+                
+                attributes[attributeName] = attributeValue
             }
-            
-            let quote = startsFromSingleQuote ? "'" : "\""
-            
-            let value = tagScanner.scanUpTo(quote) ?? ""
-            
-            guard tagScanner.scanString(quote) != nil else {
-                break
-            }
-            
-            attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
         }
         
         return Tag(name: tagName, attributes: attributes)
@@ -118,6 +118,7 @@ extension String {
                             if let tagString = scanner.scanUpTo(">") {
                                 
                                 if scanner.scanString(">") != nil {
+                                    
                                     if let tag = parseTag(tagString, parseAttributes: tagType == .start ) {
                                         
                                         let resultTextEndIndex = resultString.count
