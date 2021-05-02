@@ -8,7 +8,7 @@ import Foundation
 
 import UIKit
 
-@IBDesignable open class AttributedLabel: UIView {
+@IBDesignable open class AttributedLabel: UIControl {
 
     open override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
@@ -20,7 +20,6 @@ import UIKit
     
     //MARK: - private properties
     private let textView = UITextView()
-    private var detectionAreaButtons = [DetectionAreaButton]()
     
     //MARK: - public properties
     open var onClick: ((AttributedLabel, Detection)->Void)?
@@ -28,7 +27,7 @@ import UIKit
     open func rects(for detection: Detection) -> [CGRect] {
         var result = [CGRect]()
 
-        if let attributedText = state.attributedText {
+        if let attributedText = internalState.attributedText {
             let nsrange = NSRange(detection.range, in: attributedText.string)
             textView.layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange, withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0), in: textView.textContainer, using: { (rect, stop) in
                 result.append(rect)
@@ -38,13 +37,12 @@ import UIKit
         return result
     }
     
-    @IBInspectable open var isEnabled: Bool {
+    @IBInspectable open override var isEnabled: Bool {
         set {
-            detectionAreaButtons.forEach { $0.isUserInteractionEnabled = newValue  }
-            state.isEnabled = newValue
+            internalState.isEnabled = newValue
         }
         get {
-            return state.isEnabled
+            return internalState.isEnabled
         }
     }
     
@@ -60,11 +58,11 @@ import UIKit
     
     open var attributedText: AttributedText? {
         set {
-            state = State(attributedText: newValue, isEnabled: state.isEnabled, detection: nil)
+            internalState = State(attributedText: newValue, isEnabled: internalState.isEnabled, detection: nil)
             setNeedsLayout()
         }
         get {
-            return state.attributedText
+            return internalState.attributedText
         }
     }
     
@@ -138,6 +136,8 @@ import UIKit
     }
     
     private func commonInit() {
+        isAccessibilityElement = false
+
         addSubview(textView)
         
         lineBreakMode = .byTruncatingTail
@@ -159,29 +159,6 @@ import UIKit
         textView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
     }
     
-    //MARK: - overrides
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        detectionAreaButtons.forEach {
-            $0.removeFromSuperview()
-        }
-        
-        detectionAreaButtons.removeAll()
-        
-        if let attributedText = state.attributedText {
-            
-            let highlightableDetections = attributedText.detections.filter { $0.style.typedAttributes[.highlighted] != nil }
-            
-            highlightableDetections.forEach { detection in
-                let nsrange = NSRange(detection.range, in: attributedText.string)
-                textView.layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange, withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0), in: textView.textContainer, using: { (rect, stop) in
-                    self.addDetectionAreaButton(frame: rect, detection: detection, text: String(attributedText.string[detection.range]))
-                })
-            }
-        }
-    }
-    
     open override func sizeThatFits(_ size: CGSize) -> CGSize {
         return textView.sizeThatFits(size)
     }
@@ -193,56 +170,105 @@ import UIKit
     open override var forLastBaselineLayout: UIView {
         return textView
     }
-    
-    //MARK: - DetectionAreaButton
-    private class DetectionAreaButton: UIButton {
-        
-        var onHighlightChanged: ((DetectionAreaButton)->Void)?
-        
-        let detection: Detection
-        init(detection: Detection) {
-            self.detection = detection
-            super.init(frame: .zero)
-            self.isExclusiveTouch = true
+
+    private var trackedDetection: Detection?
+
+    open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let pt = touch.location(in: self)
+        if super.beginTracking(touch, with: event) {
+            trackedDetection = detection(at: pt)
+            if trackedDetection != nil {
+                internalState.detection = trackedDetection
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
         }
-        
-        override var isHighlighted: Bool {
-            didSet {
-                if (isHighlighted && isTracking) || !isHighlighted {
-                    onHighlightChanged?(self)
+    }
+
+    open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let pt = touch.location(in: self)
+        if let currentDetection = detection(at: pt) {
+            if currentDetection.range == trackedDetection?.range {
+                if internalState.detection?.range != trackedDetection?.range {
+                    internalState.detection = trackedDetection
+                }
+            } else {
+                if internalState.detection != nil {
+                    internalState.detection = nil
+                }
+            }
+        } else {
+            internalState.detection = nil
+        }
+        return super.continueTracking(touch, with: event)
+    }
+
+    open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        super.endTracking(touch, with: event)
+        if let detection = internalState.detection {
+            onClick?(self, detection)
+        }
+        trackedDetection = nil
+        internalState.detection = nil
+    }
+
+    open override func cancelTracking(with event: UIEvent?) {
+        super.cancelTracking(with: event)
+        trackedDetection = nil
+        internalState.detection = nil
+    }
+
+    private var highlightableDetections: [Detection] {
+        guard let detections = attributedText?.detections else {
+            return []
+        }
+
+        var previousDetection: Detection?
+
+        return detections
+            .filter { $0.style.typedAttributes[.highlighted] != nil }
+            .sorted { $0.range.lowerBound < $1.range.lowerBound }
+            .filter { d in
+                var result = true
+                if let previousDetection = previousDetection {
+                    result = !d.range.overlaps(previousDetection.range)
+                }
+                previousDetection = d
+                return result
+            }
+    }
+
+    private func detection(at point: CGPoint) -> Detection? {
+
+        var result: Detection?
+
+        if let attributedText = internalState.attributedText {
+
+            for detection in highlightableDetections {
+                let nsrange = NSRange(detection.range, in: attributedText.string)
+                textView.layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange,
+                                                               withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
+                                                               in: textView.textContainer, using: { (rect, stop) in
+                    if rect.contains(point) {
+                        stop.pointee = true
+                        result = detection
+                    }
+                })
+                if result != nil {
+                    break
                 }
             }
         }
-        
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+
+        return result;
     }
-    
-    private func addDetectionAreaButton(frame: CGRect, detection: Detection, text: String) {
-        let button = DetectionAreaButton(detection: detection)
-        button.accessibilityLabel = text
-        button.isAccessibilityElement = true
-        #if swift(>=4.2)
-        button.accessibilityTraits = UIAccessibilityTraits.button
-        #else
-        button.accessibilityTraits = UIAccessibilityTraitButton
-        #endif
-        
-        button.isUserInteractionEnabled = state.isEnabled
-        button.addTarget(self, action: #selector(handleDetectionAreaButtonClick), for: .touchUpInside)
-        detectionAreaButtons.append(button)
-        
-        button.onHighlightChanged = { [weak self] in
-            self?.state.detection = $0.isHighlighted ? $0.detection : nil
-        }
-        
-        addSubview(button)
-        button.frame = frame
-    }
-    
-    @objc private func handleDetectionAreaButtonClick(_ sender: DetectionAreaButton) {
-        onClick?(self, sender.detection)
+
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        accessibleElements = nil
     }
     
     //MARK: - state
@@ -253,7 +279,7 @@ import UIKit
         var detection: Detection?
     }
     
-    private var state: State = State(attributedText: nil, isEnabled: true, detection: nil) {
+    private var internalState: State = State(attributedText: nil, isEnabled: true, detection: nil) {
         didSet {
             updateText()
         }
@@ -305,14 +331,15 @@ import UIKit
     }
     
     private func updateText() {
-        if let attributedText = state.attributedText {
+        if let attributedText = internalState.attributedText {
             
-            if let detection = state.detection {
+            if let detection = internalState.detection {
                 let higlightedAttributedString = NSMutableAttributedString(attributedString: attributedText.attributedString)
-                higlightedAttributedString.addAttributes(detection.style.highlightedAttributes, range: NSRange(detection.range, in: attributedText.string))
+                higlightedAttributedString.addAttributes(detection.style.highlightedAttributes,
+                                                         range: NSRange(detection.range, in: attributedText.string))
                 updateAttributedTextInTextView(higlightedAttributedString)
             } else {
-                if state.isEnabled {
+                if internalState.isEnabled {
                     updateAttributedTextInTextView(attributedText.attributedString)
                 } else {
                     updateAttributedTextInTextView(attributedText.disabledAttributedString)
@@ -321,6 +348,126 @@ import UIKit
         } else {
             textView.attributedText = nil
         }
+        accessibleElements = nil
+    }
+
+    //MARK: - Accessibitilty
+
+    private class AccessibilityElement: UIAccessibilityElement {
+        private weak var view: UIView?
+        private let enclosingRects: [CGRect]
+        private let usePath: Bool
+
+        init(container: Any, view: UIView, enclosingRects: [CGRect], usePath: Bool) {
+            self.view = view
+            self.enclosingRects = enclosingRects
+            self.usePath = usePath
+            super.init(accessibilityContainer: container)
+        }
+
+        override var accessibilityActivationPoint: CGPoint {
+            get {
+                guard let view = view  else {
+                    return .zero
+                }
+
+                if enclosingRects.count == 0 {
+                    return .zero
+                } else {
+                    let rect = UIAccessibilityConvertFrameToScreenCoordinates(enclosingRects[0], view)
+                    return CGPoint(x: rect.midX, y: rect.midY)
+                }
+            }
+            set {
+            }
+        }
+
+        override var accessibilityFrame: CGRect {
+            get {
+                guard let view = view  else {
+                    return .null
+                }
+
+                if enclosingRects.count == 0 {
+                    return .null
+                }
+
+                if enclosingRects.count == 1 {
+                    return UIAccessibilityConvertFrameToScreenCoordinates(enclosingRects[0], view)
+                }
+
+                var resultRect = enclosingRects[0]
+
+                for i in 1..<enclosingRects.count {
+                    resultRect = resultRect.union(enclosingRects[i])
+                }
+
+                return UIAccessibilityConvertFrameToScreenCoordinates(resultRect, view)
+            }
+            set {}
+        }
+
+        override var accessibilityPath: UIBezierPath? {
+            get {
+                if !usePath {
+                    return nil
+                }
+                guard let view = view  else {
+                    return nil
+                }
+
+                let path = UIBezierPath()
+
+                enclosingRects.forEach { rect in
+                    path.append(UIBezierPath(rect: rect))
+                }
+
+                return UIAccessibilityConvertPathToScreenCoordinates(path, view)
+            }
+            set {}
+        }
+    }
+
+    private var accessibleElements: [Any]?
+
+    open override var accessibilityElements: [Any]? {
+        get {
+            if (accessibleElements == nil) {
+                accessibleElements = []
+
+                if let attributedText = internalState.attributedText {
+
+                    let text = AccessibilityElement(container: self, view: self, enclosingRects: [textView.frame], usePath: false)
+                    text.accessibilityLabel = attributedText.string
+                    text.accessibilityTraits = UIAccessibilityTraitStaticText
+                    accessibleElements?.append(text)
+
+                    for detection in highlightableDetections {
+                        let nsrange = NSRange(detection.range, in: attributedText.string)
+                        var enclosingRects = [CGRect]()
+                        textView.layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange,
+                                                                       withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
+                                                                       in: textView.textContainer, using: { (rect, stop) in
+                            enclosingRects.append(rect)
+                        })
+
+                        let element = AccessibilityElement(container: self, view: self, enclosingRects: enclosingRects, usePath: true)
+                        element.isAccessibilityElement = false
+
+                        let innerElement = AccessibilityElement(container: element, view: self, enclosingRects: enclosingRects, usePath: false)
+                        innerElement.accessibilityLabel = String(attributedText.string[detection.range])
+                        innerElement.accessibilityTraits = UIAccessibilityTraitLink
+
+                        element.accessibilityElements = [innerElement]
+
+                        accessibleElements?.append(element)
+                    }
+                }
+            }
+
+            return accessibleElements
+        }
+        set {}
     }
 }
 

@@ -464,7 +464,7 @@
 				TargetAttributes = {
 					1B2F838C1E5C98A4009AFBCA = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 6UG65RB759;
+						DevelopmentTeam = 9SCKTYVAB7;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
@@ -723,11 +723,11 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 6UG65RB759;
+				DEVELOPMENT_TEAM = 9SCKTYVAB7;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Atributika.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.psharanda.Atributika.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 4.0;
@@ -742,11 +742,11 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 6UG65RB759;
+				DEVELOPMENT_TEAM = 9SCKTYVAB7;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.psharanda.Atributika.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.psharanda.Atributika.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;

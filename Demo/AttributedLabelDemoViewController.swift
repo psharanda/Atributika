@@ -123,6 +123,7 @@ class TweetCell: UITableViewCell {
             let link = Style("a")
                 .foregroundColor(.blue, .normal)
                 .foregroundColor(.brown, .highlighted)
+                .foregroundColor(.lightGray, .disabled)
 
             tweetLabel.attributedText = tweet?
                 .style(tags: link)
