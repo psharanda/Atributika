@@ -153,15 +153,10 @@ import UIKit
         
         textView.translatesAutoresizingMaskIntoConstraints = false
         
-        if #available(iOS 9.0, *) {
-            textView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-            textView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-            textView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-            textView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        } else {
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[textView]|", options: [], metrics: nil, views: ["textView": textView]))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[textView]|", options: [], metrics: nil, views: ["textView": textView]))
-        }
+        textView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        textView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        textView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        textView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
     }
     
     //MARK: - overrides
