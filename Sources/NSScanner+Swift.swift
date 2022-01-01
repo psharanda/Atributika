@@ -44,4 +44,22 @@ extension Scanner {
         }
         return nil
     }
+    
+    /// The character `String.Index` at which the receiver will begin its next scanning operation.
+    var currentCharacterIndex: String.Index {
+        let utf16View = string.utf16
+        
+        guard let scanLocationInUTF16 = utf16View.index(
+            utf16View.startIndex,
+            offsetBy: scanLocation,
+            limitedBy: utf16View.endIndex
+        ), let scanLoactionForCharacter = String.Index(
+            scanLocationInUTF16,
+            within: string
+        ) else {
+            return string.endIndex
+        }
+        
+        return scanLoactionForCharacter
+    }
 }

@@ -457,6 +457,77 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(tags[0].tag.attributes["href"], "http://foo.com")
     }
     
+    func testTagStartEndPositions() throws {
+        let test = "Hello 👸🏽 <a class=\"big\" target=\"\" href=\"http://foo.com\"><strong>world 👍🏼</strong></a>!"
+        
+        var linkOpeningTagStartPosition: String.Index?
+        var linkOpeningTagEndPosition: String.Index?
+        var linkClosingTagStartPosition: String.Index?
+        var linkClosingTagEndPosition: String.Index?
+        
+        var strongOpeningTagStartPosition: String.Index?
+        var strongOpeningTagEndPosition: String.Index?
+        var strongClosingTagStartPosition: String.Index?
+        var strongClosingTagEndPosition: String.Index?
+        
+        let transformers: [TagTransformer] = [
+            TagTransformer(tagName: "a", tagType: .start) { tag in
+                linkOpeningTagStartPosition = tag.startPosition
+                linkOpeningTagEndPosition = tag.endPosition
+                return ""
+            },
+            TagTransformer(tagName: "a", tagType: .end) { tag in
+                linkClosingTagStartPosition = tag.startPosition
+                linkClosingTagEndPosition = tag.endPosition
+                return ""
+            },
+            TagTransformer(tagName: "strong", tagType: .start) { tag in
+                strongOpeningTagStartPosition = tag.startPosition
+                strongOpeningTagEndPosition = tag.endPosition
+                return ""
+            },
+            TagTransformer(tagName: "strong", tagType: .end) { tag in
+                strongClosingTagStartPosition = tag.startPosition
+                strongClosingTagEndPosition = tag.endPosition
+                return ""
+            }
+        ]
+        
+        let result = test.style(tags: [], transformers: transformers)
+        
+        XCTAssertEqual(result.string, "Hello 👸🏽 world 👍🏼!")
+        
+        XCTAssertEqual(
+            test[try XCTUnwrap(linkOpeningTagStartPosition)..<XCTUnwrap(linkOpeningTagEndPosition)],
+            "<a class=\"big\" target=\"\" href=\"http://foo.com\">"
+        )
+        
+        XCTAssertEqual(
+            test[try XCTUnwrap(linkClosingTagStartPosition)..<XCTUnwrap(linkClosingTagEndPosition)],
+            "</a>"
+        )
+        
+        XCTAssertEqual(
+            test[try XCTUnwrap(linkOpeningTagStartPosition)..<XCTUnwrap(linkClosingTagEndPosition)],
+            "<a class=\"big\" target=\"\" href=\"http://foo.com\"><strong>world 👍🏼</strong></a>"
+        )
+        
+        XCTAssertEqual(
+            test[try XCTUnwrap(strongOpeningTagStartPosition)..<XCTUnwrap(strongOpeningTagEndPosition)],
+            "<strong>"
+        )
+        
+        XCTAssertEqual(
+            test[try XCTUnwrap(strongClosingTagStartPosition)..<XCTUnwrap(strongClosingTagEndPosition)],
+            "</strong>"
+        )
+        
+        XCTAssertEqual(
+            test[try XCTUnwrap(strongOpeningTagStartPosition)..<XCTUnwrap(strongClosingTagEndPosition)],
+            "<strong>world 👍🏼</strong>"
+        )
+    }
+    
     func testTagAttributesWithSingleQuote() {
         let test = "Hello <a class='big' target='' href=\"http://foo.com\">world</a>!"
         

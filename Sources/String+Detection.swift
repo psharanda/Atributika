@@ -8,6 +8,8 @@ import Foundation
 public struct Tag {
     public let name: String
     public let attributes: [String: String]
+    public let startPosition: String.Index
+    public let endPosition: String.Index
 }
 
 public struct TagInfo {
@@ -46,7 +48,7 @@ public struct TagTransformer {
 
 extension String {
     
-    private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
+    private func parseTag(_ tagString: String, parseAttributes: Bool, tagStartPosition: String.Index, tagEndPosition: String.Index) -> Tag? {
         let tagScanner = Scanner(string: tagString)
         
         guard let tagName = tagScanner.scanCharacters(from: CharacterSet.alphanumerics) else {
@@ -83,7 +85,7 @@ extension String {
             attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
         }
         
-        return Tag(name: tagName, attributes: attributes)
+        return Tag(name: tagName, attributes: attributes, startPosition: tagStartPosition, endPosition: tagEndPosition)
     }
     
     public func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
@@ -106,6 +108,7 @@ extension String {
             if let textString = scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "<&")) {
                 resultString.append(textString)
             } else {
+                let tagStartPosition = scanner.currentCharacterIndex
                 if scanner.scanString("<") != nil {
                     
                     if scanner.isAtEnd {
@@ -118,7 +121,8 @@ extension String {
                             if let tagString = scanner.scanUpTo(">") {
                                 
                                 if scanner.scanString(">") != nil {
-                                    if let tag = parseTag(tagString, parseAttributes: tagType == .start ) {
+                                    let tagEndPosition = scanner.currentCharacterIndex
+                                    if let tag = parseTag(tagString, parseAttributes: tagType == .start, tagStartPosition: tagStartPosition, tagEndPosition: tagEndPosition) {
                                         
                                         let resultTextEndIndex = resultString.count
                                         
