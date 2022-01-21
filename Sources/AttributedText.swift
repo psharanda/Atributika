@@ -130,6 +130,9 @@ extension AttributedTextProtocol {
     
     public func styleLinks(_ style: Style) -> AttributedText {
         let ranges = string.detect(textCheckingTypes: [.link])
+            .filter{
+                !detections.map{string[$0.range]}.contains(string[$0])
+            }
         
         #if swift(>=4.1)
         let ds = ranges.compactMap { range in
