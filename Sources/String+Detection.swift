@@ -106,7 +106,7 @@ extension String {
             if let textString = scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "<&")) {
                 resultString.append(textString)
             } else {
-                if scanner.scanString("<") != nil {
+                if scanner.scanString("<", options: .diacriticInsensitive) != nil {
                     
                     if scanner.isAtEnd {
                         resultString.append("<")
@@ -165,7 +165,7 @@ extension String {
                             resultString.append("<")
                         }
                     }
-                } else if scanner.scanString("&") != nil {
+                } else if scanner.scanString("&", options: .diacriticInsensitive) != nil {
                     if scanner.scanString("#") != nil {
                         if let potentialSpecial = scanner.scanCharacters(from: CharacterSet.alphanumerics) {
                             if scanner.scanString(";") != nil {

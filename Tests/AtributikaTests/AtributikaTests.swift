@@ -709,6 +709,12 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(string, test)
         XCTAssertEqual(tags.count, 0)
     }
+    
+    // sut should not encounter infinity loop when using ampersand or less than symbol character with diacritic
+    func testAmpersandOrLessThanSymbolCharacterWithDiacritic() {
+        let actual = "Hello &️ World <️ Good".detectTags()
+        XCTAssertEqual(actual.string, "Hello &️ World <️ Good")
+    }
 }
 
 
