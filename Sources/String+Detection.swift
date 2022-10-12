@@ -197,8 +197,8 @@ extension String {
     }
     
     public func detectHashTags() -> [Range<String.Index>] {
-        
-        return detect(regex: "#[^[:punct:][:space:]]+")
+      
+        return detect(regex: #"(?!\s)#[A-Za-z]\w*\b"#)
     }
     
     public func detectMentions() -> [Range<String.Index>] {
