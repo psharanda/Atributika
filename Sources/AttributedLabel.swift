@@ -9,13 +9,13 @@ import Foundation
 import UIKit
 
 @IBDesignable open class AttributedLabel: UIControl {
-    open func setLinkStyle(_ style: Style, for state: UIControl.State) {
+    open func setLinkTextAttributes(_ attrs: [NSAttributedString.Key: Any], for state: UIControl.State) {
         
     }
 
     open override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
-        let gray = Style().foregroundColor(.gray)
+        let gray = TextAttributesBuilder().withForegroundColor(.gray).attributes
         attributedText = "<gray>Attributed</gray>Label"
             .style(tags: ["gray": gray])
         invalidateIntrinsicContentSize()

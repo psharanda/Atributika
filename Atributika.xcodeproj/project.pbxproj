@@ -39,10 +39,10 @@
 		1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
 		1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
 		1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
-		1BB55AE11E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
-		1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
-		1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
-		1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* Style.swift */; };
+		1BB55AE11E5C73F000CE6EAD /* TextAttributesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* TextAttributesBuilder.swift */; };
+		1BB55AE21E5C73F000CE6EAD /* TextAttributesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* TextAttributesBuilder.swift */; };
+		1BB55AE31E5C73F000CE6EAD /* TextAttributesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* TextAttributesBuilder.swift */; };
+		1BB55AE41E5C73F000CE6EAD /* TextAttributesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55AD01E5C73EF00CE6EAD /* TextAttributesBuilder.swift */; };
 		1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5681E683A8F006374F6 /* Snippet.swift */; };
 		1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
@@ -113,7 +113,7 @@
 		1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+Utils.swift"; path = "Sources/NSAttributedString+Utils.swift"; sourceTree = "<group>"; };
 		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScanner+Swift.swift"; path = "Sources/NSScanner+Swift.swift"; sourceTree = "<group>"; };
 		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Detection.swift"; path = "Sources/String+Detection.swift"; sourceTree = "<group>"; };
-		1BB55AD01E5C73EF00CE6EAD /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Style.swift; path = Sources/Style.swift; sourceTree = "<group>"; };
+		1BB55AD01E5C73EF00CE6EAD /* TextAttributesBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextAttributesBuilder.swift; path = Sources/TextAttributesBuilder.swift; sourceTree = "<group>"; };
 		1BDDF5681E683A8F006374F6 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
 		1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -220,7 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				1B38369F1F97C224001DB333 /* AttributedLabel.swift */,
-				1BB55AD01E5C73EF00CE6EAD /* Style.swift */,
+				1BB55AD01E5C73EF00CE6EAD /* TextAttributesBuilder.swift */,
 				1BB55ACC1E5C73EF00CE6EAD /* AttributedText.swift */,
 				1BB55ACD1E5C73EF00CE6EAD /* NSAttributedString+Utils.swift */,
 				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */,
@@ -608,7 +608,7 @@
 				1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */,
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BB55AD51E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
-				1BB55AE11E5C73F000CE6EAD /* Style.swift in Sources */,
+				1BB55AE11E5C73F000CE6EAD /* TextAttributesBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,7 +630,7 @@
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD71E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
-				1BB55AE31E5C73F000CE6EAD /* Style.swift in Sources */,
+				1BB55AE31E5C73F000CE6EAD /* TextAttributesBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,7 +644,7 @@
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD81E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
-				1BB55AE41E5C73F000CE6EAD /* Style.swift in Sources */,
+				1BB55AE41E5C73F000CE6EAD /* TextAttributesBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,7 +658,7 @@
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AD61E5C73F000CE6EAD /* NSAttributedString+Utils.swift in Sources */,
-				1BB55AE21E5C73F000CE6EAD /* Style.swift in Sources */,
+				1BB55AE21E5C73F000CE6EAD /* TextAttributesBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
