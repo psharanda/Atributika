@@ -119,18 +119,18 @@ class TweetCell: UITableViewCell {
     
     var tweet: String? {
         didSet {
-            let all = Style.font(UIFont.preferredFont(forTextStyle: .body))
-            let link = Style("a")
-                .foregroundColor(.blue, .normal)
-                .foregroundColor(.brown, .highlighted)
-                .foregroundColor(.lightGray, .disabled)
-
-            tweetLabel.attributedText = tweet?
-                .style(tags: link)
-                .styleHashtags(link)
-                .styleMentions(link)
-                .styleLinks(link)
-                .styleAll(all)
+//            let all = Style.font(UIFont.preferredFont(forTextStyle: .body))
+//            let link = Style("a")
+//                .foregroundColor(.blue, .normal)
+//                .foregroundColor(.brown, .highlighted)
+//                .foregroundColor(.lightGray, .disabled)
+//
+//            tweetLabel.attributedText = tweet?
+//                .style(tags: link)
+//                .styleHashtags(link)
+//                .styleMentions(link)
+//                .styleLinks(link)
+//                .styleAll(all)
         }
     }
 }

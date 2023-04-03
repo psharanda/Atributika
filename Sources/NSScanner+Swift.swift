@@ -1,4 +1,3 @@
-// NSScanner+Swift.swift
 // A set of Swift-idiomatic methods for NSScanner
 //
 // (c) 2015 Nate Cook, licensed under the MIT license

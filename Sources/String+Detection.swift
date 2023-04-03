@@ -1,6 +1,5 @@
 //
-//  Created by Pavel Sharanda on 21.02.17.
-//  Copyright © 2017 psharanda. All rights reserved.
+//  Copyright © 2017-2023 psharanda. All rights reserved.
 //
 
 import Foundation

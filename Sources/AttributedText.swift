@@ -1,26 +1,6 @@
-/**
- *  Atributika
- *
- *  Copyright (c) 2017 Pavel Sharanda. Licensed under the MIT license, as follows:
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in all
- *  copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- *  SOFTWARE.
- */
+//
+//  Copyright © 2017-2023 psharanda. All rights reserved.
+//
 
 import Foundation
 
@@ -50,7 +30,7 @@ public protocol AttributedTextProtocol {
 
 extension AttributedTextProtocol {
     
-    fileprivate func makeAttributedString(getAttributes: (Style)-> [AttributedStringKey: Any]) -> NSAttributedString {
+    fileprivate func makeAttributedString(getAttributes: (Style)-> [NSAttributedString.Key: Any]) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: string, attributes: getAttributes(baseStyle))
         
         let sortedDetections = detections.sorted {
@@ -82,10 +62,6 @@ public final class AttributedText: AttributedTextProtocol {
 
     public lazy private(set) var attributedString: NSAttributedString  = {
         makeAttributedString { $0.attributes }
-    }()
-
-    public lazy private(set) var disabledAttributedString: NSAttributedString  = {
-        makeAttributedString { $0.disabledAttributes }
     }()
 }
 
@@ -164,33 +140,25 @@ extension String: AttributedTextProtocol {
         return Style()
     }
     
-    public func style(tags: [Style], transformers: [TagTransformer] = [TagTransformer.brTransformer], tuner: (Style, Tag) -> Style = { s, _ in return  s}) -> AttributedText {
+    public func style(tags: [String: Style], transformers: [TagTransformer] = [TagTransformer.brTransformer], tuner: (Style, Tag) -> Style = { s, _ in return  s}) -> AttributedText {
         let (string, tagsInfo) = detectTags(transformers: transformers)
         
         var ds: [Detection] = []
         
         tagsInfo.forEach { t in
             
-            if let style = (tags.first { style in style.name.lowercased() == t.tag.name.lowercased() }) {
+            if let style = tags[t.tag.name.lowercased()] ?? tags[t.tag.name.uppercased()]  {
                 ds.append(Detection(type: .tag(t.tag), style: tuner(style, t.tag), range: t.range, level: t.level))
             } else {
-                ds.append(Detection(type: .tag(t.tag), style: Style(), range: t.range, level: t.level))
+                ds.append(Detection(type: .tag(t.tag), style: tuner(Style(), t.tag), range: t.range, level: t.level))
             }
         }
         
         return AttributedText(string: string, detections: ds, baseStyle: baseStyle)
     }
-    
-    public func style(tags: Style..., transformers: [TagTransformer] = [TagTransformer.brTransformer], tuner: (Style, Tag) -> Style = { s, _ in return  s}) -> AttributedText {
-        return style(tags: tags, transformers: transformers, tuner: tuner)
-    }
 
     public var attributedString: NSAttributedString {
         return makeAttributedString { $0.attributes }
-    }
-
-    public var disabledAttributedString: NSAttributedString {
-        return makeAttributedString { $0.disabledAttributes }
     }
 }
 
@@ -202,7 +170,7 @@ extension NSAttributedString: AttributedTextProtocol {
         
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attributes, range, _) in
             if let range = Range(range, in: self.string) {
-                ds.append(Detection(type: .range, style: Style("", attributes), range: range, level: Int.max))
+                ds.append(Detection(type: .range, style: Style(attributes), range: range, level: Int.max))
             }
         }
         
@@ -215,9 +183,5 @@ extension NSAttributedString: AttributedTextProtocol {
 
     public var attributedString: NSAttributedString {
         return makeAttributedString { $0.attributes }
-    }
-
-    public var disabledAttributedString: NSAttributedString {
-        return makeAttributedString { $0.disabledAttributes }
     }
 }

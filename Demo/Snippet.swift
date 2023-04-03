@@ -10,22 +10,24 @@ import Atributika
 func stringWithAtributikaLogo() -> NSAttributedString {
     
     let redColor = UIColor(red:(0xD0 / 255.0), green: (0x02 / 255.0), blue:(0x1B / 255.0), alpha:1.0)
-    let a = Style("a").foregroundColor(redColor)
+    let a = Style().foregroundColor(redColor)
     
     let font = UIFont(name: "AvenirNext-Regular", size: 24)!
     let grayColor = UIColor(white: 0x66 / 255.0, alpha: 1)
-    let all = Style.font(font).foregroundColor(grayColor)
+    let all = Style().font(font).foregroundColor(grayColor)
     
-    let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>".style(tags: a)
+    let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
+        .style(tags: ["a": a])
         .styleAll(all)
         .attributedString
     return str
 }
 
 func stringWithTagsAndEmoji() -> NSAttributedString {
-    let b = Style("b").font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
-    let all = Style.font(.systemFont(ofSize: 20))
-    let str = "Hello <b>W🌎rld</b>!!!".style(tags: b)
+    let b = Style().font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
+    let all = Style().font(.systemFont(ofSize: 20))
+    let str = "Hello <b>W🌎rld</b>!!!"
+        .style(tags: ["b": b])
         .styleAll(all)
         .attributedString
     return str
@@ -34,22 +36,22 @@ func stringWithTagsAndEmoji() -> NSAttributedString {
 func stringWithHashTagAndMention() -> NSAttributedString {
     
     let str = "#Hello @World!!!"
-        .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
-        .styleMentions(Style.foregroundColor(.red))
+        .styleHashtags(Style().font(.boldSystemFont(ofSize: 45)))
+        .styleMentions(Style().foregroundColor(.red))
         .attributedString
     return str
 }
 
 func stringWithPhone() -> NSAttributedString {
     let str = "Call me (888)555-5512"
-        .stylePhoneNumbers(Style.foregroundColor(.red))
+        .stylePhoneNumbers(Style().foregroundColor(.red))
         .attributedString
     return str
 }
 
 func stringWithLink() -> NSAttributedString {
     let str = "Check this http://google.com"
-        .styleLinks(Style.foregroundColor(.blue))
+        .styleLinks(Style().foregroundColor(.blue))
         .attributedString
     return str
 }
@@ -60,30 +62,31 @@ func stringWithBoldItalic() -> NSAttributedString {
     let descriptor = baseFont.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])
     let font = descriptor.map { UIFont(descriptor: $0, size: baseFont.pointSize) } ?? baseFont
     
-    let a = Style("a").font(font).foregroundColor(.blue)
-    let str = "<a href=\"https://en.wikipedia.org/wiki/World_of_Dance_(TV_series)\" target=\"_blank\">World of Dance</a>".style(tags: a)
+    let a = Style().font(font).foregroundColor(.blue)
+    let str = "<a href=\"https://en.wikipedia.org/wiki/World_of_Dance_(TV_series)\" target=\"_blank\">World of Dance</a>"
+        .style(tags: ["a": a])
         .attributedString
     return str
 }
 
 func stringWithManyDetectables() -> NSAttributedString {
     
-    let links = Style.foregroundColor(.blue)
-    let phoneNumbers = Style.backgroundColor(.yellow)
-    let mentions = Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
-    let b = Style("b").font(.boldSystemFont(ofSize: 12))
+    let links = Style().foregroundColor(.blue)
+    let phoneNumbers = Style().backgroundColor(.yellow)
+    let mentions = Style().font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
+    let b = Style().font(.boldSystemFont(ofSize: 12))
     
     #if swift(>=4.2)
-    let u = Style("u").underlineStyle(.single)
+    let u = Style().underlineStyle(.single)
     #else
-    let u = Style("u").underlineStyle(.styleSingle)
+    let u = Style().underlineStyle(.styleSingle)
     #endif
     
     
-    let all = Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
+    let all = Style().font(.systemFont(ofSize: 12)).foregroundColor(.gray)
     
     let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
-        .style(tags: u, b)
+        .style(tags: ["u": u, "b": b])
         .styleMentions(mentions)
         .styleHashtags(links)
         .styleLinks(links)
@@ -96,20 +99,24 @@ func stringWithManyDetectables() -> NSAttributedString {
 
 func stringWith3Tags() -> NSAttributedString {
     
-    let str = "<r>first</r><g>sec⚽️nd</g><b>third</b>".style(tags:
-        Style("r").foregroundColor(.red),
-                                                            Style("g").foregroundColor(.green),
-                                                            Style("b").foregroundColor(.blue)).attributedString
+    let str = "<r>first</r><g>sec⚽️nd</g><b>third</b>"
+        .style(tags: [
+            "r": Style().foregroundColor(.red),
+            "g": Style().foregroundColor(.green),
+            "b": Style().foregroundColor(.blue)
+        ])
+        .attributedString
     return str
 }
 
 func stringWithGrams() -> NSAttributedString {
     
     let calculatedCoffee: Int = 768
-    let g = Style("g").font(.boldSystemFont(ofSize: 12)).foregroundColor(.red)
-    let all = Style.font(.systemFont(ofSize: 12))
+    let g = Style().font(.boldSystemFont(ofSize: 12)).foregroundColor(.red)
+    let all = Style().font(.systemFont(ofSize: 12))
     
-    let str = "\(calculatedCoffee)<g>g</g>".style(tags: g)
+    let str = "\(calculatedCoffee)<g>g</g>"
+        .style(tags: ["g": g])
         .styleAll(all)
         .attributedString
     
@@ -117,10 +124,11 @@ func stringWithGrams() -> NSAttributedString {
 }
 
 func stringWithStrong() -> NSAttributedString {
-    let str = "<strong>Nice</strong> try, Phil".style(tags:
-        Style("strong").font(.boldSystemFont(ofSize: 15)))
+    let str = "<strong>Nice</strong> try, Phil"
+        .style(tags: [
+            "strong": Style().font(.boldSystemFont(ofSize: 15))
+        ])
         .attributedString
-    
     return str
 }
 
@@ -128,10 +136,13 @@ func stringWithTagAndHashtag() -> NSAttributedString {
     
     let str = "<b>Hello</b> #World"
     let data = str.data(using: .utf8)
-    let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
+    let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [.documentType: NSAttributedString.DocumentType.html,
+                                                                       .characterEncoding: String.Encoding.utf8.rawValue]
     
     let htmlAttrString = try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
-    let result = htmlAttrString.styleHashtags(Style.foregroundColor(.blue)).attributedString
+    let result = htmlAttrString
+        .styleHashtags(Style().foregroundColor(.blue))
+        .attributedString
     return result
 }
 
@@ -143,11 +154,11 @@ func stringWithUnorderedList() -> NSAttributedString {
         TagTransformer(tagName: "li", tagType: .end, replaceValue: "\n")
     ]
     
-    let li = Style("li").font(.systemFont(ofSize: 12)).foregroundColor(.red)
+    let li = Style().font(.systemFont(ofSize: 12)).foregroundColor(.red)
     
     return "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>"
-        .style(tags: li, transformers: transformers)
-        .styleAll(Style.font(.boldSystemFont(ofSize: 14)))
+        .style(tags: ["li": li], transformers: transformers)
+        .styleAll(Style().font(.boldSystemFont(ofSize: 14)))
         .attributedString
 }
 
@@ -165,24 +176,29 @@ func stringWithOrderedList() -> NSAttributedString {
         }
     ]
     
-    return "<ol><li>Coffee</li><li>Tea</li><li>Milk</li></ol>".style(tags: [], transformers: transformers).attributedString
+    return "<ol><li>Coffee</li><li>Tea</li><li>Milk</li></ol>"
+        .style(tags: [:], transformers: transformers)
+        .attributedString
 }
 
 func stringWithHref() -> NSAttributedString {
-    return "Hey\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello\r\nWorld</a>s".style(tags:
-        Style("a").font(.boldSystemFont(ofSize: 45)).foregroundColor(.red)
-        ).attributedString
+    return "Hey\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello\r\nWorld</a>s"
+        .style(tags: [
+            "a": Style().font(.boldSystemFont(ofSize: 45)).foregroundColor(.red)
+        ])
+        .attributedString
 }
 
 func stringWithBoldItalicUnderline() -> NSAttributedString {
     let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
     #if swift(>=4.2)
-    let uib = Style("uib").font(font).underlineStyle(.single)
+    let uib = Style().font(font).underlineStyle(.single)
     #else
-    let uib = Style("uib").font(font).underlineStyle(.styleSingle)
+    let uib = Style().font(font).underlineStyle(.styleSingle)
     #endif
     
-    let str = "<br><uib>Italicunderline</uib>".style(tags: uib)
+    let str = "<br><uib>Italicunderline</uib>"
+        .style(tags: ["uib": uib])
         .attributedString
     return str
 }
@@ -191,11 +207,12 @@ func stringWithImage() -> NSAttributedString {
     let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
     
     #if swift(>=4.2)
-    let uib = Style("b").font(font).underlineStyle(.single)
+    let b = Style().font(font).underlineStyle(.single)
     #else
-    let uib = Style("b").font(font).underlineStyle(.styleSingle)
+    let b = Style().font(font).underlineStyle(.styleSingle)
     #endif
-    let str = "<b>Running</b> with <img id=\"scissors\"></img>!".style(tags: uib)
+    let str = "<b>Running</b> with <img id=\"scissors\"></img>!"
+        .style(tags: ["b": b])
     
     let mutableAttrStr = NSMutableAttributedString(attributedString: str.attributedString)
     
@@ -220,39 +237,42 @@ func stringWithImage() -> NSAttributedString {
 }
 
 func stringWithStrikethrough() -> NSAttributedString {
-    let all = Style.font(.systemFont(ofSize: 20))
+    let all = Style().font(.systemFont(ofSize: 20))
     #if swift(>=4.2)
-    let strike = Style("strike").strikethroughStyle(.single).strikethroughColor(.black)
+    let strike = Style().strikethroughStyle(.single).strikethroughColor(.black)
     #else
-    let strike = Style("strike").strikethroughStyle(.styleSingle).strikethroughColor(.black)
+    let strike = Style().strikethroughStyle(.styleSingle).strikethroughColor(.black)
     #endif
     
-    let code = Style("code").foregroundColor(.red)
+    let code = Style().foregroundColor(.red)
     
     let str = "<code>my code</code> <strike>test</strike> testing"
-        .style(tags: [strike,code])
+        .style(tags: ["strike": strike, "code": code])
         .styleAll(all)
         .attributedString
     return str
 }
 
 func stringWithColors() -> NSAttributedString {
-    let r = Style("r").foregroundColor(.red)
-    let g = Style("g").foregroundColor(.green)
-    let b = Style("b").foregroundColor(.blue)
-    let c = Style("c").foregroundColor(.cyan)
-    let m = Style("m").foregroundColor(.magenta)
-    let y = Style("y").foregroundColor(.yellow)
+    let r = Style().foregroundColor(.red)
+    let g = Style().foregroundColor(.green)
+    let b = Style().foregroundColor(.blue)
+    let c = Style().foregroundColor(.cyan)
+    let m = Style().foregroundColor(.magenta)
+    let y = Style().foregroundColor(.yellow)
     
-    let str = "<r>Hello <g>w<c>orld<m></g>; he<y>l</y></c>lo atributika</r></m>".style(tags: r, g, b, c, m, y)
+    let str = "<r>Hello <g>w<c>orld<m></g>; he<y>l</y></c>lo atributika</r></m>"
+        .style(tags: ["r": r, "g": g, "b": b, "c": c, "m": m, "y": y])
         .attributedString
     return str
 }
 
 func stringWithParagraph() -> NSAttributedString {
-    let p = Style("p").font(UIFont(name: "HelveticaNeue", size: 20)!)
-    let strong = Style("strong").font(UIFont(name: "Copperplate", size: 20)!)
-    let str = "<p>some string... <strong> string</strong></p>".style(tags: [p,strong]).attributedString
+    let p = Style().font(UIFont(name: "HelveticaNeue", size: 20)!)
+    let strong = Style().font(UIFont(name: "Copperplate", size: 20)!)
+    let str = "<p>some string... <strong> string</strong></p>"
+        .style(tags: ["p": p, "strong": strong])
+        .attributedString
     return str
 }
 
@@ -265,20 +285,20 @@ func stringWithIndentedList() -> NSAttributedString {
     ]
 
     let listItemFont = UIFont.systemFont(ofSize: 12)
-    let indentation: CGFloat = (bullet as NSString).size(withAttributes: [NSAttributedStringKey.font: listItemFont]).width
+    let indentation: CGFloat = (bullet as NSString).size(withAttributes: [NSAttributedString.Key.font: listItemFont]).width
 
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: indentation, options: [NSTextTab.OptionKey: Any]())]
     paragraphStyle.defaultTabInterval = indentation
     paragraphStyle.headIndent = indentation
 
-    let li = Style("li")
+    let li = Style()
         .font(listItemFont)
         .paragraphStyle(paragraphStyle)
 
     return "TODO:<br><li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li><li>Vestibulum ornare dui ut orci congue placerat. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li><li>Nunc et tortor vulputate, elementum quam at, tristique nibh. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li>"
-        .style(tags: li, transformers: transformers)
-        .styleAll(Style.font(.boldSystemFont(ofSize: 14)))
+        .style(tags: ["li": li], transformers: transformers)
+        .styleAll(Style().font(.boldSystemFont(ofSize: 14)))
         .attributedString
 }
 

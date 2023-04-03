@@ -1,8 +1,8 @@
-// Credits to https://github.com/alexaubry/HTMLString
+//
+//  Copyright © 2017-2023 psharanda. All rights reserved.
+//
 
 import Foundation
-
-let HTMLSpecialMaxLength = 31
 
 extension String {
     func unescapeAsNumber() -> String? {
@@ -21,8 +21,6 @@ extension String {
         return String(scalar)
     }
 }
-
-private final class BundleToken { }
 
 func HTMLSpecial(for code: String) -> String? {
     if let res = popularHTMLSpecialsMap[code] {
