@@ -4,7 +4,7 @@
 
 import Foundation
 import XCTest
-import Atributika
+@testable import Atributika
 
 #if os(macOS)
     typealias Font = NSFont
@@ -18,9 +18,10 @@ import Atributika
 class AtributikaTests: XCTestCase {
     
     func testHello() {        
-        let test = "Hello <b>World</b>!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"Hello <b>World</b>!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
             .attributedString
         
@@ -32,11 +33,12 @@ class AtributikaTests: XCTestCase {
     
     func testHelloWithBase() {
         
-        let test = "<b>Hello World</b>!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"<b>Hello World</b>!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
-            .styleAll(TextAttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
+            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -48,11 +50,12 @@ class AtributikaTests: XCTestCase {
     
     func testTagsWithNumbers() {
         
-        let test = "<b1>Hello World</b1>!!!"
-            .style(tags: [
-                "b1": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"<b1>Hello World</b1>!!!",
+            tags: [
+                "b1": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
-            .styleAll(TextAttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
+            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -64,11 +67,12 @@ class AtributikaTests: XCTestCase {
     
     func testLines() {
         
-        let test = "<b>Hello\nWorld</b>!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"<b>Hello\nWorld</b>!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
-            .styleAll(TextAttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
+            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
@@ -79,7 +83,8 @@ class AtributikaTests: XCTestCase {
     }
     
     func testEmpty() {
-        let test = "Hello World!!!".style(tags: [:]).attributedString
+        let test = AttributedStringBuilder(htmlString: "Hello World!!!")
+            .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
         
@@ -87,26 +92,27 @@ class AtributikaTests: XCTestCase {
     }
     
     func testParams() {
-        let a = "<a href=\"http://google.com\">Hello</a> World!!!"
-            .style(tags: [:])
+        let link = URL(string: "http://google.com")!
+        let a = AttributedStringBuilder(
+            htmlString:"<a href=\"\(link)\">Hello</a> World!!!",
+            tuner: { attrs, tag in
+                if (tag.name == "a") {
+                    return AttributesBuilder(attrs).withLink(link).attributes
+                } else {
+                    return attrs
+                }
+            })
+            .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.setAttributes([.link: link], range: NSMakeRange(0, 5))
         
-        XCTAssertEqual(a.attributedString, reference)
-        
-        XCTAssertEqual(a.detections[0].range, a.string.startIndex..<a.string.index(a.string.startIndex, offsetBy: 5))
-        
-        if case .tag(let tag) = a.detections[0].type {
-            XCTAssertEqual(tag.name, "a")
-            XCTAssertEqual(tag.attributes, ["href":"http://google.com"])
-            
-        }
-        
+        XCTAssertEqual(a, reference)
     }
     
     func testBase() {
-        let test = "Hello World!!!"
-            .styleAll(TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
+        let test = AttributedStringBuilder(string: "Hello World!!!")
+            .style(AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!", attributes: [.font: Font.boldSystemFont(ofSize: 45)])
@@ -116,10 +122,11 @@ class AtributikaTests: XCTestCase {
     
     func testManyTags() {
             
-        let test = "He<i>llo</i> <b>World</b>!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes,
-                "i": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 12)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"He<i>llo</i> <b>World</b>!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes,
+                "i": AttributesBuilder().withFont(.boldSystemFont(ofSize: 12)).attributes
             ])
             .attributedString
         
@@ -132,9 +139,10 @@ class AtributikaTests: XCTestCase {
     
     func testManySameTags() {
         
-        let test = "He<b>llo</b> <b>World</b>!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"He<b>llo</b> <b>World</b>!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
             .attributedString
         
@@ -147,10 +155,11 @@ class AtributikaTests: XCTestCase {
     
     func testTagsOverlap() {
         
-        let test = "Hello <b>W<red>orld</b>!!!</red>"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes,
-                "red": TextAttributesBuilder().withForegroundColor(.red).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"Hello <b>W<red>orld</b>!!!</red>",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes,
+                "red": AttributesBuilder().withForegroundColor(.red).attributes
             ])
             .attributedString
         
@@ -162,7 +171,8 @@ class AtributikaTests: XCTestCase {
     }
     
     func testBr() {
-        let test = "Hello<br>World!!!".style(tags: [:]).attributedString
+        let test = AttributedStringBuilder(htmlString:"Hello<br>World!!!")
+            .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
         
@@ -171,9 +181,10 @@ class AtributikaTests: XCTestCase {
     
     func testNotClosedTag() {
         
-        let test = "Hello <b>World!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"Hello <b>World!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
             .attributedString
         
@@ -184,9 +195,10 @@ class AtributikaTests: XCTestCase {
     
     func testNotOpenedTag() {
         
-        let test = "Hello </b>World!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"Hello </b>World!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
             .attributedString
         
@@ -197,9 +209,10 @@ class AtributikaTests: XCTestCase {
     
     func testBadTag() {
         
-        let test = "Hello <World!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"Hello <World!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
             .attributedString
         
@@ -211,15 +224,16 @@ class AtributikaTests: XCTestCase {
     func testTagsStack() {
         
 #if swift(>=4.2)
-        let u = TextAttributesBuilder().withUnderlineStyle(.single).attributes
+        let u = AttributesBuilder().withUnderlineStyle(.single).attributes
 #else
-        let u = TextAttributesBuilder().withUnderlineStyle(.styleSingle).attributes
+        let u = AttributesBuilder().withUnderlineStyle(.styleSingle).attributes
 #endif
         
-        let test = "Hello <b>Wo<red>rl<u>d</u></red></b>!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes,
-                "red": TextAttributesBuilder().withForegroundColor(.red).attributes,
+        let test = AttributedStringBuilder(
+            htmlString:"Hello <b>Wo<red>rl<u>d</u></red></b>!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes,
+                "red": AttributesBuilder().withForegroundColor(.red).attributes,
                 "u": u
             ])
             .attributedString
@@ -239,9 +253,9 @@ class AtributikaTests: XCTestCase {
     
     func testHashCodes() {
         
-        let test = "#Hello @World!!!"
-            .styleHashtags(TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
-            .styleMentions(TextAttributesBuilder().withForegroundColor(.red).attributes)
+        let test = AttributedStringBuilder(string: "#Hello @World!!!")
+            .styleHashtags(AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
+            .styleMentions(AttributesBuilder().withForegroundColor(.red).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "#Hello @World!!!")
@@ -253,8 +267,8 @@ class AtributikaTests: XCTestCase {
     
     func testDataDetectorPhoneRaw() {
         
-        let test = "Call me (888)555-5512"
-            .style(textCheckingTypes: [.phoneNumber], style: TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
+        let test = AttributedStringBuilder(string: "Call me (888)555-5512")
+            .style(textCheckingTypes: [.phoneNumber], attributes: AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Call me (888)555-5512")
@@ -265,8 +279,11 @@ class AtributikaTests: XCTestCase {
     
     func testDataDetectorLinkRaw() {
         
-        let test = "Check this http://google.com"
-            .style(textCheckingTypes: [.link], style: TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
+        let test = AttributedStringBuilder(string: "Check this http://google.com")
+            .style(
+                textCheckingTypes: [.link],
+                attributes: AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+            )
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Check this http://google.com")
@@ -277,8 +294,8 @@ class AtributikaTests: XCTestCase {
     
     func testDataDetectorPhone() {
         
-        let test = "Call me (888)555-5512"
-            .stylePhoneNumbers(TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
+        let test = AttributedStringBuilder(string: "Call me (888)555-5512")
+            .stylePhoneNumbers(AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Call me (888)555-5512")
@@ -289,8 +306,8 @@ class AtributikaTests: XCTestCase {
     
     func testDataDetectorLink() {
         
-        let test = "Check this http://google.com"
-            .styleLinks(TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
+        let test = AttributedStringBuilder(string: "Check this http://google.com")
+            .styleLinks(AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Check this http://google.com")
@@ -301,14 +318,13 @@ class AtributikaTests: XCTestCase {
     
     func testIssue1() {
         
-        let bad = "<b>Save $1.00</b> on <b>any</b> order!"
-            .style(tags: [
-                "b":TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 14)).attributes
+        let bad = AttributedStringBuilder(
+            htmlString:"<b>Save $1.00</b> on <b>any</b> order!",
+            tags: [
+                "b":AttributesBuilder().withFont(.boldSystemFont(ofSize: 14)).attributes
             ])
-            .styleAll(TextAttributesBuilder().withFont(.systemFont(ofSize: 14)).withForegroundColor(.red).attributes)
+            .style(AttributesBuilder().withFont(.systemFont(ofSize: 14)).withForegroundColor(.red).attributes)
             .attributedString
-        
-        
         
         let badReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [.font: Font.systemFont(ofSize: 14), .foregroundColor: Color.red])
         
@@ -317,11 +333,10 @@ class AtributikaTests: XCTestCase {
         
         XCTAssertEqual(bad, badReference)
         
-        let good = "Save <b>$1.00</b> on <b>any</b> order!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 14)).attributes
+        let good = AttributedStringBuilder(htmlString:"Save <b>$1.00</b> on <b>any</b> order!", tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 14)).attributes
             ])
-            .styleAll(TextAttributesBuilder().withFont(.systemFont(ofSize: 14)).withForegroundColor(.red).attributes)
+            .style(AttributesBuilder().withFont(.systemFont(ofSize: 14)).withForegroundColor(.red).attributes)
             .attributedString
         
         let goodReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [.font: Font.systemFont(ofSize: 14), .foregroundColor: Color.red])
@@ -334,8 +349,8 @@ class AtributikaTests: XCTestCase {
     func testRange() {
         let str = "Hello World!!!"
         
-        let test = "Hello World!!!"
-            .style(range: str.startIndex..<str.index(str.startIndex, offsetBy: 5), style: TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
+        let test = AttributedStringBuilder(string: "Hello World!!!")
+            .style(range: str.startIndex..<str.index(str.startIndex, offsetBy: 5), attributes: AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -346,9 +361,10 @@ class AtributikaTests: XCTestCase {
     
     func testEmojis() {
         
-        let test = "Hello <b>W🌎rld</b>!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(
+            htmlString:"Hello <b>W🌎rld</b>!!!",
+            tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
             .attributedString
         
@@ -366,12 +382,13 @@ class AtributikaTests: XCTestCase {
             TagTransformer(tagName: "li", tagType: .end, replaceValue: "\n")
         ]
         
-        let li = TextAttributesBuilder()
+        let li = AttributesBuilder()
             .withFont(.systemFont(ofSize: 12))
             .attributes
         
-        let test = "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>"
-            .style(tags: ["li": li], transformers: transformers)
+        let test = AttributedStringBuilder(
+            htmlString:"TODO:<br><li>veni</li><li>vidi</li><li>vici</li>",
+            tags: ["li": li], transformers: transformers)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "TODO:\n- veni\n- vidi\n- vici\n")
@@ -400,18 +417,18 @@ class AtributikaTests: XCTestCase {
             }
         ]
         
-        let test = "<div><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol></div>"
-            .style(tags: [:], transformers: transformers)
-            .string
+        let test = AttributedStringBuilder(
+            htmlString:"<div><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol></div>",
+            transformers: transformers)
+            .attributedString.string
         let reference = "1. Coffee\n2. Tea\n3. Milk\n1. Coffee\n2. Tea\n3. Milk\n"
         
         XCTAssertEqual(test,reference)
     }
     
     func testHelloWithRHTMLTag() {
-        let test = "\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello World</a>"
-            .style(tags: [
-                "a": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(htmlString:"\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello World</a>", tags: [
+                "a": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
             .attributedString
         
@@ -528,11 +545,10 @@ class AtributikaTests: XCTestCase {
     
     func testCaseInsensitive1() {
         
-        let test = "<B>Hello World</B>!!!"
-            .style(tags: [
-                "b": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(htmlString:"<B>Hello World</B>!!!", tags: [
+                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
-            .styleAll(TextAttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
+            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -545,11 +561,10 @@ class AtributikaTests: XCTestCase {
     
     func testCaseInsensitive2() {
         
-        let test = "<B>Hello World</b>!!!"
-            .style(tags: [
-                "B": TextAttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
+        let test = AttributedStringBuilder(htmlString:"<B>Hello World</b>!!!", tags: [
+                "B": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
-            .styleAll(TextAttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
+            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -561,8 +576,7 @@ class AtributikaTests: XCTestCase {
     }
     
     func testCaseInsensitiveBr() {
-        let test = "Hello<BR>World!!!"
-            .style(tags: [:])
+        let test = AttributedStringBuilder(htmlString:"Hello<BR>World!!!", tags: [:])
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
@@ -596,11 +610,10 @@ class AtributikaTests: XCTestCase {
         
         let font: [NSAttributedString.Key: Any] = [:]
         
-        let test = "Monday - Friday:<font color=\"#6cc299\"> 8:00 - 19:00</font>"
-            .style(tags: ["font": font], tuner: { style, tag in
+        let test = AttributedStringBuilder(htmlString:"Monday - Friday:<font color=\"#6cc299\"> 8:00 - 19:00</font>", tags: ["font": font], tuner: { style, tag in
                 if tag.name == "font" {
                     if let colorString = tag.attributes["color"] {
-                        return TextAttributesBuilder(style)
+                        return AttributesBuilder(style)
                             .withForegroundColor(hexStringToUIColor(hex: colorString))
                             .attributes
                     }
@@ -616,11 +629,10 @@ class AtributikaTests: XCTestCase {
     
     func testHrefTuner() {
         
-        let test = "<a href=\"https://github.com/psharanda/Atributika\">link</a>"
-            .style(tags: [:], tuner: { style, tag in
+        let test = AttributedStringBuilder(htmlString:"<a href=\"https://github.com/psharanda/Atributika\">link</a>", tags: [:], tuner: { style, tag in
                 if tag.name == "a" {
                     if let link = tag.attributes["href"] {
-                        return TextAttributesBuilder(style)
+                        return AttributesBuilder(style)
                             .withLink(URL(string: link)!)
                             .attributes
                     }

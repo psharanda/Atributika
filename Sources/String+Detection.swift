@@ -12,7 +12,7 @@ public struct Tag {
 public struct TagInfo {
     public let tag: Tag
     public let range: Range<String.Index>
-    public let level: Int
+    let level: Int
 }
 
 public enum TagType {
@@ -85,7 +85,7 @@ extension String {
         return Tag(name: tagName, attributes: attributes)
     }
     
-    public func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
+    func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
         
         struct TagInfoInternal {
             public let tag: Tag
@@ -195,17 +195,7 @@ extension String {
         return (resultString, tagsResult.map { TagInfo(tag: $0.tag, range: resultString.index(resultString.startIndex, offsetBy: $0.rangeStart)..<resultString.index(resultString.startIndex, offsetBy: $0.rangeEnd), level: $0.level) })
     }
     
-    public func detectHashTags() -> [Range<String.Index>] {
-        
-        return detect(regex: "#[^[:punct:][:space:]]+")
-    }
-    
-    public func detectMentions() -> [Range<String.Index>] {
-        
-        return detect(regex: "@[^[:punct:][:space:]]+")
-    }
-    
-    public func detect(regex: String, options: NSRegularExpression.Options = []) -> [Range<String.Index>] {
+    func detect(regex: String, options: NSRegularExpression.Options = []) -> [Range<String.Index>] {
         
         var ranges = [Range<String.Index>]()
         
@@ -219,7 +209,7 @@ extension String {
         return ranges
     }
     
-    public func detect(textCheckingTypes: NSTextCheckingResult.CheckingType) -> [Range<String.Index>] {
+    func detect(textCheckingTypes: NSTextCheckingResult.CheckingType) -> [Range<String.Index>] {
         
         var ranges = [Range<String.Index>]()
         
