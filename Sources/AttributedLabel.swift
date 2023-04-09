@@ -15,7 +15,7 @@ import Foundation
 //
 //    open override func prepareForInterfaceBuilder() {
 //        super.prepareForInterfaceBuilder()
-//        let gray = AttributesBuilder().withForegroundColor(.gray).attributes
+//        let gray = AttributesBuilder().foregroundColor(.gray).attributes
 //        attributedText = "<gray>Attributed</gray>Label"
 //            .style(tags: ["gray": gray])
 //        invalidateIntrinsicContentSize()

@@ -16,7 +16,7 @@ public final class AttributedStringBuilder {
     private var detections: [Detection]
     public private(set) var baseAttributes: [NSAttributedString.Key: Any]
     
-    private var level: Int = 0
+    private var currentMaxLevel: Int = 0
     
     private init(string: String, detections: [Detection], baseAttributes: [NSAttributedString.Key: Any]) {
         self.string = string
@@ -62,7 +62,7 @@ public final class AttributedStringBuilder {
             }
         
             self.init(string: string, detections: ds, baseAttributes: baseAttributes)
-            level = newLevel
+            currentMaxLevel = newLevel
     }
 
     public var attributedString: NSAttributedString {
@@ -80,13 +80,6 @@ public final class AttributedStringBuilder {
         }
         
         return attributedString
-    }
-
-    public func withBaseAttributes(_ attributes:  [NSAttributedString.Key: Any]) -> Self {
-        baseAttributes = baseAttributes.merging(attributes) { lhs, rhs in
-            return lhs
-        }
-        return self
     }
     
     public func styleHashtags(_ attributes:  [NSAttributedString.Key: Any]) -> Self {
@@ -124,11 +117,11 @@ public final class AttributedStringBuilder {
     }
     
     public func style(ranges: [Range<String.Index>], attributes:  [NSAttributedString.Key: Any]) -> Self {
-        level += 1
+        currentMaxLevel += 1
         let ds = ranges.map { range in
             Detection(attributes: attributes,
                       range: range,
-                      level: level)
+                      level: currentMaxLevel)
         }
         
         detections.append(contentsOf: ds)
