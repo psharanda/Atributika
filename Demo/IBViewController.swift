@@ -29,7 +29,7 @@ class IBViewController: UIViewController {
 //        if #available(iOS 10.0, *) {
 //            attributedLabel.adjustsFontForContentSizeCategory = true
 //        }
-//        attributedLabel.attributedText = "Hello! <button>Need to register?</button>".style(tags: button).styleAll(.font(.systemFont(ofSize: 12)))
+//        attributedLabel.attributedText = "Hello! <button>Need to register?</button>".style(tagStylers: button).styleAll(.font(.systemFont(ofSize: 12)))
 //
 //
 //       setupTopLabels()
@@ -46,7 +46,7 @@ class IBViewController: UIViewController {
 //
 //        issue103Label.numberOfLines = 0
 //        issue103Label.attributedText = message
-//            .style(tags: button)
+//            .style(tagStylers: button)
 //            .styleAll(.font(.systemFont(ofSize: 30)))
 //
 //        issue103Label.onClick = { label, detection in

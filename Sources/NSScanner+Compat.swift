@@ -1,5 +1,5 @@
 //
-//  Copyright © 2017-2023 psharanda. All rights reserved.
+//  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
 import Foundation

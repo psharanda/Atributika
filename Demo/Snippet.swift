@@ -16,7 +16,7 @@ func stringWithAtributikaLogo() -> NSAttributedString {
     let all = Style().font(font).foregroundColor(grayColor)
 
     let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
-        .style(tags: ["a": a])
+        .style(tagStylers: ["a": a])
         .styleAll(all)
         .attributedString
     return str
@@ -26,7 +26,7 @@ func stringWithTagsAndEmoji() -> NSAttributedString {
     let b = Style().font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
     let all = Style().font(.systemFont(ofSize: 20))
     let str = "Hello <b>W🌎rld</b>!!!"
-        .style(tags: ["b": b])
+        .style(tagStylers: ["b": b])
         .styleAll(all)
         .attributedString
     return str
@@ -61,7 +61,7 @@ func stringWithBoldItalic() -> NSAttributedString {
 
     let a = Style().font(font).foregroundColor(.blue)
     let str = "<a href=\"https://en.wikipedia.org/wiki/World_of_Dance_(TV_series)\" target=\"_blank\">World of Dance</a>"
-        .style(tags: ["a": a])
+        .style(tagStylers: ["a": a])
         .attributedString
     return str
 }
@@ -81,7 +81,7 @@ func stringWithManyDetectables() -> NSAttributedString {
     let all = Style().font(.systemFont(ofSize: 12)).foregroundColor(.gray)
 
     let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
-        .style(tags: ["u": u, "b": b])
+        .style(tagStylers: ["u": u, "b": b])
         .styleMentions(mentions)
         .styleHashtags(links)
         .styleLinks(links)
@@ -94,7 +94,7 @@ func stringWithManyDetectables() -> NSAttributedString {
 
 func stringWith3Tags() -> NSAttributedString {
     let str = "<r>first</r><g>sec⚽️nd</g><b>third</b>"
-        .style(tags: [
+        .style(tagStylers: [
             "r": Style().foregroundColor(.red),
             "g": Style().foregroundColor(.green),
             "b": Style().foregroundColor(.blue),
@@ -109,7 +109,7 @@ func stringWithGrams() -> NSAttributedString {
     let all = Style().font(.systemFont(ofSize: 12))
 
     let str = "\(calculatedCoffee)<g>g</g>"
-        .style(tags: ["g": g])
+        .style(tagStylers: ["g": g])
         .styleAll(all)
         .attributedString
 
@@ -118,7 +118,7 @@ func stringWithGrams() -> NSAttributedString {
 
 func stringWithStrong() -> NSAttributedString {
     let str = "<strong>Nice</strong> try, Phil"
-        .style(tags: [
+        .style(tagStylers: [
             "strong": Style().font(.boldSystemFont(ofSize: 15)),
         ])
         .attributedString
@@ -148,7 +148,7 @@ func stringWithUnorderedList() -> NSAttributedString {
     let li = Style().font(.systemFont(ofSize: 12)).foregroundColor(.red)
 
     return "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>"
-        .style(tags: ["li": li], transformers: transformers)
+        .style(tagStylers: ["li": li], transformers: transformers)
         .styleAll(Style().font(.boldSystemFont(ofSize: 14)))
         .attributedString
 }
@@ -168,13 +168,13 @@ func stringWithOrderedList() -> NSAttributedString {
     ]
 
     return "<ol><li>Coffee</li><li>Tea</li><li>Milk</li></ol>"
-        .style(tags: [:], transformers: transformers)
+        .style(tagStylers: [:], transformers: transformers)
         .attributedString
 }
 
 func stringWithHref() -> NSAttributedString {
     return "Hey\r\n<a style=\"text-decoration:none\" href=\"http://www.google.com\">Hello\r\nWorld</a>s"
-        .style(tags: [
+        .style(tagStylers: [
             "a": Style().font(.boldSystemFont(ofSize: 45)).foregroundColor(.red),
         ])
         .attributedString
@@ -189,7 +189,7 @@ func stringWithBoldItalicUnderline() -> NSAttributedString {
     #endif
 
     let str = "<br><uib>Italicunderline</uib>"
-        .style(tags: ["uib": uib])
+        .style(tagStylers: ["uib": uib])
         .attributedString
     return str
 }
@@ -203,7 +203,7 @@ func stringWithImage() -> NSAttributedString {
         let b = Style().font(font).underlineStyle(.styleSingle)
     #endif
     let str = "<b>Running</b> with <img id=\"scissors\"></img>!"
-        .style(tags: ["b": b])
+        .style(tagStylers: ["b": b])
 
     let mutableAttrStr = NSMutableAttributedString(attributedString: str.attributedString)
 
@@ -238,7 +238,7 @@ func stringWithStrikethrough() -> NSAttributedString {
     let code = Style().foregroundColor(.red)
 
     let str = "<code>my code</code> <strike>test</strike> testing"
-        .style(tags: ["strike": strike, "code": code])
+        .style(tagStylers: ["strike": strike, "code": code])
         .styleAll(all)
         .attributedString
     return str
@@ -253,7 +253,7 @@ func stringWithColors() -> NSAttributedString {
     let y = Style().foregroundColor(.yellow)
 
     let str = "<r>Hello <g>w<c>orld<m></g>; he<y>l</y></c>lo atributika</r></m>"
-        .style(tags: ["r": r, "g": g, "b": b, "c": c, "m": m, "y": y])
+        .style(tagStylers: ["r": r, "g": g, "b": b, "c": c, "m": m, "y": y])
         .attributedString
     return str
 }
@@ -262,7 +262,7 @@ func stringWithParagraph() -> NSAttributedString {
     let p = Style().font(UIFont(name: "HelveticaNeue", size: 20)!)
     let strong = Style().font(UIFont(name: "Copperplate", size: 20)!)
     let str = "<p>some string... <strong> string</strong></p>"
-        .style(tags: ["p": p, "strong": strong])
+        .style(tagStylers: ["p": p, "strong": strong])
         .attributedString
     return str
 }
@@ -288,7 +288,7 @@ func stringWithIndentedList() -> NSAttributedString {
         .paragraphStyle(paragraphStyle)
 
     return "TODO:<br><li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li><li>Vestibulum ornare dui ut orci congue placerat. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li><li>Nunc et tortor vulputate, elementum quam at, tristique nibh. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li>"
-        .style(tags: ["li": li], transformers: transformers)
+        .style(tagStylers: ["li": li], transformers: transformers)
         .styleAll(Style().font(.boldSystemFont(ofSize: 14)))
         .attributedString
 }

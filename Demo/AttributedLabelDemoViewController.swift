@@ -125,7 +125,7 @@ class TweetCell: UITableViewCell {
 //                .foregroundColor(.lightGray, .disabled)
 //
 //            tweetLabel.attributedText = tweet?
-//                .style(tags: link)
+//                .style(tagStylers: link)
 //                .styleHashtags(link)
 //                .styleMentions(link)
 //                .styleLinks(link)

@@ -1,13 +1,43 @@
 //
-//  Copyright © 2017-2023 psharanda. All rights reserved.
+//  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
 import Foundation
 
+public struct Tag: Equatable {
+    public let name: String
+    public let attributes: [String: String]
+
+    public init(name: String, attributes: [String: String]) {
+        self.name = name
+        self.attributes = attributes
+    }
+}
+
+public enum TagPosition: Equatable {
+    case start // includes self-closing tags like <img />
+    case end
+}
+
+public struct TagStyler {
+    public let style: ([String: String]) -> [NSAttributedString.Key: Any]
+    public let transform: ([String: String], TagPosition) -> String?
+
+    public init(style: @escaping ([String: String]) -> [NSAttributedString.Key: Any], transform: @escaping ([String: String], TagPosition) -> String? = { _, _ in nil }) {
+        self.style = style
+        self.transform = transform
+    }
+
+    public init(attributes: [NSAttributedString.Key: Any], transform: @escaping ([String: String], TagPosition) -> String? = { _, _ in nil }) {
+        style = { _ in attributes }
+        self.transform = transform
+    }
+}
+
 public final class AttributedStringBuilder {
     private struct Detection {
-        public let attributes: [NSAttributedString.Key: Any]
-        public let range: Range<String.Index>
+        let attributes: [NSAttributedString.Key: Any]
+        let range: Range<String.Index>
         let level: Int
     }
 
@@ -43,20 +73,16 @@ public final class AttributedStringBuilder {
     public convenience init(
         htmlString: String,
         baseAttributes: [NSAttributedString.Key: Any] = [:],
-        tags: [String: [NSAttributedString.Key: Any]] = [:],
-        transformers: [TagTransformer] = [],
-        tuner: ([NSAttributedString.Key: Any], Tag) -> [NSAttributedString.Key: Any] = { s, _ in s }
+        tagStylers: [String: TagStyler] = [:]
     ) {
-        let (string, tagsInfo) = htmlString.detectTags(transformers: transformers)
+        let (string, tagsInfo) = htmlString.detectTags(tagStylers: tagStylers)
         var ds: [Detection] = []
 
         var newLevel = 0
         tagsInfo.forEach { t in
             newLevel = max(t.level, newLevel)
-            if let style = tags[t.tag.name] {
-                ds.append(Detection(attributes: tuner(style, t.tag), range: t.range, level: t.level))
-            } else {
-                ds.append(Detection(attributes: tuner([:], t.tag), range: t.range, level: t.level))
+            if let style = tagStylers[t.tag.name] {
+                ds.append(Detection(attributes: style.style(t.tag.attributes), range: t.range, level: t.level))
             }
         }
 
@@ -82,13 +108,11 @@ public final class AttributedStringBuilder {
     }
 
     public func styleHashtags(_ attributes: [NSAttributedString.Key: Any]) -> Self {
-        return style(ranges: string.detect(regex: "#[^[:punct:][:space:]]+"),
-                     attributes: attributes)
+        return style(regex: "#[^[:punct:][:space:]]+", attributes: attributes)
     }
 
     public func styleMentions(_ attributes: [NSAttributedString.Key: Any]) -> Self {
-        return style(ranges: string.detect(regex: "@[^[:punct:][:space:]]+"),
-                     attributes: attributes)
+        return style(regex: "@[^[:punct:][:space:]]+", attributes: attributes)
     }
 
     public func style(regex: String, options: NSRegularExpression.Options = [], attributes: [NSAttributedString.Key: Any]) -> Self {

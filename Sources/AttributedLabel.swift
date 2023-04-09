@@ -1,5 +1,5 @@
 //
-//  Copyright © 2017-2023 psharanda. All rights reserved.
+//  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ import Foundation
 //        super.prepareForInterfaceBuilder()
 //        let gray = AttributesBuilder().foregroundColor(.gray).attributes
 //        attributedText = "<gray>Attributed</gray>Label"
-//            .style(tags: ["gray": gray])
+//            .style(tagStylers: ["gray": gray])
 //        invalidateIntrinsicContentSize()
 //    }
 //
