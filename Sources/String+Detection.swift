@@ -4,12 +4,12 @@
 
 import Foundation
 
-public struct Tag {
+public struct Tag: Equatable {
     public let name: String
     public let attributes: [String: String]
 }
 
-public struct TagInfo {
+public struct TagInfo: Equatable {
     public let tag: Tag
     public let range: Range<String.Index>
     let level: Int
@@ -48,7 +48,7 @@ extension String {
     private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
         let tagScanner = Scanner(string: tagString)
         
-        guard let tagName = tagScanner.scanCharacters(from: CharacterSet.alphanumerics) else {
+        guard let tagName = tagScanner._scanCharacters(from: CharacterSet.alphanumerics) else {
             return nil
         }
         
@@ -56,26 +56,26 @@ extension String {
         
         while parseAttributes && !tagScanner.isAtEnd {
             
-            guard let name = tagScanner.scanUpTo("=") else {
+            guard let name = tagScanner._scanUpToString("=") else {
                 break
             }
             
-            guard tagScanner.scanString("=") != nil else {
+            guard tagScanner._scanString("=") != nil else {
                 break
             }
             
-            let startsFromSingleQuote = (tagScanner.scanString("'") != nil)
+            let startsFromSingleQuote = (tagScanner._scanString("'") != nil)
             if !startsFromSingleQuote {
-                guard tagScanner.scanString("\"") != nil else {
+                guard tagScanner._scanString("\"") != nil else {
                     break
                 }
             }
             
             let quote = startsFromSingleQuote ? "'" : "\""
             
-            let value = tagScanner.scanUpTo(quote) ?? ""
+            let value = tagScanner._scanUpToString(quote) ?? ""
             
-            guard tagScanner.scanString(quote) != nil else {
+            guard tagScanner._scanString(quote) != nil else {
                 break
             }
             
@@ -85,58 +85,83 @@ extension String {
         return Tag(name: tagName, attributes: attributes)
     }
     
-    func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
-        
-        struct TagInfoInternal {
-            public let tag: Tag
-            public let rangeStart: Int
-            public let rangeEnd: Int
-            public let level: Int
+    private func parseSpecial(scanner: Scanner) -> String {
+        if scanner._scanString("#") != nil {
+            if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.alphanumerics) {
+                if scanner._scanString(";") != nil {
+                    return potentialSpecial.unescapeAsNumber() ?? "&#\(potentialSpecial);"
+                } else {
+                    return "&#\(potentialSpecial)"
+                }
+            } else {
+                return "&#"
+            }
+        } else {
+            if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.letters) {
+                if scanner._scanString(";") != nil {
+                    return HTMLSpecial(for: potentialSpecial) ?? "&\(potentialSpecial);"
+                } else {
+                    return "&\(potentialSpecial)"
+                }
+            } else {
+                return "&"
+            }
         }
+    }
+    
+    private static let htmlControlChars = CharacterSet(charactersIn: "<&")
+    
+    private struct TagInfoInternal {
+        let tag: Tag
+        let rangeStart: String.Index
+        let rangeEnd: String.Index
+        let level: Int
+    }
+    
+    func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
         
         let scanner = Scanner(string: self)
         scanner.charactersToBeSkipped = nil
         var resultString = String()
         var tagsResult = [TagInfoInternal]()
-        var tagsStack = [(Tag, Int, Int)]()
+        var tagsStack = [(tag: Tag, startIndex: String.Index, level: Int)]()
         
         while !scanner.isAtEnd {
-            
-            if let textString = scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "<&")) {
+            if let textString = scanner._scanUpToCharacters(from: String.htmlControlChars) {
                 resultString.append(textString)
             } else {
-                if scanner.scanString("<") != nil {
-                    
-                    if scanner.isAtEnd {
-                        resultString.append("<")
-                    } else {
-                        let scannerString = (scanner.string as NSString)
-                        let nextChar = scannerString.substring(with: NSRange(location: scanner.scanLocation, length: 1))
+                if scanner._scanString("<") != nil {
+                    if let nextChar = scanner.currentCharacter() {
                         if CharacterSet.letters.contains(nextChar.unicodeScalars.first!) || (nextChar == "/") {
-                            let tagType = scanner.scanString("/") == nil ? TagType.start : TagType.end
-                            if let tagString = scanner.scanUpTo(">") {
-                                
-                                if scanner.scanString(">") != nil {
+                            let tagType = scanner._scanString("/") == nil ? TagType.start : TagType.end
+                            if let tagString = scanner._scanUpToString(">") {
+                                if scanner._scanString(">") != nil {
                                     if let tag = parseTag(tagString, parseAttributes: tagType == .start ) {
                                         
-                                        let resultTextEndIndex = resultString.count
+                                        let resultTextEndIndex = resultString.endIndex
                                         
                                         if let transformer = transformers.first(where: {
-                                            $0.tagName.lowercased() == tag.name.lowercased() && $0.tagType == tagType
+                                            $0.tagName == tag.name && $0.tagType == tagType
                                         }) {
                                             resultString.append(transformer.transform(tag))
                                         }
-
-                                        let nextLevel = (tagsStack.last?.2 ?? -1) + 1
-
+                                        
+                                        let nextLevel = (tagsStack.last?.level ?? -1) + 1
+                                        
                                         if tagString.last == "/" {
-                                            tagsResult.append(TagInfoInternal(tag: tag, rangeStart: resultTextEndIndex, rangeEnd: resultTextEndIndex, level: nextLevel))
+                                            tagsResult.append(TagInfoInternal(tag: tag,
+                                                                              rangeStart: resultTextEndIndex,
+                                                                              rangeEnd: resultTextEndIndex,
+                                                                              level: nextLevel))
                                         } else if tagType == .start {
                                             tagsStack.append((tag, resultTextEndIndex, nextLevel))
                                         } else {
-                                            for (index, (tagInStack, startIndex, level)) in tagsStack.enumerated().reversed() {
-                                                if tagInStack.name.lowercased() == tag.name.lowercased() {
-                                                    tagsResult.append(TagInfoInternal(tag: tagInStack, rangeStart: startIndex, rangeEnd: resultTextEndIndex, level: level))
+                                            for (index, tagInfo) in tagsStack.enumerated().reversed() {
+                                                if tagInfo.tag.name == tag.name {
+                                                    tagsResult.append(TagInfoInternal(tag: tagInfo.tag,
+                                                                                      rangeStart: tagInfo.startIndex,
+                                                                                      rangeEnd: resultTextEndIndex,
+                                                                                      level: tagInfo.level))
                                                     tagsStack.remove(at: index)
                                                     break
                                                 }
@@ -148,52 +173,30 @@ extension String {
                                     resultString.append(tagString)
                                 }
                             }
-                        } else if nextChar == "!", scannerString.length >= scanner.scanLocation + 3 {
-                            let afterNextChars = scannerString.substring(with: NSRange(location: scanner.scanLocation + 1, length: 2))
-                            if afterNextChars == "--" {
-                                let scanLocation = scanner.scanLocation + 3
-                                _ = scanner.scanUpTo("-->")
-                                if  scanner.scanString("-->") == nil {
-                                    scanner.scanLocation = scanLocation
-                                    resultString.append("<!--")
-                                }
-                            } else {
-                                resultString.append("<")
-                            }
+                        } else if scanner._scanString("!--") != nil {
+                            _ = scanner._scanUpToString("-->")
+                            _ = scanner._scanString("-->")
                         } else {
                             resultString.append("<")
                         }
-                    }
-                } else if scanner.scanString("&") != nil {
-                    if scanner.scanString("#") != nil {
-                        if let potentialSpecial = scanner.scanCharacters(from: CharacterSet.alphanumerics) {
-                            if scanner.scanString(";") != nil {
-                                resultString.append(potentialSpecial.unescapeAsNumber() ?? "&#\(potentialSpecial);")
-                            } else {
-                                resultString.append("&#")
-                                resultString.append(potentialSpecial)
-                            }
-                        } else {
-                            resultString.append("&#")
-                        }
                     } else {
-                        if let potentialSpecial = scanner.scanCharacters(from: CharacterSet.letters) {
-                            if scanner.scanString(";") != nil {
-                                resultString.append(HTMLSpecial(for: potentialSpecial) ?? "&\(potentialSpecial);")
-                            } else {
-                                resultString.append("&")
-                                resultString.append(potentialSpecial)
-                            }
-                        } else {
-                            resultString.append("&")
-                        }
+                        resultString.append("<")
                     }
+                } else if scanner._scanString("&") != nil {
+                    resultString.append(parseSpecial(scanner: scanner))
                 }
             }
         }
         
-        return (resultString, tagsResult.map { TagInfo(tag: $0.tag, range: resultString.index(resultString.startIndex, offsetBy: $0.rangeStart)..<resultString.index(resultString.startIndex, offsetBy: $0.rangeEnd), level: $0.level) })
+        return (resultString, tagsResult.map {
+            TagInfo(tag: $0.tag,
+                    range: $0.rangeStart..<$0.rangeEnd,
+                    level: $0.level) })
     }
+}
+    
+    
+extension String {
     
     func detect(regex: String, options: NSRegularExpression.Options = []) -> [Range<String.Index>] {
         

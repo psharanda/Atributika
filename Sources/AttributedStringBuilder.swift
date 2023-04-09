@@ -12,9 +12,11 @@ public final class AttributedStringBuilder {
         let level: Int
     }
 
-    private let string: String
+    public let string: String
     private var detections: [Detection]
-    private var baseAttributes: [NSAttributedString.Key: Any]
+    public private(set) var baseAttributes: [NSAttributedString.Key: Any]
+    
+    private var level: Int = 0
     
     private init(string: String, detections: [Detection], baseAttributes: [NSAttributedString.Key: Any]) {
         self.string = string
@@ -49,8 +51,10 @@ public final class AttributedStringBuilder {
             let (string, tagsInfo) = htmlString.detectTags(transformers: transformers)
             var ds: [Detection] = []
         
+            var newLevel = 0
             tagsInfo.forEach { t in
-                if let style = tags[t.tag.name.lowercased()] ?? tags[t.tag.name.uppercased()]  {
+                newLevel = max(t.level, newLevel)
+                if let style = tags[t.tag.name] {
                     ds.append(Detection(attributes: tuner(style, t.tag), range: t.range, level: t.level))
                 } else {
                     ds.append(Detection(attributes: tuner([:], t.tag), range: t.range, level: t.level))
@@ -58,6 +62,7 @@ public final class AttributedStringBuilder {
             }
         
             self.init(string: string, detections: ds, baseAttributes: baseAttributes)
+            level = newLevel
     }
 
     public var attributedString: NSAttributedString {
@@ -77,7 +82,7 @@ public final class AttributedStringBuilder {
         return attributedString
     }
 
-    public func style(_ attributes:  [NSAttributedString.Key: Any]) -> Self {
+    public func withBaseAttributes(_ attributes:  [NSAttributedString.Key: Any]) -> Self {
         baseAttributes = baseAttributes.merging(attributes) { lhs, rhs in
             return lhs
         }
@@ -119,10 +124,11 @@ public final class AttributedStringBuilder {
     }
     
     public func style(ranges: [Range<String.Index>], attributes:  [NSAttributedString.Key: Any]) -> Self {
+        level += 1
         let ds = ranges.map { range in
             Detection(attributes: attributes,
                       range: range,
-                      level: Int.max)
+                      level: level)
         }
         
         detections.append(contentsOf: ds)

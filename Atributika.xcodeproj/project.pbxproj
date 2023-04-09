@@ -27,10 +27,10 @@
 		1BB55AD21E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
 		1BB55AD31E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
 		1BB55AD41E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
-		1BB55AD91E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */; };
-		1BB55ADA1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */; };
-		1BB55ADB1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */; };
-		1BB55ADC1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */; };
+		1BB55AD91E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */; };
+		1BB55ADA1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */; };
+		1BB55ADB1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */; };
+		1BB55ADC1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */; };
 		1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
 		1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
 		1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */; };
@@ -106,7 +106,7 @@
 		1B80548923A8ACDF002DCA63 /* IBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
 		1B80548B23A8ACF1002DCA63 /* IB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
 		1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedStringBuilder.swift; path = Sources/AttributedStringBuilder.swift; sourceTree = "<group>"; };
-		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScanner+Swift.swift"; path = "Sources/NSScanner+Swift.swift"; sourceTree = "<group>"; };
+		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScanner+Compat.swift"; path = "Sources/NSScanner+Compat.swift"; sourceTree = "<group>"; };
 		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Detection.swift"; path = "Sources/String+Detection.swift"; sourceTree = "<group>"; };
 		1BB55AD01E5C73EF00CE6EAD /* AttributesBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributesBuilder.swift; path = Sources/AttributesBuilder.swift; sourceTree = "<group>"; };
 		1BDDF5681E683A8F006374F6 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 				1B38369F1F97C224001DB333 /* AttributedLabel.swift */,
 				1BB55AD01E5C73EF00CE6EAD /* AttributesBuilder.swift */,
 				1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */,
-				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Swift.swift */,
+				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */,
 				1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */,
 				1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */,
 				1BB55AC11E5C6F2400CE6EAD /* Tests */,
@@ -597,7 +597,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B2E55D92192FC8100D2B934 /* HTMLSpecials.swift in Sources */,
-				1BB55AD91E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
+				1BB55AD91E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */,
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
@@ -617,7 +617,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BB55ADB1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
+				1BB55ADB1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD31E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
@@ -630,7 +630,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BB55ADC1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
+				1BB55ADC1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD41E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
@@ -643,7 +643,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BB55ADA1E5C73F000CE6EAD /* NSScanner+Swift.swift in Sources */,
+				1BB55ADA1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD21E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,

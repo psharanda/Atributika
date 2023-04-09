@@ -38,7 +38,7 @@ class AtributikaTests: XCTestCase {
             tags: [
                 "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
-            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
+            .withBaseAttributes(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -55,7 +55,7 @@ class AtributikaTests: XCTestCase {
             tags: [
                 "b1": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
-            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
+            .withBaseAttributes(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!")
@@ -72,7 +72,7 @@ class AtributikaTests: XCTestCase {
             tags: [
                 "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
             ])
-            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
+            .withBaseAttributes(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
@@ -112,7 +112,7 @@ class AtributikaTests: XCTestCase {
     
     func testBase() {
         let test = AttributedStringBuilder(string: "Hello World!!!")
-            .style(AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
+            .withBaseAttributes(AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes)
             .attributedString
         
         let reference = NSMutableAttributedString(string: "Hello World!!!", attributes: [.font: Font.boldSystemFont(ofSize: 45)])
@@ -323,7 +323,7 @@ class AtributikaTests: XCTestCase {
             tags: [
                 "b":AttributesBuilder().withFont(.boldSystemFont(ofSize: 14)).attributes
             ])
-            .style(AttributesBuilder().withFont(.systemFont(ofSize: 14)).withForegroundColor(.red).attributes)
+            .withBaseAttributes(AttributesBuilder().withFont(.systemFont(ofSize: 14)).withForegroundColor(.red).attributes)
             .attributedString
         
         let badReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [.font: Font.systemFont(ofSize: 14), .foregroundColor: Color.red])
@@ -336,7 +336,7 @@ class AtributikaTests: XCTestCase {
         let good = AttributedStringBuilder(htmlString:"Save <b>$1.00</b> on <b>any</b> order!", tags: [
                 "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 14)).attributes
             ])
-            .style(AttributesBuilder().withFont(.systemFont(ofSize: 14)).withForegroundColor(.red).attributes)
+            .withBaseAttributes(AttributesBuilder().withFont(.systemFont(ofSize: 14)).withForegroundColor(.red).attributes)
             .attributedString
         
         let goodReference = NSMutableAttributedString(string: "Save $1.00 on any order!", attributes: [.font: Font.systemFont(ofSize: 14), .foregroundColor: Color.red])
@@ -543,47 +543,6 @@ class AtributikaTests: XCTestCase {
         
     }
     
-    func testCaseInsensitive1() {
-        
-        let test = AttributedStringBuilder(htmlString:"<B>Hello World</B>!!!", tags: [
-                "b": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
-            ])
-            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
-            .attributedString
-        
-        let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
-        reference.addAttributes([.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
-        
-        XCTAssertEqual(test,reference)
-        
-    }
-    
-    func testCaseInsensitive2() {
-        
-        let test = AttributedStringBuilder(htmlString:"<B>Hello World</b>!!!", tags: [
-                "B": AttributesBuilder().withFont(.boldSystemFont(ofSize: 45)).attributes
-            ])
-            .style(AttributesBuilder().withFont(.systemFont(ofSize: 12)).attributes)
-            .attributedString
-        
-        let reference = NSMutableAttributedString(string: "Hello World!!!")
-        reference.addAttributes([.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 11))
-        reference.addAttributes([.font: Font.systemFont(ofSize: 12)], range: NSMakeRange(11, 3))
-        
-        XCTAssertEqual(test,reference)
-        
-    }
-    
-    func testCaseInsensitiveBr() {
-        let test = AttributedStringBuilder(htmlString:"Hello<BR>World!!!", tags: [:])
-            .attributedString
-        
-        let reference = NSMutableAttributedString(string: "Hello\nWorld!!!")
-        
-        XCTAssertEqual(test, reference)
-    }
-    
     func testTuner() {
         
         func hexStringToUIColor (hex:String) -> Color {
@@ -696,13 +655,23 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(tags.count, 0)
     }
     
+    func testBrokenTag() {
+        let test = "Hello <"
+        
+        let (string, tags) = test.detectTags()
+        
+        
+        XCTAssertEqual(string, test)
+        XCTAssertEqual(tags.count, 0)
+    }
+    
     func testBrokenHTMLComment4() {
         let test = "Hello <!--"
         
         let (string, tags) = test.detectTags()
         
         
-        XCTAssertEqual(string, test)
+        XCTAssertEqual(string, "Hello ")
         XCTAssertEqual(tags.count, 0)
     }
     
@@ -712,7 +681,7 @@ class AtributikaTests: XCTestCase {
         let (string, tags) = test.detectTags()
         
         
-        XCTAssertEqual(string, test)
+        XCTAssertEqual(string, "Hello ")
         XCTAssertEqual(tags.count, 0)
     }
     
@@ -722,8 +691,36 @@ class AtributikaTests: XCTestCase {
         let (string, tags) = test.detectTags()
         
         
-        XCTAssertEqual(string, test)
+        XCTAssertEqual(string, "Hello ")
         XCTAssertEqual(tags.count, 0)
+    }
+    
+    
+    
+    func testScanCharacter() {
+        let ref = "Hello W🌎rld-🇬🇧🥗 Text 🍣"
+        
+        var test = ""
+        
+        let scanner = Scanner(string: ref)
+        scanner.charactersToBeSkipped = nil
+        
+        while let char = scanner.currentCharacter() {
+            _ = scanner._scanString(String(char))
+            test.append(char)
+        }
+        
+        if #available(iOS 13.0, *) {
+            let scanner13 = Scanner(string: ref)
+            scanner13.charactersToBeSkipped = nil
+            var test13 = ""
+            while let char = scanner13.scanCharacter() {
+                test13.append(char)
+            }
+            XCTAssertEqual(test13, test)
+        }
+        
+        XCTAssertEqual(test, ref)
     }
 }
 
