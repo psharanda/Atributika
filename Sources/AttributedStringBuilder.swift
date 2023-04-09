@@ -4,60 +4,30 @@
 
 import Foundation
 
-public struct Tag: Equatable {
-    public let name: String
-    public let attributes: [String: String]
-
-    public init(name: String, attributes: [String: String]) {
-        self.name = name
-        self.attributes = attributes
-    }
-}
-
-public enum TagPosition: Equatable {
-    case start // includes self-closing tags like <img />
-    case end
-}
-
-public struct TagStyler {
-    public let style: ([String: String]) -> [NSAttributedString.Key: Any]
-    public let transform: ([String: String], TagPosition) -> String?
-
-    public init(style: @escaping ([String: String]) -> [NSAttributedString.Key: Any], transform: @escaping ([String: String], TagPosition) -> String? = { _, _ in nil }) {
-        self.style = style
-        self.transform = transform
-    }
-
-    public init(attributes: [NSAttributedString.Key: Any], transform: @escaping ([String: String], TagPosition) -> String? = { _, _ in nil }) {
-        style = { _ in attributes }
-        self.transform = transform
-    }
-}
-
 public final class AttributedStringBuilder {
     private struct Detection {
-        let attributes: [NSAttributedString.Key: Any]
+        let attributes: AttributesProvider
         let range: Range<String.Index>
         let level: Int
     }
 
     public let string: String
     private var detections: [Detection]
-    public private(set) var baseAttributes: [NSAttributedString.Key: Any]
+    public private(set) var baseAttributes: AttributesProvider
 
     private var currentMaxLevel: Int = 0
 
-    private init(string: String, detections: [Detection], baseAttributes: [NSAttributedString.Key: Any]) {
+    private init(string: String, detections: [Detection], baseAttributes: AttributesProvider) {
         self.string = string
         self.detections = detections
         self.baseAttributes = baseAttributes
     }
 
-    public convenience init(string: String, baseAttributes: [NSAttributedString.Key: Any] = [:]) {
+    public convenience init(string: String, baseAttributes: AttributesProvider = [NSAttributedString.Key: Any]()) {
         self.init(string: string, detections: [], baseAttributes: baseAttributes)
     }
 
-    public convenience init(attributedString: NSAttributedString, baseAttributes: [NSAttributedString.Key: Any] = [:]) {
+    public convenience init(attributedString: NSAttributedString, baseAttributes: AttributesProvider = [NSAttributedString.Key: Any]()) {
         let string = attributedString.string
         var detections: [Detection] = []
 
@@ -72,17 +42,17 @@ public final class AttributedStringBuilder {
 
     public convenience init(
         htmlString: String,
-        baseAttributes: [NSAttributedString.Key: Any] = [:],
-        tagStylers: [String: TagStyler] = [:]
+        baseAttributes: AttributesProvider = [NSAttributedString.Key: Any](),
+        tags: [String: TagTuning] = [:]
     ) {
-        let (string, tagsInfo) = htmlString.detectTags(tagStylers: tagStylers)
+        let (string, tagsInfo) = htmlString.detectTags(tags: tags)
         var ds: [Detection] = []
 
         var newLevel = 0
         tagsInfo.forEach { t in
             newLevel = max(t.level, newLevel)
-            if let style = tagStylers[t.tag.name] {
-                ds.append(Detection(attributes: style.style(t.tag.attributes), range: t.range, level: t.level))
+            if let style = tags[t.tag.name] {
+                ds.append(Detection(attributes: style.style(tagAttributes: t.tag.attributes), range: t.range, level: t.level))
             }
         }
 
@@ -91,7 +61,7 @@ public final class AttributedStringBuilder {
     }
 
     public var attributedString: NSAttributedString {
-        let attributedString = NSMutableAttributedString(string: string, attributes: baseAttributes)
+        let attributedString = NSMutableAttributedString(string: string, attributes: baseAttributes.attributes)
 
         let sortedDetections = detections.sorted {
             $0.level < $1.level
@@ -99,47 +69,47 @@ public final class AttributedStringBuilder {
 
         for d in sortedDetections {
             let attributes = d.attributes
-            if attributes.count > 0 {
-                attributedString.addAttributes(attributes, range: NSRange(d.range, in: string))
+            if attributes.attributes.count > 0 {
+                attributedString.addAttributes(attributes.attributes, range: NSRange(d.range, in: string))
             }
         }
 
         return attributedString
     }
 
-    public func styleHashtags(_ attributes: [NSAttributedString.Key: Any]) -> Self {
+    public func styleHashtags(_ attributes: AttributesProvider) -> Self {
         return style(regex: "#[^[:punct:][:space:]]+", attributes: attributes)
     }
 
-    public func styleMentions(_ attributes: [NSAttributedString.Key: Any]) -> Self {
+    public func styleMentions(_ attributes: AttributesProvider) -> Self {
         return style(regex: "@[^[:punct:][:space:]]+", attributes: attributes)
     }
 
-    public func style(regex: String, options: NSRegularExpression.Options = [], attributes: [NSAttributedString.Key: Any]) -> Self {
+    public func style(regex: String, options: NSRegularExpression.Options = [], attributes: AttributesProvider) -> Self {
         return style(ranges: string.detect(regex: regex, options: options),
                      attributes: attributes)
     }
 
-    public func style(textCheckingTypes: NSTextCheckingResult.CheckingType, attributes: [NSAttributedString.Key: Any]) -> Self {
+    public func style(textCheckingTypes: NSTextCheckingResult.CheckingType, attributes: AttributesProvider) -> Self {
         return style(ranges: string.detect(textCheckingTypes: textCheckingTypes),
                      attributes: attributes)
     }
 
-    public func stylePhoneNumbers(_ attributes: [NSAttributedString.Key: Any]) -> Self {
+    public func stylePhoneNumbers(_ attributes: AttributesProvider) -> Self {
         return style(ranges: string.detect(textCheckingTypes: [.phoneNumber]),
                      attributes: attributes)
     }
 
-    public func styleLinks(_ attributes: [NSAttributedString.Key: Any]) -> Self {
+    public func styleLinks(_ attributes: AttributesProvider) -> Self {
         return style(ranges: string.detect(textCheckingTypes: [.link]),
                      attributes: attributes)
     }
 
-    public func style(range: Range<String.Index>, attributes: [NSAttributedString.Key: Any]) -> Self {
+    public func style(range: Range<String.Index>, attributes: AttributesProvider) -> Self {
         return style(ranges: [range], attributes: attributes)
     }
 
-    public func style(ranges: [Range<String.Index>], attributes: [NSAttributedString.Key: Any]) -> Self {
+    public func style(ranges: [Range<String.Index>], attributes: AttributesProvider) -> Self {
         currentMaxLevel += 1
         let ds = ranges.map { range in
             Detection(attributes: attributes,
@@ -149,5 +119,48 @@ public final class AttributedStringBuilder {
 
         detections.append(contentsOf: ds)
         return self
+    }
+
+    public func styleBase(_ attributes: AttributesProvider) -> Self {
+        baseAttributes = attributes
+        return self
+    }
+}
+
+public extension String {
+    func style(tags: [String: TagTuning]) -> AttributedStringBuilder {
+        return AttributedStringBuilder(htmlString: self, tags: tags)
+    }
+
+    func styleBase(_ attributes: AttributesProvider) -> AttributedStringBuilder {
+        return AttributedStringBuilder(string: self, baseAttributes: attributes)
+    }
+
+    func styleHashtags(_ attributes: AttributesProvider) -> AttributedStringBuilder {
+        return AttributedStringBuilder(string: self).styleHashtags(attributes)
+    }
+
+    func styleMentions(_ attributes: AttributesProvider) -> AttributedStringBuilder {
+        return AttributedStringBuilder(string: self).styleMentions(attributes)
+    }
+
+    func style(regex: String, options: NSRegularExpression.Options = [], attributes: AttributesProvider) -> AttributedStringBuilder {
+        return AttributedStringBuilder(string: self).style(regex: regex, options: options, attributes: attributes)
+    }
+
+    func style(textCheckingTypes: NSTextCheckingResult.CheckingType, attributes: AttributesProvider) -> AttributedStringBuilder {
+        return AttributedStringBuilder(string: self).style(textCheckingTypes: textCheckingTypes, attributes: attributes)
+    }
+
+    func stylePhoneNumbers(_ attributes: AttributesProvider) -> AttributedStringBuilder {
+        return AttributedStringBuilder(string: self).stylePhoneNumbers(attributes)
+    }
+
+    func styleLinks(_ attributes: AttributesProvider) -> AttributedStringBuilder {
+        return AttributedStringBuilder(string: self).styleLinks(attributes)
+    }
+
+    func style(range: Range<String.Index>, attributes: AttributesProvider) -> AttributedStringBuilder {
+        return AttributedStringBuilder(string: self).style(range: range, attributes: attributes)
     }
 }

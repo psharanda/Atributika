@@ -78,37 +78,37 @@ class TweetCell: UITableViewCell {
     override init(style: TableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        tweetLabel.onClick = { _, detection in
-            switch detection.type {
-            case let .hashtag(tag):
-                if let url = URL(string: "https://twitter.com/hashtag/\(tag)") {
-                    UIApplication.shared.openURL(url)
-                }
-            case let .mention(name):
-                if let url = URL(string: "https://twitter.com/\(name)") {
-                    UIApplication.shared.openURL(url)
-                }
-            case let .link(url):
-                UIApplication.shared.openURL(url)
-            case let .tag(tag):
-                if tag.name == "a", let href = tag.attributes["href"], let url = URL(string: href) {
-                    UIApplication.shared.openURL(url)
-                }
-            default:
-                break
-            }
-        }
-
-        contentView.addSubview(tweetLabel)
-
-        let marginGuide = contentView.layoutMarginsGuide
-
-        tweetLabel.translatesAutoresizingMaskIntoConstraints = false
-        tweetLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
-        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
-        tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
-        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
-        tweetLabel.numberOfLines = 0
+//        tweetLabel.onClick = { _, detection in
+//            switch detection.type {
+//            case let .hashtag(tag):
+//                if let url = URL(string: "https://twitter.com/hashtag/\(tag)") {
+//                    UIApplication.shared.openURL(url)
+//                }
+//            case let .mention(name):
+//                if let url = URL(string: "https://twitter.com/\(name)") {
+//                    UIApplication.shared.openURL(url)
+//                }
+//            case let .link(url):
+//                UIApplication.shared.openURL(url)
+//            case let .tag(tag):
+//                if tag.name == "a", let href = tag.attributes["href"], let url = URL(string: href) {
+//                    UIApplication.shared.openURL(url)
+//                }
+//            default:
+//                break
+//            }
+//        }
+//
+//        contentView.addSubview(tweetLabel)
+//
+//        let marginGuide = contentView.layoutMarginsGuide
+//
+//        tweetLabel.translatesAutoresizingMaskIntoConstraints = false
+//        tweetLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
+//        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+//        tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
+//        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+//        tweetLabel.numberOfLines = 0
     }
 
     @available(*, unavailable)
@@ -125,7 +125,7 @@ class TweetCell: UITableViewCell {
 //                .foregroundColor(.lightGray, .disabled)
 //
 //            tweetLabel.attributedText = tweet?
-//                .style(tagStylers: link)
+//                .style(tags: link)
 //                .styleHashtags(link)
 //                .styleMentions(link)
 //                .styleLinks(link)

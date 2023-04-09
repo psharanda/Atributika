@@ -10,15 +10,25 @@ import Foundation
     import UIKit
 #endif
 
-public final class AttributesBuilder {
+public protocol AttributesProvider {
+    var attributes: [NSAttributedString.Key: Any] { get }
+}
+
+extension Dictionary: AttributesProvider where Key == NSAttributedString.Key, Value == Any {
+    public var attributes: [NSAttributedString.Key: Any] {
+        return self
+    }
+}
+
+public final class AttributesBuilder: AttributesProvider {
     public private(set) var attributes: [NSAttributedString.Key: Any]
 
-    public var asTagStyler: TagStyler {
-        return TagStyler(attributes: attributes)
+    public init(_ attributes: AttributesProvider = [NSAttributedString.Key: Any]()) {
+        self.attributes = attributes.attributes
     }
-
-    public init(_ attributes: [NSAttributedString.Key: Any] = [:]) {
-        self.attributes = attributes
+    
+    public func copy() -> AttributesBuilder {
+        return AttributesBuilder(attributes)
     }
 
     @discardableResult
@@ -33,65 +43,65 @@ public final class AttributesBuilder {
     }
 
     #if os(macOS)
-    @discardableResult
-    public func font(_ value: NSFont) -> Self {
-        return attribute(.font, value)
-    }
+        @discardableResult
+        public func font(_ value: NSFont) -> Self {
+            return attribute(.font, value)
+        }
 
-    @discardableResult
-    public func foregroundColor(_ value: NSColor) -> Self {
-        return attribute(.foregroundColor, value)
-    }
+        @discardableResult
+        public func foregroundColor(_ value: NSColor) -> Self {
+            return attribute(.foregroundColor, value)
+        }
 
-    @discardableResult
-    public func backgroundColor(_ value: NSColor) -> Self {
-        return attribute(.backgroundColor, value)
-    }
+        @discardableResult
+        public func backgroundColor(_ value: NSColor) -> Self {
+            return attribute(.backgroundColor, value)
+        }
 
-    @discardableResult
-    public func strikethroughColor(_ value: NSColor) -> Self {
-        return attribute(.strikethroughColor, value)
-    }
+        @discardableResult
+        public func strikethroughColor(_ value: NSColor) -> Self {
+            return attribute(.strikethroughColor, value)
+        }
 
-    @discardableResult
-    public func underlineColor(_ value: NSColor) -> Self {
-        return attribute(.underlineColor, value)
-    }
+        @discardableResult
+        public func underlineColor(_ value: NSColor) -> Self {
+            return attribute(.underlineColor, value)
+        }
 
-    @discardableResult
-    public func strokeColor(_ value: NSColor) -> Self {
-        return attribute(.strokeColor, value)
-    }
+        @discardableResult
+        public func strokeColor(_ value: NSColor) -> Self {
+            return attribute(.strokeColor, value)
+        }
     #else
-    @discardableResult
-    public func font(_ value: UIFont) -> Self {
-        return attribute(.font, value)
-    }
+        @discardableResult
+        public func font(_ value: UIFont) -> Self {
+            return attribute(.font, value)
+        }
 
-    @discardableResult
-    public func foregroundColor(_ value: UIColor) -> Self {
-        return attribute(.foregroundColor, value)
-    }
+        @discardableResult
+        public func foregroundColor(_ value: UIColor) -> Self {
+            return attribute(.foregroundColor, value)
+        }
 
-    @discardableResult
-    public func backgroundColor(_ value: UIColor) -> Self {
-        return attribute(.backgroundColor, value)
-    }
+        @discardableResult
+        public func backgroundColor(_ value: UIColor) -> Self {
+            return attribute(.backgroundColor, value)
+        }
 
-    @discardableResult
-    public func strikethroughColor(_ value: UIColor) -> Self {
-        return attribute(.strikethroughColor, value)
-    }
+        @discardableResult
+        public func strikethroughColor(_ value: UIColor) -> Self {
+            return attribute(.strikethroughColor, value)
+        }
 
-    @discardableResult
-    public func underlineColor(_ value: UIColor) -> Self {
-        return attribute(.underlineColor, value)
-    }
+        @discardableResult
+        public func underlineColor(_ value: UIColor) -> Self {
+            return attribute(.underlineColor, value)
+        }
 
-    @discardableResult
-    public func strokeColor(_ value: UIColor) -> Self {
-        return attribute(.strokeColor, value)
-    }
+        @discardableResult
+        public func strokeColor(_ value: UIColor) -> Self {
+            return attribute(.strokeColor, value)
+        }
     #endif
 
     @discardableResult
@@ -120,10 +130,10 @@ public final class AttributesBuilder {
     }
 
     #if !os(watchOS)
-    @discardableResult
-    public func shadow(_ value: NSShadow) -> Self {
-        return attribute(.shadow, value)
-    }
+        @discardableResult
+        public func shadow(_ value: NSShadow) -> Self {
+            return attribute(.shadow, value)
+        }
     #endif
 
     @discardableResult
@@ -132,10 +142,10 @@ public final class AttributesBuilder {
     }
 
     #if !os(watchOS)
-    @discardableResult
-    public func attachment(_ value: NSTextAttachment) -> Self {
-        return attribute(.attachment, value)
-    }
+        @discardableResult
+        public func attachment(_ value: NSTextAttachment) -> Self {
+            return attribute(.attachment, value)
+        }
     #endif
 
     @discardableResult
@@ -167,4 +177,19 @@ public final class AttributesBuilder {
     public func writingDirection(_ value: NSWritingDirection) -> Self {
         return attribute(.writingDirection, value.rawValue)
     }
+}
+
+extension AttributesBuilder: TagTuning {
+    public func style(tagAttributes: [String : String]) -> AttributesProvider {
+        return self
+    }
+    
+    public func transform(tagAttributes: [String : String], tagPosition: TagPosition) -> String? {
+        return nil
+    }
+}
+
+
+public var Style: AttributesBuilder {
+    return AttributesBuilder()
 }

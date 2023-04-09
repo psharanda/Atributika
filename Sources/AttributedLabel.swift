@@ -2,7 +2,9 @@
 //  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+@IBDesignable open class AttributedLabel: UIControl {}
 
 // #if os(iOS)
 //
@@ -17,7 +19,7 @@ import Foundation
 //        super.prepareForInterfaceBuilder()
 //        let gray = AttributesBuilder().foregroundColor(.gray).attributes
 //        attributedText = "<gray>Attributed</gray>Label"
-//            .style(tagStylers: ["gray": gray])
+//            .style(tags: ["gray": gray])
 //        invalidateIntrinsicContentSize()
 //    }
 //
@@ -291,7 +293,7 @@ import Foundation
 //
 //    private func updateAttributedTextInTextView(_ string: NSAttributedString) {
 //
-//        let paragraphStyle = NSMutableParagraphStyle()
+//        let paragraphStyle = NSMutableParagraphStyle
 //        paragraphStyle.alignment = textAlignment
 //
 //        var inheritedAttributes = [NSAttributedString.Key.font: font as Any,

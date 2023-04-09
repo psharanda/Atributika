@@ -11,9 +11,8 @@ struct TagInfo: Equatable {
 }
 
 extension String {
-    
-    private static let htmlControlChars = CharacterSet(charactersIn: "<&")
-    
+    // MARK: - html specials
+
     private static let HTMLSpecials: [String: Character] = [
         "quot": "\u{22}",
         "amp": "\u{26}",
@@ -21,77 +20,8 @@ extension String {
         "lt": "\u{3C}",
         "gt": "\u{3E}",
     ]
-    
+
     private static let allowedTagCharacters = CharacterSet(charactersIn: ".-_").union(CharacterSet.alphanumerics)
-    
-    private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
-        let tagScanner = Scanner(string: tagString)
-
-        guard let tagName = tagScanner._scanCharacters(from: Self.allowedTagCharacters) else {
-            return nil
-        }
-
-        var attributes = [String: String]()
-
-        while parseAttributes, !tagScanner.isAtEnd {
-            guard let name = tagScanner._scanUpToString("=") else {
-                break
-            }
-
-            guard tagScanner._scanString("=") != nil else {
-                break
-            }
-
-            let startsFromSingleQuote = (tagScanner._scanString("'") != nil)
-            if !startsFromSingleQuote {
-                guard tagScanner._scanString("\"") != nil else {
-                    break
-                }
-            }
-
-            let quote = startsFromSingleQuote ? "'" : "\""
-
-            let value = tagScanner._scanUpToString(quote) ?? ""
-
-            guard tagScanner._scanString(quote) != nil else {
-                break
-            }
-
-            if startsFromSingleQuote {
-                attributes[name] = value.replacingOccurrences(of: "&apos;", with: "'")
-            } else {
-                attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
-            }
-        }
-
-        return Tag(name: tagName, attributes: attributes)
-    }
-
-    private func parseSpecial(scanner: Scanner) -> String {
-        var result = ""
-        if scanner._scanString("#") != nil {
-            if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.alphanumerics) {
-                if scanner._scanString(";") != nil {
-                    result = potentialSpecial.unescapeAsNumber() ?? "&#\(potentialSpecial);"
-                } else {
-                    result = "&#\(potentialSpecial)"
-                }
-            } else {
-                result = "&#"
-            }
-        } else {
-            if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.letters) {
-                if scanner._scanString(";") != nil {
-                    result = Self.HTMLSpecials[potentialSpecial].map { String($0) } ?? "&\(potentialSpecial);"
-                } else {
-                    result = "&\(potentialSpecial)"
-                }
-            } else {
-                result = "&"
-            }
-        }
-        return result
-    }
 
     private func unescapeAsNumber() -> String? {
         let isHexadecimal = hasPrefix("X") || hasPrefix("x")
@@ -109,90 +39,192 @@ extension String {
         return String(scalar)
     }
 
-    func detectTags(
-        tagStylers: [String: TagStyler] = [:]
-    ) -> (string: String, tagsInfo: [TagInfo]) {
+    private func parseSpecial(_ scanner: Scanner, _ resultString: inout String) {
+        if scanner._scanString("#") != nil {
+            if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.alphanumerics) {
+                if scanner._scanString(";") != nil {
+                    resultString.append(potentialSpecial.unescapeAsNumber() ?? "&#\(potentialSpecial);")
+                } else {
+                    resultString.append("&#\(potentialSpecial)")
+                }
+            } else {
+                resultString.append("&#")
+            }
+        } else {
+            if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.letters) {
+                if scanner._scanString(";") != nil {
+                    resultString.append(Self.HTMLSpecials[potentialSpecial].map { String($0) } ?? "&\(potentialSpecial);")
+                } else {
+                    resultString.append("&\(potentialSpecial)")
+                }
+            } else {
+                resultString.append("&")
+            }
+        }
+    }
+
+    // MARK: - tags
+
+    private struct TagStackItem {
+        let tag: Tag
+        let startIndex: String.Index
+        let level: Int
+    }
+
+    private func parseClosingTag(_ scanner: Scanner, _ tagsStack: inout [String.TagStackItem], _ tags: [String: TagTuning], _ resultString: inout String, _ tagsInfo: inout [TagInfo]) {
+        _ = scanner._scanString("/")
+        guard let tagName = scanner._scanCharacters(from: Self.allowedTagCharacters) else {
+            resultString.append("</")
+            return
+        }
+
+        for (index, tagInfo) in tagsStack.enumerated().reversed() {
+            if tagInfo.tag.name == tagName {
+                if let tagStyler = tags[tagName],
+                   let str = tagStyler.transform(tagAttributes: tagInfo.tag.attributes, tagPosition: .end)
+                {
+                    resultString.append(str)
+                }
+
+                tagsInfo.append(
+                    TagInfo(
+                        tag: tagInfo.tag,
+                        range: tagInfo.startIndex ..< resultString.endIndex,
+                        level: tagInfo.level
+                    ))
+                tagsStack.remove(at: index)
+                break
+            }
+        }
+        if scanner._scanUpToString(">") == nil {
+            _ = scanner._scanString(">")
+        }
+    }
+
+    private func parseOpeningTag(_ scanner: Scanner, _ resultString: inout String, _ tags: [String: TagTuning], _ tagsStack: inout [String.TagStackItem], _ tagsInfo: inout [TagInfo]) {
+        let tagName = scanner._scanCharacters(from: Self.allowedTagCharacters)!
+
+        var selfClosing = false
+        var attributes: [String: String] = [:]
+
+        var paramName: String?
+        var paramValue: String?
+
+        while !scanner.isAtEnd {
+            _ = scanner._scanCharacters(from: CharacterSet.whitespaces)
+
+            guard let currentCharacter = scanner.currentCharacter() else {
+                break
+            }
+
+            if scanner._scanString(">") != nil {
+                break
+            } else if scanner._scanString("/") != nil {
+                selfClosing = true
+            } else if scanner._scanString("=") != nil {
+                _ = scanner._scanCharacters(from: CharacterSet.whitespaces)
+
+                if let quote = scanner._scanString("\"") ?? scanner._scanString("'") {
+                    if let scannedParamValue = scanner._scanUpToCharacters(from: CharacterSet(charactersIn: quote)) {
+                        _ = scanner._scanCharacter()
+                        paramValue = scannedParamValue
+                    }
+                } else {
+                    paramValue = scanner._scanUpToCharacters(from: CharacterSet.whitespaces.union(CharacterSet(charactersIn: "/>")))
+                }
+
+                if paramValue != nil, paramValue!.contains("&") {
+                    for (key, value) in Self.HTMLSpecials {
+                        paramValue = paramValue!.replacingOccurrences(of: "&\(key);", with: String(value))
+                    }
+                }
+
+                if let name = paramName, let value = paramValue {
+                    attributes[name] = value
+                    paramName = nil
+                    paramValue = nil
+                }
+            } else if let firstUnicodeScalar = currentCharacter.unicodeScalars.first, Self.allowedTagCharacters.contains(firstUnicodeScalar) {
+                if let prevParamName = paramName {
+                    attributes[prevParamName] = ""
+                    paramName = nil
+                }
+                paramName = scanner._scanCharacters(from: Self.allowedTagCharacters)!
+            } else {
+                _ = scanner._scanCharacter()
+            }
+        }
+
+        if let name = paramName {
+            attributes[name] = paramValue ?? ""
+            paramName = nil
+            paramValue = nil
+        }
+
+        let startIndex = resultString.endIndex
+
+        if let tagStyler = tags[tagName],
+           let str = tagStyler.transform(tagAttributes: attributes, tagPosition: .start(selfClosing: selfClosing))
+        {
+            resultString.append(str)
+        } else if tagName.lowercased() == "br" {
+            resultString.append("\n")
+        }
+
+        let nextLevel = (tagsStack.last?.level ?? -1) + 1
+
+        let tag = Tag(name: tagName, attributes: attributes)
+        if selfClosing {
+            tagsInfo.append(
+                TagInfo(
+                    tag: tag,
+                    range: startIndex ..< resultString.endIndex,
+                    level: nextLevel
+                ))
+        } else {
+            tagsStack.append(TagStackItem(tag: tag, startIndex: startIndex, level: nextLevel))
+        }
+    }
+
+    private func parseTag(_ tags: [String: TagTuning], _ scanner: Scanner, _ resultString: inout String, _ tagsInfo: inout [TagInfo], _ tagsStack: inout [TagStackItem]) {
+        guard let nextChar = scanner.currentCharacter(), let nextUnicodeScalar = nextChar.unicodeScalars.first else {
+            resultString.append("<")
+            return
+        }
+        if nextChar == "/" {
+            parseClosingTag(scanner, &tagsStack, tags, &resultString, &tagsInfo)
+        } else if CharacterSet.letters.contains(nextUnicodeScalar) {
+            parseOpeningTag(scanner, &resultString, tags, &tagsStack, &tagsInfo)
+        } else if scanner._scanString("!--") != nil {
+            _ = scanner._scanUpToString("-->")
+            _ = scanner._scanString("-->")
+        } else {
+            resultString.append("<")
+        }
+    }
+
+    // MARK: - main
+
+    private static let htmlControlChars = CharacterSet(charactersIn: "<&")
+
+    func detectTags(tags: [String: TagTuning] = [:]) -> (string: String, tagsInfo: [TagInfo]) {
         let scanner = Scanner(string: self)
         scanner.charactersToBeSkipped = nil
+
         var resultString = String()
-        var tagsResult = [TagInfo]()
-        var tagsStack = [(tag: Tag, startIndex: String.Index, level: Int)]()
+        var tagsInfo = [TagInfo]()
+        var tagsStack = [TagStackItem]()
 
         while !scanner.isAtEnd {
             if let textString = scanner._scanUpToCharacters(from: String.htmlControlChars) {
                 resultString.append(textString)
-            } else {
-                if scanner._scanString("<") != nil {
-                    if let nextChar = scanner.currentCharacter(), let nextUnicodeScalar = nextChar.unicodeScalars.first {
-                        if Self.allowedTagCharacters.contains(nextUnicodeScalar) || (nextChar == "/") {
-                            let tagType = scanner._scanString("/") == nil ? TagPosition.start : TagPosition.end
-                            if let tagString = scanner._scanUpToString(">") {
-                                if scanner._scanString(">") != nil {
-                                    if let tag = parseTag(tagString, parseAttributes: tagType == .start) {
-                                        let resultTextEndIndex = resultString.endIndex
-
-                                        if let tagStyler = tagStylers[tag.name], let str = tagStyler.transform(tag.attributes, tagType) {
-                                            resultString.append(str)
-                                        } else if tag.name.lowercased() == "br" {
-                                            resultString.append("\n")
-                                        }
-
-                                        let nextLevel = (tagsStack.last?.level ?? -1) + 1
-
-                                        if tagString.last == "/" {
-                                            tagsResult.append(
-                                                TagInfo(
-                                                    tag: tag,
-                                                    range: resultTextEndIndex ..< resultTextEndIndex,
-                                                    level: nextLevel
-                                                ))
-                                        } else if tagType == .start {
-                                            tagsStack.append((tag, resultTextEndIndex, nextLevel))
-                                        } else {
-                                            for (index, tagInfo) in tagsStack.enumerated().reversed() {
-                                                if tagInfo.tag.name == tag.name {
-                                                    tagsResult.append(
-                                                        TagInfo(
-                                                            tag: tagInfo.tag,
-                                                            range: tagInfo.startIndex ..< resultTextEndIndex,
-                                                            level: tagInfo.level
-                                                        ))
-                                                    tagsStack.remove(at: index)
-                                                    break
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        resultString.append("<")
-                                        if (tagType == .end) {
-                                            resultString.append("/")
-                                        }
-                                        resultString.append(tagString)
-                                        resultString.append(">")
-                                    }
-                                } else {
-                                    resultString.append("<")
-                                    if (tagType == .end) {
-                                        resultString.append("/")
-                                    }
-                                    resultString.append(tagString)
-                                }
-                            }
-                        } else if scanner._scanString("!--") != nil {
-                            _ = scanner._scanUpToString("-->")
-                            _ = scanner._scanString("-->")
-                        } else {
-                            resultString.append("<")
-                        }
-                    } else {
-                        resultString.append("<")
-                    }
-                } else if scanner._scanString("&") != nil {
-                    resultString.append(parseSpecial(scanner: scanner))
-                }
+            } else if scanner._scanString("<") != nil {
+                parseTag(tags, scanner, &resultString, &tagsInfo, &tagsStack)
+            } else if scanner._scanString("&") != nil {
+                parseSpecial(scanner, &resultString)
             }
         }
 
-        return (resultString, tagsResult)
+        return (resultString, tagsInfo)
     }
 }

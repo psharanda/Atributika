@@ -59,4 +59,24 @@ extension Scanner {
         }
         return string[nextCharRange.lowerBound]
     }
+
+    func _scanCharacterPreiOS13() -> Character? {
+        guard !isAtEnd, let nextCharRange = Range(NSRange(location: scanLocation, length: 0), in: string) else {
+            return nil
+        }
+        let char = string[nextCharRange.lowerBound]
+        let charRange = nextCharRange.lowerBound ..< string.index(after: nextCharRange.lowerBound)
+        let nsRange = NSRange(charRange, in: string)
+        scanLocation += nsRange.length
+
+        return char
+    }
+
+    func _scanCharacter() -> Character? {
+        if #available(iOS 13.0, *) {
+            return scanCharacter()
+        } else {
+            return _scanCharacterPreiOS13()
+        }
+    }
 }
