@@ -4,13 +4,13 @@
 
 import Foundation
 
-//#if os(iOS)
+// #if os(iOS)
 //
-//import UIKit
+// import UIKit
 //
-//@IBDesignable open class AttributedLabel: UIControl {
+// @IBDesignable open class AttributedLabel: UIControl {
 //    open func setTextAttributes(for key: NSAttributedString.Key, _ attrs: [NSAttributedString.Key: Any], for state: UIControl.State) {
-//        
+//
 //    }
 //
 //    open override func prepareForInterfaceBuilder() {
@@ -20,10 +20,10 @@ import Foundation
 //            .style(tags: ["gray": gray])
 //        invalidateIntrinsicContentSize()
 //    }
-//    
+//
 //    //MARK: - private properties
 //    private let textView = UITextView()
-//    
+//
 //    //MARK: - public properties
 //    open var onClick: ((AttributedLabel, Detection)->Void)?
 //
@@ -39,7 +39,7 @@ import Foundation
 //
 //        return result
 //    }
-//    
+//
 //    @IBInspectable open override var isEnabled: Bool {
 //        set {
 //            internalState.isEnabled = newValue
@@ -48,7 +48,7 @@ import Foundation
 //            return internalState.isEnabled
 //        }
 //    }
-//    
+//
 //    @IBInspectable open var isSelectable: Bool {
 //        get {
 //            return textView.isUserInteractionEnabled && textView.isSelectable
@@ -58,7 +58,7 @@ import Foundation
 //            textView.isUserInteractionEnabled = newValue
 //        }
 //    }
-//    
+//
 //    open var attributedText: AttributedText? {
 //        set {
 //            internalState = State(attributedText: newValue, isEnabled: internalState.isEnabled, detection: nil)
@@ -68,35 +68,35 @@ import Foundation
 //            return internalState.attributedText
 //        }
 //    }
-//    
+//
 //    @IBInspectable open var numberOfLines: Int {
 //        set { textView.textContainer.maximumNumberOfLines = newValue }
 //        get { return textView.textContainer.maximumNumberOfLines }
 //    }
-//    
+//
 //    @IBInspectable open var lineBreakMode: NSLineBreakMode {
 //        set { textView.textContainer.lineBreakMode = newValue }
 //        get { return textView.textContainer.lineBreakMode }
 //    }
-//    
+//
 //    @available(iOS 10.0, *)
 //    @IBInspectable open var adjustsFontForContentSizeCategory: Bool {
 //        set { textView.adjustsFontForContentSizeCategory = newValue }
 //        get { return textView.adjustsFontForContentSizeCategory }
 //    }
-//    
+//
 //    @IBInspectable open var font: UIFont = .preferredFont(forTextStyle: .body) {
 //        didSet {
 //            updateText()
 //        }
 //    }
-//    
+//
 //    @IBInspectable open var textAlignment: NSTextAlignment = .natural {
 //        didSet {
 //            updateText()
 //        }
 //    }
-//    
+//
 //    @IBInspectable open var textColor: UIColor = {
 //        if #available(iOS 13.0, *) {
 //            return .label
@@ -108,41 +108,41 @@ import Foundation
 //            updateText()
 //        }
 //    }
-//    
+//
 //    @IBInspectable open var shadowColor: UIColor? {
 //        didSet {
 //            updateText()
 //        }
 //    }
-//    
+//
 //    @IBInspectable open var shadowOffset = CGSize(width: 0, height: -1) {
 //        didSet {
 //            updateText()
 //        }
 //    }
-//    
+//
 //    @IBInspectable open var shadowBlurRadius: CGFloat = 0 {
 //        didSet {
 //            updateText()
 //        }
 //    }
-//    
+//
 //    //MARK: - init
 //    public override init(frame: CGRect) {
 //        super.init(frame: frame)
 //        commonInit()
 //    }
-//    
+//
 //    public required init?(coder aDecoder: NSCoder) {
 //        super.init(coder: aDecoder)
 //        commonInit()
 //    }
-//    
+//
 //    private func commonInit() {
 //        isAccessibilityElement = false
 //
 //        addSubview(textView)
-//        
+//
 //        lineBreakMode = .byTruncatingTail
 //        numberOfLines = 1
 //
@@ -153,23 +153,23 @@ import Foundation
 //        textView.isScrollEnabled = false
 //        textView.isSelectable = false
 //        textView.backgroundColor = nil
-//        
+//
 //        textView.translatesAutoresizingMaskIntoConstraints = false
-//        
+//
 //        textView.topAnchor.constraint(equalTo: topAnchor).isActive = true
 //        textView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 //        textView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
 //        textView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
 //    }
-//    
+//
 //    open override func sizeThatFits(_ size: CGSize) -> CGSize {
 //        return textView.sizeThatFits(size)
 //    }
-//    
+//
 //    open override var forFirstBaselineLayout: UIView {
 //        return textView
 //    }
-//    
+//
 //    open override var forLastBaselineLayout: UIView {
 //        return textView
 //    }
@@ -274,30 +274,30 @@ import Foundation
 //        super.layoutSubviews()
 //        //accessibleElements = nil
 //    }
-//    
+//
 //    //MARK: - state
-//    
+//
 //    private struct State {
 //        var attributedText: AttributedText?
 //        var isEnabled: Bool
 //        var detection: Detection?
 //    }
-//    
+//
 //    private var internalState: State = State(attributedText: nil, isEnabled: true, detection: nil) {
 //        didSet {
 //            updateText()
 //        }
 //    }
-//    
+//
 //    private func updateAttributedTextInTextView(_ string: NSAttributedString) {
-//        
+//
 //        let paragraphStyle = NSMutableParagraphStyle()
 //        paragraphStyle.alignment = textAlignment
-//        
+//
 //        var inheritedAttributes = [NSAttributedString.Key.font: font as Any,
 //                                   NSAttributedString.Key.paragraphStyle: paragraphStyle as Any,
 //                                   NSAttributedString.Key.foregroundColor: textColor]
-//        
+//
 //        if let shadowColor = shadowColor {
 //            let shadow = NSShadow()
 //            shadow.shadowColor = shadowColor
@@ -305,27 +305,27 @@ import Foundation
 //            shadow.shadowBlurRadius = shadowBlurRadius
 //            inheritedAttributes[NSAttributedString.Key.shadow] = shadow
 //        }
-//        
+//
 //        let length = string.length
 //        let result = NSMutableAttributedString(string: string.string, attributes: inheritedAttributes)
-//        
+//
 //        result.beginEditing()
-//        
+//
 //        string.enumerateAttributes(in: NSMakeRange(0, length), options: .longestEffectiveRangeNotRequired, using: { (attributes, range, _) in
 //            result.addAttributes(attributes, range: range)
 //        })
 //        result.endEditing()
-//        
-//        
+//
+//
 //        if #available(iOS 10.0, *) {
 //            let shouldAdjustsFontForContentSizeCategory = textView.adjustsFontForContentSizeCategory
-//            
+//
 //            if shouldAdjustsFontForContentSizeCategory {
 //                textView.adjustsFontForContentSizeCategory = false
 //            }
-//            
+//
 //            textView.attributedText = result
-//            
+//
 //            if shouldAdjustsFontForContentSizeCategory {
 //                textView.adjustsFontForContentSizeCategory = true
 //            }
@@ -333,10 +333,10 @@ import Foundation
 //            textView.attributedText = string
 //        }
 //    }
-//    
+//
 //    private func updateText() {
 ////        if let attributedText = internalState.attributedText {
-////            
+////
 ////            if let detection = internalState.detection {
 ////                let higlightedAttributedString = NSMutableAttributedString(attributedString: attributedText.attributedString)
 ////                higlightedAttributedString.addAttributes(detection.style.highlightedAttributes,
@@ -473,6 +473,6 @@ import Foundation
 ////        }
 ////        set {}
 ////    }
-//}
+// }
 //
-//#endif
+// #endif

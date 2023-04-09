@@ -3,31 +3,30 @@
 //  Copyright © 2017 Pavel Sharanda. All rights reserved.
 //
 
-import UIKit
 import Atributika
+import UIKit
 
 #if swift(>=4.2)
-public typealias TableViewCellStyle = UITableViewCell.CellStyle
+    public typealias TableViewCellStyle = UITableViewCell.CellStyle
 #else
-public typealias TableViewCellStyle = UITableViewCellStyle
+    public typealias TableViewCellStyle = UITableViewCellStyle
 #endif
 
 class AttributedLabelDemoViewController: UIViewController {
-    
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(), style: .plain)
-        
+
         tableView.delegate = self
         tableView.dataSource = self
         #if swift(>=4.2)
-        tableView.rowHeight = UITableView.automaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
         #else
-        tableView.rowHeight = UITableViewAutomaticDimension
-        #endif        
+            tableView.rowHeight = UITableViewAutomaticDimension
+        #endif
         tableView.estimatedRowHeight = 50
         return tableView
     }()
-    
+
     private var tweets: [String] = [
         "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>",
         "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars😊 https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link that won't detect click here</a>",
@@ -42,14 +41,14 @@ class AttributedLabelDemoViewController: UIViewController {
         "HELP ME PLEASE. A MAN NEEDS HIS NUGGS https://pbs.twimg.com/media/C8sk8QlUwAAR3qI.jpg",
         "Подтверждая номер телефона, вы\nпринимаете «<a>пользовательское соглашение</a>»",
         "Here's how a similar one was solved 😄 \nhttps://medium.com/@narcelio/solving-decred-mockingbird-puzzle-5366efeaeed7\n",
-        "#Hello @World!"
+        "#Hello @World!",
     ]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
@@ -57,18 +56,17 @@ class AttributedLabelDemoViewController: UIViewController {
 }
 
 extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return tweets.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "CellId"
         let cell = (tableView.dequeueReusableCell(withIdentifier: cellId) as? TweetCell) ?? TweetCell(style: .default, reuseIdentifier: cellId)
         cell.tweet = tweets[indexPath.row]
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -80,19 +78,19 @@ class TweetCell: UITableViewCell {
     override init(style: TableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        tweetLabel.onClick = { label, detection in
+        tweetLabel.onClick = { _, detection in
             switch detection.type {
-            case .hashtag(let tag):
+            case let .hashtag(tag):
                 if let url = URL(string: "https://twitter.com/hashtag/\(tag)") {
                     UIApplication.shared.openURL(url)
                 }
-            case .mention(let name):
+            case let .mention(name):
                 if let url = URL(string: "https://twitter.com/\(name)") {
                     UIApplication.shared.openURL(url)
                 }
-            case .link(let url):
+            case let .link(url):
                 UIApplication.shared.openURL(url)
-            case .tag(let tag):
+            case let .tag(tag):
                 if tag.name == "a", let href = tag.attributes["href"], let url = URL(string: href) {
                     UIApplication.shared.openURL(url)
                 }
@@ -102,9 +100,9 @@ class TweetCell: UITableViewCell {
         }
 
         contentView.addSubview(tweetLabel)
-        
+
         let marginGuide = contentView.layoutMarginsGuide
-        
+
         tweetLabel.translatesAutoresizingMaskIntoConstraints = false
         tweetLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
         tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
@@ -112,11 +110,12 @@ class TweetCell: UITableViewCell {
         tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
         tweetLabel.numberOfLines = 0
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     var tweet: String? {
         didSet {
 //            let all = Style.font(UIFont.preferredFont(forTextStyle: .body))
@@ -134,6 +133,3 @@ class TweetCell: UITableViewCell {
         }
     }
 }
-
-
-

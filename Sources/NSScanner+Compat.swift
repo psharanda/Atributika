@@ -5,7 +5,6 @@
 import Foundation
 
 extension Scanner {
-    
     func _scanCharacters(from set: CharacterSet) -> String? {
         if #available(iOS 13.0, *) {
             return scanCharacters(from: set)
@@ -17,7 +16,7 @@ extension Scanner {
             return nil
         }
     }
-    
+
     func _scanUpToCharacters(from set: CharacterSet) -> String? {
         if #available(iOS 13.0, *) {
             return scanUpToCharacters(from: set)
@@ -29,7 +28,7 @@ extension Scanner {
             return nil
         }
     }
-    
+
     func _scanString(_ str: String) -> String? {
         if #available(iOS 13.0, *) {
             return scanString(str)
@@ -41,7 +40,7 @@ extension Scanner {
             return nil
         }
     }
-    
+
     func _scanUpToString(_ str: String) -> String? {
         if #available(iOS 13.0, *) {
             return scanUpToString(str)
@@ -53,7 +52,7 @@ extension Scanner {
             return nil
         }
     }
-    
+
     func currentCharacter() -> Character? {
         guard !isAtEnd, let nextCharRange = Range(NSRange(location: scanLocation, length: 0), in: string) else {
             return nil

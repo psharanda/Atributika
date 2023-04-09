@@ -14,5 +14,6 @@ let package = Package(name: "Atributika",
                                         path: "Sources"),
                                 .testTarget(
                                     name: "AtributikaTests",
-                                    dependencies: ["Atributika"]),],
+                                    dependencies: ["Atributika"]
+                                )],
                       swiftLanguageVersions: [.v5])
