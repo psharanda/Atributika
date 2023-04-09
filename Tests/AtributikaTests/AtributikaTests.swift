@@ -515,8 +515,11 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual("<a".detectTags().string, "<a")
         XCTAssertEqual("<a>".detectTags().string, "")
         XCTAssertEqual("< a>".detectTags().string, "< a>")        
-        XCTAssertEqual("&frasl;".detectTags().string, "⁄")
+        XCTAssertEqual("&lt;".detectTags().string, "<")
+        
+        AttributedStringBuilder.HTMLSpecials["raquo"] = "»"
         XCTAssertEqual("&raquo;".detectTags().string, "»")
+        AttributedStringBuilder.HTMLSpecials["raquo"] = nil
     }
     
     func testSpecialCodes() {
@@ -537,8 +540,6 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual("What is this character ? -> &#xd8ff;".detectTags().string, "What is this character ? -> &#xd8ff;")
         
         XCTAssertEqual("I love &swift;".detectTags().string ,"I love &swift;")
-        
-        XCTAssertEqual("Do you know &aleph;?".detectTags().string, "Do you know ℵ?")
         
         XCTAssertEqual("a &amp;&amp; b".detectTags().string, "a && b")
         

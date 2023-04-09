@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B2E55D92192FC8100D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
-		1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
-		1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
-		1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */; };
 		1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */; };
 		1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */; };
 		1B2F83971E5C98A4009AFBCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B2F83961E5C98A4009AFBCA /* Assets.xcassets */; };
@@ -95,7 +91,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTMLSpecials.swift; path = Sources/HTMLSpecials.swift; sourceTree = "<group>"; };
 		1B2F838D1E5C98A4009AFBCA /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsViewController.swift; sourceTree = "<group>"; };
@@ -219,7 +214,6 @@
 				1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */,
 				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */,
 				1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */,
-				1B2E55D82192FC8100D2B934 /* HTMLSpecials.swift */,
 				1BB55AC11E5C6F2400CE6EAD /* Tests */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
 				1B2F838E1E5C98A4009AFBCA /* Demo */,
@@ -596,7 +590,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B2E55D92192FC8100D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55AD91E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */,
@@ -619,7 +612,6 @@
 			files = (
 				1BB55ADB1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD31E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
-				1B2E55DB219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* AttributesBuilder.swift in Sources */,
@@ -632,7 +624,6 @@
 			files = (
 				1BB55ADC1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD41E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
-				1B2E55DC219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* AttributesBuilder.swift in Sources */,
@@ -645,7 +636,6 @@
 			files = (
 				1BB55ADA1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD21E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
-				1B2E55DA219321FB00D2B934 /* HTMLSpecials.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* AttributesBuilder.swift in Sources */,

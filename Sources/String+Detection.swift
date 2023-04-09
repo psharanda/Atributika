@@ -43,6 +43,7 @@ public struct TagTransformer {
     }
 }
 
+
 extension String {
     
     private func parseTag(_ tagString: String, parseAttributes: Bool) -> Tag? {
@@ -85,7 +86,7 @@ extension String {
         return Tag(name: tagName, attributes: attributes)
     }
     
-    private func parseSpecial(scanner: Scanner) -> String {
+    private func parseSpecial(scanner: Scanner, htmlSpecials: [String: Character]) -> String {
         if scanner._scanString("#") != nil {
             if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.alphanumerics) {
                 if scanner._scanString(";") != nil {
@@ -99,7 +100,7 @@ extension String {
         } else {
             if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.letters) {
                 if scanner._scanString(";") != nil {
-                    return HTMLSpecial(for: potentialSpecial) ?? "&\(potentialSpecial);"
+                    return htmlSpecials[potentialSpecial].map { String($0) } ?? "&\(potentialSpecial);"
                 } else {
                     return "&\(potentialSpecial)"
                 }
@@ -107,6 +108,22 @@ extension String {
                 return "&"
             }
         }
+    }
+    
+    private func unescapeAsNumber() -> String? {
+        
+        let isHexadecimal = hasPrefix("X") || hasPrefix("x")
+        let radix = isHexadecimal ? 16 : 10
+        
+        let numberStartIndex = index(startIndex, offsetBy: isHexadecimal ? 1 : 0)
+        let numberString = String(self[numberStartIndex ..< endIndex])
+        
+        guard let codePoint = UInt32(numberString, radix: radix),
+            let scalar = UnicodeScalar(codePoint) else {
+                return nil
+        }
+        
+        return String(scalar)
     }
     
     private static let htmlControlChars = CharacterSet(charactersIn: "<&")
@@ -118,7 +135,7 @@ extension String {
         let level: Int
     }
     
-    func detectTags(transformers: [TagTransformer] = []) -> (string: String, tagsInfo: [TagInfo]) {
+    func detectTags(transformers: [TagTransformer] = [], htmlSpecials: [String: Character] = AttributedStringBuilder.HTMLSpecials) -> (string: String, tagsInfo: [TagInfo]) {
         
         let scanner = Scanner(string: self)
         scanner.charactersToBeSkipped = nil
@@ -183,7 +200,7 @@ extension String {
                         resultString.append("<")
                     }
                 } else if scanner._scanString("&") != nil {
-                    resultString.append(parseSpecial(scanner: scanner))
+                    resultString.append(parseSpecial(scanner: scanner, htmlSpecials: htmlSpecials))
                 }
             }
         }
