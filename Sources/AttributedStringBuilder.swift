@@ -40,13 +40,6 @@ public final class AttributedStringBuilder {
         self.init(string: string, detections: detections, baseAttributes: baseAttributes)
     }
 
-    public static var HTMLSpecials: [String: Character] = [
-        "QUOT": "\u{22}", "quot": "\u{22}",
-        "LT": "\u{3C}", "lt": "\u{3C}",
-        "GT": "\u{3E}", "gt": "\u{3E}",
-        "AMP": "\u{26}", "amp": "\u{26}",
-    ]
-
     public convenience init(
         htmlString: String,
         baseAttributes: [NSAttributedString.Key: Any] = [:],
@@ -54,7 +47,7 @@ public final class AttributedStringBuilder {
         transformers: [TagTransformer] = [],
         tuner: ([NSAttributedString.Key: Any], Tag) -> [NSAttributedString.Key: Any] = { s, _ in s }
     ) {
-        let (string, tagsInfo) = htmlString.detectTags(transformers: transformers, htmlSpecials: Self.HTMLSpecials)
+        let (string, tagsInfo) = htmlString.detectTags(transformers: transformers)
         var ds: [Detection] = []
 
         var newLevel = 0

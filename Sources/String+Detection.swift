@@ -72,13 +72,25 @@ extension String {
                 break
             }
 
-            attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
+            if startsFromSingleQuote {
+                attributes[name] = value.replacingOccurrences(of: "&apos;", with: "'")
+            } else {
+                attributes[name] = value.replacingOccurrences(of: "&quot;", with: "\"")
+            }
         }
 
         return Tag(name: tagName, attributes: attributes)
     }
 
-    private func parseSpecial(scanner: Scanner, htmlSpecials: [String: Character]) -> String {
+    private static let HTMLSpecials: [String: Character] = [
+        "quot": "\u{22}",
+        "amp": "\u{26}",
+        "apos": "\u{27}",
+        "lt": "\u{3C}",
+        "gt": "\u{3E}",
+    ]
+
+    private func parseSpecial(scanner: Scanner) -> String {
         if scanner._scanString("#") != nil {
             if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.alphanumerics) {
                 if scanner._scanString(";") != nil {
@@ -92,7 +104,7 @@ extension String {
         } else {
             if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.letters) {
                 if scanner._scanString(";") != nil {
-                    return htmlSpecials[potentialSpecial].map { String($0) } ?? "&\(potentialSpecial);"
+                    return Self.HTMLSpecials[potentialSpecial].map { String($0) } ?? "&\(potentialSpecial);"
                 } else {
                     return "&\(potentialSpecial)"
                 }
@@ -128,8 +140,7 @@ extension String {
     }
 
     func detectTags(
-        transformers: [TagTransformer] = [],
-        htmlSpecials: [String: Character] = AttributedStringBuilder.HTMLSpecials
+        transformers: [TagTransformer] = []
     ) -> (string: String, tagsInfo: [TagInfo]) {
         let scanner = Scanner(string: self)
         scanner.charactersToBeSkipped = nil
@@ -201,7 +212,7 @@ extension String {
                         resultString.append("<")
                     }
                 } else if scanner._scanString("&") != nil {
-                    resultString.append(parseSpecial(scanner: scanner, htmlSpecials: htmlSpecials))
+                    resultString.append(parseSpecial(scanner: scanner))
                 }
             }
         }

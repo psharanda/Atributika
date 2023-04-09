@@ -509,10 +509,9 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual("<a>".detectTags().string, "")
         XCTAssertEqual("< a>".detectTags().string, "< a>")
         XCTAssertEqual("&lt;".detectTags().string, "<")
-
-        AttributedStringBuilder.HTMLSpecials["raquo"] = "»"
-        XCTAssertEqual("&raquo;".detectTags().string, "»")
-        AttributedStringBuilder.HTMLSpecials["raquo"] = nil
+        XCTAssertEqual("&gt;".detectTags().string, ">")
+        XCTAssertEqual("&apos;".detectTags().string, "'")
+        XCTAssertEqual("&quot;".detectTags().string, "\"")
     }
 
     func testSpecialCodes() {
