@@ -4,7 +4,7 @@
 
 import Foundation
 
-public var Style: Attributes {
+public var Attrs: Attributes {
     return Attributes()
 }
 

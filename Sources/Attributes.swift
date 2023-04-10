@@ -188,3 +188,13 @@ extension Attributes: TagTuning {
         return nil
     }
 }
+
+extension Dictionary: TagTuning where Key == NSAttributedString.Key, Value == Any {
+    public func style(tag _: Tag) -> AttributesProvider {
+        return self
+    }
+
+    public func transform(tag _: Tag, position _: TagPosition) -> String? {
+        return nil
+    }
+}

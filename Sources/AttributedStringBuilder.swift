@@ -13,9 +13,9 @@ public final class AttributedStringBuilder {
         let range: Range<String.Index>
         let level: Int
     }
-    
+
     private var currentMaxLevel: Int = 0
-    
+
     private var attributesRangeInfo: [AttributesRangeInfo]
 
     private init(string: String, attributesRangeInfo: [AttributesRangeInfo], baseAttributes: AttributesProvider) {

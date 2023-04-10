@@ -99,16 +99,17 @@ class TweetCell: UITableViewCell {
 //            }
 //        }
 //
-//        contentView.addSubview(tweetLabel)
-//
-//        let marginGuide = contentView.layoutMarginsGuide
-//
-//        tweetLabel.translatesAutoresizingMaskIntoConstraints = false
-//        tweetLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
-//        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
-//        tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
-//        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
-//        tweetLabel.numberOfLines = 0
+        contentView.addSubview(tweetLabel)
+
+        let marginGuide = contentView.layoutMarginsGuide
+
+        tweetLabel.translatesAutoresizingMaskIntoConstraints = false
+        tweetLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
+        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+        tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
+        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+        tweetLabel.numberOfLines = 0
+        tweetLabel.isSelectable = true
     }
 
     @available(*, unavailable)
@@ -118,18 +119,16 @@ class TweetCell: UITableViewCell {
 
     var tweet: String? {
         didSet {
-//            let all = Style.font(UIFont.preferredFont(forTextStyle: .body))
-//            let link = Style("a")
-//                .foregroundColor(.blue, .normal)
-//                .foregroundColor(.brown, .highlighted)
-//                .foregroundColor(.lightGray, .disabled)
-//
-//            tweetLabel.attributedText = tweet?
-//                .style(tags: link)
-//                .styleHashtags(link)
-//                .styleMentions(link)
-//                .styleLinks(link)
-//                .styleAll(all)
+            let base = Attrs.font(UIFont.preferredFont(forTextStyle: .body))
+            let link = Attrs.foregroundColor(.blue)
+
+            tweetLabel.attributedText = tweet?
+                .style(tags: ["a": link])
+                .styleHashtags(link)
+                .styleMentions(link)
+                .styleLinks(link)
+                .styleBase(base)
+                .attributedString
         }
     }
 }
