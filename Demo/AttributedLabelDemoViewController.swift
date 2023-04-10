@@ -12,6 +12,31 @@ import UIKit
     public typealias TableViewCellStyle = UITableViewCellStyle
 #endif
 
+extension String {
+    func styleAsTweet() -> AttributedStringBuilder {
+        let a = TagTuner { tag in
+            Attrs.foregroundColor(.blue).attributedLabelLink(tag.attributes["href"] ?? "")
+        }
+
+        let hashtag = DetectionTuner { d in
+            Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
+        }
+
+        let mention = DetectionTuner { d in
+            Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
+        }
+
+        let link = DetectionTuner { d in
+            Attrs.foregroundColor(.blue).attributedLabelLink(d.text)
+        }
+
+        return style(tags: ["a": a])
+            .styleHashtags(hashtag)
+            .styleMentions(mention)
+            .styleLinks(link)
+    }
+}
+
 class AttributedLabelDemoViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(), style: .plain)
@@ -67,8 +92,21 @@ extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDat
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = AttributedLabelDemoDetailsViewController()
+        vc.tweet = tweets[indexPath.row]
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        tableView.flashScrollIndicators()
+
+        if let selectedRow = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedRow, animated: animated)
+        }
     }
 }
 
@@ -105,9 +143,11 @@ class TweetCell: UITableViewCell {
         tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
         tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
         tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+
         tweetLabel.numberOfLines = 0
-        // tweetLabel.isEnabled = false
-        // tweetLabel.isSelectable = true
+        tweetLabel.font = .preferredFont(forTextStyle: .body)
+        tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
+        tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray)
     }
 
     @available(*, unavailable)
@@ -121,33 +161,61 @@ class TweetCell: UITableViewCell {
                 return
             }
 
-            let base = Attrs.font(UIFont.preferredFont(forTextStyle: .body))
-            let a = TagTuner { tag in
-                Attrs.foregroundColor(.blue).attributedLabelLink(tag.attributes["href"] ?? "")
+            tweetLabel.attributedText = tweet.styleAsTweet().attributedString
+        }
+    }
+}
+
+class AttributedLabelDemoDetailsViewController: UIViewController {
+    private let attributedLabel = AttributedLabel()
+
+    var tweet: String? {
+        didSet {
+            guard let tweet = tweet else {
+                return
             }
 
-            let hashtag = DetectionTuner { d in
-                Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
+            attributedLabel.attributedText = tweet.styleAsTweet().attributedString
+        }
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        view.addSubview(attributedLabel)
+
+        attributedLabel.font = .preferredFont(forTextStyle: .title1)
+        attributedLabel.numberOfLines = 0
+        attributedLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
+        attributedLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray)
+        attributedLabel.isSelectable = true
+
+        attributedLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        attributedLabel.backgroundColor = UIColor(white: 0, alpha: 0.05)
+
+        if #available(iOS 11.0, *) {
+            NSLayoutConstraint.activate([
+                attributedLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+                attributedLabel.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+                attributedLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+                attributedLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                attributedLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10),
+                attributedLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomLayoutGuide.bottomAnchor, constant: -10),
+                attributedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+                attributedLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            ])
+        }
+    }
+
+    @objc private func labelOnTouchUpInside(_ sender: AttributedLabel) {
+        if let linkStr = sender.highlightedLinkValue as? String {
+            if let url = URL(string: linkStr) {
+                UIApplication.shared.openURL(url)
             }
-
-            let mention = DetectionTuner { d in
-                Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
-            }
-
-            let link = DetectionTuner { d in
-                Attrs.foregroundColor(.blue).attributedLabelLink(d.text)
-            }
-
-            tweetLabel.attributedText = tweet
-                .style(tags: ["a": a])
-                .styleHashtags(hashtag)
-                .styleMentions(mention)
-                .styleLinks(link)
-                .styleBase(base)
-                .attributedString
-
-            tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
-            tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray)
         }
     }
 }
