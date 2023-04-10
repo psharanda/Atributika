@@ -51,7 +51,7 @@ AttributedLabel / AttributedTextView
 + subclass off UIControl
 + AttributedLabel based on UILabel (more lightweight, text is centered vertically), AttributedTextView based on UITextView (supports scrolling and text selections, text is aligned to the top of the frame)
 
-`Style("xxx").`/`Style.` -> Attr.
+`Style("xxx").`/`Style.` -> `Attr.`
 `styleAll` -> `styleBase`
 
 AttributedLabel api is reworked a lot see updated example below
@@ -67,7 +67,7 @@ let a = Attrs.foregroundColor(redColor)
 
 let font = UIFont(name: "AvenirNext-Regular", size: 24)!
 let grayColor = UIColor(white: 0x66 / 255.0, alpha: 1)
-let base = Style.font(font).foregroundColor(grayColor)
+let base = Attrs.font(font).foregroundColor(grayColor)
 
 let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
     .style(tags: ["a": a])
@@ -134,9 +134,11 @@ let str = "Call me (888)555-5512"
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_uber.png" alt="" width="342" />
 
-## Attrs
+## Attributes / Attrs
 
 ## AttributedStringBuilder
+
+## AttributesProvider
 
 ## TagTuning
 
@@ -189,6 +191,8 @@ view.addSubview(tweetLabel)
 
 ```
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_attributedlabel.png" alt="" width="361" />
+
+## Demo
 
 ## Requirements
 
