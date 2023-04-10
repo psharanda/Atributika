@@ -78,27 +78,14 @@ class TweetCell: UITableViewCell {
     override init(style: TableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-//        tweetLabel.onClick = { _, detection in
-//            switch detection.type {
-//            case let .hashtag(tag):
-//                if let url = URL(string: "https://twitter.com/hashtag/\(tag)") {
-//                    UIApplication.shared.openURL(url)
-//                }
-//            case let .mention(name):
-//                if let url = URL(string: "https://twitter.com/\(name)") {
-//                    UIApplication.shared.openURL(url)
-//                }
-//            case let .link(url):
-//                UIApplication.shared.openURL(url)
-//            case let .tag(tag):
-//                if tag.name == "a", let href = tag.attributes["href"], let url = URL(string: href) {
-//                    UIApplication.shared.openURL(url)
-//                }
-//            default:
-//                break
-//            }
-//        }
-//
+        tweetLabel.onLinkTouchUpInside = { _, val in
+            if let linkStr = val as? String {
+                if let url = URL(string: linkStr) {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+
         contentView.addSubview(tweetLabel)
 
         let marginGuide = contentView.layoutMarginsGuide
@@ -109,6 +96,7 @@ class TweetCell: UITableViewCell {
         tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
         tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
         tweetLabel.numberOfLines = 0
+        // tweetLabel.isEnabled = false
         // tweetLabel.isSelectable = true
     }
 
@@ -149,7 +137,7 @@ class TweetCell: UITableViewCell {
                 .attributedString
 
             tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
-            tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.darkGray)
+            tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray)
         }
     }
 }

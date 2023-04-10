@@ -13,7 +13,6 @@ public extension String {
             in: self, options: [], range: NSMakeRange(0, (self as NSString).length),
             using: { result, _, _ in
                 if let r = result, let range = Range(r.range, in: self) {
-                    print("regex: \(self[range])")
                     ranges.append(range)
                 }
             }
@@ -23,11 +22,11 @@ public extension String {
     }
 
     func detectHashtags() -> [Range<String.Index>] {
-        return detect(regex: "#[^\\p{Pd}\\p{Ps}\\p{Pe}\\p{Pi}\\p{Pf}\\p{Po}\\p{Z}]+")
+        return detect(regex: "#[^\\p{Pd}\\p{Ps}\\p{Pe}\\p{Pi}\\p{Pf}\\p{Po}\\p{Z}\\p{C}\\p{S}]+")
     }
 
     func detectMentions() -> [Range<String.Index>] {
-        return detect(regex: "@[^\\p{Pd}\\p{Ps}\\p{Pe}\\p{Pi}\\p{Pf}\\p{Po}\\p{Z}]+")
+        return detect(regex: "@[^\\p{Pd}\\p{Ps}\\p{Pe}\\p{Pi}\\p{Pf}\\p{Po}\\p{Z}\\p{C}\\p{S}]+")
     }
 
     func detect(textCheckingTypes: NSTextCheckingResult.CheckingType) -> [Range<String.Index>] {
