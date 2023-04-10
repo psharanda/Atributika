@@ -626,7 +626,7 @@ class AtributikaTests: XCTestCase {
         .attributedString
 
         let reference = NSMutableAttributedString(string: "link")
-        reference.addAttributes([.link: URL(string: "https://github.com/psharanda/Atributika")!, .foregroundColor: UIColor.blue], range: NSMakeRange(0, 4))
+        reference.addAttributes([.link: URL(string: "https://github.com/psharanda/Atributika")!, .foregroundColor: Color.blue], range: NSMakeRange(0, 4))
         XCTAssertEqual(test, reference)
     }
 
@@ -724,7 +724,7 @@ class AtributikaTests: XCTestCase {
             test.append(char)
         }
 
-        if #available(iOS 13.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
             let scanner13 = Scanner(string: ref)
             scanner13.charactersToBeSkipped = nil
             var test13 = ""

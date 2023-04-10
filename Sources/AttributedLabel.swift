@@ -2,13 +2,12 @@
 //  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
-import UIKit
+ #if os(iOS)
+
+ import UIKit
 
 @IBDesignable open class AttributedLabel: UIControl {}
 
-// #if os(iOS)
-//
-// import UIKit
 //
 // @IBDesignable open class AttributedLabel: UIControl {
 //    open func setTextAttributes(for key: NSAttributedString.Key, _ attrs: [NSAttributedString.Key: Any], for state: UIControl.State) {
@@ -477,4 +476,4 @@ import UIKit
 ////    }
 // }
 //
-// #endif
+#endif

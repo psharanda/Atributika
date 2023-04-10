@@ -6,7 +6,7 @@ import Foundation
 
 extension Scanner {
     func _scanCharacters(from set: CharacterSet) -> String? {
-        if #available(iOS 13.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
             return scanCharacters(from: set)
         } else {
             var value: NSString? = ""
@@ -18,7 +18,7 @@ extension Scanner {
     }
 
     func _scanUpToCharacters(from set: CharacterSet) -> String? {
-        if #available(iOS 13.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
             return scanUpToCharacters(from: set)
         } else {
             var value: NSString? = ""
@@ -30,7 +30,7 @@ extension Scanner {
     }
 
     func _scanString(_ str: String) -> String? {
-        if #available(iOS 13.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
             return scanString(str)
         } else {
             var value: NSString? = ""
@@ -42,7 +42,7 @@ extension Scanner {
     }
 
     func _scanUpToString(_ str: String) -> String? {
-        if #available(iOS 13.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
             return scanUpToString(str)
         } else {
             var value: NSString? = ""
@@ -73,7 +73,7 @@ extension Scanner {
     }
 
     func _scanCharacter() -> Character? {
-        if #available(iOS 13.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
             return scanCharacter()
         } else {
             return _scanCharacterPreiOS13()
