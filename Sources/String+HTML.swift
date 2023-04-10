@@ -5,8 +5,8 @@
 import Foundation
 
 public struct TagInfo: Equatable {
-    let tag: Tag
-    let range: Range<String.Index>
+    public let tag: Tag
+    public let range: Range<String.Index>
     let level: Int
 }
 

@@ -8,11 +8,6 @@
 
     @IBDesignable open class AttributedLabel: UIControl {
 //
-        // @IBDesignable open class AttributedLabel: UIControl {
-//    open func setTextAttributes(for key: NSAttributedString.Key, _ attrs: [NSAttributedString.Key: Any], for state: UIControl.State) {
-//
-//    }
-//
 //    open override func prepareForInterfaceBuilder() {
 //        super.prepareForInterfaceBuilder()
 //
@@ -69,6 +64,18 @@
             }
             get {
                 return internalState.attributedText
+            }
+        }
+
+        open var highlightedLinkAttributes: AttributesProvider? {
+            didSet {
+                updateText()
+            }
+        }
+
+        open var disabledLinkAttributes: AttributesProvider? {
+            didSet {
+                updateText()
             }
         }
 
@@ -163,55 +170,59 @@
             return textView
         }
 
-//    private var trackedDetection: Detection?
-//
-//    open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-//        let pt = touch.location(in: self)
-//        if super.beginTracking(touch, with: event) {
-//            trackedDetection = detection(at: pt)
-//            if trackedDetection != nil {
-//                internalState.detection = trackedDetection
-//                return true
-//            } else {
-//                return false
-//            }
-//        } else {
-//            return false
-//        }
-//    }
-//
-//    open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-//        let pt = touch.location(in: self)
-//        if let currentDetection = detection(at: pt) {
-//            if currentDetection.range == trackedDetection?.range {
-//                if internalState.detection?.range != trackedDetection?.range {
-//                    internalState.detection = trackedDetection
-//                }
-//            } else {
-//                if internalState.detection != nil {
-//                    internalState.detection = nil
-//                }
-//            }
-//        } else {
-//            internalState.detection = nil
-//        }
-//        return super.continueTracking(touch, with: event)
-//    }
-//
-//    open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-//        super.endTracking(touch, with: event)
-//        if let detection = internalState.detection {
-//            onClick?(self, detection)
-//        }
-//        trackedDetection = nil
-//        internalState.detection = nil
-//    }
-//
-//    open override func cancelTracking(with event: UIEvent?) {
-//        super.cancelTracking(with: event)
-//        trackedDetection = nil
-//        internalState.detection = nil
-//    }
+        struct Detection {
+            let range: NSRange
+        }
+
+        private var trackedDetection: Detection?
+
+        override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+            let pt = touch.location(in: self)
+            if super.beginTracking(touch, with: event) {
+                trackedDetection = detection(at: pt)
+                if trackedDetection != nil {
+                    internalState.detection = trackedDetection
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+
+        override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+            let pt = touch.location(in: self)
+            if let currentDetection = detection(at: pt) {
+                if currentDetection.range == trackedDetection?.range {
+                    if internalState.detection?.range != trackedDetection?.range {
+                        internalState.detection = trackedDetection
+                    }
+                } else {
+                    if internalState.detection != nil {
+                        internalState.detection = nil
+                    }
+                }
+            } else {
+                internalState.detection = nil
+            }
+            return super.continueTracking(touch, with: event)
+        }
+
+        override open func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+            super.endTracking(touch, with: event)
+            if let detection = internalState.detection {
+                // onClick?(self, detection)
+            }
+            trackedDetection = nil
+            internalState.detection = nil
+        }
+
+        override open func cancelTracking(with event: UIEvent?) {
+            super.cancelTracking(with: event)
+            trackedDetection = nil
+            internalState.detection = nil
+        }
 
 //    private var highlightableDetections: [Detection] {
         ////        guard let detections = attributedText?.detections else {
@@ -234,28 +245,24 @@
 //        return []
 //    }
 
-        private struct AttributeHitInfo {}
+        private func detection(at point: CGPoint) -> Detection? {
+            var result: Detection?
 
-        private func attributes(at _: CGPoint) -> [AttributeHitInfo] {
-            var result: [AttributeHitInfo] = []
-
-//        if let attributedText = internalState.attributedText {
-//
-//            for detection in highlightableDetections {
-//                let nsrange = NSRange(detection.range, in: attributedText.string)
-//                textView.layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange,
-//                                                               withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-//                                                               in: textView.textContainer, using: { (rect, stop) in
-//                    if rect.contains(point) {
-//                        stop.pointee = true
-//                        result = detection
-//                    }
-//                })
-//                if result != nil {
-//                    break
-//                }
-//            }
-//        }
+            if let attributedText = internalState.attributedText {
+                attributedText.enumerateAttribute(.attributedLabelLink, in: NSRange(location: 0, length: attributedText.length)) { _, range, stop in
+                    textView.layoutManager.enumerateEnclosingRects(forGlyphRange: range,
+                                                                   withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
+                                                                   in: textView.textContainer, using: { rect, innerStop in
+                                                                       if rect.contains(point) {
+                                                                           innerStop.pointee = true
+                                                                           result = Detection(range: range)
+                                                                       }
+                                                                   })
+                    if result != nil {
+                        stop.pointee = true
+                    }
+                }
+            }
 
             return result
         }
@@ -270,9 +277,10 @@
         private struct State {
             var attributedText: NSAttributedString?
             var isEnabled: Bool
+            var detection: Detection?
         }
 
-        private var internalState: State = .init(attributedText: nil, isEnabled: true) {
+        private var internalState: State = .init(attributedText: nil, isEnabled: true, detection: nil) {
             didSet {
                 updateText()
             }
@@ -405,6 +413,17 @@
         ////        }
         ////        set {}
         ////    }
+    }
+
+    public extension NSAttributedString.Key {
+        static let attributedLabelLink = NSAttributedString.Key("Atributika.AttributedLabel.Link")
+    }
+
+    public extension Attributes {
+        @discardableResult
+        func attributedLabelLink(_ value: String) -> Self {
+            return attribute(.attributedLabelLink, value)
+        }
     }
 
 #endif

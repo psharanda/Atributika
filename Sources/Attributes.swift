@@ -198,3 +198,15 @@ extension Dictionary: TagTuning where Key == NSAttributedString.Key, Value == An
         return nil
     }
 }
+
+extension Attributes: DetectionTuning {
+    public func style(detection _: Detection) -> AttributesProvider {
+        return self
+    }
+}
+
+extension Dictionary: DetectionTuning where Key == NSAttributedString.Key, Value == Any {
+    public func style(detection _: Detection) -> AttributesProvider {
+        return self
+    }
+}

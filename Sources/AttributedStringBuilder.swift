@@ -78,54 +78,54 @@ public final class AttributedStringBuilder {
         return attributedString
     }
 
-    public func styleHashtags(_ attributes: AttributesProvider) -> Self {
+    public func styleBase(_ attributes: AttributesProvider) -> Self {
+        baseAttributes = attributes
+        return self
+    }
+
+    public func styleHashtags(_ attributes: DetectionTuning) -> Self {
         return style(ranges: string.detectHashtags(),
                      attributes: attributes)
     }
 
-    public func styleMentions(_ attributes: AttributesProvider) -> Self {
+    public func styleMentions(_ attributes: DetectionTuning) -> Self {
         return style(ranges: string.detectMentions(),
                      attributes: attributes)
     }
 
-    public func style(regex: String, options: NSRegularExpression.Options = [], attributes: AttributesProvider) -> Self {
+    public func style(regex: String, options: NSRegularExpression.Options = [], attributes: DetectionTuning) -> Self {
         return style(ranges: string.detect(regex: regex, options: options),
                      attributes: attributes)
     }
 
-    public func style(textCheckingTypes: NSTextCheckingResult.CheckingType, attributes: AttributesProvider) -> Self {
+    public func style(textCheckingTypes: NSTextCheckingResult.CheckingType, attributes: DetectionTuning) -> Self {
         return style(ranges: string.detect(textCheckingTypes: textCheckingTypes),
                      attributes: attributes)
     }
 
-    public func stylePhoneNumbers(_ attributes: AttributesProvider) -> Self {
+    public func stylePhoneNumbers(_ attributes: DetectionTuning) -> Self {
         return style(ranges: string.detectPhoneNumbers(),
                      attributes: attributes)
     }
 
-    public func styleLinks(_ attributes: AttributesProvider) -> Self {
+    public func styleLinks(_ attributes: DetectionTuning) -> Self {
         return style(ranges: string.detectLinks(),
                      attributes: attributes)
     }
 
-    public func style(range: Range<String.Index>, attributes: AttributesProvider) -> Self {
+    public func style(range: Range<String.Index>, attributes: DetectionTuning) -> Self {
         return style(ranges: [range], attributes: attributes)
     }
 
-    public func style(ranges: [Range<String.Index>], attributes: AttributesProvider) -> Self {
+    public func style(ranges: [Range<String.Index>], attributes: DetectionTuning) -> Self {
         currentMaxLevel += 1
         let info = ranges.map { range in
-            AttributesRangeInfo(attributes: attributes,
+            AttributesRangeInfo(attributes: attributes.style(detection: Detection(range: range, text: String(string[range]))),
                                 range: range,
                                 level: currentMaxLevel)
         }
 
         attributesRangeInfo.append(contentsOf: info)
-        return self
-    }
-
-    public func styleBase(_ attributes: AttributesProvider) -> Self {
-        baseAttributes = attributes
         return self
     }
 }

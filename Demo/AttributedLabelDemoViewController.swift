@@ -109,7 +109,7 @@ class TweetCell: UITableViewCell {
         tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
         tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
         tweetLabel.numberOfLines = 0
-        tweetLabel.isSelectable = true
+        // tweetLabel.isSelectable = true
     }
 
     @available(*, unavailable)
@@ -119,16 +119,37 @@ class TweetCell: UITableViewCell {
 
     var tweet: String? {
         didSet {
-            let base = Attrs.font(UIFont.preferredFont(forTextStyle: .body))
-            let link = Attrs.foregroundColor(.blue)
+            guard let tweet = tweet else {
+                return
+            }
 
-            tweetLabel.attributedText = tweet?
-                .style(tags: ["a": link])
-                .styleHashtags(link)
-                .styleMentions(link)
+            let base = Attrs.font(UIFont.preferredFont(forTextStyle: .body))
+            let a = TagTuner { tag in
+                Attrs.foregroundColor(.blue).attributedLabelLink(tag.attributes["href"] ?? "")
+            }
+
+            let hashtag = DetectionTuner { d in
+                Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text)")
+            }
+
+            let mention = DetectionTuner { d in
+                Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text)")
+            }
+
+            let link = DetectionTuner { d in
+                Attrs.foregroundColor(.blue).attributedLabelLink(d.text)
+            }
+
+            tweetLabel.attributedText = tweet
+                .style(tags: ["a": a])
+                .styleHashtags(hashtag)
+                .styleMentions(mention)
                 .styleLinks(link)
                 .styleBase(base)
                 .attributedString
+
+            tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
+            tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.darkGray)
         }
     }
 }
