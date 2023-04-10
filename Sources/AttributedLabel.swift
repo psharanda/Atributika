@@ -20,7 +20,17 @@
 
         // MARK: - private properties
 
-        private let textView = UITextView()
+        private let label = UILabel()
+        
+        private let textEngine = TextEngine()
+        
+        private var layoutManager: NSLayoutManager {
+            return textEngine.layoutManager
+        }
+        
+        private var textContainer: NSTextContainer {
+            return textEngine.textContainer
+        }
 
         // MARK: - links
 
@@ -29,12 +39,12 @@
         open func rects(for range: Range<String.Index>) -> [CGRect] {
             var result = [CGRect]()
 
-            if let attributedText = attributedText {
-                let nsrange = NSRange(range, in: attributedText.string)
-                textView.layoutManager.enumerateEnclosingRects(
+            if let str = attributedText {
+                let nsrange = NSRange(range, in: str.string)
+                layoutManager.enumerateEnclosingRects(
                     forGlyphRange: nsrange,
                     withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                    in: textView.textContainer,
+                    in: textContainer,
                     using: { rect, _ in
                         result.append(rect)
                     }
@@ -70,16 +80,6 @@
             }
         }
 
-        @IBInspectable open var isSelectable: Bool {
-            get {
-                return textView.isSelectable && textView.isUserInteractionEnabled
-            }
-            set {
-                textView.isSelectable = newValue
-                textView.isUserInteractionEnabled = newValue
-            }
-        }
-
         @IBInspectable open var attributedText: NSAttributedString? {
             didSet {
                 setNeedsDisplayText()
@@ -101,29 +101,37 @@
 
         @IBInspectable open var numberOfLines: Int {
             set {
-                textView.textContainer.maximumNumberOfLines = newValue
+                label.numberOfLines = newValue
+                textContainer.maximumNumberOfLines = newValue
             }
             get {
-                return textView.textContainer.maximumNumberOfLines
+                return textContainer.maximumNumberOfLines
             }
         }
 
         @IBInspectable open var lineBreakMode: NSLineBreakMode {
             set {
-                textView.textContainer.lineBreakMode = newValue
+                label.lineBreakMode = lineBreakMode
+                textContainer.lineBreakMode = newValue
             }
             get {
-                return textView.textContainer.lineBreakMode
+                return textContainer.lineBreakMode
+            }
+        }
+        
+        open var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy = [.pushOut] {
+            didSet {
+                setNeedsDisplayText()
             }
         }
 
         @available(iOS 10.0, *)
         @IBInspectable open var adjustsFontForContentSizeCategory: Bool {
             set {
-                textView.adjustsFontForContentSizeCategory = newValue
+                label.adjustsFontForContentSizeCategory = newValue
             }
             get {
-                return textView.adjustsFontForContentSizeCategory
+                return label.adjustsFontForContentSizeCategory
             }
         }
 
@@ -184,37 +192,29 @@
         private func commonInit() {
             isAccessibilityElement = false
 
-            addSubview(textView)
+            addSubview(label)
 
             lineBreakMode = .byTruncatingTail
             numberOfLines = 1
 
-            textView.isUserInteractionEnabled = false
-            textView.textContainer.lineFragmentPadding = 0
-            textView.textContainerInset = .zero
-            textView.isEditable = false
-            textView.isScrollEnabled = false
-            textView.isSelectable = false
-            textView.backgroundColor = nil
+            label.translatesAutoresizingMaskIntoConstraints = false
 
-            textView.translatesAutoresizingMaskIntoConstraints = false
-
-            textView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-            textView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-            textView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-            textView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+            label.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            label.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+            label.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         }
 
         override open func sizeThatFits(_ size: CGSize) -> CGSize {
-            return textView.sizeThatFits(size)
+            return label.sizeThatFits(size)
         }
 
         override open var forFirstBaselineLayout: UIView {
-            return textView
+            return label
         }
 
         override open var forLastBaselineLayout: UIView {
-            return textView
+            return label
         }
 
         private var trackedLinkRange: NSRange? {
@@ -285,7 +285,7 @@
 
         override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
             let superResult = super.hitTest(point, with: event)
-            if isTracking || isSelectable {
+            if isTracking {
                 return superResult
             }
 
@@ -299,19 +299,19 @@
         private func linkRange(at point: CGPoint) -> NSRange? {
             var result: NSRange?
 
-            if let attributedText = attributedText {
-                attributedText.enumerateAttribute(
+            if let str = attributedText {
+                str.enumerateAttribute(
                     .attributedLabelLink,
-                    in: NSRange(location: 0, length: attributedText.length)
+                    in: NSRange(location: 0, length: str.length)
                 ) { val, range, stop in
 
                     guard val != nil else {
                         return
                     }
-                    textView.layoutManager.enumerateEnclosingRects(
+                    layoutManager.enumerateEnclosingRects(
                         forGlyphRange: range,
                         withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                        in: textView.textContainer, using: { rect, innerStop in
+                        in: textContainer, using: { rect, innerStop in
                             if rect.contains(point) {
                                 innerStop.pointee = true
                                 result = range
@@ -328,9 +328,8 @@
         }
 
         override open func layoutSubviews() {
-            displayTextIfNeeded()
             super.layoutSubviews()
-            // accessibleElements = nil
+            textEngine.size = bounds.size
         }
 
         override open var intrinsicContentSize: CGSize {
@@ -353,13 +352,15 @@
         }
 
         private func updateText() {
-            guard let string = attributedText else {
-                textView.attributedText = nil
+            guard let str = attributedText else {
+                label.attributedText = nil
+                textEngine.attributedString = nil
                 return
             }
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = textAlignment
+            paragraphStyle.lineBreakStrategy = lineBreakStrategy
 
             var inheritedAttributes: [NSAttributedString.Key: Any] = [
                 .font: font,
@@ -375,12 +376,12 @@
                 inheritedAttributes[.shadow] = shadow
             }
 
-            let length = string.length
-            let result = NSMutableAttributedString(string: string.string, attributes: inheritedAttributes)
+            let length = str.length
+            let result = NSMutableAttributedString(string: str.string, attributes: inheritedAttributes)
 
             result.beginEditing()
 
-            string.enumerateAttributes(in: NSMakeRange(0, length), options: .longestEffectiveRangeNotRequired, using: { attributes, range, _ in
+            str.enumerateAttributes(in: NSMakeRange(0, length), options: .longestEffectiveRangeNotRequired, using: { attributes, range, _ in
                 result.addAttributes(attributes, range: range)
 
                 if attributes[.attributedLabelLink] != nil {
@@ -397,19 +398,21 @@
             result.endEditing()
 
             if #available(iOS 10.0, *) {
-                let shouldAdjustsFontForContentSizeCategory = textView.adjustsFontForContentSizeCategory
+                let shouldAdjustsFontForContentSizeCategory = label.adjustsFontForContentSizeCategory
 
                 if shouldAdjustsFontForContentSizeCategory {
-                    textView.adjustsFontForContentSizeCategory = false
+                    label.adjustsFontForContentSizeCategory = false
                 }
 
-                textView.attributedText = result
+                label.attributedText = result
+                textEngine.attributedString = result
 
                 if shouldAdjustsFontForContentSizeCategory {
-                    textView.adjustsFontForContentSizeCategory = true
+                    label.adjustsFontForContentSizeCategory = true
                 }
             } else {
-                textView.attributedText = string
+                label.attributedText = result
+                textEngine.attributedString = str
             }
         }
 
@@ -496,15 +499,15 @@
                 if accessibleElements == nil {
                     accessibleElements = []
 
-                    if let attributedText = attributedText {
-                        let text = AccessibilityElement(container: self, view: self, enclosingRects: [textView.frame], usePath: false)
-                        text.accessibilityLabel = attributedText.string
+                    if let str = attributedText {
+                        let text = AccessibilityElement(container: self, view: self, enclosingRects: [label.frame], usePath: false)
+                        text.accessibilityLabel = str.string
                         text.accessibilityTraits = UIAccessibilityTraitStaticText
                         accessibleElements?.append(text)
 
-                        attributedText.enumerateAttribute(
+                        str.enumerateAttribute(
                             .attributedLabelLink,
-                            in: NSRange(location: 0, length: attributedText.length)
+                            in: NSRange(location: 0, length: str.length)
                         ) { val, range, _ in
 
                             guard val != nil else {
@@ -513,10 +516,10 @@
 
                             var enclosingRects = [CGRect]()
 
-                            textView.layoutManager.enumerateEnclosingRects(
+                            layoutManager.enumerateEnclosingRects(
                                 forGlyphRange: range,
                                 withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                                in: textView.textContainer, using: { rect, _ in
+                                in: textContainer, using: { rect, _ in
                                     enclosingRects.append(rect)
                                 }
                             )
@@ -526,8 +529,8 @@
 
                             let innerElement = AccessibilityElement(container: element, view: self, enclosingRects: enclosingRects, usePath: false)
 
-                            if let r = Range(range, in: attributedText.string) {
-                                innerElement.accessibilityLabel = String(attributedText.string[r])
+                            if let r = Range(range, in: str.string) {
+                                innerElement.accessibilityLabel = String(str.string[r])
                             }
                             innerElement.accessibilityTraits = UIAccessibilityTraitLink
 

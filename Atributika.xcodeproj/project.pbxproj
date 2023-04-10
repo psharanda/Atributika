@@ -21,6 +21,10 @@
 		1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
 		1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
 		1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* AttributedLabel.swift */; };
+		1B539F1129E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
+		1B539F1229E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
+		1B539F1329E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
+		1B539F1429E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
 		1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B80548923A8ACDF002DCA63 /* IBViewController.swift */; };
 		1B80548C23A8ACF1002DCA63 /* IB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B80548B23A8ACF1002DCA63 /* IB.storyboard */; };
 		1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
@@ -115,6 +119,7 @@
 		1B2F839B1E5C98A4009AFBCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B38369F1F97C224001DB333 /* AttributedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedLabel.swift; path = Sources/AttributedLabel.swift; sourceTree = "<group>"; };
 		1B3C73B229E46BAB00022952 /* Detection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Detection.swift; path = Sources/Detection.swift; sourceTree = "<group>"; };
+		1B539F1029E4A34B00188B7A /* TextEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextEngine.swift; path = Sources/TextEngine.swift; sourceTree = "<group>"; };
 		1B80548923A8ACDF002DCA63 /* IBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
 		1B80548B23A8ACF1002DCA63 /* IB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
 		1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedStringBuilder.swift; path = Sources/AttributedStringBuilder.swift; sourceTree = "<group>"; };
@@ -229,6 +234,7 @@
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
+				1B539F1029E4A34B00188B7A /* TextEngine.swift */,
 				1B3C73B229E46BAB00022952 /* Detection.swift */,
 				1BD4163129E42E0700687F88 /* String+HTML.swift */,
 				1BD4163329E42E0700687F88 /* Sugar.swift */,
@@ -622,6 +628,7 @@
 				1BD4163429E42E0700687F88 /* String+HTML.swift in Sources */,
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1B3C73B329E46BAB00022952 /* Detection.swift in Sources */,
+				1B539F1129E4A34B00188B7A /* TextEngine.swift in Sources */,
 				1BB55AE11E5C73F000CE6EAD /* Attributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -646,6 +653,7 @@
 				1BD4163629E42E0700687F88 /* String+HTML.swift in Sources */,
 				1B4638592259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1B3C73B529E46BAB00022952 /* Detection.swift in Sources */,
+				1B539F1329E4A34B00188B7A /* TextEngine.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* Attributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -662,6 +670,7 @@
 				1BD4163729E42E0700687F88 /* String+HTML.swift in Sources */,
 				1B46385A2259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1B3C73B629E46BAB00022952 /* Detection.swift in Sources */,
+				1B539F1429E4A34B00188B7A /* TextEngine.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* Attributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -678,6 +687,7 @@
 				1BD4163529E42E0700687F88 /* String+HTML.swift in Sources */,
 				1B4638582259FFE400ED5BA9 /* AttributedLabel.swift in Sources */,
 				1B3C73B429E46BAB00022952 /* Detection.swift in Sources */,
+				1B539F1229E4A34B00188B7A /* TextEngine.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* Attributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
