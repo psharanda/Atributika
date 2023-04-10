@@ -78,11 +78,13 @@ public final class AttributedStringBuilder {
     }
 
     public func styleHashtags(_ attributes: AttributesProvider) -> Self {
-        return style(regex: "#[^[:punct:][:space:]]+", attributes: attributes)
+        return style(ranges: string.detectHashtags(),
+                     attributes: attributes)
     }
 
     public func styleMentions(_ attributes: AttributesProvider) -> Self {
-        return style(regex: "@[^[:punct:][:space:]]+", attributes: attributes)
+        return style(ranges: string.detectMentions(),
+                     attributes: attributes)
     }
 
     public func style(regex: String, options: NSRegularExpression.Options = [], attributes: AttributesProvider) -> Self {
@@ -96,12 +98,12 @@ public final class AttributedStringBuilder {
     }
 
     public func stylePhoneNumbers(_ attributes: AttributesProvider) -> Self {
-        return style(ranges: string.detect(textCheckingTypes: [.phoneNumber]),
+        return style(ranges: string.detectPhoneNumbers(),
                      attributes: attributes)
     }
 
     public func styleLinks(_ attributes: AttributesProvider) -> Self {
-        return style(ranges: string.detect(textCheckingTypes: [.link]),
+        return style(ranges: string.detectLinks(),
                      attributes: attributes)
     }
 

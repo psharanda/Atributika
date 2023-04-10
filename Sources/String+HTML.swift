@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct TagInfo: Equatable {
+public struct TagInfo: Equatable {
     let tag: Tag
     let range: Range<String.Index>
     let level: Int
@@ -219,7 +219,7 @@ extension String {
 
     private static let htmlControlChars = CharacterSet(charactersIn: "<&")
 
-    func detectTags(tags: [String: TagTuning] = [:]) -> (string: String, tagsInfo: [TagInfo]) {
+    public func detectTags(tags: [String: TagTuning] = [:]) -> (string: String, tagsInfo: [TagInfo]) {
         let scanner = Scanner(string: self)
         scanner.charactersToBeSkipped = nil
 

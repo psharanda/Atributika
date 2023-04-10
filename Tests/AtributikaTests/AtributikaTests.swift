@@ -261,6 +261,45 @@ class AtributikaTests: XCTestCase {
 
         XCTAssertEqual(test, reference)
     }
+    
+    func testHashCodesUnderscore() {
+        let test = AttributedStringBuilder(string: "#He_lo @Wo_ld!!!")
+            .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
+            .styleMentions(Style.foregroundColor(.red))
+            .attributedString
+
+        let reference = NSMutableAttributedString(string: "#He_lo @Wo_ld!!!")
+        reference.addAttributes([.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 6))
+        reference.addAttributes([.foregroundColor: Color.red], range: NSMakeRange(7, 6))
+
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testHashCodesLoc() {
+        let test = AttributedStringBuilder(string: "#Парам @Тадам!!!")
+            .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
+            .styleMentions(Style.foregroundColor(.red))
+            .attributedString
+
+        let reference = NSMutableAttributedString(string: "#Парам @Тадам!!!")
+        reference.addAttributes([.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 6))
+        reference.addAttributes([.foregroundColor: Color.red], range: NSMakeRange(7, 6))
+
+        XCTAssertEqual(test, reference)
+    }
+    
+    func testHashCodesEmoji() {
+        let test = AttributedStringBuilder(string: "#Smile😄 @👮‍♀️!!!")
+            .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
+            .styleMentions(Style.foregroundColor(.red))
+            .attributedString
+
+        let reference = NSMutableAttributedString(string: "#Smile😄 @👮‍♀️!!!")
+        reference.addAttributes([.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(0, 8))
+        reference.addAttributes([.foregroundColor: Color.red], range: NSMakeRange(9, 6))
+
+        XCTAssertEqual(test, reference)
+    }
 
     func testDataDetectorPhoneRaw() {
         let test = AttributedStringBuilder(string: "Call me (888)555-5512")
