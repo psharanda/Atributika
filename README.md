@@ -4,10 +4,6 @@
 </p>
 <br>
 
-[![Language: Swift](https://img.shields.io/badge/language-swift-orange.svg)](https://travis-ci.org/psharanda/Atributika)
-[![CocoaPods](https://img.shields.io/cocoapods/p/Atributika.svg?style=plastic)](https://cocoapods.org/pods/Atributika)
-[![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-
 `Atributika` is an easy and painless way to build NSAttributedString. It is able to detect HTML-like tags, links, phone numbers, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc. `Atributika` comes with drop-in label replacement `AttributedLabel` which is able to make any detection clickable
 
 ## Intro
@@ -40,9 +36,9 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 + `+` operator to concatenate NSAttributedString with other attributed or regular strings
 + works on iOS, tvOS, watchOS, macOS
 
-## V4 -> V5
+## V5
 
-V5 is a major rewrite of the project. 
+V5 is a major rewrite of the project happened at Spring 2023 
 
 NSAttributedString building
 + HTML parser completely rewritten, supports more edge cases
