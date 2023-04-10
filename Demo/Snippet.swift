@@ -213,7 +213,7 @@ func stringWithImage() -> NSAttributedString {
             style.attachment(textAttachment)
         }
         return style
-    }, transform: {tag, position in
+    }, transform: { _, position in
         switch position {
         case .start:
             return "\u{FFFC}"

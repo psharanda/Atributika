@@ -261,7 +261,7 @@ class AtributikaTests: XCTestCase {
 
         XCTAssertEqual(test, reference)
     }
-    
+
     func testHashCodesUnderscore() {
         let test = AttributedStringBuilder(string: "#He_lo @Wo_ld!!!")
             .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
@@ -274,7 +274,7 @@ class AtributikaTests: XCTestCase {
 
         XCTAssertEqual(test, reference)
     }
-    
+
     func testHashCodesLoc() {
         let test = AttributedStringBuilder(string: "#Парам @Тадам!!!")
             .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
@@ -287,7 +287,7 @@ class AtributikaTests: XCTestCase {
 
         XCTAssertEqual(test, reference)
     }
-    
+
     func testHashCodesEmoji() {
         let test = AttributedStringBuilder(string: "#Smile😄 @👮‍♀️!!!")
             .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
@@ -554,7 +554,7 @@ class AtributikaTests: XCTestCase {
 
         XCTAssertEqual("<a>xxx</a yyy".detectTags().string, "xxx")
         XCTAssertEqual("<a>xxx</a yyy".detectTags().tagsInfo[0].tag, Tag(name: "a", attributes: [:]))
-        
+
         XCTAssertEqual("</img id=\"scissors\">".detectTags().string, "")
     }
 

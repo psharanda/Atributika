@@ -236,7 +236,7 @@ extension String {
                 parseSpecial(scanner, &resultString)
             }
         }
-        
+
         for tagStackItem in tagsStack {
             tagsInfo.append(
                 TagInfo(
@@ -245,7 +245,7 @@ extension String {
                     level: tagStackItem.level
                 ))
         }
- 
+
         return (resultString, tagsInfo)
     }
 }

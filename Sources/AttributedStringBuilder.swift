@@ -5,39 +5,40 @@
 import Foundation
 
 public final class AttributedStringBuilder {
-    private struct Detection {
+    public let string: String
+    public private(set) var baseAttributes: AttributesProvider
+
+    private struct AttributesRangeInfo {
         let attributes: AttributesProvider
         let range: Range<String.Index>
         let level: Int
     }
-
-    public let string: String
-    private var detections: [Detection]
-    public private(set) var baseAttributes: AttributesProvider
-
+    
     private var currentMaxLevel: Int = 0
+    
+    private var attributesRangeInfo: [AttributesRangeInfo]
 
-    private init(string: String, detections: [Detection], baseAttributes: AttributesProvider) {
+    private init(string: String, attributesRangeInfo: [AttributesRangeInfo], baseAttributes: AttributesProvider) {
         self.string = string
-        self.detections = detections
+        self.attributesRangeInfo = attributesRangeInfo
         self.baseAttributes = baseAttributes
     }
 
     public convenience init(string: String, baseAttributes: AttributesProvider = [NSAttributedString.Key: Any]()) {
-        self.init(string: string, detections: [], baseAttributes: baseAttributes)
+        self.init(string: string, attributesRangeInfo: [], baseAttributes: baseAttributes)
     }
 
     public convenience init(attributedString: NSAttributedString, baseAttributes: AttributesProvider = [NSAttributedString.Key: Any]()) {
         let string = attributedString.string
-        var detections: [Detection] = []
+        var info: [AttributesRangeInfo] = []
 
         attributedString.enumerateAttributes(in: NSMakeRange(0, attributedString.length), options: []) { attributes, range, _ in
             if let range = Range(range, in: string) {
-                detections.append(Detection(attributes: attributes, range: range, level: -1))
+                info.append(AttributesRangeInfo(attributes: attributes, range: range, level: -1))
             }
         }
 
-        self.init(string: string, detections: detections, baseAttributes: baseAttributes)
+        self.init(string: string, attributesRangeInfo: info, baseAttributes: baseAttributes)
     }
 
     public convenience init(
@@ -46,31 +47,31 @@ public final class AttributedStringBuilder {
         tags: [String: TagTuning] = [:]
     ) {
         let (string, tagsInfo) = htmlString.detectTags(tags: tags)
-        var ds: [Detection] = []
+        var info: [AttributesRangeInfo] = []
 
         var newLevel = 0
         tagsInfo.forEach { t in
             newLevel = max(t.level, newLevel)
             if let style = tags[t.tag.name] {
-                ds.append(Detection(attributes: style.style(tag: t.tag), range: t.range, level: t.level))
+                info.append(AttributesRangeInfo(attributes: style.style(tag: t.tag), range: t.range, level: t.level))
             }
         }
 
-        self.init(string: string, detections: ds, baseAttributes: baseAttributes)
+        self.init(string: string, attributesRangeInfo: info, baseAttributes: baseAttributes)
         currentMaxLevel = newLevel
     }
 
     public var attributedString: NSAttributedString {
         let attributedString = NSMutableAttributedString(string: string, attributes: baseAttributes.attributes)
 
-        let sortedDetections = detections.sorted {
+        let info = attributesRangeInfo.sorted {
             $0.level < $1.level
         }
 
-        for d in sortedDetections {
-            let attributes = d.attributes
+        for i in info {
+            let attributes = i.attributes
             if attributes.attributes.count > 0 {
-                attributedString.addAttributes(attributes.attributes, range: NSRange(d.range, in: string))
+                attributedString.addAttributes(attributes.attributes, range: NSRange(i.range, in: string))
             }
         }
 
@@ -113,13 +114,13 @@ public final class AttributedStringBuilder {
 
     public func style(ranges: [Range<String.Index>], attributes: AttributesProvider) -> Self {
         currentMaxLevel += 1
-        let ds = ranges.map { range in
-            Detection(attributes: attributes,
-                      range: range,
-                      level: currentMaxLevel)
+        let info = ranges.map { range in
+            AttributesRangeInfo(attributes: attributes,
+                                range: range,
+                                level: currentMaxLevel)
         }
 
-        detections.append(contentsOf: ds)
+        attributesRangeInfo.append(contentsOf: info)
         return self
     }
 

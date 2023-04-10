@@ -2,14 +2,14 @@
 //  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
- #if os(iOS)
+#if os(iOS)
 
- import UIKit
+    import UIKit
 
-@IBDesignable open class AttributedLabel: UIControl {}
+    @IBDesignable open class AttributedLabel: UIControl {}
 
 //
-// @IBDesignable open class AttributedLabel: UIControl {
+    // @IBDesignable open class AttributedLabel: UIControl {
 //    open func setTextAttributes(for key: NSAttributedString.Key, _ attrs: [NSAttributedString.Key: Any], for state: UIControl.State) {
 //
 //    }
@@ -226,23 +226,23 @@
 //    }
 //
 //    private var highlightableDetections: [Detection] {
-////        guard let detections = attributedText?.detections else {
-////            return []
-////        }
-////
-////        var previousDetection: Detection?
-////
-////        return detections
-////            .filter { $0.style.typedAttributes[.highlighted] != nil }
-////            .sorted { $0.range.lowerBound < $1.range.lowerBound }
-////            .filter { d in
-////                var result = true
-////                if let previousDetection = previousDetection {
-////                    result = !d.range.overlaps(previousDetection.range)
-////                }
-////                previousDetection = d
-////                return result
-////            }
+    ////        guard let detections = attributedText?.detections else {
+    ////            return []
+    ////        }
+    ////
+    ////        var previousDetection: Detection?
+    ////
+    ////        return detections
+    ////            .filter { $0.style.typedAttributes[.highlighted] != nil }
+    ////            .sorted { $0.range.lowerBound < $1.range.lowerBound }
+    ////            .filter { d in
+    ////                var result = true
+    ////                if let previousDetection = previousDetection {
+    ////                    result = !d.range.overlaps(previousDetection.range)
+    ////                }
+    ////                previousDetection = d
+    ////                return result
+    ////            }
 //        return []
 //    }
 //
@@ -336,144 +336,144 @@
 //    }
 //
 //    private func updateText() {
-////        if let attributedText = internalState.attributedText {
-////
-////            if let detection = internalState.detection {
-////                let higlightedAttributedString = NSMutableAttributedString(attributedString: attributedText.attributedString)
-////                higlightedAttributedString.addAttributes(detection.style.highlightedAttributes,
-////                                                         range: NSRange(detection.range, in: attributedText.string))
-////                updateAttributedTextInTextView(higlightedAttributedString)
-////            } else {
-////                if internalState.isEnabled {
-////                    updateAttributedTextInTextView(attributedText.attributedString)
-////                } else {
-////                    updateAttributedTextInTextView(attributedText.disabledAttributedString)
-////                }
-////            }
-////        } else {
-////            textView.attributedText = nil
-////        }
+    ////        if let attributedText = internalState.attributedText {
+    ////
+    ////            if let detection = internalState.detection {
+    ////                let higlightedAttributedString = NSMutableAttributedString(attributedString: attributedText.attributedString)
+    ////                higlightedAttributedString.addAttributes(detection.style.highlightedAttributes,
+    ////                                                         range: NSRange(detection.range, in: attributedText.string))
+    ////                updateAttributedTextInTextView(higlightedAttributedString)
+    ////            } else {
+    ////                if internalState.isEnabled {
+    ////                    updateAttributedTextInTextView(attributedText.attributedString)
+    ////                } else {
+    ////                    updateAttributedTextInTextView(attributedText.disabledAttributedString)
+    ////                }
+    ////            }
+    ////        } else {
+    ////            textView.attributedText = nil
+    ////        }
 //        //accessibleElements = nil
 //    }
 //
 //    //MARK: - Accessibitilty
-////
-////    private class AccessibilityElement: UIAccessibilityElement {
-////        private weak var view: UIView?
-////        private let enclosingRects: [CGRect]
-////        private let usePath: Bool
-////
-////        init(container: Any, view: UIView, enclosingRects: [CGRect], usePath: Bool) {
-////            self.view = view
-////            self.enclosingRects = enclosingRects
-////            self.usePath = usePath
-////            super.init(accessibilityContainer: container)
-////        }
-////
-////        override var accessibilityActivationPoint: CGPoint {
-////            get {
-////                guard let view = view  else {
-////                    return .zero
-////                }
-////
-////                if enclosingRects.count == 0 {
-////                    return .zero
-////                } else {
-////                    let rect = UIAccessibilityConvertFrameToScreenCoordinates(enclosingRects[0], view)
-////                    return CGPoint(x: rect.midX, y: rect.midY)
-////                }
-////            }
-////            set {
-////            }
-////        }
-////
-////        override var accessibilityFrame: CGRect {
-////            get {
-////                guard let view = view  else {
-////                    return .null
-////                }
-////
-////                if enclosingRects.count == 0 {
-////                    return .null
-////                }
-////
-////                if enclosingRects.count == 1 {
-////                    return UIAccessibilityConvertFrameToScreenCoordinates(enclosingRects[0], view)
-////                }
-////
-////                var resultRect = enclosingRects[0]
-////
-////                for i in 1..<enclosingRects.count {
-////                    resultRect = resultRect.union(enclosingRects[i])
-////                }
-////
-////                return UIAccessibilityConvertFrameToScreenCoordinates(resultRect, view)
-////            }
-////            set {}
-////        }
-////
-////        override var accessibilityPath: UIBezierPath? {
-////            get {
-////                if !usePath {
-////                    return nil
-////                }
-////                guard let view = view  else {
-////                    return nil
-////                }
-////
-////                let path = UIBezierPath()
-////
-////                enclosingRects.forEach { rect in
-////                    path.append(UIBezierPath(rect: rect))
-////                }
-////
-////                return UIAccessibilityConvertPathToScreenCoordinates(path, view)
-////            }
-////            set {}
-////        }
-////    }
-////
-////    private var accessibleElements: [Any]?
-////
-////    open override var accessibilityElements: [Any]? {
-////        get {
-////            if (accessibleElements == nil) {
-////                accessibleElements = []
-////
-////                if let attributedText = internalState.attributedText {
-////
-////                    let text = AccessibilityElement(container: self, view: self, enclosingRects: [textView.frame], usePath: false)
-////                    text.accessibilityLabel = attributedText.string
-////                    text.accessibilityTraits = UIAccessibilityTraitStaticText
-////                    accessibleElements?.append(text)
-////
-////                    for detection in highlightableDetections {
-////                        let nsrange = NSRange(detection.range, in: attributedText.string)
-////                        var enclosingRects = [CGRect]()
-////                        textView.layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange,
-////                                                                       withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-////                                                                       in: textView.textContainer, using: { (rect, stop) in
-////                            enclosingRects.append(rect)
-////                        })
-////
-////                        let element = AccessibilityElement(container: self, view: self, enclosingRects: enclosingRects, usePath: true)
-////                        element.isAccessibilityElement = false
-////
-////                        let innerElement = AccessibilityElement(container: element, view: self, enclosingRects: enclosingRects, usePath: false)
-////                        innerElement.accessibilityLabel = String(attributedText.string[detection.range])
-////                        innerElement.accessibilityTraits = UIAccessibilityTraitLink
-////
-////                        element.accessibilityElements = [innerElement]
-////
-////                        accessibleElements?.append(element)
-////                    }
-////                }
-////            }
-////
-////            return accessibleElements
-////        }
-////        set {}
-////    }
-// }
+    ////
+    ////    private class AccessibilityElement: UIAccessibilityElement {
+    ////        private weak var view: UIView?
+    ////        private let enclosingRects: [CGRect]
+    ////        private let usePath: Bool
+    ////
+    ////        init(container: Any, view: UIView, enclosingRects: [CGRect], usePath: Bool) {
+    ////            self.view = view
+    ////            self.enclosingRects = enclosingRects
+    ////            self.usePath = usePath
+    ////            super.init(accessibilityContainer: container)
+    ////        }
+    ////
+    ////        override var accessibilityActivationPoint: CGPoint {
+    ////            get {
+    ////                guard let view = view  else {
+    ////                    return .zero
+    ////                }
+    ////
+    ////                if enclosingRects.count == 0 {
+    ////                    return .zero
+    ////                } else {
+    ////                    let rect = UIAccessibilityConvertFrameToScreenCoordinates(enclosingRects[0], view)
+    ////                    return CGPoint(x: rect.midX, y: rect.midY)
+    ////                }
+    ////            }
+    ////            set {
+    ////            }
+    ////        }
+    ////
+    ////        override var accessibilityFrame: CGRect {
+    ////            get {
+    ////                guard let view = view  else {
+    ////                    return .null
+    ////                }
+    ////
+    ////                if enclosingRects.count == 0 {
+    ////                    return .null
+    ////                }
+    ////
+    ////                if enclosingRects.count == 1 {
+    ////                    return UIAccessibilityConvertFrameToScreenCoordinates(enclosingRects[0], view)
+    ////                }
+    ////
+    ////                var resultRect = enclosingRects[0]
+    ////
+    ////                for i in 1..<enclosingRects.count {
+    ////                    resultRect = resultRect.union(enclosingRects[i])
+    ////                }
+    ////
+    ////                return UIAccessibilityConvertFrameToScreenCoordinates(resultRect, view)
+    ////            }
+    ////            set {}
+    ////        }
+    ////
+    ////        override var accessibilityPath: UIBezierPath? {
+    ////            get {
+    ////                if !usePath {
+    ////                    return nil
+    ////                }
+    ////                guard let view = view  else {
+    ////                    return nil
+    ////                }
+    ////
+    ////                let path = UIBezierPath()
+    ////
+    ////                enclosingRects.forEach { rect in
+    ////                    path.append(UIBezierPath(rect: rect))
+    ////                }
+    ////
+    ////                return UIAccessibilityConvertPathToScreenCoordinates(path, view)
+    ////            }
+    ////            set {}
+    ////        }
+    ////    }
+    ////
+    ////    private var accessibleElements: [Any]?
+    ////
+    ////    open override var accessibilityElements: [Any]? {
+    ////        get {
+    ////            if (accessibleElements == nil) {
+    ////                accessibleElements = []
+    ////
+    ////                if let attributedText = internalState.attributedText {
+    ////
+    ////                    let text = AccessibilityElement(container: self, view: self, enclosingRects: [textView.frame], usePath: false)
+    ////                    text.accessibilityLabel = attributedText.string
+    ////                    text.accessibilityTraits = UIAccessibilityTraitStaticText
+    ////                    accessibleElements?.append(text)
+    ////
+    ////                    for detection in highlightableDetections {
+    ////                        let nsrange = NSRange(detection.range, in: attributedText.string)
+    ////                        var enclosingRects = [CGRect]()
+    ////                        textView.layoutManager.enumerateEnclosingRects(forGlyphRange: nsrange,
+    ////                                                                       withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
+    ////                                                                       in: textView.textContainer, using: { (rect, stop) in
+    ////                            enclosingRects.append(rect)
+    ////                        })
+    ////
+    ////                        let element = AccessibilityElement(container: self, view: self, enclosingRects: enclosingRects, usePath: true)
+    ////                        element.isAccessibilityElement = false
+    ////
+    ////                        let innerElement = AccessibilityElement(container: element, view: self, enclosingRects: enclosingRects, usePath: false)
+    ////                        innerElement.accessibilityLabel = String(attributedText.string[detection.range])
+    ////                        innerElement.accessibilityTraits = UIAccessibilityTraitLink
+    ////
+    ////                        element.accessibilityElements = [innerElement]
+    ////
+    ////                        accessibleElements?.append(element)
+    ////                    }
+    ////                }
+    ////            }
+    ////
+    ////            return accessibleElements
+    ////        }
+    ////        set {}
+    ////    }
+    // }
 //
 #endif
