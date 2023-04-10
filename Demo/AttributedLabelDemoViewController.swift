@@ -75,7 +75,6 @@ extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDat
 class TweetCell: UITableViewCell {
     private let tweetLabel = AttributedLabel()
 
-    
     @objc private func labelOnTouchUpInside(_ sender: AttributedLabel) {
         if let linkStr = sender.highlightedLinkValue as? String {
             if let url = URL(string: linkStr) {
@@ -83,7 +82,7 @@ class TweetCell: UITableViewCell {
             }
         }
     }
-    
+
     override init(style: TableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -94,7 +93,7 @@ class TweetCell: UITableViewCell {
 //                }
 //            }
 //        }
-        
+
         tweetLabel.addTarget(self, action: #selector(labelOnTouchUpInside), for: .touchUpInside)
 
         contentView.addSubview(tweetLabel)

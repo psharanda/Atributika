@@ -18,7 +18,7 @@
         open func rects(for range: Range<String.Index>) -> [CGRect] {
             var result = [CGRect]()
 
-            if let attributedText = internalState.attributedText {
+            if let attributedText = attributedText {
                 let nsrange = NSRange(range, in: attributedText.string)
                 textView.layoutManager.enumerateEnclosingRects(
                     forGlyphRange: nsrange,
@@ -34,8 +34,8 @@
         }
 
         open var highlightedLinkValue: Any? {
-            if let range = internalState.highlightedLinkRange,
-               let val = internalState.attributedText?.attribute(.attributedLabelLink, at: range.location, effectiveRange: nil)
+            if let range = _highlightedLinkRange,
+               let val = attributedText?.attribute(.attributedLabelLink, at: range.location, effectiveRange: nil)
             {
                 return val
             } else {
@@ -44,7 +44,7 @@
         }
 
         open var highlightedLinkRange: Range<String.Index>? {
-            if let str = internalState.attributedText?.string, let range = internalState.highlightedLinkRange {
+            if let str = attributedText?.string, let range = _highlightedLinkRange {
                 return Range(range, in: str)
             } else {
                 return nil
@@ -53,70 +53,77 @@
 
         // MARK: - public properties
 
-        @IBInspectable override open var isEnabled: Bool {
-            set {
-                internalState.isEnabled = newValue
-            }
-            get {
-                return internalState.isEnabled
+        override open var isEnabled: Bool {
+            didSet {
+                setNeedsDisplayText()
             }
         }
 
         @IBInspectable open var isSelectable: Bool {
             get {
-                return textView.isSelectable
+                return textView.isSelectable && textView.isUserInteractionEnabled
             }
             set {
                 textView.isSelectable = newValue
+                textView.isUserInteractionEnabled = newValue
             }
         }
 
         @IBInspectable open var attributedText: NSAttributedString? {
-            set {
-                internalState = State(attributedText: newValue, isEnabled: internalState.isEnabled)
-            }
-            get {
-                return internalState.attributedText
+            didSet {
+                setNeedsDisplayText()
             }
         }
 
         open var highlightedLinkAttributes: AttributesProvider? {
             didSet {
-                updateText()
+                setNeedsDisplayText()
             }
         }
 
         open var disabledLinkAttributes: AttributesProvider? {
             didSet {
-                updateText()
+                setNeedsDisplayText()
             }
         }
 
         @IBInspectable open var numberOfLines: Int {
-            set { textView.textContainer.maximumNumberOfLines = newValue }
-            get { return textView.textContainer.maximumNumberOfLines }
+            set {
+                textView.textContainer.maximumNumberOfLines = newValue
+            }
+            get {
+                return textView.textContainer.maximumNumberOfLines
+            }
         }
 
         @IBInspectable open var lineBreakMode: NSLineBreakMode {
-            set { textView.textContainer.lineBreakMode = newValue }
-            get { return textView.textContainer.lineBreakMode }
+            set {
+                textView.textContainer.lineBreakMode = newValue
+            }
+            get {
+                return textView.textContainer.lineBreakMode
+            }
         }
 
         @available(iOS 10.0, *)
         @IBInspectable open var adjustsFontForContentSizeCategory: Bool {
-            set { textView.adjustsFontForContentSizeCategory = newValue }
-            get { return textView.adjustsFontForContentSizeCategory }
+            set {
+                textView.adjustsFontForContentSizeCategory = newValue
+            }
+            get {
+                return textView.adjustsFontForContentSizeCategory
+            }
         }
 
         @IBInspectable open var font: UIFont = .preferredFont(forTextStyle: .body) {
             didSet {
-                updateText()
+                setNeedsDisplayText()
             }
         }
 
         @IBInspectable open var textAlignment: NSTextAlignment = .natural {
             didSet {
-                updateText()
+                setNeedsDisplayText()
             }
         }
 
@@ -128,25 +135,25 @@
             }
         }() {
             didSet {
-                updateText()
+                setNeedsDisplayText()
             }
         }
 
         @IBInspectable open var shadowColor: UIColor? {
             didSet {
-                updateText()
+                setNeedsDisplayText()
             }
         }
 
         @IBInspectable open var shadowOffset = CGSize(width: 0, height: -1) {
             didSet {
-                updateText()
+                setNeedsDisplayText()
             }
         }
 
         @IBInspectable open var shadowBlurRadius: CGFloat = 0 {
             didSet {
-                updateText()
+                setNeedsDisplayText()
             }
         }
 
@@ -202,14 +209,24 @@
             let range: NSRange
         }
 
-        private var trackedLinkRange: NSRange?
+        private var trackedLinkRange: NSRange? {
+            didSet {
+                setNeedsDisplayText()
+            }
+        }
+        
+        private var _highlightedLinkRange: NSRange? {
+            didSet {
+                setNeedsDisplayText()
+            }
+        }
 
         override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
             let pt = touch.location(in: self)
             if super.beginTracking(touch, with: event) {
                 trackedLinkRange = linkRange(at: pt)
                 if trackedLinkRange != nil {
-                    internalState.highlightedLinkRange = trackedLinkRange
+                    _highlightedLinkRange = trackedLinkRange
                     return true
                 } else {
                     return false
@@ -223,16 +240,16 @@
             let pt = touch.location(in: self)
             if let currentDetection = linkRange(at: pt) {
                 if currentDetection == trackedLinkRange {
-                    if internalState.highlightedLinkRange != trackedLinkRange {
-                        internalState.highlightedLinkRange = trackedLinkRange
+                    if _highlightedLinkRange != trackedLinkRange {
+                        _highlightedLinkRange = trackedLinkRange
                     }
                 } else {
-                    if internalState.highlightedLinkRange != nil {
-                        internalState.highlightedLinkRange = nil
+                    if _highlightedLinkRange != nil {
+                        _highlightedLinkRange = nil
                     }
                 }
             } else {
-                internalState.highlightedLinkRange = nil
+                _highlightedLinkRange = nil
             }
             return super.continueTracking(touch, with: event)
         }
@@ -241,24 +258,21 @@
             super.endTracking(touch, with: event)
             trackedLinkRange = nil
         }
-        
-        
-        open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-            
+
+        override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
             if let val = highlightedLinkValue {
                 onLinkTouchUpInside?(self, val)
             }
-            
+
             super.touchesEnded(touches, with: event)
 
-            internalState.highlightedLinkRange = nil
+            _highlightedLinkRange = nil
         }
-        
 
         override open func cancelTracking(with event: UIEvent?) {
             super.cancelTracking(with: event)
             trackedLinkRange = nil
-            internalState.highlightedLinkRange = nil
+            _highlightedLinkRange = nil
         }
 
         override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -277,7 +291,7 @@
         private func linkRange(at point: CGPoint) -> NSRange? {
             var result: NSRange?
 
-            if let attributedText = internalState.attributedText {
+            if let attributedText = attributedText {
                 attributedText.enumerateAttribute(
                     .attributedLabelLink,
                     in: NSRange(location: 0, length: attributedText.length)
@@ -306,25 +320,38 @@
         }
 
         override open func layoutSubviews() {
+            displayTextIfNeeded()
             super.layoutSubviews()
             // accessibleElements = nil
         }
-
-        // MARK: - state
-
-        private struct State {
-            var attributedText: NSAttributedString?
-            var isEnabled: Bool
-            var highlightedLinkRange: NSRange?
+        
+        open override var intrinsicContentSize: CGSize {
+            get {
+                displayTextIfNeeded()
+                return super.intrinsicContentSize
+            }
         }
-
-        private var internalState: State = .init(attributedText: nil, isEnabled: true, highlightedLinkRange: nil) {
-            didSet {
+        
+        private var needsDisplayText: Bool = true
+        
+        private func setNeedsDisplayText() {
+            needsDisplayText = true
+            setNeedsLayout()
+        }
+        
+        private func displayTextIfNeeded() {
+            if (needsDisplayText) {
+                needsDisplayText = false
                 updateText()
             }
         }
-
-        private func updateAttributedTextInTextView(_ string: NSAttributedString) {
+        
+        private func updateText() {
+            guard let string = attributedText else {
+                textView.attributedText = nil
+                return
+            }
+            
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = textAlignment
 
@@ -351,13 +378,13 @@
                 result.addAttributes(attributes, range: range)
 
                 if attributes[.attributedLabelLink] != nil {
-                    if !internalState.isEnabled, let attrs = disabledLinkAttributes {
+                    if !isEnabled, let attrs = disabledLinkAttributes {
                         result.addAttributes(attrs.attributes, range: range)
                     }
                 }
             })
 
-            if let range = internalState.highlightedLinkRange, let attrs = highlightedLinkAttributes {
+            if let range = _highlightedLinkRange, let attrs = highlightedLinkAttributes {
                 result.addAttributes(attrs.attributes, range: range)
             }
 
@@ -377,14 +404,6 @@
                 }
             } else {
                 textView.attributedText = string
-            }
-        }
-
-        private func updateText() {
-            if let attributedText = internalState.attributedText {
-                updateAttributedTextInTextView(attributedText)
-            } else {
-                textView.attributedText = nil
             }
         }
 //
