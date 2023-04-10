@@ -7,6 +7,17 @@
     import UIKit
 
     @IBDesignable open class AttributedLabel: UIControl {
+        override open func prepareForInterfaceBuilder() {
+            super.prepareForInterfaceBuilder()
+
+            let gray = Attrs.foregroundColor(.gray)
+
+            attributedText = "<gray>Attributed</gray> Label"
+                .style(tags: ["gray": gray])
+                .attributedString
+            invalidateIntrinsicContentSize()
+        }
+
         // MARK: - private properties
 
         private let textView = UITextView()
@@ -204,10 +215,6 @@
 
         override open var forLastBaselineLayout: UIView {
             return textView
-        }
-
-        struct Detection {
-            let range: NSRange
         }
 
         private var trackedLinkRange: NSRange? {
@@ -494,31 +501,31 @@
                         text.accessibilityLabel = attributedText.string
                         text.accessibilityTraits = UIAccessibilityTraitStaticText
                         accessibleElements?.append(text)
-                        
+
                         attributedText.enumerateAttribute(
                             .attributedLabelLink,
                             in: NSRange(location: 0, length: attributedText.length)
-                        ) { val, range, stop in
+                        ) { val, range, _ in
 
                             guard val != nil else {
                                 return
                             }
-                            
+
                             var enclosingRects = [CGRect]()
-                            
+
                             textView.layoutManager.enumerateEnclosingRects(
                                 forGlyphRange: range,
                                 withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                                in: textView.textContainer, using: { rect, innerStop in
+                                in: textView.textContainer, using: { rect, _ in
                                     enclosingRects.append(rect)
                                 }
                             )
-                            
+
                             let element = AccessibilityElement(container: self, view: self, enclosingRects: enclosingRects, usePath: true)
                             element.isAccessibilityElement = false
 
                             let innerElement = AccessibilityElement(container: element, view: self, enclosingRects: enclosingRects, usePath: false)
-                            
+
                             if let r = Range(range, in: attributedText.string) {
                                 innerElement.accessibilityLabel = String(attributedText.string[r])
                             }
