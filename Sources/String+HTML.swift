@@ -13,14 +13,6 @@ public struct TagInfo: Equatable {
 extension String {
     // MARK: - html specials
 
-    private static let HTMLSpecials: [String: Character] = [
-        "quot": "\u{22}",
-        "amp": "\u{26}",
-        "apos": "\u{27}",
-        "lt": "\u{3C}",
-        "gt": "\u{3E}",
-    ]
-
     private static let allowedTagCharacters = CharacterSet(charactersIn: ".-_").union(CharacterSet.alphanumerics)
 
     private func unescapeAsNumber() -> String? {
@@ -53,7 +45,7 @@ extension String {
         } else {
             if let potentialSpecial = scanner._scanCharacters(from: CharacterSet.letters) {
                 if scanner._scanString(";") != nil {
-                    resultString.append(Self.HTMLSpecials[potentialSpecial].map { String($0) } ?? "&\(potentialSpecial);")
+                    resultString.append(AtributikaConfig.htmlSpecialsProvider.stringForHTMLSpecial(potentialSpecial) ?? "&\(potentialSpecial);")
                 } else {
                     resultString.append("&\(potentialSpecial)")
                 }

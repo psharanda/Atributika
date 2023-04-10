@@ -569,6 +569,24 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual("<tag val=&amp;/>".detectTags().tagsInfo[0].tag, Tag(name: "tag", attributes: ["val": "&"]))
     }
 
+    func testCustomSpecials() {
+        struct TestSpecialProvider: HTMLSpecialsProvider {
+            func stringForHTMLSpecial(_ htmlSpecial: String) -> String? {
+                if htmlSpecial == "Tab" {
+                    return "\t"
+                }
+                return nil
+            }
+        }
+
+        let prev = AtributikaConfig.htmlSpecialsProvider
+
+        AtributikaConfig.htmlSpecialsProvider = TestSpecialProvider()
+        XCTAssertEqual("&Tab;".detectTags().string, "\t")
+
+        AtributikaConfig.htmlSpecialsProvider = prev
+    }
+
     func testSpecialCodes() {
         XCTAssertEqual("&# ".detectTags().string, "&# ")
 

@@ -21,13 +21,13 @@
         // MARK: - private properties
 
         private let label = UILabel()
-        
+
         private let textEngine = TextEngine()
-        
+
         private var layoutManager: NSLayoutManager {
             return textEngine.layoutManager
         }
-        
+
         private var textContainer: NSTextContainer {
             return textEngine.textContainer
         }
@@ -118,7 +118,7 @@
                 return textContainer.lineBreakMode
             }
         }
-        
+
         open var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy = [.pushOut] {
             didSet {
                 setNeedsDisplayText()

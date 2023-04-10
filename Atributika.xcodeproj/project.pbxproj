@@ -25,6 +25,10 @@
 		1B539F1229E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
 		1B539F1329E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
 		1B539F1429E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
+		1B539F1629E4B55400188B7A /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1529E4B55400188B7A /* Atributika.swift */; };
+		1B539F1729E4B55400188B7A /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1529E4B55400188B7A /* Atributika.swift */; };
+		1B539F1829E4B55400188B7A /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1529E4B55400188B7A /* Atributika.swift */; };
+		1B539F1929E4B55400188B7A /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1529E4B55400188B7A /* Atributika.swift */; };
 		1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B80548923A8ACDF002DCA63 /* IBViewController.swift */; };
 		1B80548C23A8ACF1002DCA63 /* IB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B80548B23A8ACF1002DCA63 /* IB.storyboard */; };
 		1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
@@ -120,6 +124,7 @@
 		1B38369F1F97C224001DB333 /* AttributedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedLabel.swift; path = Sources/AttributedLabel.swift; sourceTree = "<group>"; };
 		1B3C73B229E46BAB00022952 /* Detection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Detection.swift; path = Sources/Detection.swift; sourceTree = "<group>"; };
 		1B539F1029E4A34B00188B7A /* TextEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextEngine.swift; path = Sources/TextEngine.swift; sourceTree = "<group>"; };
+		1B539F1529E4B55400188B7A /* Atributika.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Atributika.swift; path = Sources/Atributika.swift; sourceTree = "<group>"; };
 		1B80548923A8ACDF002DCA63 /* IBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
 		1B80548B23A8ACF1002DCA63 /* IB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
 		1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedStringBuilder.swift; path = Sources/AttributedStringBuilder.swift; sourceTree = "<group>"; };
@@ -234,6 +239,7 @@
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
+				1B539F1529E4B55400188B7A /* Atributika.swift */,
 				1B539F1029E4A34B00188B7A /* TextEngine.swift */,
 				1B3C73B229E46BAB00022952 /* Detection.swift */,
 				1BD4163129E42E0700687F88 /* String+HTML.swift */,
@@ -623,6 +629,7 @@
 				1BD4163C29E42E0700687F88 /* Sugar.swift in Sources */,
 				1BB55AD91E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
+				1B539F1629E4B55400188B7A /* Atributika.swift in Sources */,
 				1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */,
 				1BD4163829E42E0700687F88 /* Tag.swift in Sources */,
 				1BD4163429E42E0700687F88 /* String+HTML.swift in Sources */,
@@ -648,6 +655,7 @@
 				1BD4163E29E42E0700687F88 /* Sugar.swift in Sources */,
 				1BB55ADB1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD31E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
+				1B539F1829E4B55400188B7A /* Atributika.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BD4163A29E42E0700687F88 /* Tag.swift in Sources */,
 				1BD4163629E42E0700687F88 /* String+HTML.swift in Sources */,
@@ -665,6 +673,7 @@
 				1BD4163F29E42E0700687F88 /* Sugar.swift in Sources */,
 				1BB55ADC1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD41E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
+				1B539F1929E4B55400188B7A /* Atributika.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BD4163B29E42E0700687F88 /* Tag.swift in Sources */,
 				1BD4163729E42E0700687F88 /* String+HTML.swift in Sources */,
@@ -682,6 +691,7 @@
 				1BD4163D29E42E0700687F88 /* Sugar.swift in Sources */,
 				1BB55ADA1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD21E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
+				1B539F1729E4B55400188B7A /* Atributika.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BD4163929E42E0700687F88 /* Tag.swift in Sources */,
 				1BD4163529E42E0700687F88 /* String+HTML.swift in Sources */,
