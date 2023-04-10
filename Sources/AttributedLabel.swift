@@ -239,12 +239,21 @@
 
         override open func endTracking(_ touch: UITouch?, with event: UIEvent?) {
             super.endTracking(touch, with: event)
+            trackedLinkRange = nil
+        }
+        
+        
+        open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+            
             if let val = highlightedLinkValue {
                 onLinkTouchUpInside?(self, val)
             }
-            trackedLinkRange = nil
+            
+            super.touchesEnded(touches, with: event)
+
             internalState.highlightedLinkRange = nil
         }
+        
 
         override open func cancelTracking(with event: UIEvent?) {
             super.cancelTracking(with: event)

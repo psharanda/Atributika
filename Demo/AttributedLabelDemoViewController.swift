@@ -75,16 +75,27 @@ extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDat
 class TweetCell: UITableViewCell {
     private let tweetLabel = AttributedLabel()
 
+    
+    @objc private func labelOnTouchUpInside(_ sender: AttributedLabel) {
+        if let linkStr = sender.highlightedLinkValue as? String {
+            if let url = URL(string: linkStr) {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
     override init(style: TableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        tweetLabel.onLinkTouchUpInside = { _, val in
-            if let linkStr = val as? String {
-                if let url = URL(string: linkStr) {
-                    UIApplication.shared.openURL(url)
-                }
-            }
-        }
+//        tweetLabel.onLinkTouchUpInside = { _, val in
+//            if let linkStr = val as? String {
+//                if let url = URL(string: linkStr) {
+//                    UIApplication.shared.openURL(url)
+//                }
+//            }
+//        }
+        
+        tweetLabel.addTarget(self, action: #selector(labelOnTouchUpInside), for: .touchUpInside)
 
         contentView.addSubview(tweetLabel)
 
@@ -117,11 +128,11 @@ class TweetCell: UITableViewCell {
             }
 
             let hashtag = DetectionTuner { d in
-                Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text)")
+                Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
             }
 
             let mention = DetectionTuner { d in
-                Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text)")
+                Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
             }
 
             let link = DetectionTuner { d in
