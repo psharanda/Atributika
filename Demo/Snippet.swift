@@ -205,16 +205,16 @@ func stringWithImage() -> NSAttributedString {
         let b = Style.font(font).underlineStyle(.styleSingle)
     #endif
 
-    let img = TagTuner(style: { tagAttributes in
+    let img = TagTuner(style: { tag in
         let style = Style
-        if let imageId = tagAttributes["id"] {
+        if let imageId = tag.attributes["id"] {
             let textAttachment = NSTextAttachment()
             textAttachment.image = UIImage(named: imageId)
             style.attachment(textAttachment)
         }
         return style
     }, transform: { _, _ in
-        return "\u{FFFC}"
+        "\u{FFFC}"
     })
 
     let str = "<b>Running</b> with <img id=\"scissors\"></img>!"

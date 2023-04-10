@@ -52,7 +52,7 @@ public final class AttributedStringBuilder {
         tagsInfo.forEach { t in
             newLevel = max(t.level, newLevel)
             if let style = tags[t.tag.name] {
-                ds.append(Detection(attributes: style.style(tagAttributes: t.tag.attributes), range: t.range, level: t.level))
+                ds.append(Detection(attributes: style.style(tag: t.tag), range: t.range, level: t.level))
             }
         }
 

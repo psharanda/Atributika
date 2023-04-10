@@ -81,7 +81,7 @@ extension String {
         for (index, tagInfo) in tagsStack.enumerated().reversed() {
             if tagInfo.tag.name == tagName {
                 if let tagStyler = tags[tagName],
-                   let str = tagStyler.transform(tagAttributes: tagInfo.tag.attributes, tagPosition: .end)
+                   let str = tagStyler.transform(tag: tagInfo.tag, position: .end)
                 {
                     resultString.append(str)
                 }
@@ -126,7 +126,7 @@ extension String {
 
                 if let quote = scanner._scanString("\"") ?? scanner._scanString("'") {
                     if let scannedParamValue = scanner._scanUpToCharacters(from: CharacterSet(charactersIn: quote)) {
-                        _ = scanner._scanCharacter()
+                        _ = scanner._scanString(quote)
                         paramValue = scannedParamValue
                     }
                 } else {
@@ -162,9 +162,11 @@ extension String {
         }
 
         let startIndex = resultString.endIndex
+        
+        let tag = Tag(name: tagName, attributes: attributes)
 
         if let tagStyler = tags[tagName],
-           let str = tagStyler.transform(tagAttributes: attributes, tagPosition: .start(selfClosing: selfClosing))
+           let str = tagStyler.transform(tag: tag, position: .start(selfClosing: selfClosing))
         {
             resultString.append(str)
         } else if tagName.lowercased() == "br" {
@@ -172,8 +174,7 @@ extension String {
         }
 
         let nextLevel = (tagsStack.last?.level ?? -1) + 1
-
-        let tag = Tag(name: tagName, attributes: attributes)
+        
         if selfClosing {
             tagsInfo.append(
                 TagInfo(

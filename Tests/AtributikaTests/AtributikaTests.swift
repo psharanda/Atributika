@@ -376,14 +376,7 @@ class AtributikaTests: XCTestCase {
 
         let test = AttributedStringBuilder(
             htmlString: "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>",
-            tags: ["li": TagTuner(attributes: li) { _, position in
-                switch position {
-                case .start:
-                    return "- "
-                case .end:
-                    return "\n"
-                }
-            }]
+            tags: ["li": TagTuner(attributes: li, startReplacement: "- ", endReplacement: "\n")]
         )
         .attributedString
 
@@ -600,9 +593,9 @@ class AtributikaTests: XCTestCase {
         let test = AttributedStringBuilder(
             htmlString: "Monday - Friday:<font color=\"#6cc299\"> 8:00 - 19:00</font>",
             tags: [
-                "font": TagTuner { tagAttributes in
+                "font": TagTuner { tag in
                     let ab = Style
-                    if let colorString = tagAttributes["color"] {
+                    if let colorString = tag.attributes["color"] {
                         ab.foregroundColor(hexStringToUIColor(hex: colorString))
                     }
                     return ab
@@ -619,10 +612,10 @@ class AtributikaTests: XCTestCase {
     func testHrefTagTuner() {
         let test = AttributedStringBuilder(
             htmlString: "<a href=\"https://github.com/psharanda/Atributika\">link</a>",
-            tags: ["a": TagTuner { tagAttributes in
+            tags: ["a": TagTuner { tag in
 
                 let ab = Style.foregroundColor(.blue)
-                if let link = tagAttributes["href"] {
+                if let link = tag.attributes["href"] {
                     ab.link(URL(string: link)!)
                 }
                 return ab
@@ -740,6 +733,14 @@ class AtributikaTests: XCTestCase {
         }
 
         XCTAssertEqual(test, ref)
+    }
+
+    func testCompatibilityString() {
+        XCTAssertEqual("<font>Hello 👨‍👧‍👧</font>".detectTags().string, "Hello 👨‍👧‍👧")
+        XCTAssertEqual("<font>Hello 👨‍👧‍👧👨‍👧‍👧</font>".detectTags().string, "Hello 👨‍👧‍👧👨‍👧‍👧")
+        XCTAssertEqual("<font>Hello 👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧</font>".detectTags().string, "Hello 👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧")
+        XCTAssertEqual("<font>Hello 👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧</font>".detectTags().string, "Hello 👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧")
+        XCTAssertEqual("<font>Hello 👨‍👨‍👦‍👦👨‍👨‍👦‍👦👨‍👨‍👦‍👦👨‍👨‍👦‍👦</font>".detectTags().string, "Hello 👨‍👨‍👦‍👦👨‍👨‍👦‍👦👨‍👨‍👦‍👦👨‍👨‍👦‍👦")
     }
 }
 

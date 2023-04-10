@@ -19,49 +19,43 @@ public enum TagPosition: Equatable {
     case end
 }
 
-public protocol TagStyling {
-    func style(tagAttributes: [String: String]) -> AttributesProvider
+public protocol TagTuning {
+    func style(tag: Tag) -> AttributesProvider
+    func transform(tag: Tag, position: TagPosition) -> String?
 }
-
-public protocol TagTransforming {
-    func transform(tagAttributes: [String: String], tagPosition: TagPosition) -> String?
-}
-
-public typealias TagTuning = TagStyling & TagTransforming
-
 
 public struct TagTuner: TagTuning {
-    public func style(tagAttributes: [String : String]) -> AttributesProvider {
-        return _style(tagAttributes)
+    public func style(tag: Tag) -> AttributesProvider {
+        return _style(tag)
     }
-    
-    public func transform(tagAttributes: [String : String], tagPosition: TagPosition) -> String? {
-        return _transform(tagAttributes, tagPosition)
-    }
-    
-    private let _style: ([String: String]) -> AttributesProvider
-    private let _transform: ([String: String], TagPosition) -> String?
 
-    public init(style: @escaping ([String: String]) -> AttributesProvider, transform: @escaping ([String: String], TagPosition) -> String?) {
+    public func transform(tag: Tag, position: TagPosition) -> String? {
+        return _transform(tag, position)
+    }
+
+    private let _style: (Tag) -> AttributesProvider
+    private let _transform: (Tag, TagPosition) -> String?
+
+    public init(style: @escaping (Tag) -> AttributesProvider, transform: @escaping (Tag, TagPosition) -> String?) {
         _style = style
         _transform = transform
     }
 
-    public init(style: @escaping ([String: String]) -> AttributesProvider) {
+    public init(style: @escaping (Tag) -> AttributesProvider) {
         _style = style
         _transform = { _, _ in nil }
     }
 
-    public init(transform: @escaping ([String: String], TagPosition) -> String?) {
+    public init(transform: @escaping (Tag, TagPosition) -> String?) {
         _style = { _ in [NSAttributedString.Key: Any]() }
         _transform = transform
     }
 
-    public init(attributes: AttributesProvider, transform: @escaping ([String: String], TagPosition) -> String? = { _, _ in nil }) {
+    public init(attributes: AttributesProvider, transform: @escaping (Tag, TagPosition) -> String? = { _, _ in nil }) {
         _style = { _ in attributes }
         _transform = transform
     }
-    
+
     public init(attributes: AttributesProvider = [NSAttributedString.Key: Any](), startReplacement: String? = nil, endReplacement: String? = nil) {
         _style = { _ in attributes }
         _transform = { _, position in
@@ -74,6 +68,3 @@ public struct TagTuner: TagTuning {
         }
     }
 }
-
-
-

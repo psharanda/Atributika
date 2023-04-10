@@ -20,15 +20,15 @@ extension Dictionary: AttributesProvider where Key == NSAttributedString.Key, Va
     }
 }
 
-public final class AttributesBuilder: AttributesProvider {
+public final class Attributes: AttributesProvider {
     public private(set) var attributes: [NSAttributedString.Key: Any]
 
     public init(_ attributes: AttributesProvider = [NSAttributedString.Key: Any]()) {
         self.attributes = attributes.attributes
     }
-    
-    public func copy() -> AttributesBuilder {
-        return AttributesBuilder(attributes)
+
+    public func copy() -> Attributes {
+        return Attributes(attributes)
     }
 
     @discardableResult
@@ -179,17 +179,16 @@ public final class AttributesBuilder: AttributesProvider {
     }
 }
 
-extension AttributesBuilder: TagTuning {
-    public func style(tagAttributes: [String : String]) -> AttributesProvider {
+extension Attributes: TagTuning {
+    public func style(tag: Tag) -> AttributesProvider {
         return self
     }
     
-    public func transform(tagAttributes: [String : String], tagPosition: TagPosition) -> String? {
+    public func transform(tag: Tag, position: TagPosition) -> String? {
         return nil
     }
 }
 
-
-public var Style: AttributesBuilder {
-    return AttributesBuilder()
+public var Style: Attributes {
+    return Attributes()
 }
