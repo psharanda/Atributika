@@ -68,6 +68,7 @@ extension String {
     private struct TagStackItem {
         let tag: Tag
         let startIndex: String.Index
+        let endIndex: String.Index
         let level: Int
     }
 
@@ -96,9 +97,8 @@ extension String {
                 break
             }
         }
-        if scanner._scanUpToString(">") == nil {
-            _ = scanner._scanString(">")
-        }
+        _ = scanner._scanUpToString(">")
+        _ = scanner._scanString(">")
     }
 
     private func parseOpeningTag(_ scanner: Scanner, _ resultString: inout String, _ tags: [String: TagTuning], _ tagsStack: inout [String.TagStackItem], _ tagsInfo: inout [TagInfo]) {
@@ -194,7 +194,7 @@ extension String {
                     level: nextLevel
                 ))
         } else {
-            tagsStack.append(TagStackItem(tag: tag, startIndex: startIndex, level: nextLevel))
+            tagsStack.append(TagStackItem(tag: tag, startIndex: startIndex, endIndex: resultString.endIndex, level: nextLevel))
         }
     }
 
@@ -236,7 +236,16 @@ extension String {
                 parseSpecial(scanner, &resultString)
             }
         }
-
+        
+        for tagStackItem in tagsStack {
+            tagsInfo.append(
+                TagInfo(
+                    tag: tagStackItem.tag,
+                    range: tagStackItem.startIndex ..< tagStackItem.endIndex,
+                    level: tagStackItem.level
+                ))
+        }
+ 
         return (resultString, tagsInfo)
     }
 }

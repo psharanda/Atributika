@@ -213,11 +213,16 @@ func stringWithImage() -> NSAttributedString {
             style.attachment(textAttachment)
         }
         return style
-    }, transform: { _, _ in
-        "\u{FFFC}"
+    }, transform: {tag, position in
+        switch position {
+        case .start:
+            return "\u{FFFC}"
+        case .end:
+            return nil
+        }
     })
 
-    let str = "<b>Running</b> with <img id=\"scissors\"></img>!"
+    let str = "<b>Running</b> with <img id=\"scissors\"></img><img id=\"scissors\"/></img id=\"scissors\">!"
         .style(tags: ["b": b, "img": img])
         .attributedString
 

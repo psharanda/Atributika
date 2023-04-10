@@ -515,6 +515,8 @@ class AtributikaTests: XCTestCase {
 
         XCTAssertEqual("<a>xxx</a yyy".detectTags().string, "xxx")
         XCTAssertEqual("<a>xxx</a yyy".detectTags().tagsInfo[0].tag, Tag(name: "a", attributes: [:]))
+        
+        XCTAssertEqual("</img id=\"scissors\">".detectTags().string, "")
     }
 
     func testSpecials() {
