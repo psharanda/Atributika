@@ -78,7 +78,7 @@ func stringWithManyDetectables() -> NSAttributedString {
         let u = Attrs.underlineStyle(.styleSingle)
     #endif
 
-    let all = Attrs.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
+    let base = Attrs.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
 
     let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
         .style(tags: ["u": u, "b": b])
@@ -86,7 +86,7 @@ func stringWithManyDetectables() -> NSAttributedString {
         .styleHashtags(links)
         .styleLinks(links)
         .stylePhoneNumbers(phoneNumbers)
-        .styleBase(all)
+        .styleBase(base)
         .attributedString
 
     return str

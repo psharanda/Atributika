@@ -9,12 +9,10 @@
     @IBDesignable open class AttributedLabel: UIControl {
         override open func prepareForInterfaceBuilder() {
             super.prepareForInterfaceBuilder()
-
-            let gray = Attrs.foregroundColor(.gray)
-
-            attributedText = "<gray>Attributed</gray> Label"
-                .style(tags: ["gray": gray])
-                .attributedString
+            attributedText = NSAttributedString(
+                string: "Label",
+                attributes: [.font: UIFont.boldSystemFont(ofSize: 12), .foregroundColor: UIColor.darkGray]
+            )
             invalidateIntrinsicContentSize()
         }
 
@@ -87,13 +85,13 @@
             }
         }
 
-        open var highlightedLinkAttributes: AttributesProvider? {
+        open var highlightedLinkAttributes: [NSAttributedString.Key: Any]? {
             didSet {
                 setNeedsDisplayText()
             }
         }
 
-        open var disabledLinkAttributes: AttributesProvider? {
+        open var disabledLinkAttributes: [NSAttributedString.Key: Any]? {
             didSet {
                 setNeedsDisplayText()
             }
@@ -386,13 +384,13 @@
 
                 if attributes[.attributedLabelLink] != nil {
                     if !isEnabled, let attrs = disabledLinkAttributes {
-                        result.addAttributes(attrs.attributes, range: range)
+                        result.addAttributes(attrs, range: range)
                     }
                 }
             })
 
             if let range = _highlightedLinkRange, let attrs = highlightedLinkAttributes {
-                result.addAttributes(attrs.attributes, range: range)
+                result.addAttributes(attrs, range: range)
             }
 
             result.endEditing()
@@ -553,7 +551,7 @@
 
     public extension Attributes {
         @discardableResult
-        func attributedLabelLink(_ value: String) -> Self {
+        func attributedLabelLink(_ value: Any) -> Self {
             return attribute(.attributedLabelLink, value)
         }
     }

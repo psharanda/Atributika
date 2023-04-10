@@ -7,9 +7,9 @@ import Atributika
 import UIKit
 
 #if swift(>=4.2)
-    public typealias TableViewCellStyle = UITableViewCell.CellStyle
+    typealias TableViewCellStyle = UITableViewCell.CellStyle
 #else
-    public typealias TableViewCellStyle = UITableViewCellStyle
+    typealias TableViewCellStyle = UITableViewCellStyle
 #endif
 
 extension String {
@@ -147,8 +147,8 @@ class TweetCell: UITableViewCell {
 
         tweetLabel.numberOfLines = 0
         tweetLabel.font = .preferredFont(forTextStyle: .body)
-        tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
-        tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray)
+        tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
+        tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
     }
 
     @available(*, unavailable)
@@ -187,8 +187,8 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
 
         attributedLabel.font = .preferredFont(forTextStyle: .title1)
         attributedLabel.numberOfLines = 0
-        attributedLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
-        attributedLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray)
+        attributedLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
+        attributedLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
 
         attributedLabel.translatesAutoresizingMaskIntoConstraints = false
 

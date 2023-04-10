@@ -16,18 +16,19 @@ NSAttributedString is really powerful but still a low level API which requires a
 Oh wait, but you can use Atributika!
 
 ```swift
-let b = Style("b").font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
+let b = Attrs.font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
         
-label.attributedText = "Hello <b>World</b>!!!".style(tags: b).attributedString
+label.attributedText = "Hello <b>World</b>!!!".style(tags: ["b": b]).attributedString
 ```
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/main.png" alt="" width="139" />
 
 Yeah, that's much better. Atributika is easy, declarative, flexible and covers all the raw edges for you.
 
+
 ## Features
 
-+ NEW! `AttributedLabel` is a drop-in label replacement which **makes detections clickable** and style them dynamically for `normal/highlighted/disabled` states.
++ AttributedLabel` is a drop-in label replacement which **makes detections clickable** and style them dynamically for `normal/highlighted/disabled` states.
 + detect and style HTML-like **tags** using custom speedy parser
 + detect and style **hashtags** and **mentions** (i.e. #something and @someone)
 + detect and style **links** and **phone numbers**
@@ -39,21 +40,42 @@ Yeah, that's much better. Atributika is easy, declarative, flexible and covers a
 + `+` operator to concatenate NSAttributedString with other attributed or regular strings
 + works on iOS, tvOS, watchOS, macOS
 
+## V4 -> V5
+
+V5 is a major rewrite of the project. 
+
+NSAttributedString building
++ HTML parser completely rewritten, supports more edge cases
++ Text transforming and attributes fine tuning depening from detected text
+
+AttributedLabel / AttributedTextView
++ proper accessibility support
++ doesn't depend from the string building code and classes
++ better performance and touch handling
++ subclass off UIControl
++ AttributedLabel based on UILabel (more lightweight, text is centered vertically), AttributedTextView based on UITextView (supports scrolling and text selections, text is aligned to the top of the frame)
+
+`Style("xxx").`/`Style.` -> Attr.
+`styleAll` -> `styleBase`
+
+AttributedLabel api is reworked a lot see updated example below
+
+
 ## Examples
 
 ### Detect and style tags, provide base style for the rest of string, don't forget about special html symbols
 
 ```swift
 let redColor = UIColor(red:(0xD0 / 255.0), green: (0x02 / 255.0), blue:(0x1B / 255.0), alpha:1.0)
-let a = Style("a").foregroundColor(redColor)
+let a = Attrs.foregroundColor(redColor)
 
 let font = UIFont(name: "AvenirNext-Regular", size: 24)!
 let grayColor = UIColor(white: 0x66 / 255.0, alpha: 1)
-let all = Style.font(font).foregroundColor(grayColor)
+let base = Style.font(font).foregroundColor(grayColor)
 
 let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
-    .style(tags: a)
-    .styleAll(all)
+    .style(tags: ["a": a])
+    .styleBase(base)
     .attributedString
 ```
 
@@ -63,8 +85,8 @@ let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
 
 ```swift
 let str = "#Hello @World!!!"
-    .styleHashtags(Style.font(.boldSystemFont(ofSize: 45)))
-    .styleMentions(Style.foregroundColor(.red))
+    .styleHashtags(Attrs.font(.boldSystemFont(ofSize: 45)))
+    .styleMentions(Attrs.foregroundColor(.red))
     .attributedString
 ```
 
@@ -75,7 +97,7 @@ let str = "#Hello @World!!!"
 
 ```swift
 let str = "Check this website http://google.com"
-    .styleLinks(Style.foregroundColor(.blue))
+    .styleLinks(Attrs.foregroundColor(.blue))
     .attributedString
 ```
 
@@ -85,7 +107,7 @@ let str = "Check this website http://google.com"
 
 ```swift
 let str = "Call me (888)555-5512"
-    .stylePhoneNumbers(Style.foregroundColor(.red))
+    .stylePhoneNumbers(Attrs.foregroundColor(.red))
     .attributedString
 ```
 
@@ -94,71 +116,81 @@ let str = "Call me (888)555-5512"
 ### Uber String
 
 ```swift
-    let links = Style.foregroundColor(.blue)
-    let phoneNumbers = Style.backgroundColor(.yellow)
-    let mentions = Style.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
-    let b = Style("b").font(.boldSystemFont(ofSize: 12))
-    let u = Style("u").underlineStyle(.styleSingle)
-    let all = Style.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
-    
+    let links = Attrs.foregroundColor(.blue)
+    let phoneNumbers = Attrs.backgroundColor(.yellow)
+    let mentions = Attrs.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
+    let b = Attrs.font(.boldSystemFont(ofSize: 12))
+    let u = Attrs.underlineStyle(.single)
+
+    let base = Attrs.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
+
     let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
-        .style(tags: u, b)
+        .style(tags: ["u": u, "b": b])
         .styleMentions(mentions)
         .styleHashtags(links)
         .styleLinks(links)
         .stylePhoneNumbers(phoneNumbers)
-        .styleAll(all)
+        .styleBase(base)
         .attributedString
+
+    return str
 ```    
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_uber.png" alt="" width="342" />
 
-## AttributedText
-`Atributika` APIs `styleXXX` produce `AttributedText` which can be converted into `NSAttributedString`. Basically `AttributedText` just contains string, base style and all the detections.
+## Attrs
+
+## AttributedStringBuilder
+
+## TagTuning
+
+## DetectionTuning
 
 ## AttributedLabel
-`AttributedLabel` is able to display `AttributedText` and makes detections clickable if style contains any attributes for `.highlighted`
+`AttributedLabel` displays `NSAttributedString` and makes links clickable. Links needs to be added as attribute using `.attributedLabelLink` key. Value for this key can be of any type, conventional builder using String. 
 
 ```swift
 
 let tweetLabel = AttributedLabel()
 
 tweetLabel.numberOfLines = 0
+tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
 
-let all = Style.font(.systemFont(ofSize: 20))
-let link = Style("a")
-    .foregroundColor(.blue, .normal)
-    .foregroundColor(.brown, .highlighted) // <-- detections with this style will be clickable now
+let a = TagTuner { tag in
+    Attrs.foregroundColor(.blue).attributedLabelLink(tag.attributes["href"] ?? "")
+}
 
-tweetLabel.attributedText = "@e2F If only Bradley's arm was longer. Best photo ever.😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>"
-    .style(tags: link)
-    .styleHashtags(link)
-    .styleMentions(link)
+let hashtag = DetectionTuner { d in
+    Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
+}
+
+let mention = DetectionTuner { d in
+    Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
+}
+
+let link = DetectionTuner { d in
+    Attrs.foregroundColor(.blue).attributedLabelLink(d.text)
+}
+
+let tweet = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika" 
+
+tweetLabel.attributedText = tweet
+    .style(tags: ["a": a])
+    .styleHashtags(hashtag)
+    .styleMentions(mention)
     .styleLinks(link)
-    .styleAll(all)
+    .attributedString
 
-tweetLabel.onClick = { label, detection in
-            switch detection.type {
-            case .hashtag(let tag):
-                if let url = URL(string: "https://twitter.com/hashtag/\(tag)") {
-                    UIApplication.shared.openURL(url)
-                }
-            case .mention(let name):
-                if let url = URL(string: "https://twitter.com/\(name)") {
-                    UIApplication.shared.openURL(url)
-                }
-            case .link(let url):
+    tweetLabel.onLinkTouchUpInside = { _, val in
+        if let linkStr = val as? String {
+            if let url = URL(string: linkStr) {
                 UIApplication.shared.openURL(url)
-            case .tag(let tag):
-                if tag.name == "a", let href = tag.attributes["href"], let url = URL(string: href) {
-                    UIApplication.shared.openURL(url)
-                }
-            default:
-                break
             }
         }
+    }
 
 view.addSubview(tweetLabel)
+
 ```
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_attributedlabel.png" alt="" width="361" />
 
@@ -167,7 +199,7 @@ view.addSubview(tweetLabel)
 Current version is compatible with:
 
 * Swift 4.0+ (for Swift 3.2 use `swift-3.2` branch)
-* iOS 8.0 or later
+* iOS 9.0 or later
 * tvOS 9.0 or later
 * watchOS 2.0 or later
 * macOS 10.10 or later
@@ -178,6 +210,30 @@ Note: `AttributedLabel` works only on iOS
 Because in Belarusian/Russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
 
 ## Integration
+
+### [Swift Package Manager](https://github.com/apple/swift-package-manager)
+
+Create a `Package.swift` file.
+
+```swift
+// swift-tools-version:5.0
+
+import PackageDescription
+
+let package = Package(
+  name: "MyProject",
+  dependencies: [
+    .package(url: "https://github.com/psharanda/Atributika.git", .exact("5.0.0"))
+  ],
+  targets: [
+    .target(name: "MyProject", dependencies: ["Atributika"])
+  ]
+)
+```
+
+```bash
+$ swift build
+```
 
 ### Carthage
 
