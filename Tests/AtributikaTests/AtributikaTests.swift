@@ -392,11 +392,11 @@ class AtributikaTests: XCTestCase {
         let test = AttributedStringBuilder(
             htmlString: "<div><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol></div>",
             tags: [
-                "ol": TagTuner(attributes: [:]) { _, _ in
+                "ol": TagTuner { _, _ in
                     counter = 0
                     return nil
                 },
-                "li": TagTuner(attributes: [:]) { _, position in
+                "li": TagTuner { _, position in
                     switch position {
                     case .start:
                         counter += 1

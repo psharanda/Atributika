@@ -51,11 +51,6 @@ public struct TagTuner: TagTuning {
         _transform = transform
     }
 
-    public init(attributes: AttributesProvider, transform: @escaping (Tag, TagPosition) -> String? = { _, _ in nil }) {
-        _style = { _ in attributes }
-        _transform = transform
-    }
-
     public init(attributes: AttributesProvider = [NSAttributedString.Key: Any](), startReplacement: String? = nil, endReplacement: String? = nil) {
         _style = { _ in attributes }
         _transform = { _, position in

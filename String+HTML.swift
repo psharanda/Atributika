@@ -132,11 +132,22 @@ extension String {
                 } else {
                     paramValue = scanner._scanUpToCharacters(from: CharacterSet.whitespaces.union(CharacterSet(charactersIn: "/>")))
                 }
-
-                if paramValue != nil, paramValue!.contains("&") {
-                    for (key, value) in Self.HTMLSpecials {
-                        paramValue = paramValue!.replacingOccurrences(of: "&\(key);", with: String(value))
+                
+                if let val = paramValue {
+                    let valScanner = Scanner(string: val)
+                    var newVal = ""
+                    
+                    while !valScanner.isAtEnd {
+                        if let str = valScanner._scanUpToString("&") {
+                            newVal.append(str)
+                        }
+                        
+                        if valScanner._scanString("&") != nil {
+                            parseSpecial(valScanner, &newVal)
+                        }
                     }
+                    
+                    paramValue = newVal
                 }
 
                 if let name = paramName, let value = paramValue {
