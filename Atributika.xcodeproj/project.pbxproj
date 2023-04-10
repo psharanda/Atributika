@@ -43,6 +43,10 @@
 		1BD4161329E34F8F00687F88 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4161129E34F8F00687F88 /* Tag.swift */; };
 		1BD4161429E34F8F00687F88 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4161129E34F8F00687F88 /* Tag.swift */; };
 		1BD4161529E34F8F00687F88 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4161129E34F8F00687F88 /* Tag.swift */; };
+		1BD4161729E4206C00687F88 /* Sugar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4161629E4206C00687F88 /* Sugar.swift */; };
+		1BD4161829E4206C00687F88 /* Sugar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4161629E4206C00687F88 /* Sugar.swift */; };
+		1BD4161929E4206C00687F88 /* Sugar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4161629E4206C00687F88 /* Sugar.swift */; };
+		1BD4161A29E4206C00687F88 /* Sugar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4161629E4206C00687F88 /* Sugar.swift */; };
 		1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF5681E683A8F006374F6 /* Snippet.swift */; };
 		1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */; };
 		52D6D9871BEFF229002C0205 /* Atributika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Atributika.framework */; };
@@ -114,6 +118,7 @@
 		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Detection.swift"; path = "Sources/String+Detection.swift"; sourceTree = "<group>"; };
 		1BB55AD01E5C73EF00CE6EAD /* Attributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Attributes.swift; path = Sources/Attributes.swift; sourceTree = "<group>"; };
 		1BD4161129E34F8F00687F88 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		1BD4161629E4206C00687F88 /* Sugar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sugar.swift; sourceTree = "<group>"; };
 		1BDDF5681E683A8F006374F6 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
 		1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +224,7 @@
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
+				1BD4161629E4206C00687F88 /* Sugar.swift */,
 				1B38369F1F97C224001DB333 /* AttributedLabel.swift */,
 				1BB55AD01E5C73EF00CE6EAD /* Attributes.swift */,
 				1BD4161129E34F8F00687F88 /* Tag.swift */,
@@ -602,6 +608,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BD4161729E4206C00687F88 /* Sugar.swift in Sources */,
 				1BB55AD91E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B3836A01F97C224001DB333 /* AttributedLabel.swift in Sources */,
@@ -624,6 +631,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BD4161929E4206C00687F88 /* Sugar.swift in Sources */,
 				1BB55ADB1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD31E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
@@ -638,6 +646,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BD4161A29E4206C00687F88 /* Sugar.swift in Sources */,
 				1BB55ADC1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD41E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
@@ -652,6 +661,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BD4161829E4206C00687F88 /* Sugar.swift in Sources */,
 				1BB55ADA1E5C73F000CE6EAD /* NSScanner+Compat.swift in Sources */,
 				1BB55AD21E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,

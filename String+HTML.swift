@@ -132,21 +132,21 @@ extension String {
                 } else {
                     paramValue = scanner._scanUpToCharacters(from: CharacterSet.whitespaces.union(CharacterSet(charactersIn: "/>")))
                 }
-                
+
                 if let val = paramValue {
                     let valScanner = Scanner(string: val)
                     var newVal = ""
-                    
+
                     while !valScanner.isAtEnd {
                         if let str = valScanner._scanUpToString("&") {
                             newVal.append(str)
                         }
-                        
+
                         if valScanner._scanString("&") != nil {
                             parseSpecial(valScanner, &newVal)
                         }
                     }
-                    
+
                     paramValue = newVal
                 }
 
@@ -173,7 +173,7 @@ extension String {
         }
 
         let startIndex = resultString.endIndex
-        
+
         let tag = Tag(name: tagName, attributes: attributes)
 
         if let tagStyler = tags[tagName],
@@ -185,7 +185,7 @@ extension String {
         }
 
         let nextLevel = (tagsStack.last?.level ?? -1) + 1
-        
+
         if selfClosing {
             tagsInfo.append(
                 TagInfo(

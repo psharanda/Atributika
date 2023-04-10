@@ -180,15 +180,11 @@ public final class Attributes: AttributesProvider {
 }
 
 extension Attributes: TagTuning {
-    public func style(tag: Tag) -> AttributesProvider {
+    public func style(tag _: Tag) -> AttributesProvider {
         return self
     }
-    
-    public func transform(tag: Tag, position: TagPosition) -> String? {
+
+    public func transform(tag _: Tag, position _: TagPosition) -> String? {
         return nil
     }
-}
-
-public var Style: Attributes {
-    return Attributes()
 }
