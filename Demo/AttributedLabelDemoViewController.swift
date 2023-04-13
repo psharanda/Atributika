@@ -15,19 +15,19 @@ import UIKit
 extension String {
     func styleAsTweet() -> AttributedStringBuilder {
         let a = TagTuner { tag in
-            Attrs.foregroundColor(.blue).attributedLabelLink(tag.attributes["href"] ?? "")
+            Attrs.foregroundColor(.blue).akaLink(tag.attributes["href"] ?? "")
         }
 
         let hashtag = DetectionTuner { d in
-            Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
+            Attrs.foregroundColor(.blue).akaLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
         }
 
         let mention = DetectionTuner { d in
-            Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
+            Attrs.foregroundColor(.blue).akaLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
         }
 
         let link = DetectionTuner { d in
-            Attrs.foregroundColor(.blue).attributedLabelLink(d.text)
+            Attrs.foregroundColor(.blue).akaLink(d.text)
         }
 
         return style(tags: ["a": a])
@@ -95,7 +95,15 @@ extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDat
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = AttributedLabelDemoDetailsViewController()
-        vc.tweet = tweets[indexPath.row]
+        
+        var x20 = String()
+        
+        for _ in 0..<20 {
+            x20.append(tweets[indexPath.row])
+            x20.append("\n")
+        }
+        
+        vc.tweet = x20
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -114,26 +122,16 @@ extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDat
 class TweetCell: UITableViewCell {
     private let tweetLabel = AttributedLabel()
 
-    @objc private func labelOnTouchUpInside(_ sender: AttributedLabel) {
-        if let linkStr = sender.highlightedLinkValue as? String {
-            if let url = URL(string: linkStr) {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
-
     override init(style: TableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-//        tweetLabel.onLinkTouchUpInside = { _, val in
-//            if let linkStr = val as? String {
-//                if let url = URL(string: linkStr) {
-//                    UIApplication.shared.openURL(url)
-//                }
-//            }
-//        }
-
-        tweetLabel.addTarget(self, action: #selector(labelOnTouchUpInside), for: .touchUpInside)
+        tweetLabel.onLinkTouchUpInside = { _, val in
+            if let linkStr = val as? String {
+                if let url = URL(string: linkStr) {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
 
         contentView.addSubview(tweetLabel)
 
@@ -168,7 +166,7 @@ class TweetCell: UITableViewCell {
 }
 
 class AttributedLabelDemoDetailsViewController: UIViewController {
-    private let attributedLabel = AttributedLabel()
+    private let attributedTextView = AttributedTextView()
 
     var tweet: String? {
         didSet {
@@ -176,37 +174,47 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
                 return
             }
 
-            attributedLabel.attributedText = tweet.styleAsTweet().attributedString
+            attributedTextView.attributedText = tweet.styleAsTweet().attributedString
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "AttributedTextView"
         view.backgroundColor = .white
-        view.addSubview(attributedLabel)
+        view.addSubview(attributedTextView)
 
-        attributedLabel.font = .preferredFont(forTextStyle: .title1)
-        attributedLabel.numberOfLines = 0
-        attributedLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
-        attributedLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
+        attributedTextView.isScrollEnabled = true
+        attributedTextView.isSelectable = true
+        attributedTextView.alwaysBounceVertical = true
+        attributedTextView.numberOfLines = 0
+        attributedTextView.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
+        attributedTextView.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
+        attributedTextView.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
 
-        attributedLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        attributedLabel.backgroundColor = UIColor(white: 0, alpha: 0.05)
+        attributedTextView.onLinkTouchUpInside = { _, val in
+            if let linkStr = val as? String {
+                if let url = URL(string: linkStr) {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+        
+        attributedTextView.translatesAutoresizingMaskIntoConstraints = false
 
         if #available(iOS 11.0, *) {
             NSLayoutConstraint.activate([
-                attributedLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-                attributedLabel.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-                attributedLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-                attributedLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+                attributedTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+                attributedTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+                attributedTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+                attributedTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
             ])
         } else {
             NSLayoutConstraint.activate([
-                attributedLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10),
-                attributedLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomLayoutGuide.bottomAnchor, constant: -10),
-                attributedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-                attributedLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+                attributedTextView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0),
+                attributedTextView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0),
+                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             ])
         }
     }
