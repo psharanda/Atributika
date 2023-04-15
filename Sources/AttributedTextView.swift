@@ -176,6 +176,10 @@
                 textView.textContainerInset = newValue
             }
         }
+        
+        open func flashScrollIndicators() {
+            textView.flashScrollIndicators()
+        }
     }
 
 #endif

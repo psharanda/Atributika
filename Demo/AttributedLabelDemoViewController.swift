@@ -131,16 +131,14 @@ class TweetCell: UITableViewCell {
 
         tweetLabel.translatesAutoresizingMaskIntoConstraints = false
         tweetLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
-        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor, constant: 50).isActive = true
+        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
         tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
-        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor, constant: -50).isActive = true
-        tweetLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 200).isActive = true
+        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
 
         tweetLabel.numberOfLines = 0
         tweetLabel.font = .preferredFont(forTextStyle: .body)
         tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
         tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
-        tweetLabel.textAlignment = .center
     }
 
     @available(*, unavailable)
@@ -197,17 +195,17 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
 
         if #available(iOS 11.0, *) {
             NSLayoutConstraint.activate([
-                attributedTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-                attributedTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+                attributedTextView.topAnchor.constraint(equalTo: view.topAnchor),
+                attributedTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
         } else {
             NSLayoutConstraint.activate([
-                attributedTextView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0),
-                attributedTextView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0),
-                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+                attributedTextView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+                attributedTextView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor),
+                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
         }
     }
