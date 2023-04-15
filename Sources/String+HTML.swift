@@ -56,12 +56,27 @@ extension String {
     }
 
     // MARK: - tags
+    
+    private enum StoredStringIndex {
+        case index(String.Index)
+        case offset(Int)
+    }
 
     private struct TagStackItem {
         let tag: Tag
-        let startIndex: String.Index
+        
+        let startIndex: StoredStringIndex
         let endIndex: String.Index
         let level: Int
+        
+        func startIndex(in string: String) -> String.Index {
+            switch startIndex {
+            case .index(let index):
+                return index
+            case .offset(let offset):
+                return string.index(string.startIndex, offsetBy: offset)
+            }
+        }
     }
 
     private func parseClosingTag(_ scanner: Scanner, _ tagsStack: inout [String.TagStackItem], _ tags: [String: TagTuning], _ resultString: inout String, _ tagsInfo: inout [TagInfo]) {
@@ -71,19 +86,21 @@ extension String {
             return
         }
 
-        for (index, tagInfo) in tagsStack.enumerated().reversed() {
-            if tagInfo.tag.name == tagName {
+        for (index, tagStackItem) in tagsStack.enumerated().reversed() {
+            if tagStackItem.tag.name == tagName {
                 if let tagStyler = tags[tagName],
-                   let str = tagStyler.transform(tag: tagInfo.tag, position: .end)
+                   let str = tagStyler.transform(tag: tagStackItem.tag, position: .end)
                 {
                     resultString.append(str)
                 }
+                
+                //print(resultString[resultString.index(before: resultString.index(before: tagStackItem.startIndex(in: resultString)))])
 
                 tagsInfo.append(
                     TagInfo(
-                        tag: tagInfo.tag,
-                        range: tagInfo.startIndex ..< resultString.endIndex,
-                        level: tagInfo.level
+                        tag: tagStackItem.tag,
+                        range: tagStackItem.startIndex(in: resultString) ..< resultString.endIndex,
+                        level: tagStackItem.level
                     ))
                 tagsStack.remove(at: index)
                 break
@@ -186,7 +203,19 @@ extension String {
                     level: nextLevel
                 ))
         } else {
-            tagsStack.append(TagStackItem(tag: tag, startIndex: startIndex, endIndex: resultString.endIndex, level: nextLevel))
+            
+            let storedStartIndex: StoredStringIndex
+            if #available(iOS 13.0, *) {
+                storedStartIndex = .index(startIndex)
+            } else {
+                storedStartIndex = .offset(resultString.distance(from: resultString.startIndex, to: startIndex))
+            }
+            
+            tagsStack.append(TagStackItem(
+                tag: tag,
+                startIndex: storedStartIndex,
+                endIndex: resultString.endIndex, level: nextLevel
+            ))
         }
     }
 
@@ -233,7 +262,7 @@ extension String {
             tagsInfo.append(
                 TagInfo(
                     tag: tagStackItem.tag,
-                    range: tagStackItem.startIndex ..< tagStackItem.endIndex,
+                    range: tagStackItem.startIndex(in: resultString) ..< tagStackItem.endIndex,
                     level: tagStackItem.level
                 ))
         }
