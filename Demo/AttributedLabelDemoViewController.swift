@@ -138,6 +138,7 @@ class TweetCell: UITableViewCell {
         tweetLabel.font = .preferredFont(forTextStyle: .body)
         tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
         tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
+        tweetLabel.accessibilityBehaviour = .textFirstLinksAfter
     }
 
     @available(*, unavailable)

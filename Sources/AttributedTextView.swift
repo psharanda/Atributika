@@ -81,7 +81,7 @@
                     super.layoutSubviews()
                     if needsResetContentOffset {
                         needsResetContentOffset = false
-                        if #available(iOSApplicationExtension 11.0, *) {
+                        if #available(iOS 11.0, *) {
                             contentOffset = CGPoint(x: 0, y: -adjustedContentInset.top)
                         } else {
                             contentOffset = .zero
@@ -106,73 +106,73 @@
             }
         }
 
-        private var textView: UITextView!
+        private var _textView: UITextView!
 
         override func makeBackend() -> TextViewBackend {
             let backend = UITextViewBackend()
-            textView = backend.textView
+            _textView = backend.textView
             return backend
         }
 
         @IBInspectable open var isSelectable: Bool {
             get {
-                return textView.isSelectable && textView.isUserInteractionEnabled
+                return _textView.isSelectable && _textView.isUserInteractionEnabled
             }
             set {
-                textView.isSelectable = newValue
-                textView.isUserInteractionEnabled = newValue || textView.isScrollEnabled
+                _textView.isSelectable = newValue
+                _textView.isUserInteractionEnabled = newValue || _textView.isScrollEnabled
             }
         }
 
         @IBInspectable open var isScrollEnabled: Bool {
             get {
-                return textView.isScrollEnabled && textView.isUserInteractionEnabled
+                return _textView.isScrollEnabled && _textView.isUserInteractionEnabled
             }
             set {
-                textView.isScrollEnabled = newValue
-                textView.isUserInteractionEnabled = newValue || textView.isSelectable
+                _textView.isScrollEnabled = newValue
+                _textView.isUserInteractionEnabled = newValue || _textView.isSelectable
             }
         }
 
         @IBInspectable open var alwaysBounceVertical: Bool {
             get {
-                return textView.alwaysBounceVertical
+                return _textView.alwaysBounceVertical
             }
             set {
-                textView.alwaysBounceVertical = newValue
+                _textView.alwaysBounceVertical = newValue
             }
         }
 
         @IBInspectable open var alwaysBounceHorizontal: Bool {
             get {
-                return textView.alwaysBounceHorizontal
+                return _textView.alwaysBounceHorizontal
             }
             set {
-                textView.alwaysBounceHorizontal = newValue
+                _textView.alwaysBounceHorizontal = newValue
             }
         }
 
         @available(iOS 11.0, *)
         open var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior {
             get {
-                return textView.contentInsetAdjustmentBehavior
+                return _textView.contentInsetAdjustmentBehavior
             }
             set {
-                textView.contentInsetAdjustmentBehavior = newValue
+                _textView.contentInsetAdjustmentBehavior = newValue
             }
         }
 
         @IBInspectable open var textContainerInset: UIEdgeInsets {
             get {
-                return textView.textContainerInset
+                return _textView.textContainerInset
             }
             set {
-                textView.textContainerInset = newValue
+                _textView.textContainerInset = newValue
             }
         }
 
         open func flashScrollIndicators() {
-            textView.flashScrollIndicators()
+            _textView.flashScrollIndicators()
         }
     }
 
