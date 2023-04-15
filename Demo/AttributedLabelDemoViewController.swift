@@ -184,8 +184,7 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
         attributedTextView.numberOfLines = 0
         attributedTextView.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
         attributedTextView.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
-        attributedTextView.textContainerInset = UIEdgeInsets(top: 50, left: 105, bottom: 0, right: 5)
-
+        attributedTextView.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         attributedTextView.onLinkTouchUpInside = { _, val in
             if let linkStr = val as? String {
                 if let url = URL(string: linkStr) {
@@ -198,10 +197,10 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
 
         if #available(iOS 11.0, *) {
             NSLayoutConstraint.activate([
-                attributedTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-                attributedTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-                attributedTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-                attributedTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+                attributedTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+                attributedTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             ])
         } else {
             NSLayoutConstraint.activate([

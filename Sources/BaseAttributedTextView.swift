@@ -6,23 +6,17 @@
 
     import UIKit
 
-    enum TextVerticalAlignment {
-        case top
-        case center
-    }
-
     protocol TextViewBackend: AnyObject {
         var attributedText: NSAttributedString? { get set }
         var numberOfLines: Int { get set }
         var lineBreakMode: NSLineBreakMode { get set }
 
-        var textVerticalAlignment: TextVerticalAlignment { get }
-
         @available(iOS 10.0, *)
         var adjustsFontForContentSizeCategory: Bool { get set }
 
         var size: CGSize { get set }
-        var textInset: UIEdgeInsets { get }
+
+        var textOrigin: CGPoint { get }
 
         var view: UIView { get }
 
@@ -353,18 +347,8 @@
         }
 
         private func linkRange(at point: CGPoint) -> NSRange? {
-            let usedRect = backend.usedRect
-            let dx = backend.textInset.left
-            let dy: CGFloat
-
-            switch backend.textVerticalAlignment {
-            case .top:
-                dy = backend.textInset.top
-            case .center:
-                dy = (bounds.height - usedRect.size.height) / 2
-            }
-
-            let adjustedPoint = CGPoint(x: point.x - dx, y: point.y - dy)
+            let textOrigin = backend.textOrigin
+            let adjustedPoint = CGPoint(x: point.x - textOrigin.x, y: point.y - textOrigin.y)
 
             var result: NSRange?
 
@@ -398,9 +382,7 @@
 
         override open func layoutSubviews() {
             super.layoutSubviews()
-            let insets = backend.textInset
-            backend.size = CGSize(width: bounds.size.width - insets.left - insets.right,
-                                  height: bounds.size.height - insets.top - insets.bottom)
+            backend.size = bounds.size
         }
 
         override open var intrinsicContentSize: CGSize {

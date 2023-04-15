@@ -63,12 +63,9 @@
                 }
             }
 
-            var textVerticalAlignment: TextVerticalAlignment {
-                return .center
-            }
-
-            var textInset: UIEdgeInsets {
-                return .zero
+            var textOrigin: CGPoint {
+                let rect = layoutManager.usedRect(for: textContainer)
+                return CGPoint(x: 0, y: (label.frame.size.height - rect.size.height) / 2)
             }
 
             var view: UIView {

@@ -48,12 +48,8 @@
 
             var size: CGSize = .zero
 
-            var textInset: UIEdgeInsets {
-                return textView.textContainerInset
-            }
-
-            var textVerticalAlignment: TextVerticalAlignment {
-                return .top
+            var textOrigin: CGPoint {
+                return CGPoint(x: textView.textContainerInset.left, y: textView.textContainerInset.top)
             }
 
             var view: UIView {
@@ -78,11 +74,33 @@
                 return textView.layoutManager.usedRect(for: textView.textContainer)
             }
 
+            class TextView: UITextView {
+                override var attributedText: NSAttributedString! {
+                    didSet {
+                        needsResetContentOffset = true
+                    }
+                }
+
+                var needsResetContentOffset = false
+
+                override func layoutSubviews() {
+                    super.layoutSubviews()
+                    if needsResetContentOffset {
+                        needsResetContentOffset = false
+                        if #available(iOSApplicationExtension 11.0, *) {
+                            contentOffset = CGPoint(x: 0, y: -adjustedContentInset.top)
+                        } else {
+                            contentOffset = .zero
+                        }
+                    }
+                }
+            }
+
             init() {
                 if #available(iOS 16.0, *) {
-                    textView = UITextView(usingTextLayoutManager: false)
+                    textView = TextView(usingTextLayoutManager: false)
                 } else {
-                    textView = UITextView()
+                    textView = TextView()
                 }
                 textView.isUserInteractionEnabled = false
                 textView.textContainer.lineFragmentPadding = 0
@@ -137,6 +155,16 @@
             }
             set {
                 textView.alwaysBounceHorizontal = newValue
+            }
+        }
+
+        @available(iOS 11.0, *)
+        open var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior {
+            get {
+                return textView.contentInsetAdjustmentBehavior
+            }
+            set {
+                textView.contentInsetAdjustmentBehavior = newValue
             }
         }
 
