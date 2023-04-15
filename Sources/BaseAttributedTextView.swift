@@ -14,13 +14,9 @@
         @available(iOS 10.0, *)
         var adjustsFontForContentSizeCategory: Bool { get set }
 
-        var size: CGSize { get set }
-
         var textOrigin: CGPoint { get }
 
         var view: UIView { get }
-
-        var usedRect: CGRect { get }
 
         func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool)
     }
@@ -382,7 +378,6 @@
 
         override open func layoutSubviews() {
             super.layoutSubviews()
-            backend.size = bounds.size
         }
 
         override open var intrinsicContentSize: CGSize {

@@ -53,17 +53,10 @@
                     return label.lineBreakMode
                 }
             }
-
-            var size: CGSize {
-                set {
-                    textContainer.size = newValue
-                }
-                get {
-                    return textContainer.size
-                }
-            }
+            
 
             var textOrigin: CGPoint {
+                ensureTextContainerSize()
                 let rect = layoutManager.usedRect(for: textContainer)
                 return CGPoint(x: 0, y: (label.frame.size.height - rect.size.height) / 2)
             }
@@ -73,6 +66,7 @@
             }
 
             func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool) {
+                ensureTextContainerSize()
                 layoutManager.enumerateEnclosingRects(
                     forGlyphRange: glyphRange,
                     withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
@@ -82,10 +76,6 @@
                         stop.pointee = true
                     }
                 }
-            }
-
-            var usedRect: CGRect {
-                return layoutManager.usedRect(for: textContainer)
             }
 
             let textContainer: NSTextContainer
@@ -103,6 +93,14 @@
 
                 textStorage = NSTextStorage()
                 textStorage.addLayoutManager(layoutManager)
+            }
+            
+            private func ensureTextContainerSize() {
+                let newSize = CGSize(width: label.bounds.width, height: CGFloat.greatestFiniteMagnitude)
+                if (textContainer.size != newSize) {
+                    textContainer.size = newSize
+                }
+                
             }
         }
 

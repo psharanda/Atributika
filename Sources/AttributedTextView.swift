@@ -46,8 +46,6 @@
                 }
             }
 
-            var size: CGSize = .zero
-
             var textOrigin: CGPoint {
                 return CGPoint(x: textView.textContainerInset.left, y: textView.textContainerInset.top)
             }
@@ -68,10 +66,6 @@
                         stop.pointee = true
                     }
                 }
-            }
-
-            var usedRect: CGRect {
-                return textView.layoutManager.usedRect(for: textView.textContainer)
             }
 
             class TextView: UITextView {
