@@ -72,11 +72,7 @@ func stringWithManyDetectables() -> NSAttributedString {
     let mentions = Attrs.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
     let b = Attrs.font(.boldSystemFont(ofSize: 12))
 
-    #if swift(>=4.2)
-        let u = Attrs.underlineStyle(.single)
-    #else
-        let u = Attrs.underlineStyle(.styleSingle)
-    #endif
+    let u = Attrs.underlineStyle(.single)
 
     let base = Attrs.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
 
@@ -184,11 +180,7 @@ func stringWithHref() -> NSAttributedString {
 
 func stringWithBoldItalicUnderline() -> NSAttributedString {
     let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
-    #if swift(>=4.2)
-        let uib = Attrs.font(font).underlineStyle(.single)
-    #else
-        let uib = Attrs.font(font).underlineStyle(.styleSingle)
-    #endif
+    let uib = Attrs.font(font).underlineStyle(.single)
 
     let str = "<br><uib>Italicunderline</uib>"
         .style(tags: ["uib": uib])
@@ -199,11 +191,7 @@ func stringWithBoldItalicUnderline() -> NSAttributedString {
 func stringWithImage() -> NSAttributedString {
     let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
 
-    #if swift(>=4.2)
-        let b = Attrs.font(font).underlineStyle(.single)
-    #else
-        let b = Attrs.font(font).underlineStyle(.styleSingle)
-    #endif
+    let b = Attrs.font(font).underlineStyle(.single)
 
     let img = TagTuner(style: { tag in
         let style = Attrs
@@ -231,11 +219,7 @@ func stringWithImage() -> NSAttributedString {
 
 func stringWithStrikethrough() -> NSAttributedString {
     let all = Attrs.font(.systemFont(ofSize: 20))
-    #if swift(>=4.2)
-        let strike = Attrs.strikethroughStyle(.single).strikethroughColor(.black)
-    #else
-        let strike = Attrs.strikethroughStyle(.styleSingle).strikethroughColor(.black)
-    #endif
+    let strike = Attrs.strikethroughStyle(.single).strikethroughColor(.black)
 
     let code = Attrs.foregroundColor(.red)
 

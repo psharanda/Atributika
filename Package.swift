@@ -16,4 +16,4 @@ let package = Package(name: "Atributika",
                                     name: "AtributikaTests",
                                     dependencies: ["Atributika"]
                                 )],
-                      swiftLanguageVersions: [.v5])
+                      swiftLanguageVersions: [.v4_2])

@@ -220,11 +220,7 @@ class AtributikaTests: XCTestCase {
     }
 
     func testTagsStack() {
-        #if swift(>=4.2)
-            let u = Attrs.underlineStyle(.single)
-        #else
-            let u = Attrs.underlineStyle(.styleSingle)
-        #endif
+        let u = Attrs.underlineStyle(.single)
 
         let test = AttributedStringBuilder(
             htmlString: "Hello <b>Wo<red>rl<u>d</u></red></b>!!!",
@@ -240,11 +236,7 @@ class AtributikaTests: XCTestCase {
         reference.addAttributes([.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
         reference.addAttributes([.foregroundColor: Color.red], range: NSMakeRange(8, 3))
 
-        #if swift(>=4.2)
-            reference.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue], range: NSMakeRange(10, 1))
-        #else
-            reference.addAttributes([.underlineStyle: NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(10, 1))
-        #endif
+        reference.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue], range: NSMakeRange(10, 1))
 
         XCTAssertEqual(test, reference)
     }

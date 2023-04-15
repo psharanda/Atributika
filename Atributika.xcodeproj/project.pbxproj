@@ -21,10 +21,6 @@
 		1B4638582259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* BaseAttributedTextView.swift */; };
 		1B4638592259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* BaseAttributedTextView.swift */; };
 		1B46385A2259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B38369F1F97C224001DB333 /* BaseAttributedTextView.swift */; };
-		1B539F1129E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
-		1B539F1229E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
-		1B539F1329E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
-		1B539F1429E4A34B00188B7A /* TextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1029E4A34B00188B7A /* TextEngine.swift */; };
 		1B539F1629E4B55400188B7A /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1529E4B55400188B7A /* Atributika.swift */; };
 		1B539F1729E4B55400188B7A /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1529E4B55400188B7A /* Atributika.swift */; };
 		1B539F1829E4B55400188B7A /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1529E4B55400188B7A /* Atributika.swift */; };
@@ -131,7 +127,6 @@
 		1B2F839B1E5C98A4009AFBCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B38369F1F97C224001DB333 /* BaseAttributedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseAttributedTextView.swift; path = Sources/BaseAttributedTextView.swift; sourceTree = "<group>"; };
 		1B3C73B229E46BAB00022952 /* Detection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Detection.swift; path = Sources/Detection.swift; sourceTree = "<group>"; };
-		1B539F1029E4A34B00188B7A /* TextEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextEngine.swift; path = Sources/TextEngine.swift; sourceTree = "<group>"; };
 		1B539F1529E4B55400188B7A /* Atributika.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Atributika.swift; path = Sources/Atributika.swift; sourceTree = "<group>"; };
 		1B80548923A8ACDF002DCA63 /* IBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
 		1B80548B23A8ACF1002DCA63 /* IB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
@@ -250,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				1B539F1529E4B55400188B7A /* Atributika.swift */,
-				1B539F1029E4A34B00188B7A /* TextEngine.swift */,
 				1B3C73B229E46BAB00022952 /* Detection.swift */,
 				1BD4163129E42E0700687F88 /* String+HTML.swift */,
 				1BD4163329E42E0700687F88 /* Sugar.swift */,
@@ -648,7 +642,6 @@
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BBE608F29E8B389000D548F /* AttributedLabel.swift in Sources */,
 				1B3C73B329E46BAB00022952 /* Detection.swift in Sources */,
-				1B539F1129E4A34B00188B7A /* TextEngine.swift in Sources */,
 				1BBE609429E8B3F5000D548F /* AttributedTextView.swift in Sources */,
 				1BB55AE11E5C73F000CE6EAD /* Attributes.swift in Sources */,
 			);
@@ -676,7 +669,6 @@
 				1B4638592259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609129E8B389000D548F /* AttributedLabel.swift in Sources */,
 				1B3C73B529E46BAB00022952 /* Detection.swift in Sources */,
-				1B539F1329E4A34B00188B7A /* TextEngine.swift in Sources */,
 				1BBE609629E8B3F5000D548F /* AttributedTextView.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* Attributes.swift in Sources */,
 			);
@@ -696,7 +688,6 @@
 				1B46385A2259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609229E8B389000D548F /* AttributedLabel.swift in Sources */,
 				1B3C73B629E46BAB00022952 /* Detection.swift in Sources */,
-				1B539F1429E4A34B00188B7A /* TextEngine.swift in Sources */,
 				1BBE609729E8B3F5000D548F /* AttributedTextView.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* Attributes.swift in Sources */,
 			);
@@ -716,7 +707,6 @@
 				1B4638582259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609029E8B389000D548F /* AttributedLabel.swift in Sources */,
 				1B3C73B429E46BAB00022952 /* Detection.swift in Sources */,
-				1B539F1229E4A34B00188B7A /* TextEngine.swift in Sources */,
 				1BBE609529E8B3F5000D548F /* AttributedTextView.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* Attributes.swift in Sources */,
 			);
@@ -790,7 +780,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.psharanda.Atributika.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -809,7 +799,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.psharanda.Atributika.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -944,7 +934,7 @@
 				PRODUCT_NAME = Atributika;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -967,7 +957,7 @@
 				PRODUCT_NAME = Atributika;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -983,7 +973,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -999,7 +989,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1022,7 +1012,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1047,7 +1037,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1072,7 +1062,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1097,7 +1087,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1125,7 +1115,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1151,7 +1141,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1168,7 +1158,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1186,7 +1176,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1201,7 +1191,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Atributika.Atributika-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
@@ -1218,7 +1208,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;

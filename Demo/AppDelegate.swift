@@ -5,11 +5,7 @@
 
 import UIKit
 
-#if swift(>=4.2)
-    typealias ApplicationLaunchOptionsKey = UIApplication.LaunchOptionsKey
-#else
-    typealias ApplicationLaunchOptionsKey = UIApplicationLaunchOptionsKey
-#endif
+typealias ApplicationLaunchOptionsKey = UIApplication.LaunchOptionsKey
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

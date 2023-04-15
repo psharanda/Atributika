@@ -6,11 +6,7 @@
 import Atributika
 import UIKit
 
-#if swift(>=4.2)
-    typealias TableViewCellStyle = UITableViewCell.CellStyle
-#else
-    typealias TableViewCellStyle = UITableViewCellStyle
-#endif
+typealias TableViewCellStyle = UITableViewCell.CellStyle
 
 extension String {
     func styleAsTweet() -> AttributedStringBuilder {
@@ -43,11 +39,7 @@ class AttributedLabelDemoViewController: UIViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
-        #if swift(>=4.2)
-            tableView.rowHeight = UITableView.automaticDimension
-        #else
-            tableView.rowHeight = UITableViewAutomaticDimension
-        #endif
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50
         return tableView
     }()
@@ -95,14 +87,14 @@ extension AttributedLabelDemoViewController: UITableViewDelegate, UITableViewDat
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = AttributedLabelDemoDetailsViewController()
-        
+
         var x20 = String()
-        
-        for _ in 0..<20 {
+
+        for _ in 0 ..< 20 {
             x20.append(tweets[indexPath.row])
             x20.append("\n")
         }
-        
+
         vc.tweet = x20
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
@@ -139,14 +131,16 @@ class TweetCell: UITableViewCell {
 
         tweetLabel.translatesAutoresizingMaskIntoConstraints = false
         tweetLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
-        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+        tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor, constant: 50).isActive = true
         tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
-        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+        tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor, constant: -50).isActive = true
+        tweetLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 200).isActive = true
 
         tweetLabel.numberOfLines = 0
         tweetLabel.font = .preferredFont(forTextStyle: .body)
         tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
         tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
+        tweetLabel.textAlignment = .center
     }
 
     @available(*, unavailable)
@@ -190,7 +184,7 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
         attributedTextView.numberOfLines = 0
         attributedTextView.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
         attributedTextView.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
-        attributedTextView.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        attributedTextView.textContainerInset = UIEdgeInsets(top: 50, left: 105, bottom: 0, right: 5)
 
         attributedTextView.onLinkTouchUpInside = { _, val in
             if let linkStr = val as? String {
@@ -199,7 +193,7 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
                 }
             }
         }
-        
+
         attributedTextView.translatesAutoresizingMaskIntoConstraints = false
 
         if #available(iOS 11.0, *) {

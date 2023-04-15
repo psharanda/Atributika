@@ -12,7 +12,12 @@
             var attributedText: NSAttributedString? {
                 set {
                     label.attributedText = newValue
-                    textEngine.attributedString = newValue
+
+                    if let attributedString = newValue {
+                        textStorage.setAttributedString(attributedString)
+                    } else {
+                        textStorage.setAttributedString(NSAttributedString())
+                    }
                 }
                 get {
                     return label.attributedText
@@ -42,7 +47,7 @@
             var lineBreakMode: NSLineBreakMode {
                 set {
                     label.lineBreakMode = newValue
-                    textEngine.lineBreakMode = newValue
+                    textContainer.lineBreakMode = newValue
                 }
                 get {
                     return label.lineBreakMode
@@ -51,28 +56,57 @@
 
             var size: CGSize {
                 set {
-                    textEngine.size = newValue
+                    textContainer.size = newValue
                 }
                 get {
-                    return textEngine.size
+                    return textContainer.size
                 }
             }
 
-            var layoutManager: NSLayoutManager {
-                return textEngine.layoutManager
+            var textVerticalAlignment: TextVerticalAlignment {
+                return .center
             }
 
-            var textContainer: NSTextContainer {
-                return textEngine.textContainer
+            var textInset: UIEdgeInsets {
+                return .zero
             }
 
             var view: UIView {
                 return label
             }
 
-            let textEngine = TextEngine()
+            func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool) {
+                layoutManager.enumerateEnclosingRects(
+                    forGlyphRange: glyphRange,
+                    withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
+                    in: textContainer
+                ) { rect, stop in
+                    if block(rect) {
+                        stop.pointee = true
+                    }
+                }
+            }
+
+            var usedRect: CGRect {
+                return layoutManager.usedRect(for: textContainer)
+            }
+
+            let textContainer: NSTextContainer
+            let layoutManager: NSLayoutManager
+            let textStorage: NSTextStorage
 
             let label = UILabel()
+
+            init() {
+                textContainer = NSTextContainer(size: .zero)
+                textContainer.lineFragmentPadding = 0
+
+                layoutManager = NSLayoutManager()
+                layoutManager.addTextContainer(textContainer)
+
+                textStorage = NSTextStorage()
+                textStorage.addLayoutManager(layoutManager)
+            }
         }
 
         override func makeBackend() -> TextViewBackend {

@@ -48,12 +48,12 @@
 
             var size: CGSize = .zero
 
-            var layoutManager: NSLayoutManager {
-                return textView.layoutManager
+            var textInset: UIEdgeInsets {
+                return textView.textContainerInset
             }
 
-            var textContainer: NSTextContainer {
-                return textView.textContainer
+            var textVerticalAlignment: TextVerticalAlignment {
+                return .top
             }
 
             var view: UIView {
@@ -62,8 +62,28 @@
 
             let textView: UITextView
 
+            func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool) {
+                textView.layoutManager.enumerateEnclosingRects(
+                    forGlyphRange: glyphRange,
+                    withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
+                    in: textView.textContainer
+                ) { rect, stop in
+                    if block(rect) {
+                        stop.pointee = true
+                    }
+                }
+            }
+
+            var usedRect: CGRect {
+                return textView.layoutManager.usedRect(for: textView.textContainer)
+            }
+
             init() {
-                textView = UITextView()
+                if #available(iOS 16.0, *) {
+                    textView = UITextView(usingTextLayoutManager: false)
+                } else {
+                    textView = UITextView()
+                }
                 textView.isUserInteractionEnabled = false
                 textView.textContainer.lineFragmentPadding = 0
                 textView.textContainerInset = .zero

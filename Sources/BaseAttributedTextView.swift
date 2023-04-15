@@ -6,20 +6,29 @@
 
     import UIKit
 
-    protocol TextViewBackend: AnyObject {
-        var layoutManager: NSLayoutManager { get }
-        var textContainer: NSTextContainer { get }
+    enum TextVerticalAlignment {
+        case top
+        case center
+    }
 
+    protocol TextViewBackend: AnyObject {
         var attributedText: NSAttributedString? { get set }
         var numberOfLines: Int { get set }
         var lineBreakMode: NSLineBreakMode { get set }
+
+        var textVerticalAlignment: TextVerticalAlignment { get }
 
         @available(iOS 10.0, *)
         var adjustsFontForContentSizeCategory: Bool { get set }
 
         var size: CGSize { get set }
+        var textInset: UIEdgeInsets { get }
 
         var view: UIView { get }
+
+        var usedRect: CGRect { get }
+
+        func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool)
     }
 
     open class BaseAttributedTextView: UIView {
@@ -35,20 +44,11 @@
         // MARK: - private properties
 
         private var backend: TextViewBackend!
-        
+
         private let trackingControl = TrackingControl()
-        
 
         func makeBackend() -> TextViewBackend {
-            fatalError("_AttributedTextControl is for subclassing only")
-        }
-
-        private var layoutManager: NSLayoutManager {
-            return backend.layoutManager
-        }
-
-        private var textContainer: NSTextContainer {
-            return backend.textContainer
+            fatalError("BaseAttributedTextView is for subclassing only")
         }
 
         // MARK: - links
@@ -60,12 +60,11 @@
 
             if let str = attributedText {
                 let nsrange = NSRange(range, in: str.string)
-                layoutManager.enumerateEnclosingRects(
+                backend.enumerateEnclosingRects(
                     forGlyphRange: nsrange,
-                    withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                    in: textContainer,
-                    using: { rect, _ in
+                    using: { rect in
                         result.append(rect)
+                        return false
                     }
                 )
             }
@@ -102,7 +101,7 @@
         @IBInspectable open var attributedText: NSAttributedString? {
             didSet {
                 setNeedsDisplayText()
-                //accessibleElements = nil
+                accessibleElements = nil
             }
         }
 
@@ -129,11 +128,10 @@
 
         @IBInspectable open var lineBreakMode: NSLineBreakMode {
             set {
-                backend.lineBreakMode = lineBreakMode
-                textContainer.lineBreakMode = newValue
+                backend.lineBreakMode = newValue
             }
             get {
-                return textContainer.lineBreakMode
+                return backend.lineBreakMode
             }
         }
 
@@ -207,17 +205,14 @@
             commonInit()
         }
 
-        fileprivate func createBackend() -> TextViewBackend {
-            fatalError("")
-        }
-
         private func commonInit() {
             backend = makeBackend()
+
             trackingControl.parent = self
             isAccessibilityElement = false
 
             addSubview(backend.view)
-            
+
             backend.view.addSubview(trackingControl)
 
             lineBreakMode = .byTruncatingTail
@@ -242,12 +237,12 @@
         override open var forLastBaselineLayout: UIView {
             return backend.view
         }
-        
-        //MARK: - tracking
-        
-        private class TrackingControl: UIControl  {
+
+        // MARK: - tracking
+
+        private class TrackingControl: UIControl {
             weak var parent: BaseAttributedTextView?
-            
+
             override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
                 if super.beginTracking(touch, with: event) {
                     return parent?._beginTracking(touch, with: event) ?? false
@@ -292,9 +287,9 @@
             }
         }
 
-        func _beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        func _beginTracking(_ touch: UITouch, with _: UIEvent?) -> Bool {
             let pt = touch.location(in: backend.view)
-            trackedLinkRange = linkRange(at: pt)
+            trackedLinkRange = linkRange(at: trackingControl.convert(pt, to: backend.view))
             if trackedLinkRange != nil {
                 _highlightedLinkRange = trackedLinkRange
                 return true
@@ -303,9 +298,9 @@
             }
         }
 
-        func _continueTracking(_ touch: UITouch, with event: UIEvent?) {
+        func _continueTracking(_ touch: UITouch, with _: UIEvent?) {
             let pt = touch.location(in: backend.view)
-            if let currentDetection = linkRange(at: pt) {
+            if let currentDetection = linkRange(at: trackingControl.convert(pt, to: backend.view)) {
                 if currentDetection == trackedLinkRange {
                     if _highlightedLinkRange != trackedLinkRange {
                         _highlightedLinkRange = trackedLinkRange
@@ -320,21 +315,21 @@
             }
         }
 
-        func _endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        func _endTracking(_: UITouch?, with _: UIEvent?) {
             trackedLinkRange = nil
         }
 
-        func _preTouchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        func _preTouchesEnded(_: Set<UITouch>, with _: UIEvent?) {
             if let val = highlightedLinkValue {
                 onLinkTouchUpInside?(self, val)
             }
         }
-        
-        func _postTouchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+        func _postTouchesEnded(_: Set<UITouch>, with _: UIEvent?) {
             _highlightedLinkRange = nil
         }
 
-        func _cancelTracking(with event: UIEvent?) {
+        func _cancelTracking(with _: UIEvent?) {
             trackedLinkRange = nil
             _highlightedLinkRange = nil
         }
@@ -353,15 +348,24 @@
             if !backend.view.isUserInteractionEnabled {
                 return nil
             } else {
-                if (superResult == trackingControl) {
-                    return backend.view
-                } else {
-                    return superResult
-                }
+                return superResult
             }
         }
 
         private func linkRange(at point: CGPoint) -> NSRange? {
+            let usedRect = backend.usedRect
+            let dx = backend.textInset.left
+            let dy: CGFloat
+
+            switch backend.textVerticalAlignment {
+            case .top:
+                dy = backend.textInset.top
+            case .center:
+                dy = (bounds.height - usedRect.size.height) / 2
+            }
+
+            let adjustedPoint = CGPoint(x: point.x - dx, y: point.y - dy)
+
             var result: NSRange?
 
             if let str = attributedText {
@@ -373,14 +377,14 @@
                     guard val != nil else {
                         return
                     }
-                    layoutManager.enumerateEnclosingRects(
+                    backend.enumerateEnclosingRects(
                         forGlyphRange: range,
-                        withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                        in: textContainer, using: { rect, innerStop in
-                            if rect.contains(point) {
-                                innerStop.pointee = true
+                        using: { rect in
+                            if rect.contains(adjustedPoint) {
                                 result = range
+                                return true
                             }
+                            return false
                         }
                     )
                     if result != nil {
@@ -394,7 +398,9 @@
 
         override open func layoutSubviews() {
             super.layoutSubviews()
-            backend.size = bounds.size
+            let insets = backend.textInset
+            backend.size = CGSize(width: bounds.size.width - insets.left - insets.right,
+                                  height: bounds.size.height - insets.top - insets.bottom)
         }
 
         override open var intrinsicContentSize: CGSize {
@@ -501,7 +507,7 @@
                     if enclosingRects.count == 0 {
                         return .zero
                     } else {
-                        let rect = UIAccessibilityConvertFrameToScreenCoordinates(enclosingRects[0], view)
+                        let rect = UIAccessibility.convertToScreenCoordinates(enclosingRects[0], in: view)
                         return CGPoint(x: rect.midX, y: rect.midY)
                     }
                 }
@@ -519,7 +525,7 @@
                     }
 
                     if enclosingRects.count == 1 {
-                        return UIAccessibilityConvertFrameToScreenCoordinates(enclosingRects[0], view)
+                        return UIAccessibility.convertToScreenCoordinates(enclosingRects[0], in: view)
                     }
 
                     var resultRect = enclosingRects[0]
@@ -528,7 +534,7 @@
                         resultRect = resultRect.union(enclosingRects[i])
                     }
 
-                    return UIAccessibilityConvertFrameToScreenCoordinates(resultRect, view)
+                    return UIAccessibility.convertToScreenCoordinates(resultRect, in: view)
                 }
                 set {}
             }
@@ -548,7 +554,7 @@
                         path.append(UIBezierPath(rect: rect))
                     }
 
-                    return UIAccessibilityConvertPathToScreenCoordinates(path, view)
+                    return UIAccessibility.convertToScreenCoordinates(path, in: view)
                 }
                 set {}
             }
@@ -564,7 +570,7 @@
                     if let str = attributedText {
                         let text = AccessibilityElement(container: self, view: self, enclosingRects: [backend.view.frame], usePath: false)
                         text.accessibilityLabel = str.string
-                        text.accessibilityTraits = UIAccessibilityTraitStaticText
+                        text.accessibilityTraits = UIAccessibilityTraits.staticText
                         accessibleElements?.append(text)
 
                         str.enumerateAttribute(
@@ -578,11 +584,11 @@
 
                             var enclosingRects = [CGRect]()
 
-                            layoutManager.enumerateEnclosingRects(
+                            backend.enumerateEnclosingRects(
                                 forGlyphRange: range,
-                                withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                                in: textContainer, using: { rect, _ in
+                                using: { rect in
                                     enclosingRects.append(rect)
+                                    return false
                                 }
                             )
 
@@ -594,7 +600,7 @@
                             if let r = Range(range, in: str.string) {
                                 innerElement.accessibilityLabel = String(str.string[r])
                             }
-                            innerElement.accessibilityTraits = UIAccessibilityTraitLink
+                            innerElement.accessibilityTraits = UIAccessibilityTraits.link
 
                             element.accessibilityElements = [innerElement]
 
