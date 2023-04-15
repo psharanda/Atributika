@@ -53,7 +53,6 @@
                     return label.lineBreakMode
                 }
             }
-            
 
             var textOrigin: CGPoint {
                 ensureTextContainerSize()
@@ -94,13 +93,12 @@
                 textStorage = NSTextStorage()
                 textStorage.addLayoutManager(layoutManager)
             }
-            
+
             private func ensureTextContainerSize() {
                 let newSize = CGSize(width: label.bounds.width, height: CGFloat.greatestFiniteMagnitude)
-                if (textContainer.size != newSize) {
+                if textContainer.size != newSize {
                     textContainer.size = newSize
                 }
-                
             }
         }
 

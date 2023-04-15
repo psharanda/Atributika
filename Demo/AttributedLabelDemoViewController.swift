@@ -205,7 +205,7 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
                 attributedTextView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
                 attributedTextView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor),
                 attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
         }
     }

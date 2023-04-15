@@ -56,7 +56,7 @@ extension String {
     }
 
     // MARK: - tags
-    
+
     private enum StoredStringIndex {
         case index(String.Index)
         case offset(Int)
@@ -64,16 +64,16 @@ extension String {
 
     private struct TagStackItem {
         let tag: Tag
-        
+
         let startIndex: StoredStringIndex
         let endIndex: String.Index
         let level: Int
-        
+
         func startIndex(in string: String) -> String.Index {
             switch startIndex {
-            case .index(let index):
+            case let .index(index):
                 return index
-            case .offset(let offset):
+            case let .offset(offset):
                 return string.index(string.startIndex, offsetBy: offset)
             }
         }
@@ -93,8 +93,8 @@ extension String {
                 {
                     resultString.append(str)
                 }
-                
-                //print(resultString[resultString.index(before: resultString.index(before: tagStackItem.startIndex(in: resultString)))])
+
+                // print(resultString[resultString.index(before: resultString.index(before: tagStackItem.startIndex(in: resultString)))])
 
                 tagsInfo.append(
                     TagInfo(
@@ -203,14 +203,13 @@ extension String {
                     level: nextLevel
                 ))
         } else {
-            
             let storedStartIndex: StoredStringIndex
             if #available(iOS 13.0, *) {
                 storedStartIndex = .index(startIndex)
             } else {
                 storedStartIndex = .offset(resultString.distance(from: resultString.startIndex, to: startIndex))
             }
-            
+
             tagsStack.append(TagStackItem(
                 tag: tag,
                 startIndex: storedStartIndex,
