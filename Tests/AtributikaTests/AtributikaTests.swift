@@ -617,8 +617,8 @@ class AtributikaTests: XCTestCase {
                 return Color.gray
             }
 
-            var rgbValue: UInt32 = 0
-            Scanner(string: cString).scanHexInt32(&rgbValue)
+            var rgbValue: UInt64 = 0
+            Scanner(string: cString).scanHexInt64(&rgbValue)
 
             return Color(
                 red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,

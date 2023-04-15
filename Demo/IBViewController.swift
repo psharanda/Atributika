@@ -1,9 +1,5 @@
 //
-//  IBViewController.swift
-//  Demo
-//
-//  Created by Pavel Sharanda on 12/17/19.
-//  Copyright © 2019 Atributika. All rights reserved.
+//  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
 import Atributika

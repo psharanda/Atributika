@@ -198,41 +198,27 @@ view.addSubview(tweetLabel)
 
 Current version is compatible with:
 
-* Swift 4.0+ (for Swift 3.2 use `swift-3.2` branch)
+* Swift 5.0+
 * iOS 9.0 or later
 * tvOS 9.0 or later
 * watchOS 2.0 or later
 * macOS 10.10 or later
 
-Note: `AttributedLabel` works only on iOS
+Note: `AttributedLabel` / `AttributedTextView` are available only on iOS
 
 ## Why does Atributika have one 't' in its name?
-Because in Belarusian/Russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not real word.
+Because in Belarusian/Russian we have one letter 't' (атрыбутыка/атрибутика). So basically it is transcription, not a real word.
 
 ## Integration
 
 ### [Swift Package Manager](https://github.com/apple/swift-package-manager)
 
-Create a `Package.swift` file.
+Add dependency to `Package.swift` file.
 
 ```swift
-// swift-tools-version:5.0
-
-import PackageDescription
-
-let package = Package(
-  name: "MyProject",
   dependencies: [
     .package(url: "https://github.com/psharanda/Atributika.git", .exact("5.0.0"))
-  ],
-  targets: [
-    .target(name: "MyProject", dependencies: ["Atributika"])
   ]
-)
-```
-
-```bash
-$ swift build
 ```
 
 ### Carthage

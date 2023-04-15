@@ -1,6 +1,5 @@
 //
-//  Created by Pavel Sharanda on 02.03.17.
-//  Copyright © 2017 Pavel Sharanda. All rights reserved.
+//  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
 import Atributika
@@ -193,21 +192,12 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
 
         attributedTextView.translatesAutoresizingMaskIntoConstraints = false
 
-        if #available(iOS 11.0, *) {
-            NSLayoutConstraint.activate([
-                attributedTextView.topAnchor.constraint(equalTo: view.topAnchor),
-                attributedTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            ])
-        } else {
-            NSLayoutConstraint.activate([
-                attributedTextView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
-                attributedTextView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor),
-                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            ])
-        }
+        NSLayoutConstraint.activate([
+            attributedTextView.topAnchor.constraint(equalTo: view.topAnchor),
+            attributedTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
     }
 
     @objc private func labelOnTouchUpInside(_ sender: AttributedLabel) {

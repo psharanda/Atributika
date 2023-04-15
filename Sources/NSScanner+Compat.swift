@@ -54,29 +54,32 @@ extension Scanner {
     }
 
     func currentCharacter() -> Character? {
-        guard !isAtEnd, let nextCharRange = Range(NSRange(location: scanLocation, length: 0), in: string) else {
+        guard !isAtEnd else {
             return nil
         }
-        return string[nextCharRange.lowerBound]
-    }
-
-    func _scanCharacterPreiOS13() -> Character? {
-        guard !isAtEnd, let nextCharRange = Range(NSRange(location: scanLocation, length: 0), in: string) else {
-            return nil
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
+            return string[currentIndex]
+        } else {
+            guard let nextCharRange = Range(NSRange(location: scanLocation, length: 0), in: string) else {
+                return nil
+            }
+            return string[nextCharRange.lowerBound]
         }
-        let char = string[nextCharRange.lowerBound]
-        let charRange = nextCharRange.lowerBound ..< string.index(after: nextCharRange.lowerBound)
-        let nsRange = NSRange(charRange, in: string)
-        scanLocation += nsRange.length
-
-        return char
     }
 
     func _scanCharacter() -> Character? {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
             return scanCharacter()
         } else {
-            return _scanCharacterPreiOS13()
+            guard !isAtEnd, let nextCharRange = Range(NSRange(location: scanLocation, length: 0), in: string) else {
+                return nil
+            }
+            let char = string[nextCharRange.lowerBound]
+            let charRange = nextCharRange.lowerBound ..< string.index(after: nextCharRange.lowerBound)
+            let nsRange = NSRange(charRange, in: string)
+            scanLocation += nsRange.length
+
+            return char
         }
     }
 }

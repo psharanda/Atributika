@@ -1,6 +1,5 @@
 //
-//  Created by Pavel Sharanda on 21.02.17.
-//  Copyright © 2017 Pavel Sharanda. All rights reserved.
+//  Copyright © 2017-2023 Pavel Sharanda. All rights reserved.
 //
 
 import UIKit
