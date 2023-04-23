@@ -48,7 +48,7 @@ class AttributedLabelDemoViewController: UIViewController {
     private var tweets: [String] = [
         "Thank you for everything. My last ask is the same",
         "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>",
-        "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars😊 https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link that won't detect click here</a>",
+        "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars😊 https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link that won't detect click here If only Bradley's arm was longer. Best photo ever</a>",
         "For every retweet this gets, Pedigree will donate one bowl of dog food to dogs in need! 😊 #tweetforbowls",
         "All the love as always. H",
         "We got kicked out of a @Delta airplane because I spoke Arabic to my mom on the phone and with my friend slim... WTFFFFFFFF please spread",
@@ -141,7 +141,7 @@ class TweetCell: UITableViewCell {
         tweetLabel.font = .preferredFont(forTextStyle: .body)
         // tweetLabel.highlightedLinkAttributes = Attrs().underlineStyle(.single).attributes
         tweetLabel.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
-        tweetLabel.linkHighlightViewFactory = DemoLinkHighlightViewFactory()
+        tweetLabel.linkHighlightViewFactory = RoundedRectLinkHighlightViewFactory()
     }
 
     @available(*, unavailable)
@@ -183,9 +183,14 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
         attributedTextView.isSelectable = true
         attributedTextView.alwaysBounceVertical = true
         attributedTextView.numberOfLines = 0
-        attributedTextView.highlightedLinkAttributes = Attrs().underlineStyle(.single).foregroundColor(.init(red: 0, green: 0, blue: 0.5, alpha: 1)).attributes
+        attributedTextView.highlightedLinkAttributes = Attrs().underlineStyle(.single).foregroundColor(.white).attributes
         attributedTextView.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
-        attributedTextView.linkHighlightViewFactory = DemoLinkHighlightViewFactory()
+        
+        let linkHighlightViewFactory = RoundedRectLinkHighlightViewFactory()
+        linkHighlightViewFactory.fillColor = UIColor.darkGray
+        linkHighlightViewFactory.enableAnimations = false
+        
+        attributedTextView.linkHighlightViewFactory = linkHighlightViewFactory
         attributedTextView.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         attributedTextView.onLinkTouchUpInside = { _, val in
             if let linkStr = val as? String {
@@ -214,41 +219,4 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
     }
 }
 
-class HighlightView: UIView, LinkHighlightViewProtocol {
-    func didAdd(to _: Atributika.BaseAttributedTextView) {
-        alpha = 0
 
-        UIView.animate(withDuration: 0.2) {
-            self.alpha = 1
-        }
-    }
-
-    func removeFrom(textView _: Atributika.BaseAttributedTextView) {
-        UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState]) {
-            self.alpha = 0
-        } completion: { _ in
-            self.removeFromSuperview()
-        }
-    }
-}
-
-class DemoLinkHighlightViewFactory: LinkHighlightViewFactoryProtocol {
-    func createView(enclosingRects: [CGRect]) -> UIView & LinkHighlightViewProtocol {
-        let view = HighlightView()
-        view.isUserInteractionEnabled = false
-
-        let path = UIBezierPath()
-
-        enclosingRects.forEach { rect in
-            path.append(UIBezierPath(roundedRect: rect.insetBy(dx: -2, dy: -4), cornerRadius: 4))
-        }
-
-        let layer = CAShapeLayer()
-        layer.fillColor = UIColor.black.withAlphaComponent(0.1).cgColor
-        layer.path = path.cgPath
-
-        view.layer.addSublayer(layer)
-
-        return view
-    }
-}

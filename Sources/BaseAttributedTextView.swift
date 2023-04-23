@@ -21,15 +21,6 @@
         func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool)
     }
 
-    public protocol LinkHighlightViewProtocol {
-        func didAdd(to textView: BaseAttributedTextView)
-        func removeFrom(textView: BaseAttributedTextView)
-    }
-
-    public protocol LinkHighlightViewFactoryProtocol {
-        func createView(enclosingRects: [CGRect]) -> UIView & LinkHighlightViewProtocol
-    }
-
     open class BaseAttributedTextView: UIView {
         override open func prepareForInterfaceBuilder() {
             super.prepareForInterfaceBuilder()

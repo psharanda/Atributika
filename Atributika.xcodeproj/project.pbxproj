@@ -59,6 +59,10 @@
 		1BC1BE4929F5994F0044609C /* TextUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4729F5994F0044609C /* TextUtils.swift */; };
 		1BC1BE4A29F5994F0044609C /* TextUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4729F5994F0044609C /* TextUtils.swift */; };
 		1BC1BE4B29F5994F0044609C /* TextUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4729F5994F0044609C /* TextUtils.swift */; };
+		1BC1BE4D29F5D67B0044609C /* LinkHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */; };
+		1BC1BE4E29F5D67B0044609C /* LinkHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */; };
+		1BC1BE4F29F5D67B0044609C /* LinkHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */; };
+		1BC1BE5029F5D67B0044609C /* LinkHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */; };
 		1BD4163429E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
 		1BD4163529E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
 		1BD4163629E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
@@ -133,22 +137,23 @@
 		1B2F83961E5C98A4009AFBCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B2F83991E5C98A4009AFBCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1B2F839B1E5C98A4009AFBCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1B38369F1F97C224001DB333 /* BaseAttributedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseAttributedTextView.swift; path = Sources/BaseAttributedTextView.swift; sourceTree = "<group>"; };
-		1B3C73B229E46BAB00022952 /* Detection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Detection.swift; path = Sources/Detection.swift; sourceTree = "<group>"; };
-		1B539F1529E4B55400188B7A /* Atributika.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Atributika.swift; path = Sources/Atributika.swift; sourceTree = "<group>"; };
+		1B38369F1F97C224001DB333 /* BaseAttributedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAttributedTextView.swift; sourceTree = "<group>"; };
+		1B3C73B229E46BAB00022952 /* Detection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Detection.swift; sourceTree = "<group>"; };
+		1B539F1529E4B55400188B7A /* Atributika.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atributika.swift; sourceTree = "<group>"; };
 		1B80548923A8ACDF002DCA63 /* IBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
 		1B80548B23A8ACF1002DCA63 /* IB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
-		1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttributedStringBuilder.swift; path = Sources/AttributedStringBuilder.swift; sourceTree = "<group>"; };
-		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScanner+Compat.swift"; path = "Sources/NSScanner+Compat.swift"; sourceTree = "<group>"; };
-		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Detection.swift"; path = "Sources/String+Detection.swift"; sourceTree = "<group>"; };
-		1BB55AD01E5C73EF00CE6EAD /* Attrs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Attrs.swift; path = Sources/Attrs.swift; sourceTree = "<group>"; };
-		1BBE608E29E8B389000D548F /* AttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AttributedLabel.swift; path = Sources/AttributedLabel.swift; sourceTree = "<group>"; };
-		1BBE609329E8B3F5000D548F /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AttributedTextView.swift; path = Sources/AttributedTextView.swift; sourceTree = "<group>"; };
-		1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RectsAccessibilityElement.swift; path = Sources/RectsAccessibilityElement.swift; sourceTree = "<group>"; };
-		1BC1BE4729F5994F0044609C /* TextUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextUtils.swift; path = Sources/TextUtils.swift; sourceTree = "<group>"; };
-		1BD4163129E42E0700687F88 /* String+HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+HTML.swift"; path = "Sources/String+HTML.swift"; sourceTree = "<group>"; };
-		1BD4163229E42E0700687F88 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tag.swift; path = Sources/Tag.swift; sourceTree = "<group>"; };
-		1BD4163329E42E0700687F88 /* Sugar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sugar.swift; path = Sources/Sugar.swift; sourceTree = "<group>"; };
+		1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
+		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+Compat.swift"; sourceTree = "<group>"; };
+		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Detection.swift"; sourceTree = "<group>"; };
+		1BB55AD01E5C73EF00CE6EAD /* Attrs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attrs.swift; sourceTree = "<group>"; };
+		1BBE608E29E8B389000D548F /* AttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedLabel.swift; sourceTree = "<group>"; };
+		1BBE609329E8B3F5000D548F /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
+		1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectsAccessibilityElement.swift; sourceTree = "<group>"; };
+		1BC1BE4729F5994F0044609C /* TextUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextUtils.swift; sourceTree = "<group>"; };
+		1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHighlight.swift; sourceTree = "<group>"; };
+		1BD4163129E42E0700687F88 /* String+HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTML.swift"; sourceTree = "<group>"; };
+		1BD4163229E42E0700687F88 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		1BD4163329E42E0700687F88 /* Sugar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sugar.swift; sourceTree = "<group>"; };
 		1BDDF5681E683A8F006374F6 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
 		1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedLabelDemoViewController.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Atributika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atributika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -251,27 +256,36 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
-		52D6D9721BEFF229002C0205 = {
+		1BC1BE5229F5DB2E0044609C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1BC1BE4729F5994F0044609C /* TextUtils.swift */,
-				1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */,
 				1B539F1529E4B55400188B7A /* Atributika.swift */,
+				1BBE608E29E8B389000D548F /* AttributedLabel.swift */,
+				1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */,
+				1BBE609329E8B3F5000D548F /* AttributedTextView.swift */,
+				1BB55AD01E5C73EF00CE6EAD /* Attrs.swift */,
+				1B38369F1F97C224001DB333 /* BaseAttributedTextView.swift */,
 				1B3C73B229E46BAB00022952 /* Detection.swift */,
+				1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */,
+				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */,
+				1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */,
+				1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */,
 				1BD4163129E42E0700687F88 /* String+HTML.swift */,
 				1BD4163329E42E0700687F88 /* Sugar.swift */,
 				1BD4163229E42E0700687F88 /* Tag.swift */,
-				1B38369F1F97C224001DB333 /* BaseAttributedTextView.swift */,
-				1BBE608E29E8B389000D548F /* AttributedLabel.swift */,
-				1BBE609329E8B3F5000D548F /* AttributedTextView.swift */,
-				1BB55AD01E5C73EF00CE6EAD /* Attrs.swift */,
-				1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */,
-				1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */,
-				1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */,
-				1BB55AC11E5C6F2400CE6EAD /* Tests */,
+				1BC1BE4729F5994F0044609C /* TextUtils.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		52D6D9721BEFF229002C0205 = {
+			isa = PBXGroup;
+			children = (
+				1BC1BE5229F5DB2E0044609C /* Sources */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
 				1B2F838E1E5C98A4009AFBCA /* Demo */,
 				52D6D97D1BEFF229002C0205 /* Products */,
+				1BB55AC11E5C6F2400CE6EAD /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -506,7 +520,7 @@
 				TargetAttributes = {
 					1B2F838C1E5C98A4009AFBCA = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 9SCKTYVAB7;
+						DevelopmentTeam = QXF4AH2XT9;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
@@ -654,6 +668,7 @@
 				1BD4163429E42E0700687F88 /* String+HTML.swift in Sources */,
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BBE608F29E8B389000D548F /* AttributedLabel.swift in Sources */,
+				1BC1BE4D29F5D67B0044609C /* LinkHighlight.swift in Sources */,
 				1B3C73B329E46BAB00022952 /* Detection.swift in Sources */,
 				1BC1BE4329F524B60044609C /* RectsAccessibilityElement.swift in Sources */,
 				1BBE609429E8B3F5000D548F /* AttributedTextView.swift in Sources */,
@@ -683,6 +698,7 @@
 				1BD4163629E42E0700687F88 /* String+HTML.swift in Sources */,
 				1B4638592259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609129E8B389000D548F /* AttributedLabel.swift in Sources */,
+				1BC1BE4F29F5D67B0044609C /* LinkHighlight.swift in Sources */,
 				1B3C73B529E46BAB00022952 /* Detection.swift in Sources */,
 				1BC1BE4529F524B60044609C /* RectsAccessibilityElement.swift in Sources */,
 				1BBE609629E8B3F5000D548F /* AttributedTextView.swift in Sources */,
@@ -704,6 +720,7 @@
 				1BD4163729E42E0700687F88 /* String+HTML.swift in Sources */,
 				1B46385A2259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609229E8B389000D548F /* AttributedLabel.swift in Sources */,
+				1BC1BE5029F5D67B0044609C /* LinkHighlight.swift in Sources */,
 				1B3C73B629E46BAB00022952 /* Detection.swift in Sources */,
 				1BC1BE4629F524B60044609C /* RectsAccessibilityElement.swift in Sources */,
 				1BBE609729E8B3F5000D548F /* AttributedTextView.swift in Sources */,
@@ -725,6 +742,7 @@
 				1BD4163529E42E0700687F88 /* String+HTML.swift in Sources */,
 				1B4638582259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609029E8B389000D548F /* AttributedLabel.swift in Sources */,
+				1BC1BE4E29F5D67B0044609C /* LinkHighlight.swift in Sources */,
 				1B3C73B429E46BAB00022952 /* Detection.swift in Sources */,
 				1BC1BE4429F524B60044609C /* RectsAccessibilityElement.swift in Sources */,
 				1BBE609529E8B3F5000D548F /* AttributedTextView.swift in Sources */,
@@ -793,11 +811,11 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 9SCKTYVAB7;
+				DEVELOPMENT_TEAM = QXF4AH2XT9;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.psharanda.Atributika.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = test.psharanda.Atributika.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
@@ -812,11 +830,11 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 9SCKTYVAB7;
+				DEVELOPMENT_TEAM = QXF4AH2XT9;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.psharanda.Atributika.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = test.psharanda.Atributika.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;

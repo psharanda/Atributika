@@ -45,7 +45,7 @@ class IBViewController: UIViewController {
             .style(tags: ["button": button])
             .styleBase(Attrs().font(.systemFont(ofSize: 30)))
             .attributedString
-        issue103Label.linkHighlightViewFactory = DemoLinkHighlightViewFactory()
+        issue103Label.linkHighlightViewFactory = RoundedRectLinkHighlightViewFactory()
 
         issue103Label.onLinkTouchUpInside = { _, value in
             print(value)
