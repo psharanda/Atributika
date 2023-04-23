@@ -51,6 +51,10 @@
 		1BBE609529E8B3F5000D548F /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE609329E8B3F5000D548F /* AttributedTextView.swift */; };
 		1BBE609629E8B3F5000D548F /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE609329E8B3F5000D548F /* AttributedTextView.swift */; };
 		1BBE609729E8B3F5000D548F /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE609329E8B3F5000D548F /* AttributedTextView.swift */; };
+		1BC1BE4329F524B60044609C /* RectsAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */; };
+		1BC1BE4429F524B60044609C /* RectsAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */; };
+		1BC1BE4529F524B60044609C /* RectsAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */; };
+		1BC1BE4629F524B60044609C /* RectsAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */; };
 		1BD4163429E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
 		1BD4163529E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
 		1BD4163629E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
@@ -136,6 +140,7 @@
 		1BB55AD01E5C73EF00CE6EAD /* Attrs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Attrs.swift; path = Sources/Attrs.swift; sourceTree = "<group>"; };
 		1BBE608E29E8B389000D548F /* AttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AttributedLabel.swift; path = Sources/AttributedLabel.swift; sourceTree = "<group>"; };
 		1BBE609329E8B3F5000D548F /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AttributedTextView.swift; path = Sources/AttributedTextView.swift; sourceTree = "<group>"; };
+		1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RectsAccessibilityElement.swift; path = Sources/RectsAccessibilityElement.swift; sourceTree = "<group>"; };
 		1BD4163129E42E0700687F88 /* String+HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+HTML.swift"; path = "Sources/String+HTML.swift"; sourceTree = "<group>"; };
 		1BD4163229E42E0700687F88 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tag.swift; path = Sources/Tag.swift; sourceTree = "<group>"; };
 		1BD4163329E42E0700687F88 /* Sugar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sugar.swift; path = Sources/Sugar.swift; sourceTree = "<group>"; };
@@ -244,6 +249,7 @@
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
+				1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */,
 				1B539F1529E4B55400188B7A /* Atributika.swift */,
 				1B3C73B229E46BAB00022952 /* Detection.swift */,
 				1BD4163129E42E0700687F88 /* String+HTML.swift */,
@@ -642,6 +648,7 @@
 				1BB55ADD1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
 				1BBE608F29E8B389000D548F /* AttributedLabel.swift in Sources */,
 				1B3C73B329E46BAB00022952 /* Detection.swift in Sources */,
+				1BC1BE4329F524B60044609C /* RectsAccessibilityElement.swift in Sources */,
 				1BBE609429E8B3F5000D548F /* AttributedTextView.swift in Sources */,
 				1BB55AE11E5C73F000CE6EAD /* Attrs.swift in Sources */,
 			);
@@ -669,6 +676,7 @@
 				1B4638592259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609129E8B389000D548F /* AttributedLabel.swift in Sources */,
 				1B3C73B529E46BAB00022952 /* Detection.swift in Sources */,
+				1BC1BE4529F524B60044609C /* RectsAccessibilityElement.swift in Sources */,
 				1BBE609629E8B3F5000D548F /* AttributedTextView.swift in Sources */,
 				1BB55AE31E5C73F000CE6EAD /* Attrs.swift in Sources */,
 			);
@@ -688,6 +696,7 @@
 				1B46385A2259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609229E8B389000D548F /* AttributedLabel.swift in Sources */,
 				1B3C73B629E46BAB00022952 /* Detection.swift in Sources */,
+				1BC1BE4629F524B60044609C /* RectsAccessibilityElement.swift in Sources */,
 				1BBE609729E8B3F5000D548F /* AttributedTextView.swift in Sources */,
 				1BB55AE41E5C73F000CE6EAD /* Attrs.swift in Sources */,
 			);
@@ -707,6 +716,7 @@
 				1B4638582259FFE400ED5BA9 /* BaseAttributedTextView.swift in Sources */,
 				1BBE609029E8B389000D548F /* AttributedLabel.swift in Sources */,
 				1B3C73B429E46BAB00022952 /* Detection.swift in Sources */,
+				1BC1BE4429F524B60044609C /* RectsAccessibilityElement.swift in Sources */,
 				1BBE609529E8B3F5000D548F /* AttributedTextView.swift in Sources */,
 				1BB55AE21E5C73F000CE6EAD /* Attrs.swift in Sources */,
 			);

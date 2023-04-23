@@ -527,103 +527,6 @@
             }
         }
 
-        private class AccessibilityElement: UIAccessibilityElement {
-            private weak var view: UIView?
-            private let enclosingRects: [CGRect]
-            private let usePath: Bool
-
-            init(container: Any, view: UIView, enclosingRects: [CGRect], usePath: Bool) {
-                self.view = view
-                self.enclosingRects = enclosingRects
-                self.usePath = usePath
-                super.init(accessibilityContainer: container)
-            }
-
-            override var accessibilityActivationPoint: CGPoint {
-                get {
-                    guard let view = view else {
-                        return .zero
-                    }
-
-                    if enclosingRects.count == 0 {
-                        return .zero
-                    } else {
-                        let rect = UIAccessibility.convertToScreenCoordinates(enclosingRects[0], in: view)
-                        return CGPoint(x: rect.midX, y: rect.midY)
-                    }
-                }
-                set {}
-            }
-
-            override var accessibilityFrame: CGRect {
-                get {
-                    guard let view = view else {
-                        return .null
-                    }
-
-                    if enclosingRects.count == 0 {
-                        return .null
-                    }
-
-                    if enclosingRects.count == 1 {
-                        return UIAccessibility.convertToScreenCoordinates(enclosingRects[0], in: view)
-                    }
-
-                    var resultRect = enclosingRects[0]
-
-                    for i in 1 ..< enclosingRects.count {
-                        resultRect = resultRect.union(enclosingRects[i])
-                    }
-
-                    return UIAccessibility.convertToScreenCoordinates(resultRect, in: view)
-                }
-                set {}
-            }
-
-            override var accessibilityPath: UIBezierPath? {
-                get {
-                    if !usePath {
-                        return nil
-                    }
-                    guard let view = view else {
-                        return nil
-                    }
-
-                    let path = UIBezierPath()
-
-                    enclosingRects.forEach { rect in
-                        path.append(UIBezierPath(rect: rect))
-                    }
-
-                    return UIAccessibility.convertToScreenCoordinates(path, in: view)
-                }
-                set {}
-            }
-
-            override func accessibilityElementDidBecomeFocused() {
-                super.accessibilityElementDidBecomeFocused()
-
-                guard let view = view else {
-                    return
-                }
-
-                if let scrollView = view as? UIScrollView {
-
-                    if enclosingRects.count == 0 {
-                        return
-                    }
-
-                    var resultRect = enclosingRects[0]
-
-                    for i in 1 ..< enclosingRects.count {
-                        resultRect = resultRect.union(enclosingRects[i])
-                    }
-
-                    scrollView.scrollRectToVisible(resultRect, animated: false)
-                }
-            }
-        }
-
         private var _accessibleElements: [Any]?
 
         override open var accessibilityElements: [Any]? {
@@ -634,7 +537,7 @@
                     if let str = attributedText {
 
                         if (accessibilityBehaviour != .natural) {
-                            let text = AccessibilityElement(container: self, view: self, enclosingRects: [_backend.view.frame], usePath: false)
+                            let text = RectsAccessibilityElement(container: self, view: self, enclosingRects: [_backend.view.frame], usePath: false)
                             text.accessibilityLabel = str.string
                             text.accessibilityTraits = .staticText
                             _accessibleElements?.append(text)
@@ -680,10 +583,10 @@
                                 }
                             )
 
-                            let element = AccessibilityElement(container: self, view: _backend.view, enclosingRects: enclosingRects, usePath: true)
+                            let element = RectsAccessibilityElement(container: self, view: _backend.view, enclosingRects: enclosingRects, usePath: true)
                             element.isAccessibilityElement = false
 
-                            let innerElement = AccessibilityElement(container: element, view: _backend.view, enclosingRects: enclosingRects, usePath: false)
+                            let innerElement = RectsAccessibilityElement(container: element, view: _backend.view, enclosingRects: enclosingRects, usePath: false)
 
                             if let r = Range(range, in: str.string) {
                                 innerElement.accessibilityLabel = String(str.string[r])
