@@ -713,7 +713,7 @@
         static let akaLink = NSAttributedString.Key("Atributika.Link")
     }
 
-    public extension Attributes {
+    public extension Attrs {
         @discardableResult
         func akaLink(_ value: Any) -> Self {
             return attribute(.akaLink, value)

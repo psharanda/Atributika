@@ -10,22 +10,22 @@ typealias TableViewCellStyle = UITableViewCell.CellStyle
 extension String {
     func styleAsTweet() -> AttributedStringBuilder {
         
-        let baseLinkAttrs = Attrs.foregroundColor(.blue)
+        let baseLinkAttrs = Attrs().foregroundColor(.blue)
         
         let a = TagTuner { tag in
-            Attributes(baseLinkAttrs).akaLink(tag.attributes["href"] ?? "")
+            Attrs(baseLinkAttrs).akaLink(tag.attributes["href"] ?? "")
         }
 
         let hashtag = DetectionTuner { d in
-            Attributes(baseLinkAttrs).akaLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
+            Attrs(baseLinkAttrs).akaLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
         }
 
         let mention = DetectionTuner { d in
-            Attributes(baseLinkAttrs).akaLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
+            Attrs(baseLinkAttrs).akaLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
         }
 
         let link = DetectionTuner { d in
-            Attributes(baseLinkAttrs).akaLink(d.text)
+            Attrs(baseLinkAttrs).akaLink(d.text)
         }
 
         return style(tags: ["a": a])
@@ -139,8 +139,8 @@ class TweetCell: UITableViewCell {
 
         tweetLabel.numberOfLines = 0
         tweetLabel.font = .preferredFont(forTextStyle: .body)
-        tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
-        tweetLabel.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
+        tweetLabel.highlightedLinkAttributes = Attrs().foregroundColor(.red).attributes
+        tweetLabel.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
         tweetLabel.accessibilityBehaviour = .textFirstLinksAfter
     }
 
@@ -183,8 +183,8 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
         attributedTextView.isSelectable = true
         attributedTextView.alwaysBounceVertical = true
         attributedTextView.numberOfLines = 0
-        attributedTextView.highlightedLinkAttributes = Attrs.foregroundColor(.red).attributes
-        attributedTextView.disabledLinkAttributes = Attrs.foregroundColor(.lightGray).attributes
+        attributedTextView.highlightedLinkAttributes = Attrs().foregroundColor(.red).attributes
+        attributedTextView.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
         attributedTextView.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         attributedTextView.onLinkTouchUpInside = { _, val in
             if let linkStr = val as? String {

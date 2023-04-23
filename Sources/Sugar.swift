@@ -4,10 +4,6 @@
 
 import Foundation
 
-public var Attrs: Attributes {
-    return Attributes()
-}
-
 public extension String {
     func style(tags: [String: TagTuning]) -> AttributedStringBuilder {
         return AttributedStringBuilder(htmlString: self, tags: tags)

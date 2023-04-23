@@ -20,15 +20,15 @@ extension Dictionary: AttributesProvider where Key == NSAttributedString.Key, Va
     }
 }
 
-public final class Attributes: AttributesProvider {
+public final class Attrs: AttributesProvider {
     public private(set) var attributes: [NSAttributedString.Key: Any]
 
     public init(_ attributes: AttributesProvider = [NSAttributedString.Key: Any]()) {
         self.attributes = attributes.attributes
     }
 
-    public func copy() -> Attributes {
-        return Attributes(attributes)
+    public func copy() -> Attrs {
+        return Attrs(attributes)
     }
 
     @discardableResult
@@ -179,7 +179,7 @@ public final class Attributes: AttributesProvider {
     }
 }
 
-extension Attributes: TagTuning {
+extension Attrs: TagTuning {
     public func style(tag _: Tag) -> AttributesProvider {
         return self
     }
@@ -199,7 +199,7 @@ extension Dictionary: TagTuning where Key == NSAttributedString.Key, Value == An
     }
 }
 
-extension Attributes: DetectionTuning {
+extension Attrs: DetectionTuning {
     public func style(detection _: Detection) -> AttributesProvider {
         return self
     }
