@@ -135,11 +135,13 @@ class TweetCell: UITableViewCell {
         tweetLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
         tweetLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
         tweetLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+        // tweetLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 300).isActive = true
 
         tweetLabel.numberOfLines = 0
         tweetLabel.font = .preferredFont(forTextStyle: .body)
-        tweetLabel.highlightedLinkAttributes = Attrs().foregroundColor(.red).attributes
+        // tweetLabel.highlightedLinkAttributes = Attrs().underlineStyle(.single).attributes
         tweetLabel.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
+        tweetLabel.linkHighlightViewFactory = DemoLinkHighlightViewFactory()
     }
 
     @available(*, unavailable)
@@ -181,8 +183,9 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
         attributedTextView.isSelectable = true
         attributedTextView.alwaysBounceVertical = true
         attributedTextView.numberOfLines = 0
-        attributedTextView.highlightedLinkAttributes = Attrs().foregroundColor(.red).attributes
+        attributedTextView.highlightedLinkAttributes = Attrs().underlineStyle(.single).foregroundColor(.init(red: 0, green: 0, blue: 0.5, alpha: 1)).attributes
         attributedTextView.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
+        attributedTextView.linkHighlightViewFactory = DemoLinkHighlightViewFactory()
         attributedTextView.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         attributedTextView.onLinkTouchUpInside = { _, val in
             if let linkStr = val as? String {
@@ -208,5 +211,43 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
                 UIApplication.shared.openURL(url)
             }
         }
+    }
+}
+
+class HighlightView: UIView, LinkHighlightViewProtocol {
+    func didAdd(to _: Atributika.BaseAttributedTextView) {
+        alpha = 0
+
+        UIView.animate(withDuration: 0.2) {
+            self.alpha = 1
+        }
+    }
+
+    func removeFrom(textView _: Atributika.BaseAttributedTextView) {
+        UIView.animate(withDuration: 0.2) {
+            self.alpha = 0
+        } completion: { _ in
+            self.removeFromSuperview()
+        }
+    }
+}
+
+class DemoLinkHighlightViewFactory: LinkHighlightViewFactoryProtocol {
+    func createView(enclosingRects: [CGRect]) -> UIView & LinkHighlightViewProtocol {
+        let view = HighlightView()
+
+        let path = UIBezierPath()
+
+        enclosingRects.forEach { rect in
+            path.append(UIBezierPath(roundedRect: rect.insetBy(dx: -2, dy: -4), cornerRadius: 4))
+        }
+
+        let layer = CAShapeLayer()
+        layer.fillColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        layer.path = path.cgPath
+
+        view.layer.addSublayer(layer)
+
+        return view
     }
 }

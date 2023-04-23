@@ -48,13 +48,11 @@
                     return UIAccessibility.convertToScreenCoordinates(enclosingRects[0], in: view)
                 }
 
-                var resultRect = enclosingRects[0]
-
-                for i in 1 ..< enclosingRects.count {
-                    resultRect = resultRect.union(enclosingRects[i])
+                let unionRect = enclosingRects.reduce(enclosingRects[0]) {
+                    $0.union($1)
                 }
 
-                return UIAccessibility.convertToScreenCoordinates(resultRect, in: view)
+                return UIAccessibility.convertToScreenCoordinates(unionRect, in: view)
             }
             set {}
         }

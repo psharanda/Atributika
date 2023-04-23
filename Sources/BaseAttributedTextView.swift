@@ -21,6 +21,15 @@
         func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool)
     }
 
+    public protocol LinkHighlightViewProtocol {
+        func didAdd(to textView: BaseAttributedTextView)
+        func removeFrom(textView: BaseAttributedTextView)
+    }
+
+    public protocol LinkHighlightViewFactoryProtocol {
+        func createView(enclosingRects: [CGRect]) -> UIView & LinkHighlightViewProtocol
+    }
+
     open class BaseAttributedTextView: UIView {
         override open func prepareForInterfaceBuilder() {
             super.prepareForInterfaceBuilder()
@@ -42,6 +51,8 @@
         }
 
         // MARK: - links
+
+        open var linkHighlightViewFactory: LinkHighlightViewFactoryProtocol?
 
         open var onLinkTouchUpInside: ((BaseAttributedTextView, Any) -> Void)?
 
@@ -293,9 +304,42 @@
 
         private var _trackedLinkRange: NSRange?
 
+        private var _linkHighlightView: (UIView & LinkHighlightViewProtocol)?
+
         private var _highlightedLinkRange: NSRange? {
             didSet {
                 if oldValue != _highlightedLinkRange {
+                    _linkHighlightView?.removeFrom(textView: self)
+                    _linkHighlightView = nil
+                    if let range = _highlightedLinkRange,
+                       let cache = _linkFramesCache,
+                       let factory = linkHighlightViewFactory
+                    {
+                        for item in cache {
+                            if item.range == range {
+                                let unionRect = item.rects.reduce(item.rects[0]) {
+                                    $0.union($1)
+                                }
+
+                                let linkHighlightView = factory.createView(
+                                    enclosingRects: item.rects.map {
+                                        CGRect(x: $0.origin.x - unionRect.minX,
+                                               y: $0.origin.y - unionRect.minY,
+                                               width: $0.width,
+                                               height: $0.height)
+                                    })
+                                insertSubview(linkHighlightView, belowSubview: _backend.view)
+
+                                let textOrigin = _backend.textOrigin
+                                linkHighlightView.frame = convert(
+                                    unionRect.offsetBy(dx: textOrigin.x, dy: textOrigin.y),
+                                    from: _backend.view
+                                )
+                                linkHighlightView.didAdd(to: self)
+                                _linkHighlightView = linkHighlightView
+                            }
+                        }
+                    }
                     setNeedsDisplayText()
                 }
             }
