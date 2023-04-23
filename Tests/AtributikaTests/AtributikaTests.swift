@@ -389,7 +389,7 @@ class AtributikaTests: XCTestCase {
     }
 
     func testLI() {
-        let li = Attrs
+        let li = Attrs()
             .font(.systemFont(ofSize: 12))
 
         let test = AttributedStringBuilder(
@@ -410,12 +410,12 @@ class AtributikaTests: XCTestCase {
         let test = AttributedStringBuilder(
             htmlString: "<div><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol></div>",
             tags: [
-                "ol": TagTuner { _, _ in
+                "ol": TagTuner { _ in
                     counter = 0
                     return nil
                 },
-                "li": TagTuner { _, position in
-                    switch position {
+                "li": TagTuner {
+                    switch $0.tagPosition {
                     case .start:
                         counter += 1
                         return "\(counter). "
@@ -631,9 +631,9 @@ class AtributikaTests: XCTestCase {
         let test = AttributedStringBuilder(
             htmlString: "Monday - Friday:<font color=\"#6cc299\"> 8:00 - 19:00</font>",
             tags: [
-                "font": TagTuner { tag in
-                    let ab = Attrs
-                    if let colorString = tag.attributes["color"] {
+                "font": TagTuner {
+                    let ab = Attrs()
+                    if let colorString = $0.tag.attributes["color"] {
                         ab.foregroundColor(hexStringToUIColor(hex: colorString))
                     }
                     return ab
@@ -650,10 +650,9 @@ class AtributikaTests: XCTestCase {
     func testHrefTagTuner() {
         let test = AttributedStringBuilder(
             htmlString: "<a href=\"https://github.com/psharanda/Atributika\">link</a>",
-            tags: ["a": TagTuner { tag in
-
+            tags: ["a": TagTuner {
                 let ab = Attrs().foregroundColor(.blue)
-                if let link = tag.attributes["href"] {
+                if let link = $0.tag.attributes["href"] {
                     ab.link(URL(string: link)!)
                 }
                 return ab
@@ -779,6 +778,38 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual("<font>Hello 👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧</font>".detectTags().string, "Hello 👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧")
         XCTAssertEqual("<font>Hello 👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧</font>".detectTags().string, "Hello 👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧👨‍👧‍👧")
         XCTAssertEqual("<font>Hello 👨‍👨‍👦‍👦👨‍👨‍👦‍👦👨‍👨‍👦‍👦👨‍👨‍👦‍👦</font>".detectTags().string, "Hello 👨‍👨‍👦‍👦👨‍👨‍👦‍👦👨‍👨‍👦‍👦👨‍👨‍👦‍👦")
+    }
+
+    func testOuterTags() {
+        let italicBoldTuner = TagTuner { info in
+            var set = Set<String>()
+            set.insert(info.tag.name)
+            info.outerTags.forEach { set.insert($0.name) }
+
+            let attrs = Attrs()
+            if set.contains("b") && set.contains("i") {
+                attrs.font(Font(name: "HelveticaNeue-BoldItalic", size: 12)!)
+            } else if set.contains("i") {
+                attrs.font(Font(name: "HelveticaNeue-Italic", size: 12)!)
+            } else if set.contains("b") {
+                attrs.font(Font(name: "HelveticaNeue-Bold", size: 12)!)
+            }
+            return attrs
+        }
+
+        let test = "<u><i><b>Italicunderline</b></i></u>"
+            .style(tags: [
+                "u": Attrs().underlineStyle(.single),
+                "i": italicBoldTuner,
+                "b": italicBoldTuner,
+            ])
+            .attributedString
+
+        let reference = NSMutableAttributedString(string: "Italicunderline")
+        reference.addAttributes([.font: Font(name: "HelveticaNeue-BoldItalic", size: 12)!,
+                                 .underlineStyle: NSUnderlineStyle.single.rawValue], range: NSMakeRange(0, 15))
+
+        XCTAssertEqual(test, reference)
     }
 }
 

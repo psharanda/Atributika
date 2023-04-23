@@ -11,20 +11,20 @@ extension String {
     func styleAsTweet() -> AttributedStringBuilder {
         let baseLinkAttrs = Attrs().foregroundColor(.blue)
 
-        let a = TagTuner { tag in
-            Attrs(baseLinkAttrs).akaLink(tag.attributes["href"] ?? "")
+        let a = TagTuner {
+            Attrs(baseLinkAttrs).akaLink($0.tag.attributes["href"] ?? "")
         }
 
-        let hashtag = DetectionTuner { d in
-            Attrs(baseLinkAttrs).akaLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
+        let hashtag = DetectionTuner {
+            Attrs(baseLinkAttrs).akaLink("https://twitter.com/hashtag/\($0.text.replacingOccurrences(of: "#", with: ""))")
         }
 
-        let mention = DetectionTuner { d in
-            Attrs(baseLinkAttrs).akaLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
+        let mention = DetectionTuner {
+            Attrs(baseLinkAttrs).akaLink("https://twitter.com/\($0.text.replacingOccurrences(of: "@", with: ""))")
         }
 
-        let link = DetectionTuner { d in
-            Attrs(baseLinkAttrs).akaLink(d.text)
+        let link = DetectionTuner {
+            Attrs(baseLinkAttrs).akaLink($0.text)
         }
 
         return style(tags: ["a": a])
@@ -244,7 +244,7 @@ class DemoLinkHighlightViewFactory: LinkHighlightViewFactoryProtocol {
         }
 
         let layer = CAShapeLayer()
-        layer.fillColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        layer.fillColor = UIColor.black.withAlphaComponent(0.1).cgColor
         layer.path = path.cgPath
 
         view.layer.addSublayer(layer)

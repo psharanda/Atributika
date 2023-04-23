@@ -19,42 +19,62 @@ public enum TagPosition: Equatable {
     case end
 }
 
+public struct TagTuningStyleInfo {
+    public let tag: Tag
+    public let outerTags: [Tag]
+    public init(tag: Tag, outerTags: [Tag]) {
+        self.tag = tag
+        self.outerTags = outerTags
+    }
+}
+
+public struct TagTuningTransformInfo {
+    public let tag: Tag
+    public let tagPosition: TagPosition
+    public let outerTags: [Tag]
+    public init(tag: Tag, tagPosition: TagPosition, outerTags: [Tag]) {
+        self.tag = tag
+        self.tagPosition = tagPosition
+        self.outerTags = outerTags
+    }
+}
+
 public protocol TagTuning {
-    func style(tag: Tag) -> AttributesProvider
-    func transform(tag: Tag, position: TagPosition) -> String?
+    func style(info: TagTuningStyleInfo) -> AttributesProvider
+    func transform(info: TagTuningTransformInfo) -> String?
 }
 
 public struct TagTuner: TagTuning {
-    public func style(tag: Tag) -> AttributesProvider {
-        return _style(tag)
+    public func style(info: TagTuningStyleInfo) -> AttributesProvider {
+        return _style(info)
     }
 
-    public func transform(tag: Tag, position: TagPosition) -> String? {
-        return _transform(tag, position)
+    public func transform(info: TagTuningTransformInfo) -> String? {
+        return _transform(info)
     }
 
-    private let _style: (Tag) -> AttributesProvider
-    private let _transform: (Tag, TagPosition) -> String?
+    private let _style: (TagTuningStyleInfo) -> AttributesProvider
+    private let _transform: (TagTuningTransformInfo) -> String?
 
-    public init(style: @escaping (Tag) -> AttributesProvider, transform: @escaping (Tag, TagPosition) -> String?) {
+    public init(style: @escaping (TagTuningStyleInfo) -> AttributesProvider, transform: @escaping (TagTuningTransformInfo) -> String?) {
         _style = style
         _transform = transform
     }
 
-    public init(style: @escaping (Tag) -> AttributesProvider) {
+    public init(style: @escaping (TagTuningStyleInfo) -> AttributesProvider) {
         _style = style
-        _transform = { _, _ in nil }
+        _transform = { _ in nil }
     }
 
-    public init(transform: @escaping (Tag, TagPosition) -> String?) {
+    public init(transform: @escaping (TagTuningTransformInfo) -> String?) {
         _style = { _ in [NSAttributedString.Key: Any]() }
         _transform = transform
     }
 
     public init(attributes: AttributesProvider = [NSAttributedString.Key: Any](), startReplacement: String? = nil, endReplacement: String? = nil) {
         _style = { _ in attributes }
-        _transform = { _, position in
-            switch position {
+        _transform = { info in
+            switch info.tagPosition {
             case .start:
                 return startReplacement
             case .end:

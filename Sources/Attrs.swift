@@ -180,21 +180,21 @@ public final class Attrs: AttributesProvider {
 }
 
 extension Attrs: TagTuning {
-    public func style(tag _: Tag) -> AttributesProvider {
+    public func style(info _: TagTuningStyleInfo) -> AttributesProvider {
         return self
     }
 
-    public func transform(tag _: Tag, position _: TagPosition) -> String? {
+    public func transform(info _: TagTuningTransformInfo) -> String? {
         return nil
     }
 }
 
 extension Dictionary: TagTuning where Key == NSAttributedString.Key, Value == Any {
-    public func style(tag _: Tag) -> AttributesProvider {
+    public func style(info _: TagTuningStyleInfo) -> AttributesProvider {
         return self
     }
 
-    public func transform(tag _: Tag, position _: TagPosition) -> String? {
+    public func transform(info _: TagTuningTransformInfo) -> String? {
         return nil
     }
 }

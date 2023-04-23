@@ -144,8 +144,8 @@ func stringWithUnorderedList() -> NSAttributedString {
 
 func stringWithOrderedList() -> NSAttributedString {
     var counter = 0
-    let ol = TagTuner { _, position in
-        switch position {
+    let ol = TagTuner {
+        switch $0.tagPosition {
         case .start:
             counter = 0
         case .end:
@@ -154,8 +154,8 @@ func stringWithOrderedList() -> NSAttributedString {
         return nil
     }
 
-    let li = TagTuner { _, position in
-        switch position {
+    let li = TagTuner {
+        switch $0.tagPosition {
         case .start:
             counter += 1
             return "\(counter). "
@@ -178,11 +178,29 @@ func stringWithHref() -> NSAttributedString {
 }
 
 func stringWithBoldItalicUnderline() -> NSAttributedString {
-    let font = UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!
-    let uib = Attrs().font(font).underlineStyle(.single)
+    let italicBoldTuner = TagTuner { info in
+        var set = Set<String>()
+        set.insert(info.tag.name)
+        info.outerTags.forEach { set.insert($0.name) }
 
-    let str = "<br><uib>Italicunderline</uib>"
-        .style(tags: ["uib": uib])
+        let attrs = Attrs()
+        if set.contains("b") && set.contains("i") {
+            attrs.font(UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!)
+        } else if set.contains("i") {
+            attrs.font(UIFont(name: "HelveticaNeue-Italic", size: 12)!)
+        } else if set.contains("b") {
+            attrs.font(UIFont(name: "HelveticaNeue-Bold", size: 12)!)
+        }
+        return attrs
+    }
+
+    let str = "Normal<u>Underline<i>ItalicUnderline<b>ItalicBoldUnderline</b></i></u>"
+        .style(tags: [
+            "u": Attrs().underlineStyle(.single),
+            "i": italicBoldTuner,
+            "b": italicBoldTuner,
+        ])
+        .styleBase(Attrs().font(UIFont(name: "HelveticaNeue", size: 12)!))
         .attributedString
     return str
 }
@@ -192,16 +210,16 @@ func stringWithImage() -> NSAttributedString {
 
     let b = Attrs().font(font).underlineStyle(.single)
 
-    let img = TagTuner(style: { tag in
+    let img = TagTuner(style: {
         let style = Attrs()
-        if let imageId = tag.attributes["id"] {
+        if let imageId = $0.tag.attributes["id"] {
             let textAttachment = NSTextAttachment()
             textAttachment.image = UIImage(named: imageId)
             style.attachment(textAttachment)
         }
         return style
-    }, transform: { _, position in
-        switch position {
+    }, transform: {
+        switch $0.tagPosition {
         case .start:
             return "\u{FFFC}"
         case .end:

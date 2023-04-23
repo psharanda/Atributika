@@ -8,6 +8,7 @@ public struct TagInfo: Equatable {
     public let tag: Tag
     public let range: Range<String.Index>
     let level: Int
+    public let outerTags: [Tag]
 }
 
 extension String {
@@ -69,6 +70,8 @@ extension String {
         let endIndex: String.Index
         let level: Int
 
+        let outerTags: [Tag]
+
         func startIndex(in string: String) -> String.Index {
             switch startIndex {
             case let .index(index):
@@ -89,7 +92,7 @@ extension String {
         for (index, tagStackItem) in tagsStack.enumerated().reversed() {
             if tagStackItem.tag.name == tagName {
                 if let tagStyler = tags[tagName],
-                   let str = tagStyler.transform(tag: tagStackItem.tag, position: .end)
+                   let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tagStackItem.tag, tagPosition: .end, outerTags: tagStackItem.outerTags))
                 {
                     resultString.append(str)
                 }
@@ -98,7 +101,8 @@ extension String {
                     TagInfo(
                         tag: tagStackItem.tag,
                         range: tagStackItem.startIndex(in: resultString) ..< resultString.endIndex,
-                        level: tagStackItem.level
+                        level: tagStackItem.level,
+                        outerTags: tagStackItem.outerTags
                     ))
                 tagsStack.remove(at: index)
                 break
@@ -184,7 +188,7 @@ extension String {
         let tag = Tag(name: tagName, attributes: attributes)
 
         if let tagStyler = tags[tagName],
-           let str = tagStyler.transform(tag: tag, position: .start(selfClosing: selfClosing))
+           let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tag, tagPosition: .start(selfClosing: selfClosing), outerTags: []))
         {
             resultString.append(str)
         } else if tagName.lowercased() == "br" {
@@ -193,12 +197,14 @@ extension String {
 
         let nextLevel = (tagsStack.last?.level ?? -1) + 1
 
+        let outerTags = tagsStack.map { $0.tag }
         if selfClosing {
             tagsInfo.append(
                 TagInfo(
                     tag: tag,
                     range: startIndex ..< resultString.endIndex,
-                    level: nextLevel
+                    level: nextLevel,
+                    outerTags: outerTags
                 ))
         } else {
             let storedStartIndex: StoredStringIndex
@@ -211,7 +217,8 @@ extension String {
             tagsStack.append(TagStackItem(
                 tag: tag,
                 startIndex: storedStartIndex,
-                endIndex: resultString.endIndex, level: nextLevel
+                endIndex: resultString.endIndex, level: nextLevel,
+                outerTags: outerTags
             ))
         }
     }
@@ -260,7 +267,8 @@ extension String {
                 TagInfo(
                     tag: tagStackItem.tag,
                     range: tagStackItem.startIndex(in: resultString) ..< tagStackItem.endIndex,
-                    level: tagStackItem.level
+                    level: tagStackItem.level,
+                    outerTags: tagStackItem.outerTags
                 ))
         }
 
