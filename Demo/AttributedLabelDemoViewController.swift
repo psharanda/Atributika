@@ -224,7 +224,7 @@ class HighlightView: UIView, LinkHighlightViewProtocol {
     }
 
     func removeFrom(textView _: Atributika.BaseAttributedTextView) {
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState]) {
             self.alpha = 0
         } completion: { _ in
             self.removeFromSuperview()
@@ -235,6 +235,7 @@ class HighlightView: UIView, LinkHighlightViewProtocol {
 class DemoLinkHighlightViewFactory: LinkHighlightViewFactoryProtocol {
     func createView(enclosingRects: [CGRect]) -> UIView & LinkHighlightViewProtocol {
         let view = HighlightView()
+        view.isUserInteractionEnabled = false
 
         let path = UIBezierPath()
 

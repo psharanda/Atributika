@@ -38,12 +38,14 @@ class IBViewController: UIViewController {
             .underlineStyle(.single)
             .font(.systemFont(ofSize: 30))
             .foregroundColor(.black)
+            .akaLink("")
 
         issue103Label.numberOfLines = 0
         issue103Label.attributedText = message
             .style(tags: ["button": button])
             .styleBase(Attrs().font(.systemFont(ofSize: 30)))
             .attributedString
+        issue103Label.linkHighlightViewFactory = DemoLinkHighlightViewFactory()
 
         issue103Label.onLinkTouchUpInside = { _, value in
             print(value)
