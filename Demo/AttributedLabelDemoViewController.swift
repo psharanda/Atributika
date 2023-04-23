@@ -9,9 +9,8 @@ typealias TableViewCellStyle = UITableViewCell.CellStyle
 
 extension String {
     func styleAsTweet() -> AttributedStringBuilder {
-        
         let baseLinkAttrs = Attrs().foregroundColor(.blue)
-        
+
         let a = TagTuner { tag in
             Attrs(baseLinkAttrs).akaLink(tag.attributes["href"] ?? "")
         }
@@ -141,7 +140,6 @@ class TweetCell: UITableViewCell {
         tweetLabel.font = .preferredFont(forTextStyle: .body)
         tweetLabel.highlightedLinkAttributes = Attrs().foregroundColor(.red).attributes
         tweetLabel.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
-        tweetLabel.accessibilityBehaviour = .textFirstLinksAfter
     }
 
     @available(*, unavailable)

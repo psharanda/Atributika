@@ -94,8 +94,6 @@ extension String {
                     resultString.append(str)
                 }
 
-                // print(resultString[resultString.index(before: resultString.index(before: tagStackItem.startIndex(in: resultString)))])
-
                 tagsInfo.append(
                     TagInfo(
                         tag: tagStackItem.tag,

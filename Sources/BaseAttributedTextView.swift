@@ -84,7 +84,7 @@
 
         open var isEnabled: Bool = true {
             didSet {
-                if (oldValue != isEnabled) {
+                if oldValue != isEnabled {
                     setNeedsDisplayText()
                 }
             }
@@ -93,9 +93,8 @@
         @IBInspectable open var attributedText: NSAttributedString? {
             didSet {
                 setNeedsDisplayText()
-                _linkFramesCache = nil
-                _accessibleElements = nil
-                
+                invalidateLinkFramesCache()
+                invalidateAccessibilityElements()
             }
         }
 
@@ -296,7 +295,7 @@
 
         private var _highlightedLinkRange: NSRange? {
             didSet {
-                if (oldValue != _highlightedLinkRange) {
+                if oldValue != _highlightedLinkRange {
                     setNeedsDisplayText()
                 }
             }
@@ -366,31 +365,34 @@
                 return superResult
             }
         }
-        
+
         private struct RangeRects {
             let range: NSRange
             let rects: [CGRect]
         }
-        
+
+        private func invalidateLinkFramesCache() {
+            _linkFramesCache = nil
+        }
+
         private var _linkFramesCache: [RangeRects]?
-        
-        
+
         private func calculateLinksRangeRectsIfNeeded() {
-            guard let str = _backend.attributedText, _linkFramesCache == nil else {
+            guard let str = attributedText, _linkFramesCache == nil else {
                 return
             }
-            
+
             var newLinkFramesCache: [RangeRects] = []
-            
+
             str.enumerateAttribute(
                 .akaLink,
                 in: NSRange(location: 0, length: str.length)
-            ) { val, range, stop in
+            ) { val, range, _ in
 
                 guard val != nil else {
                     return
                 }
-                
+
                 var rects = [CGRect]()
                 _backend.enumerateEnclosingRects(
                     forGlyphRange: range,
@@ -399,24 +401,23 @@
                         return false
                     }
                 )
-                
+
                 newLinkFramesCache.append(RangeRects(range: range, rects: rects))
             }
-            
+
             _linkFramesCache = newLinkFramesCache
         }
 
         private func linkRange(at point: CGPoint) -> NSRange? {
-            
             calculateLinksRangeRectsIfNeeded()
-            
+
             let textOrigin = _backend.textOrigin
             let adjustedPoint = CGPoint(x: point.x - textOrigin.x, y: point.y - textOrigin.y)
 
             guard let linkFramesCache = _linkFramesCache else {
                 return nil
             }
-            
+
             for rr in linkFramesCache {
                 for rect in rr.rects {
                     if rect.contains(adjustedPoint) {
@@ -424,13 +425,14 @@
                     }
                 }
             }
-            
+
             return nil
         }
 
         override open func layoutSubviews() {
             super.layoutSubviews()
-            _linkFramesCache = nil
+            invalidateLinkFramesCache()
+            invalidateAccessibilityElements()
         }
 
         override open var intrinsicContentSize: CGSize {
@@ -515,100 +517,113 @@
         }
 
         // MARK: - Accessibitilty
-        
-        public enum AccessibilityBehaviour {
-            case natural
-            case textFirstLinksAfter
+
+        private struct RangeInfo {
+            let range: NSRange
+            let substring: String
+            let type: UIAccessibilityTraits
         }
-        
-        open var accessibilityBehaviour: AccessibilityBehaviour = .natural {
-            didSet {
-                _accessibleElements = nil
+
+        private func invalidateAccessibilityElements() {
+            _accessibilityElements = nil
+            _accessibilityRanges = nil
+        }
+
+        private var _accessibilityElements: [RectsAccessibilityElement?]?
+        private var _accessibilityRanges: [RangeInfo]?
+
+        override open func accessibilityElementCount() -> Int {
+            if let count = _accessibilityElements?.count {
+                return count
             }
-        }
 
-        private var _accessibleElements: [Any]?
+            guard let str = attributedText else {
+                return 0
+            }
 
-        override open var accessibilityElements: [Any]? {
-            get {
-                if _accessibleElements == nil {
-                    _accessibleElements = []
+            var newAccessibilityRanges: [RangeInfo] = []
+            var newAccessibilityElements: [RectsAccessibilityElement?] = []
 
-                    if let str = attributedText {
+            let nsString = str.string as NSString
 
-                        if (accessibilityBehaviour != .natural) {
-                            let text = RectsAccessibilityElement(container: self, view: self, enclosingRects: [_backend.view.frame], usePath: false)
-                            text.accessibilityLabel = str.string
-                            text.accessibilityTraits = .staticText
-                            _accessibleElements?.append(text)
-                        }
-
-                        let textOrigin = _backend.textOrigin
-
-                        str.enumerateAttribute(
-                            .akaLink,
-                            in: NSRange(location: 0, length: str.length)
-                        ) { val, range, _ in
-
-                            if accessibilityBehaviour == .natural {
-                                if range.length == 0 {
-                                    return
-                                }
-
-                                if range.length == 1 {
-                                    if let r = Range(range, in: str.string) {
-                                        let char = str.string[r.lowerBound]
-                                        if CharacterSet.whitespaces.contains(char.unicodeScalars.first!) {
-                                            return
-                                        }
-                                    }
-                                }
-                            } else {
-                                if (val == nil) {
-                                    return
-                                }
-                            }
-
-                            var enclosingRects = [CGRect]()
-
-                            _backend.enumerateEnclosingRects(
-                                forGlyphRange: range,
-                                using: { rect in
-                                    enclosingRects.append(CGRect(
-                                        x:  rect.origin.x + textOrigin.x,
-                                        y:  rect.origin.y + textOrigin.y,
-                                        width: rect.width,
-                                        height: rect.height))
-                                    return false
-                                }
-                            )
-
-                            let element = RectsAccessibilityElement(container: self, view: _backend.view, enclosingRects: enclosingRects, usePath: true)
-                            element.isAccessibilityElement = false
-
-                            let innerElement = RectsAccessibilityElement(container: element, view: _backend.view, enclosingRects: enclosingRects, usePath: false)
-
-                            if let r = Range(range, in: str.string) {
-                                innerElement.accessibilityLabel = String(str.string[r])
-                            }
-
-                            if (accessibilityBehaviour == .natural) {
-                                innerElement.accessibilityTraits = val == nil ? .staticText : .link
-                            } else {
-                                innerElement.accessibilityTraits = .staticText
-                            }
-
-
-                            element.accessibilityElements = [innerElement]
-
-                            _accessibleElements?.append(element)
-                        }
-                    }
+            nsString.enumerateSubstrings(
+                in: NSRange(location: 0, length: nsString.length), options: [.byParagraphs, .substringNotRequired]
+            ) { _, substringRange, _, _ in
+                str.enumerateAttribute(
+                    .akaLink,
+                    in: substringRange
+                ) { val, range, _ in
+                    newAccessibilityRanges.append(
+                        RangeInfo(range: range,
+                                  substring: nsString.substring(with: range),
+                                  type: val != nil ? .link : .staticText)
+                    )
+                    newAccessibilityElements.append(nil)
                 }
-
-                return _accessibleElements
             }
-            set {}
+            _accessibilityRanges = newAccessibilityRanges
+            _accessibilityElements = newAccessibilityElements
+
+            return newAccessibilityElements.count
+        }
+
+        override open func accessibilityElement(at index: Int) -> Any? {
+            guard let ranges = _accessibilityRanges
+            else {
+                return nil
+            }
+
+            if let cached = _accessibilityElements![index] {
+                return cached
+            }
+
+            var enclosingRects = [CGRect]()
+
+            let textOrigin = _backend.textOrigin
+
+            let rangeInfo = ranges[index]
+
+            _backend.enumerateEnclosingRects(
+                forGlyphRange: rangeInfo.range,
+                using: { rect in
+                    enclosingRects.append(CGRect(
+                        x: rect.origin.x + textOrigin.x,
+                        y: rect.origin.y + textOrigin.y,
+                        width: rect.width,
+                        height: rect.height
+                    ))
+                    return false
+                }
+            )
+
+            let element = RectsAccessibilityElement(container: self, view: _backend.view, enclosingRects: enclosingRects, usePath: true)
+            element.isAccessibilityElement = false
+
+            let innerElement = RectsAccessibilityElement(container: element, view: _backend.view, enclosingRects: enclosingRects, usePath: false)
+            innerElement.accessibilityLabel = rangeInfo.substring
+            innerElement.accessibilityTraits = rangeInfo.type
+
+            element.accessibilityElements = [innerElement]
+
+            _accessibilityElements![index] = element
+
+            return element
+        }
+
+        override open func index(ofAccessibilityElement element: Any) -> Int {
+            guard let elements = _accessibilityElements,
+                  let elObject = element as? RectsAccessibilityElement
+            else {
+                return NSNotFound
+            }
+
+            for (idx, el) in elements.enumerated() {
+                if elObject === el {
+                    return idx
+                }
+            }
+
+            return NSNotFound
         }
     }
 
