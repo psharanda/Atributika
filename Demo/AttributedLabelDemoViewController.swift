@@ -9,20 +9,23 @@ typealias TableViewCellStyle = UITableViewCell.CellStyle
 
 extension String {
     func styleAsTweet() -> AttributedStringBuilder {
+        
+        let baseLinkAttrs = Attrs.foregroundColor(.blue)
+        
         let a = TagTuner { tag in
-            Attrs.foregroundColor(.blue).akaLink(tag.attributes["href"] ?? "")
+            Attributes(baseLinkAttrs).akaLink(tag.attributes["href"] ?? "")
         }
 
         let hashtag = DetectionTuner { d in
-            Attrs.foregroundColor(.blue).akaLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
+            Attributes(baseLinkAttrs).akaLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
         }
 
         let mention = DetectionTuner { d in
-            Attrs.foregroundColor(.blue).akaLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
+            Attributes(baseLinkAttrs).akaLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
         }
 
         let link = DetectionTuner { d in
-            Attrs.foregroundColor(.blue).akaLink(d.text)
+            Attributes(baseLinkAttrs).akaLink(d.text)
         }
 
         return style(tags: ["a": a])

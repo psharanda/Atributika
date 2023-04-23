@@ -84,13 +84,16 @@
 
         open var isEnabled: Bool = true {
             didSet {
-                setNeedsDisplayText()
+                if (oldValue != isEnabled) {
+                    setNeedsDisplayText()
+                }
             }
         }
 
         @IBInspectable open var attributedText: NSAttributedString? {
             didSet {
                 setNeedsDisplayText()
+                _linkFramesCache = nil
                 _accessibleElements = nil
                 
             }
@@ -110,7 +113,10 @@
 
         @IBInspectable open var numberOfLines: Int {
             set {
-                _backend.numberOfLines = newValue
+                if _backend.numberOfLines != newValue {
+                    _backend.numberOfLines = newValue
+                    setNeedsDisplayText()
+                }
             }
             get {
                 return _backend.numberOfLines
@@ -119,7 +125,10 @@
 
         @IBInspectable open var lineBreakMode: NSLineBreakMode {
             set {
-                _backend.lineBreakMode = newValue
+                if _backend.lineBreakMode != newValue {
+                    _backend.lineBreakMode = newValue
+                    setNeedsDisplayText()
+                }
             }
             get {
                 return _backend.lineBreakMode
@@ -128,14 +137,19 @@
 
         open var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy = [.pushOut] {
             didSet {
-                setNeedsDisplayText()
+                if oldValue != lineBreakStrategy {
+                    setNeedsDisplayText()
+                }
             }
         }
 
         @available(iOS 10.0, *)
         @IBInspectable open var adjustsFontForContentSizeCategory: Bool {
             set {
-                _backend.adjustsFontForContentSizeCategory = newValue
+                if _backend.adjustsFontForContentSizeCategory != newValue {
+                    _backend.adjustsFontForContentSizeCategory = newValue
+                    setNeedsDisplayText()
+                }
             }
             get {
                 return _backend.adjustsFontForContentSizeCategory
@@ -144,13 +158,17 @@
 
         @IBInspectable open var font: UIFont = .preferredFont(forTextStyle: .body) {
             didSet {
-                setNeedsDisplayText()
+                if oldValue != font {
+                    setNeedsDisplayText()
+                }
             }
         }
 
         @IBInspectable open var textAlignment: NSTextAlignment = .natural {
             didSet {
-                setNeedsDisplayText()
+                if oldValue != textAlignment {
+                    setNeedsDisplayText()
+                }
             }
         }
 
@@ -162,25 +180,33 @@
             }
         }() {
             didSet {
-                setNeedsDisplayText()
+                if oldValue != textColor {
+                    setNeedsDisplayText()
+                }
             }
         }
 
         @IBInspectable open var shadowColor: UIColor? {
             didSet {
-                setNeedsDisplayText()
+                if oldValue != shadowColor {
+                    setNeedsDisplayText()
+                }
             }
         }
 
         @IBInspectable open var shadowOffset = CGSize(width: 0, height: -1) {
             didSet {
-                setNeedsDisplayText()
+                if oldValue != shadowOffset {
+                    setNeedsDisplayText()
+                }
             }
         }
 
         @IBInspectable open var shadowBlurRadius: CGFloat = 0 {
             didSet {
-                setNeedsDisplayText()
+                if oldValue != shadowBlurRadius {
+                    setNeedsDisplayText()
+                }
             }
         }
 
@@ -266,15 +292,13 @@
             }
         }
 
-        private var _trackedLinkRange: NSRange? {
-            didSet {
-                setNeedsDisplayText()
-            }
-        }
+        private var _trackedLinkRange: NSRange?
 
         private var _highlightedLinkRange: NSRange? {
             didSet {
-                setNeedsDisplayText()
+                if (oldValue != _highlightedLinkRange) {
+                    setNeedsDisplayText()
+                }
             }
         }
 
@@ -342,43 +366,71 @@
                 return superResult
             }
         }
+        
+        private struct RangeRects {
+            let range: NSRange
+            let rects: [CGRect]
+        }
+        
+        private var _linkFramesCache: [RangeRects]?
+        
+        
+        private func calculateLinksRangeRectsIfNeeded() {
+            guard let str = _backend.attributedText, _linkFramesCache == nil else {
+                return
+            }
+            
+            var newLinkFramesCache: [RangeRects] = []
+            
+            str.enumerateAttribute(
+                .akaLink,
+                in: NSRange(location: 0, length: str.length)
+            ) { val, range, stop in
+
+                guard val != nil else {
+                    return
+                }
+                
+                var rects = [CGRect]()
+                _backend.enumerateEnclosingRects(
+                    forGlyphRange: range,
+                    using: { rect in
+                        rects.append(rect)
+                        return false
+                    }
+                )
+                
+                newLinkFramesCache.append(RangeRects(range: range, rects: rects))
+            }
+            
+            _linkFramesCache = newLinkFramesCache
+        }
 
         private func linkRange(at point: CGPoint) -> NSRange? {
+            
+            calculateLinksRangeRectsIfNeeded()
+            
             let textOrigin = _backend.textOrigin
             let adjustedPoint = CGPoint(x: point.x - textOrigin.x, y: point.y - textOrigin.y)
 
-            var result: NSRange?
-
-            if let str = attributedText {
-                str.enumerateAttribute(
-                    .akaLink,
-                    in: NSRange(location: 0, length: str.length)
-                ) { val, range, stop in
-
-                    guard val != nil else {
-                        return
-                    }
-                    _backend.enumerateEnclosingRects(
-                        forGlyphRange: range,
-                        using: { rect in
-                            if rect.contains(adjustedPoint) {
-                                result = range
-                                return true
-                            }
-                            return false
-                        }
-                    )
-                    if result != nil {
-                        stop.pointee = true
+            guard let linkFramesCache = _linkFramesCache else {
+                return nil
+            }
+            
+            for rr in linkFramesCache {
+                for rect in rr.rects {
+                    if rect.contains(adjustedPoint) {
+                        return rr.range
                     }
                 }
             }
-
-            return result
+            
+            return nil
         }
 
         override open func layoutSubviews() {
             super.layoutSubviews()
+            _linkFramesCache = nil
         }
 
         override open var intrinsicContentSize: CGSize {
