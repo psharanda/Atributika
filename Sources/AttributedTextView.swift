@@ -57,15 +57,7 @@
             let textView: UITextView
 
             func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool) {
-                textView.layoutManager.enumerateEnclosingRects(
-                    forGlyphRange: glyphRange,
-                    withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                    in: textView.textContainer
-                ) { rect, stop in
-                    if block(rect) {
-                        stop.pointee = true
-                    }
-                }
+                textView.layoutManager.enumerateUsedEnclosingRects(in: textView.textContainer, forGlyphRange: glyphRange, using: block)
             }
 
             class TextView: UITextView {

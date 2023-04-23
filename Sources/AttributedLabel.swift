@@ -66,15 +66,7 @@
 
             func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool) {
                 ensureTextContainerSize()
-                layoutManager.enumerateEnclosingRects(
-                    forGlyphRange: glyphRange,
-                    withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-                    in: textContainer
-                ) { rect, stop in
-                    if block(rect) {
-                        stop.pointee = true
-                    }
-                }
+                layoutManager.enumerateUsedEnclosingRects(in: textContainer, forGlyphRange: glyphRange, using: block)
             }
 
             let textContainer: NSTextContainer
