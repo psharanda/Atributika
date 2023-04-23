@@ -18,7 +18,7 @@
 
         var view: UIView { get }
 
-        func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool)
+        func enclosingRects(forGlyphRange glyphRange: NSRange) -> [CGRect]
     }
 
     open class BaseAttributedTextView: UIView {
@@ -48,20 +48,12 @@
         open var onLinkTouchUpInside: ((BaseAttributedTextView, Any) -> Void)?
 
         open func rects(for range: Range<String.Index>) -> [CGRect] {
-            var result = [CGRect]()
-
             if let str = attributedText {
                 let nsrange = NSRange(range, in: str.string)
-                _backend.enumerateEnclosingRects(
-                    forGlyphRange: nsrange,
-                    using: { rect in
-                        result.append(rect)
-                        return false
-                    }
-                )
+                return _backend.enclosingRects(forGlyphRange: nsrange)
+            } else {
+                return []
             }
-
-            return result
         }
 
         open var highlightedLinkValue: Any? {
@@ -428,15 +420,7 @@
                     return
                 }
 
-                var rects = [CGRect]()
-                _backend.enumerateEnclosingRects(
-                    forGlyphRange: range,
-                    using: { rect in
-                        rects.append(rect)
-                        return false
-                    }
-                )
-
+                let rects = _backend.enclosingRects(forGlyphRange: range)
                 newLinkFramesCache.append(RangeRects(range: range, rects: rects))
             }
 
@@ -612,24 +596,17 @@
                 return cached
             }
 
-            var enclosingRects = [CGRect]()
-
             let textOrigin = _backend.textOrigin
 
             let rangeInfo = ranges[index]
 
-            _backend.enumerateEnclosingRects(
-                forGlyphRange: rangeInfo.range,
-                using: { rect in
-                    enclosingRects.append(CGRect(
-                        x: rect.origin.x + textOrigin.x,
-                        y: rect.origin.y + textOrigin.y,
-                        width: rect.width,
-                        height: rect.height
-                    ))
-                    return false
+            let enclosingRects = _backend.enclosingRects(forGlyphRange: rangeInfo.range)
+                .map { rect in
+                    CGRect(x: rect.origin.x + textOrigin.x,
+                           y: rect.origin.y + textOrigin.y,
+                           width: rect.width,
+                           height: rect.height)
                 }
-            )
 
             let element = RectsAccessibilityElement(container: self, view: _backend.view, enclosingRects: enclosingRects, usePath: true)
             element.isAccessibilityElement = false

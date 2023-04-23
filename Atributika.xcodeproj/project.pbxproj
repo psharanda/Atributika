@@ -63,6 +63,7 @@
 		1BC1BE4E29F5D67B0044609C /* LinkHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */; };
 		1BC1BE4F29F5D67B0044609C /* LinkHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */; };
 		1BC1BE5029F5D67B0044609C /* LinkHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */; };
+		1BC1BE5429F5DD090044609C /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1BE5329F5DD090044609C /* BrowserViewController.swift */; };
 		1BD4163429E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
 		1BD4163529E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
 		1BD4163629E42E0700687F88 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4163129E42E0700687F88 /* String+HTML.swift */; };
@@ -151,6 +152,7 @@
 		1BC1BE4229F524B60044609C /* RectsAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectsAccessibilityElement.swift; sourceTree = "<group>"; };
 		1BC1BE4729F5994F0044609C /* TextUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextUtils.swift; sourceTree = "<group>"; };
 		1BC1BE4C29F5D67B0044609C /* LinkHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHighlight.swift; sourceTree = "<group>"; };
+		1BC1BE5329F5DD090044609C /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		1BD4163129E42E0700687F88 /* String+HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTML.swift"; sourceTree = "<group>"; };
 		1BD4163229E42E0700687F88 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		1BD4163329E42E0700687F88 /* Sugar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sugar.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				1B2F83911E5C98A4009AFBCA /* SnippetsViewController.swift */,
 				1BDDF56A1E6841EA006374F6 /* AttributedLabelDemoViewController.swift */,
 				1B80548923A8ACDF002DCA63 /* IBViewController.swift */,
+				1BC1BE5329F5DD090044609C /* BrowserViewController.swift */,
 				1B80548B23A8ACF1002DCA63 /* IB.storyboard */,
 				1B2F838F1E5C98A4009AFBCA /* AppDelegate.swift */,
 				1B2F83961E5C98A4009AFBCA /* Assets.xcassets */,
@@ -648,6 +651,7 @@
 			files = (
 				1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */,
 				1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */,
+				1BC1BE5429F5DD090044609C /* BrowserViewController.swift in Sources */,
 				1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */,
 				1B2F83901E5C98A4009AFBCA /* AppDelegate.swift in Sources */,
 				1BDDF56B1E6841EA006374F6 /* AttributedLabelDemoViewController.swift in Sources */,

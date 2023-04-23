@@ -185,11 +185,11 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
         attributedTextView.numberOfLines = 0
         attributedTextView.highlightedLinkAttributes = Attrs().underlineStyle(.single).foregroundColor(.white).attributes
         attributedTextView.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
-        
+
         let linkHighlightViewFactory = RoundedRectLinkHighlightViewFactory()
         linkHighlightViewFactory.fillColor = UIColor.darkGray
         linkHighlightViewFactory.enableAnimations = false
-        
+
         attributedTextView.linkHighlightViewFactory = linkHighlightViewFactory
         attributedTextView.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         attributedTextView.onLinkTouchUpInside = { _, val in
@@ -209,14 +209,4 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
             attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
-
-    @objc private func labelOnTouchUpInside(_ sender: AttributedLabel) {
-        if let linkStr = sender.highlightedLinkValue as? String {
-            if let url = URL(string: linkStr) {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
 }
-
-

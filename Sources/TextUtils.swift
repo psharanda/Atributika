@@ -4,29 +4,32 @@
 
 #if os(iOS)
 
-import UIKit
+    import UIKit
 
-extension NSLayoutManager {
-    
-    func enumerateUsedEnclosingRects(in textContainer: NSTextContainer, forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool) {
-        var lineRects = [CGRect]()
-        enumerateLineFragments(
-            forGlyphRange: glyphRange) { rect, usedRect, cont, range, stop in
+    extension NSLayoutManager {
+        func enclosingRects(in textContainer: NSTextContainer, forGlyphRange glyphRange: NSRange) -> [CGRect] {
+            var lineRects = [CGRect]()
+            enumerateLineFragments(
+                forGlyphRange: glyphRange)
+            { _, usedRect, textContainer, _, _ in
                 lineRects.append(usedRect)
             }
-        
-        var idx = 0
-        enumerateEnclosingRects(
-            forGlyphRange: glyphRange,
-            withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
-            in: textContainer
-        ) { rect, stop in
-            if block(rect.intersection(lineRects[idx])) {
-                stop.pointee = true
+
+            var enclosingRects = [CGRect]()
+            enumerateEnclosingRects(
+                forGlyphRange: glyphRange,
+                withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
+                in: textContainer
+            ) { rect, _ in
+                enclosingRects.append(rect)
             }
-            idx += 1
+
+            if lineRects.count == enclosingRects.count {
+                return zip(lineRects, enclosingRects).map { $0.0.intersection($0.1) }
+            } else {
+                return enclosingRects
+            }
         }
     }
-}
 
 #endif

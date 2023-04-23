@@ -22,7 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let vc3 = UIStoryboard(name: "IB", bundle: nil).instantiateViewController(withIdentifier: "ib")
         vc3.title = "Storyboard"
 
-        tbc.viewControllers = [UINavigationController(rootViewController: vc1), UINavigationController(rootViewController: vc2), UINavigationController(rootViewController: vc3)]
+        let vc4 = BrowserViewController()
+        vc4.title = "Browser"
+
+        tbc.viewControllers = [
+            UINavigationController(rootViewController: vc1),
+            UINavigationController(rootViewController: vc2),
+            UINavigationController(rootViewController: vc3),
+            UINavigationController(rootViewController: vc4),
+        ]
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tbc

@@ -64,9 +64,9 @@
                 return label
             }
 
-            func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect) -> Bool) {
+            func enclosingRects(forGlyphRange glyphRange: NSRange) -> [CGRect] {
                 ensureTextContainerSize()
-                layoutManager.enumerateUsedEnclosingRects(in: textContainer, forGlyphRange: glyphRange, using: block)
+                return layoutManager.enclosingRects(in: textContainer, forGlyphRange: glyphRange)
             }
 
             let textContainer: NSTextContainer
