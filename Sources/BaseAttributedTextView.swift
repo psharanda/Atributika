@@ -78,6 +78,7 @@
 
         open var isEnabled: Bool = true {
             didSet {
+                isUserInteractionEnabled = isEnabled
                 if oldValue != isEnabled {
                     setNeedsDisplayText()
                 }
@@ -376,12 +377,12 @@
         }
 
         override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-            let superResult = super.hitTest(point, with: event)
-
             if _trackingControl.isTracking {
                 return _trackingControl
             }
 
+            let superResult = super.hitTest(point, with: event)
+            
             if (superResult == self || superResult == _backend.view) && linkRange(at: convert(point, to: _backend.view)) != nil {
                 return _trackingControl
             }

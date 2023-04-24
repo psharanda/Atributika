@@ -14,7 +14,7 @@ func stringWithAtributikaLogo() -> NSAttributedString {
     let grayColor = UIColor(white: 0x66 / 255.0, alpha: 1)
     let all = Attrs().font(font).foregroundColor(grayColor)
 
-    let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
+    let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a> v5"
         .style(tags: ["a": a])
         .styleBase(all)
         .attributedString
