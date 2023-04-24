@@ -11,7 +11,7 @@
             var lineRects = [CGRect]()
             enumerateLineFragments(
                 forGlyphRange: glyphRange)
-            { _, usedRect, textContainer, _, _ in
+            { _, usedRect, _, _, _ in
                 lineRects.append(usedRect)
             }
 

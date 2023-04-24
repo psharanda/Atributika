@@ -22,16 +22,7 @@
     }
 
     open class BaseAttributedTextView: UIView {
-        override open func prepareForInterfaceBuilder() {
-            super.prepareForInterfaceBuilder()
-            attributedText = NSAttributedString(
-                string: "Label",
-                attributes: [.font: UIFont.boldSystemFont(ofSize: 12), .foregroundColor: UIColor.darkGray]
-            )
-            invalidateIntrinsicContentSize()
-        }
-
-        // MARK: - private properties
+        // MARK: - Private properties
 
         private var _backend: TextViewBackend!
 
@@ -41,7 +32,7 @@
             fatalError("BaseAttributedTextView is for subclassing only")
         }
 
-        // MARK: - links
+        // MARK: - Links
 
         open var linkHighlightViewFactory: LinkHighlightViewFactoryProtocol?
 
@@ -50,7 +41,19 @@
         open func rects(for range: Range<String.Index>) -> [CGRect] {
             if let str = attributedText {
                 let nsrange = NSRange(range, in: str.string)
+                let textOrigin = _backend.textOrigin
                 return _backend.enclosingRects(forGlyphRange: nsrange)
+                    .map {
+                        CGRect(
+                            x: $0.origin.x + textOrigin.x,
+                            y: $0.origin.y + textOrigin.y,
+                            width: $0.size.width,
+                            height: $0.size.height
+                        )
+                    }
+                    .map {
+                        convert($0, from: _backend.view)
+                    }
             } else {
                 return []
             }
@@ -74,25 +77,6 @@
             }
         }
 
-        // MARK: - public properties
-
-        open var isEnabled: Bool = true {
-            didSet {
-                isUserInteractionEnabled = isEnabled
-                if oldValue != isEnabled {
-                    setNeedsDisplayText()
-                }
-            }
-        }
-
-        @IBInspectable open var attributedText: NSAttributedString? {
-            didSet {
-                setNeedsDisplayText()
-                invalidateLinkFramesCache()
-                invalidateAccessibilityElements()
-            }
-        }
-
         open var highlightedLinkAttributes: [NSAttributedString.Key: Any]? {
             didSet {
                 setNeedsDisplayText()
@@ -105,6 +89,82 @@
             }
         }
 
+        // MARK: - Link rect calculation
+
+        private struct RangeRects {
+            let range: NSRange
+            let rects: [CGRect]
+        }
+
+        private var _linkFramesCache: [RangeRects]?
+
+        private func invalidateLinkFramesCache() {
+            _linkFramesCache = nil
+        }
+
+        private func calculateLinksRangeRectsIfNeeded() {
+            guard let str = attributedText, _linkFramesCache == nil else {
+                return
+            }
+
+            var newLinkFramesCache: [RangeRects] = []
+
+            str.enumerateAttribute(
+                .akaLink,
+                in: NSRange(location: 0, length: str.length)
+            ) { val, range, _ in
+
+                guard val != nil else {
+                    return
+                }
+
+                let rects = _backend.enclosingRects(forGlyphRange: range)
+                newLinkFramesCache.append(RangeRects(range: range, rects: rects))
+            }
+
+            _linkFramesCache = newLinkFramesCache
+        }
+
+        private func linkRange(at point: CGPoint) -> NSRange? {
+            calculateLinksRangeRectsIfNeeded()
+
+            let textOrigin = _backend.textOrigin
+            let adjustedPoint = CGPoint(x: point.x - textOrigin.x, y: point.y - textOrigin.y)
+
+            guard let linkFramesCache = _linkFramesCache else {
+                return nil
+            }
+
+            for rr in linkFramesCache {
+                for rect in rr.rects {
+                    if rect.contains(adjustedPoint) {
+                        return rr.range
+                    }
+                }
+            }
+
+            return nil
+        }
+
+        // MARK: - Public properties
+
+        @IBInspectable open var attributedText: NSAttributedString? {
+            didSet {
+                setNeedsDisplayText()
+                invalidateLinkFramesCache()
+                invalidateAccessibilityElements()
+            }
+        }
+
+        open var isEnabled: Bool = true {
+            didSet {
+                isUserInteractionEnabled = isEnabled
+                if oldValue != isEnabled {
+                    setNeedsDisplayText()
+                }
+            }
+        }
+
         @IBInspectable open var numberOfLines: Int {
             set {
                 if _backend.numberOfLines != newValue {
@@ -114,6 +174,14 @@
             }
             get {
                 return _backend.numberOfLines
+            }
+        }
+
+        @IBInspectable open var textAlignment: NSTextAlignment = .natural {
+            didSet {
+                if oldValue != textAlignment {
+                    setNeedsDisplayText()
+                }
             }
         }
 
@@ -158,14 +226,6 @@
             }
         }
 
-        @IBInspectable open var textAlignment: NSTextAlignment = .natural {
-            didSet {
-                if oldValue != textAlignment {
-                    setNeedsDisplayText()
-                }
-            }
-        }
-
         @IBInspectable open var textColor: UIColor = {
             if #available(iOS 13.0, *) {
                 return .label
@@ -204,7 +264,7 @@
             }
         }
 
-        // MARK: - init
+        // MARK: - Init
 
         override public init(frame: CGRect) {
             super.init(frame: frame)
@@ -237,6 +297,17 @@
             _backend.view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         }
 
+        // MARK: - Overrides
+
+        override open func prepareForInterfaceBuilder() {
+            super.prepareForInterfaceBuilder()
+            attributedText = NSAttributedString(
+                string: "Label",
+                attributes: [.font: UIFont.boldSystemFont(ofSize: 12), .foregroundColor: UIColor.darkGray]
+            )
+            invalidateIntrinsicContentSize()
+        }
+
         override open func sizeThatFits(_ size: CGSize) -> CGSize {
             return _backend.view.sizeThatFits(size)
         }
@@ -249,7 +320,18 @@
             return _backend.view
         }
 
-        // MARK: - tracking
+        override open func layoutSubviews() {
+            super.layoutSubviews()
+            invalidateLinkFramesCache()
+            invalidateAccessibilityElements()
+        }
+
+        override open var intrinsicContentSize: CGSize {
+            displayTextIfNeeded()
+            return super.intrinsicContentSize
+        }
+
+        // MARK: - Links tracking
 
         private class TrackingControl: UIControl {
             weak var parent: BaseAttributedTextView?
@@ -382,7 +464,7 @@
             }
 
             let superResult = super.hitTest(point, with: event)
-            
+
             if (superResult == self || superResult == _backend.view) && linkRange(at: convert(point, to: _backend.view)) != nil {
                 return _trackingControl
             }
@@ -394,71 +476,7 @@
             }
         }
 
-        private struct RangeRects {
-            let range: NSRange
-            let rects: [CGRect]
-        }
-
-        private func invalidateLinkFramesCache() {
-            _linkFramesCache = nil
-        }
-
-        private var _linkFramesCache: [RangeRects]?
-
-        private func calculateLinksRangeRectsIfNeeded() {
-            guard let str = attributedText, _linkFramesCache == nil else {
-                return
-            }
-
-            var newLinkFramesCache: [RangeRects] = []
-
-            str.enumerateAttribute(
-                .akaLink,
-                in: NSRange(location: 0, length: str.length)
-            ) { val, range, _ in
-
-                guard val != nil else {
-                    return
-                }
-
-                let rects = _backend.enclosingRects(forGlyphRange: range)
-                newLinkFramesCache.append(RangeRects(range: range, rects: rects))
-            }
-
-            _linkFramesCache = newLinkFramesCache
-        }
-
-        private func linkRange(at point: CGPoint) -> NSRange? {
-            calculateLinksRangeRectsIfNeeded()
-
-            let textOrigin = _backend.textOrigin
-            let adjustedPoint = CGPoint(x: point.x - textOrigin.x, y: point.y - textOrigin.y)
-
-            guard let linkFramesCache = _linkFramesCache else {
-                return nil
-            }
-
-            for rr in linkFramesCache {
-                for rect in rr.rects {
-                    if rect.contains(adjustedPoint) {
-                        return rr.range
-                    }
-                }
-            }
-
-            return nil
-        }
-
-        override open func layoutSubviews() {
-            super.layoutSubviews()
-            invalidateLinkFramesCache()
-            invalidateAccessibilityElements()
-        }
-
-        override open var intrinsicContentSize: CGSize {
-            displayTextIfNeeded()
-            return super.intrinsicContentSize
-        }
+        // MARK: - Update text
 
         private var _needsDisplayText: Bool = true
 
@@ -503,15 +521,17 @@
 
             result.beginEditing()
 
-            str.enumerateAttributes(in: NSMakeRange(0, length), options: .longestEffectiveRangeNotRequired, using: { attributes, range, _ in
-                result.addAttributes(attributes, range: range)
+            str.enumerateAttributes(in: NSMakeRange(0, length),
+                                    options: .longestEffectiveRangeNotRequired,
+                                    using: { attributes, range, _ in
+                                        result.addAttributes(attributes, range: range)
 
-                if attributes[.akaLink] != nil {
-                    if !isEnabled, let attrs = disabledLinkAttributes {
-                        result.addAttributes(attrs, range: range)
-                    }
-                }
-            })
+                                        if attributes[.akaLink] != nil {
+                                            if !isEnabled, let attrs = disabledLinkAttributes {
+                                                result.addAttributes(attrs, range: range)
+                                            }
+                                        }
+                                    })
 
             if let range = _highlightedLinkRange, let attrs = highlightedLinkAttributes {
                 result.addAttributes(attrs, range: range)
@@ -609,10 +629,16 @@
                            height: rect.height)
                 }
 
-            let element = RectsAccessibilityElement(container: self, view: _backend.view, enclosingRects: enclosingRects, usePath: true)
+            let element = RectsAccessibilityElement(container: self,
+                                                    view: _backend.view,
+                                                    enclosingRects: enclosingRects,
+                                                    usePath: true)
             element.isAccessibilityElement = false
 
-            let innerElement = RectsAccessibilityElement(container: element, view: _backend.view, enclosingRects: enclosingRects, usePath: false)
+            let innerElement = RectsAccessibilityElement(container: element,
+                                                         view: _backend.view,
+                                                         enclosingRects: enclosingRects,
+                                                         usePath: false)
             innerElement.accessibilityLabel = rangeInfo.substring
             innerElement.accessibilityTraits = rangeInfo.type
 
