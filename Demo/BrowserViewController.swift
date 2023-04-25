@@ -7,6 +7,8 @@ import UIKit
 
 class BrowserViewController: UIViewController {
     private let attributedTextView = AttributedTextView()
+    
+    private var currentURL: URL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,7 @@ class BrowserViewController: UIViewController {
         attributedTextView.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
         attributedTextView.onLinkTouchUpInside = { [weak self] _, val in
             if let linkStr = val as? String {
-                self?.loadUrl(linkStr)
+                self?.loadURL(linkStr)
             }
         }
 
@@ -35,13 +37,18 @@ class BrowserViewController: UIViewController {
             attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
 
-        loadUrl("https://en.wikipedia.org/wiki/Text")
+        loadURL("https://en.wikipedia.org/wiki/Text")
     }
 
-    private func loadUrl(_ urlString: String) {
-        let url = URL(string: urlString)!
+    private func loadURL(_ urlString: String) {
+        
+        if let baseURL = currentURL, urlString.hasPrefix("/") {
+            currentURL = URL(string: urlString, relativeTo: baseURL)!
+        } else {
+            currentURL = URL(string: urlString)!
+        }
 
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+        let task = URLSession.shared.dataTask(with: currentURL!) { data, _, error in
             if error != nil {
                 return
             }
