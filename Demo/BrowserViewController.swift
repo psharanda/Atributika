@@ -7,7 +7,7 @@ import UIKit
 
 class BrowserViewController: UIViewController {
     private let attributedTextView = AttributedTextView()
-    
+
     private var currentURL: URL?
 
     override func viewDidLoad() {
@@ -41,7 +41,6 @@ class BrowserViewController: UIViewController {
     }
 
     private func loadURL(_ urlString: String) {
-        
         if let baseURL = currentURL, urlString.hasPrefix("/") {
             currentURL = URL(string: urlString, relativeTo: baseURL)!
         } else {

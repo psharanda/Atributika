@@ -67,12 +67,14 @@
                     }
                 }
 
-                var needsResetContentOffset = false
+                private var needsResetContentOffset = false
+                private var didResetContentOffsetOnce = false
 
                 override func layoutSubviews() {
                     super.layoutSubviews()
-                    if needsResetContentOffset {
+                    if needsResetContentOffset && !didResetContentOffsetOnce {
                         needsResetContentOffset = false
+                        didResetContentOffsetOnce = true
                         if #available(iOS 11.0, *) {
                             contentOffset = CGPoint(x: 0, y: -adjustedContentInset.top)
                         } else {

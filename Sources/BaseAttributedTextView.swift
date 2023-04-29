@@ -76,6 +76,14 @@
                 return nil
             }
         }
+        
+        open var highlightedRects: [CGRect]? {
+            if let range = highlightedLinkRange {
+                return rects(for: range)
+            } else {
+                return nil
+            }
+        }
 
         open var highlightedLinkAttributes: [NSAttributedString.Key: Any]? {
             didSet {
@@ -278,6 +286,7 @@
 
         private func commonInit() {
             _backend = makeBackend()
+            _backend.view.isUserInteractionEnabled = true
 
             _trackingControl.parent = self
             isAccessibilityElement = false
@@ -287,7 +296,6 @@
             _backend.view.addSubview(_trackingControl)
 
             lineBreakMode = .byTruncatingTail
-            numberOfLines = 1
 
             _backend.view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -295,6 +303,12 @@
             _backend.view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
             _backend.view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
             _backend.view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+
+            _trackingControl.translatesAutoresizingMaskIntoConstraints = false
+            _trackingControl.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            _trackingControl.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            _trackingControl.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            _trackingControl.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         }
 
         // MARK: - Overrides
@@ -366,6 +380,14 @@
                 super.cancelTracking(with: event)
                 parent?._cancelTracking(with: event)
             }
+
+            override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+                if let parent = parent, parent.linkRange(at: convert(point, to: parent._backend.view)) != nil {
+                    return super.hitTest(point, with: event)
+                } else {
+                    return nil
+                }
+            }
         }
 
         private var _trackedLinkRange: NSRange?
@@ -412,7 +434,7 @@
         }
 
         func _beginTracking(_ touch: UITouch, with _: UIEvent?) -> Bool {
-            let pt = touch.location(in: _backend.view)
+            let pt = touch.location(in: _trackingControl)
             _trackedLinkRange = linkRange(at: _trackingControl.convert(pt, to: _backend.view))
             if _trackedLinkRange != nil {
                 _highlightedLinkRange = _trackedLinkRange
@@ -423,7 +445,7 @@
         }
 
         func _continueTracking(_ touch: UITouch, with _: UIEvent?) {
-            let pt = touch.location(in: _backend.view)
+            let pt = touch.location(in: _trackingControl)
             if let currentDetection = linkRange(at: _trackingControl.convert(pt, to: _backend.view)) {
                 if currentDetection == _trackedLinkRange {
                     if _highlightedLinkRange != _trackedLinkRange {
@@ -456,24 +478,6 @@
         func _cancelTracking(with _: UIEvent?) {
             _trackedLinkRange = nil
             _highlightedLinkRange = nil
-        }
-
-        override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-            if _trackingControl.isTracking {
-                return _trackingControl
-            }
-
-            let superResult = super.hitTest(point, with: event)
-
-            if (superResult == self || superResult == _backend.view) && linkRange(at: convert(point, to: _backend.view)) != nil {
-                return _trackingControl
-            }
-
-            if !_backend.view.isUserInteractionEnabled {
-                return nil
-            } else {
-                return superResult
-            }
         }
 
         // MARK: - Update text
