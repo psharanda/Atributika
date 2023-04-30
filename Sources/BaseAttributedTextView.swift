@@ -87,13 +87,13 @@
 
         open var highlightedLinkAttributes: [NSAttributedString.Key: Any]? {
             didSet {
-                setNeedsDisplayText()
+                setNeedsDisplayText(changedGeometry: false)
             }
         }
 
         open var disabledLinkAttributes: [NSAttributedString.Key: Any]? {
             didSet {
-                setNeedsDisplayText()
+                setNeedsDisplayText(changedGeometry: false)
             }
         }
 
@@ -106,7 +106,7 @@
 
         private var _linkFramesCache: [RangeRects]?
 
-        private func invalidateLinkFramesCache() {
+        func invalidateLinkFramesCache() {
             _linkFramesCache = nil
         }
 
@@ -158,9 +158,8 @@
 
         @IBInspectable open var attributedText: NSAttributedString? {
             didSet {
-                setNeedsDisplayText()
-                invalidateLinkFramesCache()
-                invalidateAccessibilityElements()
+                invalidateAccessibilityRanges()
+                setNeedsDisplayText(changedGeometry: true)                
             }
         }
 
@@ -168,7 +167,7 @@
             didSet {
                 isUserInteractionEnabled = isEnabled
                 if oldValue != isEnabled {
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: false)
                 }
             }
         }
@@ -177,7 +176,7 @@
             set {
                 if _backend.numberOfLines != newValue {
                     _backend.numberOfLines = newValue
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: true)
                 }
             }
             get {
@@ -188,7 +187,7 @@
         @IBInspectable open var textAlignment: NSTextAlignment = .natural {
             didSet {
                 if oldValue != textAlignment {
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: true)
                 }
             }
         }
@@ -197,7 +196,7 @@
             set {
                 if _backend.lineBreakMode != newValue {
                     _backend.lineBreakMode = newValue
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: true)
                 }
             }
             get {
@@ -208,7 +207,7 @@
         open var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy = [.pushOut] {
             didSet {
                 if oldValue != lineBreakStrategy {
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: true)
                 }
             }
         }
@@ -218,7 +217,7 @@
             set {
                 if _backend.adjustsFontForContentSizeCategory != newValue {
                     _backend.adjustsFontForContentSizeCategory = newValue
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: true)
                 }
             }
             get {
@@ -229,7 +228,7 @@
         @IBInspectable open var font: UIFont = .preferredFont(forTextStyle: .body) {
             didSet {
                 if oldValue != font {
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: true)
                 }
             }
         }
@@ -243,7 +242,7 @@
         }() {
             didSet {
                 if oldValue != textColor {
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: false)
                 }
             }
         }
@@ -251,7 +250,7 @@
         @IBInspectable open var shadowColor: UIColor? {
             didSet {
                 if oldValue != shadowColor {
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: false)
                 }
             }
         }
@@ -259,7 +258,7 @@
         @IBInspectable open var shadowOffset = CGSize(width: 0, height: -1) {
             didSet {
                 if oldValue != shadowOffset {
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: false)
                 }
             }
         }
@@ -267,7 +266,7 @@
         @IBInspectable open var shadowBlurRadius: CGFloat = 0 {
             didSet {
                 if oldValue != shadowBlurRadius {
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: false)
                 }
             }
         }
@@ -289,6 +288,7 @@
             _backend.view.isUserInteractionEnabled = true
 
             _trackingControl.parent = self
+            _trackingControl.backgroundColor = .red.withAlphaComponent(0.1)
             isAccessibilityElement = false
 
             addSubview(_backend.view)
@@ -333,11 +333,17 @@
         override open var forLastBaselineLayout: UIView {
             return _backend.view
         }
+        
+        private var prevSize: CGSize = .zero
 
         override open func layoutSubviews() {
             super.layoutSubviews()
-            invalidateLinkFramesCache()
-            invalidateAccessibilityElements()
+            
+            if bounds.size != prevSize {
+                prevSize = bounds.size
+                invalidateAccessibilityElements()
+                invalidateLinkFramesCache()
+            }
         }
 
         override open var intrinsicContentSize: CGSize {
@@ -370,23 +376,13 @@
 
             override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
                 parent?._preTouchesEnded(touches, with: event)
-
                 super.touchesEnded(touches, with: event)
-
                 parent?._postTouchesEnded(touches, with: event)
             }
 
             override open func cancelTracking(with event: UIEvent?) {
                 super.cancelTracking(with: event)
                 parent?._cancelTracking(with: event)
-            }
-
-            override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-                if let parent = parent, parent.linkRange(at: convert(point, to: parent._backend.view)) != nil {
-                    return super.hitTest(point, with: event)
-                } else {
-                    return nil
-                }
             }
         }
 
@@ -428,7 +424,7 @@
                             }
                         }
                     }
-                    setNeedsDisplayText()
+                    setNeedsDisplayText(changedGeometry: false)
                 }
             }
         }
@@ -484,9 +480,13 @@
 
         private var _needsDisplayText: Bool = true
 
-        private func setNeedsDisplayText() {
+        private func setNeedsDisplayText(changedGeometry: Bool) {
             _needsDisplayText = true
-            invalidateIntrinsicContentSize()
+            if changedGeometry {
+                invalidateIntrinsicContentSize()
+                invalidateLinkFramesCache()
+                invalidateAccessibilityElements()
+            }
         }
 
         private func displayTextIfNeeded() {
@@ -568,9 +568,16 @@
             let type: UIAccessibilityTraits
         }
 
-        private func invalidateAccessibilityElements() {
+        
+        private func invalidateAccessibilityRanges() {
             _accessibilityElements = nil
             _accessibilityRanges = nil
+        }
+        
+        private func invalidateAccessibilityElements() {
+            if let els = _accessibilityElements {
+                _accessibilityElements = els.map { _ in nil }
+            }
         }
 
         private var _accessibilityElements: [RectsAccessibilityElement?]?

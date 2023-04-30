@@ -23,12 +23,18 @@
             ) { rect, _ in
                 enclosingRects.append(rect)
             }
-
-            if lineRects.count == enclosingRects.count {
-                return zip(lineRects, enclosingRects).map { $0.0.intersection($0.1) }
-            } else {
-                return enclosingRects
+            
+            var result = [CGRect]()
+            for enclosingRect in enclosingRects {
+                var r = enclosingRect
+                for lineRect in lineRects {
+                    if abs(enclosingRect.origin.y - lineRect.origin.y) < 0.0001 {
+                        r = lineRect
+                    }
+                }
+                result.append(enclosingRect.intersection(r))
             }
+            return result
         }
     }
 

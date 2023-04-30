@@ -105,6 +105,7 @@
         override func makeBackend() -> TextViewBackend {
             let backend = UITextViewBackend()
             _textView = backend.textView
+            _textView.delegate = self
             return backend
         }
 
@@ -169,5 +170,11 @@
             _textView.flashScrollIndicators()
         }
     }
+
+extension AttributedTextView: UITextViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        invalidateLinkFramesCache()
+    }
+}
 
 #endif
