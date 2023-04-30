@@ -37,14 +37,16 @@ class BrowserViewController: UIViewController {
             attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
 
-        loadURL("https://en.wikipedia.org/wiki/Text")
+        loadURL("http://info.cern.ch")
     }
 
     private func loadURL(_ urlString: String) {
-        if let baseURL = currentURL, urlString.hasPrefix("/") {
-            currentURL = URL(string: urlString, relativeTo: baseURL)!
-        } else {
+        if urlString.hasPrefix("http") {
             currentURL = URL(string: urlString)!
+        } else if let baseURL = currentURL, let newURL = URL(string: urlString, relativeTo: baseURL) {
+            currentURL = newURL
+        } else {
+            return
         }
 
         let task = URLSession.shared.dataTask(with: currentURL!) { data, _, error in
@@ -66,12 +68,54 @@ class BrowserViewController: UIViewController {
             Attrs().akaLink($0.tag.attributes["href"] ?? "").foregroundColor(.blue)
         }
 
+        let base = Attrs().font(UIFont(name: "HelveticaNeue", size: 12)!)
+
+        let italicBoldTuner = TagTuner { info in
+            var set = Set<String>()
+            set.insert(info.tag.name)
+            info.outerTags.forEach { set.insert($0.name) }
+
+            let attrs = Attrs()
+            if set.contains("b") && set.contains("i") {
+                attrs.font(UIFont(name: "HelveticaNeue-BoldItalic", size: 12)!)
+            } else if set.contains("i") {
+                attrs.font(UIFont(name: "HelveticaNeue-Italic", size: 12)!)
+            } else if set.contains("b") {
+                attrs.font(UIFont(name: "HelveticaNeue-Bold", size: 12)!)
+            }
+            return attrs
+        }
+
+        let ignore = TagTuner { _ in
+            [:]
+        } transform: {
+            switch $0.tagTransform {
+            case .start:
+                return nil
+            case .end:
+                return nil
+            case .body:
+                return ""
+            }
+        }
+
         let attributedText = htmlString
-            .style(tags: ["a": a])
+            .style(tags: ["a": a,
+                          "style": ignore,
+                          "script": ignore,
+                          "head": ignore,
+                          "u": Attrs().underlineStyle(.single),
+                          "title": Attrs().font(UIFont(name: "HelveticaNeue-Bold", size: 18)!),
+                          "h1": Attrs().font(UIFont(name: "HelveticaNeue-Bold", size: 16)!),
+                          "h2": Attrs().font(UIFont(name: "HelveticaNeue-Bold", size: 14)!),
+                          "i": italicBoldTuner,
+                          "b": italicBoldTuner])
+            .styleBase(base)
             .attributedString
 
         DispatchQueue.main.async {
             self.attributedTextView.attributedText = attributedText
+            self.attributedTextView.resetContentOffset()
         }
     }
 }

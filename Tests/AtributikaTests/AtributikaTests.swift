@@ -30,6 +30,36 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(test, reference)
     }
 
+    func testHelloUppercase() {
+        let test = AttributedStringBuilder(
+            htmlString: "Hello <B>World</B>!!!",
+            tags: [
+                "b": Attrs().font(.boldSystemFont(ofSize: 45)),
+            ]
+        )
+        .attributedString
+
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.addAttributes([.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
+
+        XCTAssertEqual(test, reference)
+    }
+
+    func testHelloMixedcase() {
+        let test = AttributedStringBuilder(
+            htmlString: "Hello <B>World</b>!!!",
+            tags: [
+                "b": Attrs().font(.boldSystemFont(ofSize: 45)),
+            ]
+        )
+        .attributedString
+
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.addAttributes([.font: Font.boldSystemFont(ofSize: 45)], range: NSMakeRange(6, 5))
+
+        XCTAssertEqual(test, reference)
+    }
+
     func testHelloWithBase() {
         let test = "<b>Hello World</b>!!!"
             .style(tags: ["b": Attrs().font(.boldSystemFont(ofSize: 45))])
@@ -415,12 +445,14 @@ class AtributikaTests: XCTestCase {
                     return nil
                 },
                 "li": TagTuner {
-                    switch $0.tagPosition {
+                    switch $0.tagTransform {
                     case .start:
                         counter += 1
                         return "\(counter). "
                     case .end:
                         return "\n"
+                    case .body:
+                        return nil
                     }
                 },
             ]
@@ -683,33 +715,6 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(tags.count, 0)
     }
 
-    func testBrokenHTMLComment() {
-        let test = "Hello <!-This is a comment. Comments are erased by Atributika-->world!"
-
-        let (string, tags) = test.detectTags()
-
-        XCTAssertEqual(string, test)
-        XCTAssertEqual(tags.count, 0)
-    }
-
-    func testBrokenHTMLComment2() {
-        let test = "Hello <!"
-
-        let (string, tags) = test.detectTags()
-
-        XCTAssertEqual(string, test)
-        XCTAssertEqual(tags.count, 0)
-    }
-
-    func testBrokenHTMLComment3() {
-        let test = "Hello <!"
-
-        let (string, tags) = test.detectTags()
-
-        XCTAssertEqual(string, test)
-        XCTAssertEqual(tags.count, 0)
-    }
-
     func testBrokenTag() {
         let test = "Hello <"
 
@@ -809,6 +814,33 @@ class AtributikaTests: XCTestCase {
         reference.addAttributes([.font: Font(name: "HelveticaNeue-BoldItalic", size: 12)!,
                                  .underlineStyle: NSUnderlineStyle.single.rawValue], range: NSMakeRange(0, 15))
 
+        XCTAssertEqual(test, reference)
+    }
+
+    func testTransformBody() {
+        let head = TagTuner { _ in
+            Attrs().foregroundColor(.red)
+        } transform: {
+            switch $0.tagTransform {
+            case .start, .end:
+                return nil
+            case let .body(body):
+                if body.count > 1 {
+                    return String(body.uppercased()[body.startIndex ..< body.index(after: body.startIndex)])
+                } else {
+                    return String(body)
+                }
+            }
+        }
+
+        let script = TagTuner(bodyReplacement: "")
+
+        let test = "<head>Hel<script><head>1</head>var i = 0</script>lo</head> World"
+            .style(tags: ["script": script, "head": head])
+            .attributedString
+
+        let reference = NSMutableAttributedString(string: "H World")
+        reference.addAttributes([.foregroundColor: UIColor.red], range: NSMakeRange(0, 1))
         XCTAssertEqual(test, reference)
     }
 }

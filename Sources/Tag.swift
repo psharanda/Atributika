@@ -14,9 +14,10 @@ public struct Tag: Equatable {
     }
 }
 
-public enum TagPosition: Equatable {
+public enum TagTransform: Equatable {
     case start(selfClosing: Bool)
     case end
+    case body(Substring)
 }
 
 public struct TagTuningStyleInfo {
@@ -30,11 +31,11 @@ public struct TagTuningStyleInfo {
 
 public struct TagTuningTransformInfo {
     public let tag: Tag
-    public let tagPosition: TagPosition
+    public let tagTransform: TagTransform
     public let outerTags: [Tag]
-    public init(tag: Tag, tagPosition: TagPosition, outerTags: [Tag]) {
+    public init(tag: Tag, tagTransform: TagTransform, outerTags: [Tag]) {
         self.tag = tag
-        self.tagPosition = tagPosition
+        self.tagTransform = tagTransform
         self.outerTags = outerTags
     }
 }
@@ -71,14 +72,16 @@ public struct TagTuner: TagTuning {
         _transform = transform
     }
 
-    public init(attributes: AttributesProvider = [NSAttributedString.Key: Any](), startReplacement: String? = nil, endReplacement: String? = nil) {
+    public init(attributes: AttributesProvider = [NSAttributedString.Key: Any](), startReplacement: String? = nil, endReplacement: String? = nil, bodyReplacement: String? = nil) {
         _style = { _ in attributes }
         _transform = { info in
-            switch info.tagPosition {
+            switch info.tagTransform {
             case .start:
                 return startReplacement
             case .end:
                 return endReplacement
+            case .body:
+                return bodyReplacement
             }
         }
     }

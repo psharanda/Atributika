@@ -84,23 +84,45 @@ extension String {
 
     private func parseClosingTag(_ scanner: Scanner, _ tagsStack: inout [String.TagStackItem], _ tags: [String: TagTuning], _ resultString: inout String, _ tagsInfo: inout [TagInfo]) {
         _ = scanner._scanString("/")
-        guard let tagName = scanner._scanCharacters(from: Self.allowedTagCharacters) else {
+        guard let tagName = scanner._scanCharacters(from: Self.allowedTagCharacters)?.lowercased() else {
             resultString.append("</")
             return
         }
 
         for (index, tagStackItem) in tagsStack.enumerated().reversed() {
             if tagStackItem.tag.name == tagName {
-                if let tagStyler = tags[tagName],
-                   let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tagStackItem.tag, tagPosition: .end, outerTags: tagStackItem.outerTags))
-                {
-                    resultString.append(str)
+                let startIndex = tagStackItem.startIndex(in: resultString)
+
+                if let tagStyler = tags[tagName.lowercased()] {
+                    if let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tagStackItem.tag,
+                                                                                  tagTransform: .end,
+                                                                                  outerTags: tagStackItem.outerTags))
+                    {
+                        resultString.append(str)
+                    }
+
+                    let bodyRange = startIndex ..< resultString.endIndex
+                    let body = resultString[bodyRange]
+
+                    if let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tagStackItem.tag,
+                                                                                  tagTransform: .body(body),
+                                                                                  outerTags: tagStackItem.outerTags))
+                    {
+                        resultString.replaceSubrange(bodyRange, with: str)
+
+                        tagsInfo = tagsInfo.filter { tagInfo in
+                            if tagInfo.range.lowerBound >= startIndex {
+                                return false
+                            }
+                            return true
+                        }
+                    }
                 }
 
                 tagsInfo.append(
                     TagInfo(
                         tag: tagStackItem.tag,
-                        range: tagStackItem.startIndex(in: resultString) ..< resultString.endIndex,
+                        range: startIndex ..< resultString.endIndex,
                         level: tagStackItem.level,
                         outerTags: tagStackItem.outerTags
                     ))
@@ -113,7 +135,7 @@ extension String {
     }
 
     private func parseOpeningTag(_ scanner: Scanner, _ resultString: inout String, _ tags: [String: TagTuning], _ tagsStack: inout [String.TagStackItem], _ tagsInfo: inout [TagInfo]) {
-        let tagName = scanner._scanCharacters(from: Self.allowedTagCharacters)!
+        let tagName = scanner._scanCharacters(from: Self.allowedTagCharacters)!.lowercased()
 
         var selfClosing = false
         var attributes: [String: String] = [:]
@@ -171,7 +193,7 @@ extension String {
                     attributes[prevParamName] = ""
                     paramName = nil
                 }
-                paramName = scanner._scanCharacters(from: Self.allowedTagCharacters)!
+                paramName = scanner._scanCharacters(from: Self.allowedTagCharacters)!.lowercased()
             } else {
                 _ = scanner._scanCharacter()
             }
@@ -188,10 +210,10 @@ extension String {
         let tag = Tag(name: tagName, attributes: attributes)
 
         if let tagStyler = tags[tagName],
-           let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tag, tagPosition: .start(selfClosing: selfClosing), outerTags: []))
+           let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tag, tagTransform: .start(selfClosing: selfClosing), outerTags: []))
         {
             resultString.append(str)
-        } else if tagName.lowercased() == "br" {
+        } else if tagName == "br" {
             resultString.append("\n")
         }
 
@@ -235,6 +257,9 @@ extension String {
         } else if scanner._scanString("!--") != nil {
             _ = scanner._scanUpToString("-->")
             _ = scanner._scanString("-->")
+        } else if scanner._scanString("!") != nil {
+            _ = scanner._scanUpToString(">")
+            _ = scanner._scanString(">")
         } else {
             resultString.append("<")
         }

@@ -169,12 +169,20 @@
         open func flashScrollIndicators() {
             _textView.flashScrollIndicators()
         }
+
+        open func resetContentOffset() {
+            if #available(iOS 11.0, *) {
+                _textView.contentOffset = CGPoint(x: 0, y: -_textView.adjustedContentInset.top)
+            } else {
+                _textView.contentOffset = .zero
+            }
+        }
     }
 
-extension AttributedTextView: UITextViewDelegate {
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        invalidateLinkFramesCache()
+    extension AttributedTextView: UITextViewDelegate {
+        public func scrollViewDidScroll(_: UIScrollView) {
+            invalidateLinkFramesCache()
+        }
     }
-}
 
 #endif

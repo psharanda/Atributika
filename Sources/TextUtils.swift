@@ -23,7 +23,7 @@
             ) { rect, _ in
                 enclosingRects.append(rect)
             }
-            
+
             var result = [CGRect]()
             for enclosingRect in enclosingRects {
                 var r = enclosingRect

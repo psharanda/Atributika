@@ -145,22 +145,26 @@ func stringWithUnorderedList() -> NSAttributedString {
 func stringWithOrderedList() -> NSAttributedString {
     var counter = 0
     let ol = TagTuner {
-        switch $0.tagPosition {
+        switch $0.tagTransform {
         case .start:
             counter = 0
+            return nil
         case .end:
-            break
+            return nil
+        case .body:
+            return nil
         }
-        return nil
     }
 
     let li = TagTuner {
-        switch $0.tagPosition {
+        switch $0.tagTransform {
         case .start:
             counter += 1
             return "\(counter). "
         case .end:
             return "\n"
+        case .body:
+            return nil
         }
     }
 
@@ -219,10 +223,12 @@ func stringWithImage() -> NSAttributedString {
         }
         return style
     }, transform: {
-        switch $0.tagPosition {
+        switch $0.tagTransform {
         case .start:
             return "\u{FFFC}"
         case .end:
+            return nil
+        case .body:
             return nil
         }
     })

@@ -76,7 +76,7 @@
                 return nil
             }
         }
-        
+
         open var highlightedRects: [CGRect]? {
             if let range = highlightedLinkRange {
                 return rects(for: range)
@@ -159,7 +159,7 @@
         @IBInspectable open var attributedText: NSAttributedString? {
             didSet {
                 invalidateAccessibilityRanges()
-                setNeedsDisplayText(changedGeometry: true)                
+                setNeedsDisplayText(changedGeometry: true)
             }
         }
 
@@ -288,7 +288,6 @@
             _backend.view.isUserInteractionEnabled = true
 
             _trackingControl.parent = self
-            _trackingControl.backgroundColor = .red.withAlphaComponent(0.1)
             isAccessibilityElement = false
 
             addSubview(_backend.view)
@@ -333,12 +332,12 @@
         override open var forLastBaselineLayout: UIView {
             return _backend.view
         }
-        
+
         private var prevSize: CGSize = .zero
 
         override open func layoutSubviews() {
             super.layoutSubviews()
-            
+
             if bounds.size != prevSize {
                 prevSize = bounds.size
                 invalidateAccessibilityElements()
@@ -568,12 +567,11 @@
             let type: UIAccessibilityTraits
         }
 
-        
         private func invalidateAccessibilityRanges() {
             _accessibilityElements = nil
             _accessibilityRanges = nil
         }
-        
+
         private func invalidateAccessibilityElements() {
             if let els = _accessibilityElements {
                 _accessibilityElements = els.map { _ in nil }
