@@ -9,6 +9,8 @@
     @IBDesignable
     open class AttributedTextView: BaseAttributedTextView {
         private class UITextViewBackend: TextViewBackend {
+            var preferredMaxLayoutWidth: CGFloat = 0
+
             var attributedText: NSAttributedString? {
                 set {
                     textView.attributedText = newValue

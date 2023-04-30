@@ -25,11 +25,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let vc4 = BrowserViewController()
         vc4.title = "Browser"
 
+        let vc5: UIViewController
+        if #available(iOS 13.0, *) {
+            vc5 = SwiftUIDemoViewController(rootView: ContentView())
+        } else {
+            vc5 = UIViewController()
+        }
+
+        vc5.title = "SwiftUI"
+
         tbc.viewControllers = [
             UINavigationController(rootViewController: vc1),
             UINavigationController(rootViewController: vc2),
             UINavigationController(rootViewController: vc3),
             UINavigationController(rootViewController: vc4),
+            UINavigationController(rootViewController: vc5),
         ]
 
         window = UIWindow(frame: UIScreen.main.bounds)

@@ -25,14 +25,15 @@
             }
 
             var result = [CGRect]()
-            for enclosingRect in enclosingRects {
-                var r = enclosingRect
-                for lineRect in lineRects {
-                    if abs(enclosingRect.origin.y - lineRect.origin.y) < 0.0001 {
-                        r = lineRect
+            for lineRect in lineRects {
+                var enclosingRectForLine = lineRect
+                
+                for enclosingRect in enclosingRects {
+                    if enclosingRect.intersects(lineRect) {
+                        enclosingRectForLine = enclosingRectForLine.intersection(enclosingRect)
                     }
                 }
-                result.append(enclosingRect.intersection(r))
+                result.append(enclosingRectForLine)
             }
             return result
         }

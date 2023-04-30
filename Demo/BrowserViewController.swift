@@ -37,7 +37,8 @@ class BrowserViewController: UIViewController {
             attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
 
-        loadURL("http://info.cern.ch")
+        //loadURL("http://info.cern.ch")
+        loadURL("https://en.wikipedia.org/wiki/Text")
     }
 
     private func loadURL(_ urlString: String) {

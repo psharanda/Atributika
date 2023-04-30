@@ -19,6 +19,8 @@
         var view: UIView { get }
 
         func enclosingRects(forGlyphRange glyphRange: NSRange) -> [CGRect]
+
+        var preferredMaxLayoutWidth: CGFloat { get set }
     }
 
     open class BaseAttributedTextView: UIView {
@@ -333,6 +335,15 @@
             return _backend.view
         }
 
+        open var preferredMaxLayoutWidth: CGFloat {
+            set {
+                _backend.preferredMaxLayoutWidth = newValue
+            }
+            get {
+                return _backend.preferredMaxLayoutWidth
+            }
+        }
+
         private var prevSize: CGSize = .zero
 
         override open func layoutSubviews() {
@@ -347,7 +358,7 @@
 
         override open var intrinsicContentSize: CGSize {
             displayTextIfNeeded()
-            return super.intrinsicContentSize
+            return _backend.view.intrinsicContentSize
         }
 
         // MARK: - Links tracking

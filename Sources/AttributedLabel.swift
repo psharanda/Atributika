@@ -9,6 +9,15 @@
     @IBDesignable
     open class AttributedLabel: BaseAttributedTextView {
         private class UILabelBackend: TextViewBackend {
+            var preferredMaxLayoutWidth: CGFloat {
+                set {
+                    label.preferredMaxLayoutWidth = newValue
+                }
+                get {
+                    return label.preferredMaxLayoutWidth
+                }
+            }
+
             var attributedText: NSAttributedString? {
                 set {
                     label.attributedText = newValue

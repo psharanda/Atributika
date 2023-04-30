@@ -27,6 +27,7 @@
 		1B539F1929E4B55400188B7A /* Atributika.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B539F1529E4B55400188B7A /* Atributika.swift */; };
 		1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B80548923A8ACDF002DCA63 /* IBViewController.swift */; };
 		1B80548C23A8ACF1002DCA63 /* IB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B80548B23A8ACF1002DCA63 /* IB.storyboard */; };
+		1B9D8A4129FEED940043426A /* SwiftUIDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A4029FEED940043426A /* SwiftUIDemoViewController.swift */; };
 		1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
 		1BB55AD21E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
 		1BB55AD31E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
@@ -143,6 +144,7 @@
 		1B539F1529E4B55400188B7A /* Atributika.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atributika.swift; sourceTree = "<group>"; };
 		1B80548923A8ACDF002DCA63 /* IBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
 		1B80548B23A8ACF1002DCA63 /* IB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
+		1B9D8A4029FEED940043426A /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
 		1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
 		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+Compat.swift"; sourceTree = "<group>"; };
 		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Detection.swift"; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				1B2F83961E5C98A4009AFBCA /* Assets.xcassets */,
 				1B2F83981E5C98A4009AFBCA /* LaunchScreen.storyboard */,
 				1B2F839B1E5C98A4009AFBCA /* Info.plist */,
+				1B9D8A4029FEED940043426A /* SwiftUIDemoViewController.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -650,6 +653,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */,
+				1B9D8A4129FEED940043426A /* SwiftUIDemoViewController.swift in Sources */,
 				1BDDF5691E683A8F006374F6 /* Snippet.swift in Sources */,
 				1BC1BE5429F5DD090044609C /* BrowserViewController.swift in Sources */,
 				1B2F83921E5C98A4009AFBCA /* SnippetsViewController.swift in Sources */,
