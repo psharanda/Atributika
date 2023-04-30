@@ -63,8 +63,6 @@ class AttributedLabelDemoViewController: UIViewController {
         return tableView
     }()
 
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)

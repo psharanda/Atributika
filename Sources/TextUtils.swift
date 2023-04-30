@@ -27,7 +27,7 @@
             var result = [CGRect]()
             for lineRect in lineRects {
                 var enclosingRectForLine = lineRect
-                
+
                 for enclosingRect in enclosingRects {
                     if enclosingRect.intersects(lineRect) {
                         enclosingRectForLine = enclosingRectForLine.intersection(enclosingRect)
