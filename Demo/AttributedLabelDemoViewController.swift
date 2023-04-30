@@ -48,8 +48,7 @@ var tweets: [String] = [
     "Always in my heart @Harry_Styles . Yours sincerely, Louis",
     "HELP ME PLEASE. A MAN NEEDS HIS NUGGS https://pbs.twimg.com/media/C8sk8QlUwAAR3qI.jpg",
     "Подтверждая номер телефона, вы\nпринимаете «<a>пользовательское соглашение</a>»",
-    "Here's how a similar one was solved 😄 \nhttps://medium.com/@narcelio/solving-decred-mockingbird-puzzle-5366efeaeed7\n",
-    "#Hello @World!",
+    "Here's how a similar one was solved 😄 \nhttps://medium.com/@narcelio/solving-decred-mockingbird-puzzle-5366efeaeed7\n"
 ]
 
 class AttributedLabelDemoViewController: UIViewController {

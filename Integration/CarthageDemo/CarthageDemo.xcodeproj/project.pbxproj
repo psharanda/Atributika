@@ -17,6 +17,8 @@
 		1B1F70B829F3C01A00DDA90D /* SnippetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F70AF29F3C01A00DDA90D /* SnippetsViewController.swift */; };
 		1B1F70BB29F3C56E00DDA90D /* Atributika.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B1F70BA29F3C56E00DDA90D /* Atributika.xcframework */; };
 		1B1F70BC29F3C56E00DDA90D /* Atributika.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B1F70BA29F3C56E00DDA90D /* Atributika.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1B9D8A5829FF21C00043426A /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5629FF21C00043426A /* BrowserViewController.swift */; };
+		1B9D8A5929FF21C00043426A /* SwiftUIDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5729FF21C00043426A /* SwiftUIDemoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +47,8 @@
 		1B1F70AE29F3C01900DDA90D /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Base.lproj; path = ../../../Demo/Base.lproj; sourceTree = "<group>"; };
 		1B1F70AF29F3C01A00DDA90D /* SnippetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnippetsViewController.swift; path = ../../../Demo/SnippetsViewController.swift; sourceTree = "<group>"; };
 		1B1F70BA29F3C56E00DDA90D /* Atributika.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Atributika.xcframework; path = Carthage/Build/Atributika.xcframework; sourceTree = "<group>"; };
+		1B9D8A5629FF21C00043426A /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserViewController.swift; path = ../../../Demo/BrowserViewController.swift; sourceTree = "<group>"; };
+		1B9D8A5729FF21C00043426A /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftUIDemoViewController.swift; path = ../../../Demo/SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,8 @@
 				1B1F70AC29F3C01900DDA90D /* IBViewController.swift */,
 				1B1F70A929F3C01900DDA90D /* Info.plist */,
 				1B1F70AB29F3C01900DDA90D /* Snippet.swift */,
+				1B9D8A5629FF21C00043426A /* BrowserViewController.swift */,
+				1B9D8A5729FF21C00043426A /* SwiftUIDemoViewController.swift */,
 				1B1F70AF29F3C01A00DDA90D /* SnippetsViewController.swift */,
 			);
 			path = CarthageDemo;
@@ -174,6 +180,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B1F70B829F3C01A00DDA90D /* SnippetsViewController.swift in Sources */,
+				1B9D8A5929FF21C00043426A /* SwiftUIDemoViewController.swift in Sources */,
+				1B9D8A5829FF21C00043426A /* BrowserViewController.swift in Sources */,
 				1B1F70B429F3C01A00DDA90D /* Snippet.swift in Sources */,
 				1B1F70B329F3C01A00DDA90D /* AttributedLabelDemoViewController.swift in Sources */,
 				1B1F70B029F3C01A00DDA90D /* AppDelegate.swift in Sources */,

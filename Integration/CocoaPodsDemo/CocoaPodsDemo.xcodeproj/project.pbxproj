@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B1F703929F3B51700DDA90D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B1F703729F3B51700DDA90D /* LaunchScreen.storyboard */; };
 		1B1F704829F3B87D00DDA90D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B1F704029F3B87D00DDA90D /* Assets.xcassets */; };
 		1B1F704929F3B87D00DDA90D /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 1B1F704129F3B87D00DDA90D /* Base.lproj */; };
 		1B1F704A29F3B87D00DDA90D /* IBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F704229F3B87D00DDA90D /* IBViewController.swift */; };
@@ -16,6 +15,8 @@
 		1B1F704D29F3B87D00DDA90D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F704529F3B87D00DDA90D /* AppDelegate.swift */; };
 		1B1F704E29F3B87D00DDA90D /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F704629F3B87D00DDA90D /* Snippet.swift */; };
 		1B1F704F29F3B87D00DDA90D /* IB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B1F704729F3B87D00DDA90D /* IB.storyboard */; };
+		1B9D8A5429FF20D20043426A /* SwiftUIDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5229FF20D20043426A /* SwiftUIDemoViewController.swift */; };
+		1B9D8A5529FF20D20043426A /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5329FF20D20043426A /* BrowserViewController.swift */; };
 		AF9926E4397C525452BA71E2 /* Pods_CocoaPodsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC3CC8AB549DA5DD1C19027 /* Pods_CocoaPodsDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,8 @@
 		1B1F704529F3B87D00DDA90D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../../Demo/AppDelegate.swift; sourceTree = "<group>"; };
 		1B1F704629F3B87D00DDA90D /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Snippet.swift; path = ../../../Demo/Snippet.swift; sourceTree = "<group>"; };
 		1B1F704729F3B87D00DDA90D /* IB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = IB.storyboard; path = ../../../Demo/IB.storyboard; sourceTree = "<group>"; };
+		1B9D8A5229FF20D20043426A /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftUIDemoViewController.swift; path = ../../../Demo/SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
+		1B9D8A5329FF20D20043426A /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserViewController.swift; path = ../../../Demo/BrowserViewController.swift; sourceTree = "<group>"; };
 		3BC3CC8AB549DA5DD1C19027 /* Pods_CocoaPodsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CocoaPodsDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6C49C0E0DDFA64DA67BDD5E /* Pods-CocoaPodsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CocoaPodsDemo.debug.xcconfig"; path = "Target Support Files/Pods-CocoaPodsDemo/Pods-CocoaPodsDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +88,8 @@
 				1B1F704629F3B87D00DDA90D /* Snippet.swift */,
 				1B1F704329F3B87D00DDA90D /* SnippetsViewController.swift */,
 				1B1F703729F3B51700DDA90D /* LaunchScreen.storyboard */,
+				1B9D8A5329FF20D20043426A /* BrowserViewController.swift */,
+				1B9D8A5229FF20D20043426A /* SwiftUIDemoViewController.swift */,
 			);
 			path = CocoaPodsDemo;
 			sourceTree = "<group>";
@@ -158,7 +163,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B1F703929F3B51700DDA90D /* LaunchScreen.storyboard in Resources */,
 				1B1F704F29F3B87D00DDA90D /* IB.storyboard in Resources */,
 				1B1F704929F3B87D00DDA90D /* Base.lproj in Resources */,
 				1B1F704829F3B87D00DDA90D /* Assets.xcassets in Resources */,
@@ -215,6 +219,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B1F704C29F3B87D00DDA90D /* AttributedLabelDemoViewController.swift in Sources */,
+				1B9D8A5529FF20D20043426A /* BrowserViewController.swift in Sources */,
+				1B9D8A5429FF20D20043426A /* SwiftUIDemoViewController.swift in Sources */,
 				1B1F704B29F3B87D00DDA90D /* SnippetsViewController.swift in Sources */,
 				1B1F704E29F3B87D00DDA90D /* Snippet.swift in Sources */,
 				1B1F704D29F3B87D00DDA90D /* AppDelegate.swift in Sources */,
