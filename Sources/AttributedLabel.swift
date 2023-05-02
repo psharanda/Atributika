@@ -9,6 +9,24 @@
     @IBDesignable
     open class AttributedLabel: BaseAttributedTextView {
         private class UILabelBackend: TextViewBackend {
+            
+            private class TextEngine {
+                let textContainer: NSTextContainer
+                let layoutManager: NSLayoutManager
+                let textStorage: NSTextStorage
+
+                init() {
+                    textContainer = NSTextContainer(size: .zero)
+                    textContainer.lineFragmentPadding = 0
+
+                    layoutManager = NSLayoutManager()
+                    layoutManager.addTextContainer(textContainer)
+
+                    textStorage = NSTextStorage()
+                    textStorage.addLayoutManager(layoutManager)
+                }
+            }
+            
             var preferredMaxLayoutWidth: CGFloat {
                 set {
                     label.preferredMaxLayoutWidth = newValue
@@ -23,9 +41,9 @@
                     label.attributedText = newValue
 
                     if let attributedString = newValue {
-                        textStorage.setAttributedString(attributedString)
+                        textEngine?.textStorage.setAttributedString(attributedString)
                     } else {
-                        textStorage.setAttributedString(NSAttributedString())
+                        textEngine?.textStorage.setAttributedString(NSAttributedString())
                     }
                 }
                 get {
@@ -36,7 +54,7 @@
             var numberOfLines: Int {
                 set {
                     label.numberOfLines = newValue
-                    textContainer.maximumNumberOfLines = newValue
+                    textEngine?.textContainer.maximumNumberOfLines = newValue
                 }
                 get {
                     return label.numberOfLines
@@ -56,49 +74,49 @@
             var lineBreakMode: NSLineBreakMode {
                 set {
                     label.lineBreakMode = newValue
-                    textContainer.lineBreakMode = newValue
+                    textEngine?.textContainer.lineBreakMode = newValue
                 }
                 get {
                     return label.lineBreakMode
                 }
             }
-
-            var textOrigin: CGPoint {
-                ensureTextContainerSize()
-                let rect = layoutManager.usedRect(for: textContainer)
-                return CGPoint(x: 0, y: (label.frame.size.height - rect.size.height) / 2)
-            }
-
+            
             var view: UIView {
                 return label
             }
 
-            func enclosingRects(forGlyphRange glyphRange: NSRange) -> [CGRect] {
+
+            var textOrigin: CGPoint {
                 ensureTextContainerSize()
-                return layoutManager.enclosingRects(in: textContainer, forGlyphRange: glyphRange)
+                let rect = textEngine!.layoutManager.usedRect(for: textEngine!.textContainer)
+                return CGPoint(x: 0, y: (label.frame.size.height - rect.size.height) / 2)
             }
 
-            let textContainer: NSTextContainer
-            let layoutManager: NSLayoutManager
-            let textStorage: NSTextStorage
+            func enclosingRects(forGlyphRange glyphRange: NSRange) -> [CGRect] {
+                ensureTextContainerSize()
+                return textEngine!.layoutManager.enclosingRects(in: textEngine!.textContainer, forGlyphRange: glyphRange)
+            }
 
             let label = UILabel()
 
-            init() {
-                textContainer = NSTextContainer(size: .zero)
-                textContainer.lineFragmentPadding = 0
-
-                layoutManager = NSLayoutManager()
-                layoutManager.addTextContainer(textContainer)
-
-                textStorage = NSTextStorage()
-                textStorage.addLayoutManager(layoutManager)
-            }
+            private var textEngine: TextEngine?
 
             private func ensureTextContainerSize() {
+                createTextEngineIfNeeded()
                 let newSize = CGSize(width: label.bounds.width, height: CGFloat.greatestFiniteMagnitude)
-                if textContainer.size != newSize {
-                    textContainer.size = newSize
+                if textEngine!.textContainer.size != newSize {
+                    textEngine!.textContainer.size = newSize
+                }
+            }
+            
+            private func createTextEngineIfNeeded() {
+                if (textEngine == nil) {
+                    let textEngine = TextEngine()
+                    textEngine.textStorage.setAttributedString(attributedText ?? NSAttributedString())
+                    textEngine.textContainer.maximumNumberOfLines = numberOfLines
+                    textEngine.textContainer.lineBreakMode = lineBreakMode
+                    
+                    self.textEngine = textEngine
                 }
             }
         }

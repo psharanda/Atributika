@@ -394,6 +394,15 @@
                 super.cancelTracking(with: event)
                 parent?._cancelTracking(with: event)
             }
+            
+            override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+                if super.point(inside: point, with: event) {
+                    if let parent = parent, parent.linkRange(at: convert(point, to: parent._backend.view)) != nil {
+                        return true
+                    }
+                }
+                return false
+            }
         }
 
         private var _trackedLinkRange: NSRange?
@@ -454,13 +463,9 @@
             let pt = touch.location(in: _trackingControl)
             if let currentDetection = linkRange(at: _trackingControl.convert(pt, to: _backend.view)) {
                 if currentDetection == _trackedLinkRange {
-                    if _highlightedLinkRange != _trackedLinkRange {
-                        _highlightedLinkRange = _trackedLinkRange
-                    }
+                    _highlightedLinkRange = _trackedLinkRange
                 } else {
-                    if _highlightedLinkRange != nil {
-                        _highlightedLinkRange = nil
-                    }
+                    _highlightedLinkRange = nil
                 }
             } else {
                 _highlightedLinkRange = nil
@@ -492,8 +497,8 @@
 
         private func setNeedsDisplayText(changedGeometry: Bool) {
             _needsDisplayText = true
+            invalidateIntrinsicContentSize()
             if changedGeometry {
-                invalidateIntrinsicContentSize()
                 invalidateLinkFramesCache()
                 invalidateAccessibilityElements()
             }
