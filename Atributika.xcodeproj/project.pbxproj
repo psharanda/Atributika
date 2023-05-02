@@ -28,10 +28,6 @@
 		1B80548A23A8ACDF002DCA63 /* IBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B80548923A8ACDF002DCA63 /* IBViewController.swift */; };
 		1B80548C23A8ACF1002DCA63 /* IB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B80548B23A8ACF1002DCA63 /* IB.storyboard */; };
 		1B9D8A4129FEED940043426A /* SwiftUIDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A4029FEED940043426A /* SwiftUIDemoViewController.swift */; };
-		1B9D8A4A29FF1B2F0043426A /* AttrLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A4929FF1B2F0043426A /* AttrLabel.swift */; };
-		1B9D8A4B29FF1B2F0043426A /* AttrLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A4929FF1B2F0043426A /* AttrLabel.swift */; };
-		1B9D8A4C29FF1B2F0043426A /* AttrLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A4929FF1B2F0043426A /* AttrLabel.swift */; };
-		1B9D8A4D29FF1B2F0043426A /* AttrLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A4929FF1B2F0043426A /* AttrLabel.swift */; };
 		1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
 		1BB55AD21E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
 		1BB55AD31E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */; };
@@ -149,7 +145,6 @@
 		1B80548923A8ACDF002DCA63 /* IBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
 		1B80548B23A8ACF1002DCA63 /* IB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
 		1B9D8A4029FEED940043426A /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
-		1B9D8A4929FF1B2F0043426A /* AttrLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttrLabel.swift; sourceTree = "<group>"; };
 		1BB55ACC1E5C73EF00CE6EAD /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
 		1BB55ACE1E5C73EF00CE6EAD /* NSScanner+Compat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+Compat.swift"; sourceTree = "<group>"; };
 		1BB55ACF1E5C73EF00CE6EAD /* String+Detection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Detection.swift"; sourceTree = "<group>"; };
@@ -285,7 +280,6 @@
 				1BD4163329E42E0700687F88 /* Sugar.swift */,
 				1BD4163229E42E0700687F88 /* Tag.swift */,
 				1BC1BE4729F5994F0044609C /* TextUtils.swift */,
-				1B9D8A4929FF1B2F0043426A /* AttrLabel.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -677,7 +671,6 @@
 				1BB55AD11E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B539F1629E4B55400188B7A /* Atributika.swift in Sources */,
 				1B3836A01F97C224001DB333 /* BaseAttributedTextView.swift in Sources */,
-				1B9D8A4A29FF1B2F0043426A /* AttrLabel.swift in Sources */,
 				1BD4163829E42E0700687F88 /* Tag.swift in Sources */,
 				1BC1BE4829F5994F0044609C /* TextUtils.swift in Sources */,
 				1BD4163429E42E0700687F88 /* String+HTML.swift in Sources */,
@@ -708,7 +701,6 @@
 				1BB55AD31E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B539F1829E4B55400188B7A /* Atributika.swift in Sources */,
 				1BB55ADF1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
-				1B9D8A4C29FF1B2F0043426A /* AttrLabel.swift in Sources */,
 				1BD4163A29E42E0700687F88 /* Tag.swift in Sources */,
 				1BC1BE4A29F5994F0044609C /* TextUtils.swift in Sources */,
 				1BD4163629E42E0700687F88 /* String+HTML.swift in Sources */,
@@ -731,7 +723,6 @@
 				1BB55AD41E5C73F000CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B539F1929E4B55400188B7A /* Atributika.swift in Sources */,
 				1BB55AE01E5C73F000CE6EAD /* String+Detection.swift in Sources */,
-				1B9D8A4D29FF1B2F0043426A /* AttrLabel.swift in Sources */,
 				1BD4163B29E42E0700687F88 /* Tag.swift in Sources */,
 				1BC1BE4B29F5994F0044609C /* TextUtils.swift in Sources */,
 				1BD4163729E42E0700687F88 /* String+HTML.swift in Sources */,
@@ -754,7 +745,6 @@
 				1BB55AD21E5C73EF00CE6EAD /* AttributedStringBuilder.swift in Sources */,
 				1B539F1729E4B55400188B7A /* Atributika.swift in Sources */,
 				1BB55ADE1E5C73F000CE6EAD /* String+Detection.swift in Sources */,
-				1B9D8A4B29FF1B2F0043426A /* AttrLabel.swift in Sources */,
 				1BD4163929E42E0700687F88 /* Tag.swift in Sources */,
 				1BC1BE4929F5994F0044609C /* TextUtils.swift in Sources */,
 				1BD4163529E42E0700687F88 /* String+HTML.swift in Sources */,
