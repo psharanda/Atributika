@@ -134,8 +134,8 @@ func stringWithTagAndHashtag() -> NSAttributedString {
 
 func stringWithUnorderedList() -> NSAttributedString {
     let li = TagTuner(attributes: Attrs().font(.systemFont(ofSize: 12)).foregroundColor(.red),
-                      startReplacement: "- ",
-                      endReplacement: "\n")
+                      openingTagReplacement: "- ",
+                      closingTagReplacement: "\n")
     return "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>"
         .style(tags: ["li": li])
         .styleBase(Attrs().font(.boldSystemFont(ofSize: 14)))
@@ -144,26 +144,26 @@ func stringWithUnorderedList() -> NSAttributedString {
 
 func stringWithOrderedList() -> NSAttributedString {
     var counter = 0
-    let ol = TagTuner {
-        switch $0.tagTransform {
-        case .start:
+    let ol = TagTuner { _, part in
+        switch part {
+        case .opening:
             counter = 0
             return nil
-        case .end:
+        case .closing:
             return nil
-        case .body:
+        case .content:
             return nil
         }
     }
 
-    let li = TagTuner {
-        switch $0.tagTransform {
-        case .start:
+    let li = TagTuner { _, part in
+        switch part {
+        case .opening:
             counter += 1
             return "\(counter). "
-        case .end:
+        case .closing:
             return "\n"
-        case .body:
+        case .content:
             return nil
         }
     }
@@ -222,13 +222,13 @@ func stringWithImage() -> NSAttributedString {
             style.attachment(textAttachment)
         }
         return style
-    }, transform: {
-        switch $0.tagTransform {
-        case .start:
+    }, transform: { _, part in
+        switch part {
+        case .opening:
             return "\u{FFFC}"
-        case .end:
+        case .closing:
             return nil
-        case .body:
+        case .content:
             return nil
         }
     })
@@ -288,8 +288,8 @@ func stringWithIndentedList() -> NSAttributedString {
     paragraphStyle.headIndent = indentation
 
     let li = TagTuner(attributes: Attrs().font(listItemFont).paragraphStyle(paragraphStyle),
-                      startReplacement: bullet,
-                      endReplacement: "\n")
+                      openingTagReplacement: bullet,
+                      closingTagReplacement: "\n")
 
     return "TODO:<br><li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li><li>Vestibulum ornare dui ut orci congue placerat. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li><li>Nunc et tortor vulputate, elementum quam at, tristique nibh. Cras a mollis mauris. Cras non mauris nisi. Ut turpis tellus, pretium sed erat eu, consectetur volutpat nisl. Praesent at bibendum ante</li>"
         .style(tags: ["li": li])

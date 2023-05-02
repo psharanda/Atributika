@@ -53,7 +53,7 @@ public final class AttributedStringBuilder {
         tagsInfo.forEach { t in
             newLevel = max(t.level, newLevel)
             if let style = tags[t.tag.name.lowercased()] {
-                info.append(AttributesRangeInfo(attributes: style.style(info: TagTuningStyleInfo(tag: t.tag, outerTags: t.outerTags)), range: t.range, level: t.level))
+                info.append(AttributesRangeInfo(attributes: style.style(context: TagContext(tag: t.tag, outerTags: t.outerTags)), range: t.range, level: t.level))
             }
         }
 

@@ -424,7 +424,7 @@ class AtributikaTests: XCTestCase {
 
         let test = AttributedStringBuilder(
             htmlString: "TODO:<br><li>veni</li><li>vidi</li><li>vici</li>",
-            tags: ["li": TagTuner(attributes: li, startReplacement: "- ", endReplacement: "\n")]
+            tags: ["li": TagTuner(attributes: li, openingTagReplacement: "- ", closingTagReplacement: "\n")]
         )
         .attributedString
 
@@ -440,18 +440,18 @@ class AtributikaTests: XCTestCase {
         let test = AttributedStringBuilder(
             htmlString: "<div><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol></div>",
             tags: [
-                "ol": TagTuner { _ in
+                "ol": TagTuner { _,_  in
                     counter = 0
                     return nil
                 },
-                "li": TagTuner {
-                    switch $0.tagTransform {
-                    case .start:
+                "li": TagTuner { _, part in
+                    switch part {
+                    case .opening:
                         counter += 1
                         return "\(counter). "
-                    case .end:
+                    case .closing:
                         return "\n"
-                    case .body:
+                    case .content:
                         return nil
                     }
                 },
@@ -820,11 +820,11 @@ class AtributikaTests: XCTestCase {
     func testTransformBody() {
         let head = TagTuner { _ in
             Attrs().foregroundColor(.red)
-        } transform: {
-            switch $0.tagTransform {
-            case .start, .end:
+        } transform: { _, part in
+            switch part {
+            case .opening, .closing:
                 return nil
-            case let .body(body):
+            case let .content(body):
                 if body.count > 1 {
                     return String(body.uppercased()[body.startIndex ..< body.index(after: body.startIndex)])
                 } else {
@@ -833,7 +833,7 @@ class AtributikaTests: XCTestCase {
             }
         }
 
-        let script = TagTuner(bodyReplacement: "")
+        let script = TagTuner(contentReplacement: "")
 
         let test = "<head>Hel<script><head>1</head>var i = 0</script>lo</head> World"
             .style(tags: ["script": script, "head": head])

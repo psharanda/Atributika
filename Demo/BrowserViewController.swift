@@ -90,12 +90,12 @@ class BrowserViewController: UIViewController {
         let ignore = TagTuner { _ in
             [:]
         } transform: {
-            switch $0.tagTransform {
-            case .start:
+            switch $1 {
+            case .opening:
                 return nil
-            case .end:
+            case .closing:
                 return nil
-            case .body:
+            case .content:
                 return ""
             }
         }

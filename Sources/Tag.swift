@@ -14,13 +14,13 @@ public struct Tag: Equatable {
     }
 }
 
-public enum TagTransform: Equatable {
-    case start(selfClosing: Bool)
-    case end
-    case body(Substring)
+public enum TagPart: Equatable {
+    case opening(selfClosing: Bool)
+    case closing
+    case content(Substring)
 }
 
-public struct TagTuningStyleInfo {
+public struct TagContext {
     public let tag: Tag
     public let outerTags: [Tag]
     public init(tag: Tag, outerTags: [Tag]) {
@@ -29,59 +29,51 @@ public struct TagTuningStyleInfo {
     }
 }
 
-public struct TagTuningTransformInfo {
-    public let tag: Tag
-    public let tagTransform: TagTransform
-    public let outerTags: [Tag]
-    public init(tag: Tag, tagTransform: TagTransform, outerTags: [Tag]) {
-        self.tag = tag
-        self.tagTransform = tagTransform
-        self.outerTags = outerTags
-    }
-}
-
 public protocol TagTuning {
-    func style(info: TagTuningStyleInfo) -> AttributesProvider
-    func transform(info: TagTuningTransformInfo) -> String?
+    func style(context: TagContext) -> AttributesProvider
+    func transform(context: TagContext, part: TagPart) -> String?
 }
 
 public struct TagTuner: TagTuning {
-    public func style(info: TagTuningStyleInfo) -> AttributesProvider {
-        return _style(info)
+    public func style(context: TagContext) -> AttributesProvider {
+        return _style(context)
     }
 
-    public func transform(info: TagTuningTransformInfo) -> String? {
-        return _transform(info)
+    public func transform(context: TagContext, part: TagPart) -> String? {
+        return _transform(context, part)
     }
 
-    private let _style: (TagTuningStyleInfo) -> AttributesProvider
-    private let _transform: (TagTuningTransformInfo) -> String?
+    private let _style: (TagContext) -> AttributesProvider
+    private let _transform: (TagContext, TagPart) -> String?
 
-    public init(style: @escaping (TagTuningStyleInfo) -> AttributesProvider, transform: @escaping (TagTuningTransformInfo) -> String?) {
+    public init(style: @escaping (TagContext) -> AttributesProvider, transform: @escaping (TagContext, TagPart) -> String?) {
         _style = style
         _transform = transform
     }
 
-    public init(style: @escaping (TagTuningStyleInfo) -> AttributesProvider) {
+    public init(style: @escaping (TagContext) -> AttributesProvider) {
         _style = style
-        _transform = { _ in nil }
+        _transform = { _, _ in nil }
     }
 
-    public init(transform: @escaping (TagTuningTransformInfo) -> String?) {
+    public init(transform: @escaping (TagContext, TagPart) -> String?) {
         _style = { _ in [NSAttributedString.Key: Any]() }
         _transform = transform
     }
 
-    public init(attributes: AttributesProvider = [NSAttributedString.Key: Any](), startReplacement: String? = nil, endReplacement: String? = nil, bodyReplacement: String? = nil) {
+    public init(attributes: AttributesProvider = [NSAttributedString.Key: Any](),
+                openingTagReplacement: String? = nil,
+                closingTagReplacement: String? = nil,
+                contentReplacement: String? = nil) {
         _style = { _ in attributes }
-        _transform = { info in
-            switch info.tagTransform {
-            case .start:
-                return startReplacement
-            case .end:
-                return endReplacement
-            case .body:
-                return bodyReplacement
+        _transform = { _, part in
+            switch part {
+            case .opening:
+                return openingTagReplacement
+            case .closing:
+                return closingTagReplacement
+            case .content:
+                return contentReplacement
             }
         }
     }

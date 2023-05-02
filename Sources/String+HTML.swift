@@ -7,7 +7,7 @@ import Foundation
 public struct TagInfo: Equatable {
     public let tag: Tag
     public let range: Range<String.Index>
-    let level: Int
+    public let level: Int
     public let outerTags: [Tag]
 }
 
@@ -93,10 +93,10 @@ extension String {
             if tagStackItem.tag.name == tagName {
                 let startIndex = tagStackItem.startIndex(in: resultString)
 
-                if let tagStyler = tags[tagName.lowercased()] {
-                    if let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tagStackItem.tag,
-                                                                                  tagTransform: .end,
-                                                                                  outerTags: tagStackItem.outerTags))
+                if let tuner = tags[tagName.lowercased()] {
+                    if let str = tuner.transform(context: TagContext(tag: tagStackItem.tag,
+                                                                         outerTags: tagStackItem.outerTags),
+                                                     part: .closing)
                     {
                         resultString.append(str)
                     }
@@ -104,9 +104,9 @@ extension String {
                     let bodyRange = startIndex ..< resultString.endIndex
                     let body = resultString[bodyRange]
 
-                    if let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tagStackItem.tag,
-                                                                                  tagTransform: .body(body),
-                                                                                  outerTags: tagStackItem.outerTags))
+                    if let str = tuner.transform(context: TagContext(tag: tagStackItem.tag,
+                                                                         outerTags: tagStackItem.outerTags),
+                                                     part: .content(body))
                     {
                         resultString.replaceSubrange(bodyRange, with: str)
 
@@ -208,18 +208,19 @@ extension String {
         let startIndex = resultString.endIndex
 
         let tag = Tag(name: tagName, attributes: attributes)
-
-        if let tagStyler = tags[tagName],
-           let str = tagStyler.transform(info: TagTuningTransformInfo(tag: tag, tagTransform: .start(selfClosing: selfClosing), outerTags: []))
+        let nextLevel = (tagsStack.last?.level ?? -1) + 1
+        let outerTags = tagsStack.map { $0.tag }
+        
+        if let tuner = tags[tagName],
+           let str = tuner.transform(context: TagContext(tag: tag,
+                                                             outerTags: outerTags),
+                                         part: .opening(selfClosing: selfClosing))
         {
             resultString.append(str)
         } else if tagName == "br" {
             resultString.append("\n")
         }
 
-        let nextLevel = (tagsStack.last?.level ?? -1) + 1
-
-        let outerTags = tagsStack.map { $0.tag }
         if selfClosing {
             tagsInfo.append(
                 TagInfo(
