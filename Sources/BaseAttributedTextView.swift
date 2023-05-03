@@ -158,14 +158,23 @@
 
         // MARK: - Public properties
 
-        @IBInspectable open var attributedText: NSAttributedString? {
+        open var attributedText: NSAttributedString? {
             didSet {
                 invalidateAccessibilityRanges()
                 setNeedsDisplayText(changedGeometry: true)
             }
         }
+        
+        @IBInspectable open var text: String? {
+            set {
+                attributedText = newValue.map { NSAttributedString(string: $0) }
+            }
+            get {
+                attributedText?.string
+            }
+        }
 
-        open var isEnabled: Bool = true {
+        @IBInspectable open var isEnabled: Bool = true {
             didSet {
                 isUserInteractionEnabled = isEnabled
                 if oldValue != isEnabled {
@@ -257,7 +266,7 @@
             }
         }
 
-        @IBInspectable open var shadowOffset = CGSize(width: 0, height: -1) {
+        @IBInspectable open var shadowOffset: CGSize = CGSize(width: 0, height: -1) {
             didSet {
                 if oldValue != shadowOffset {
                     setNeedsDisplayText(changedGeometry: false)
@@ -316,11 +325,10 @@
 
         override open func prepareForInterfaceBuilder() {
             super.prepareForInterfaceBuilder()
-            attributedText = NSAttributedString(
-                string: "Label",
-                attributes: [.font: UIFont.boldSystemFont(ofSize: 12), .foregroundColor: UIColor.darkGray]
-            )
+            backgroundColor = nil
             invalidateIntrinsicContentSize()
+            updateText()
+            layoutIfNeeded()
         }
 
         override open func sizeThatFits(_ size: CGSize) -> CGSize {
