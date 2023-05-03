@@ -182,7 +182,7 @@
     }
 
     extension AttributedTextView: UITextViewDelegate {
-        public func scrollViewDidScroll(_: UIScrollView) {
+        open func scrollViewDidScroll(_: UIScrollView) {
             invalidateLinkFramesCache()
         }
     }

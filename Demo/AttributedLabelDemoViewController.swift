@@ -188,7 +188,7 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
         attributedTextView.highlightedLinkAttributes = Attrs().underlineStyle(.single).foregroundColor(.white).attributes
         attributedTextView.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
 
-        let linkHighlightViewFactory = RoundedRectLinkHighlightViewFactory()
+        var linkHighlightViewFactory = RoundedRectLinkHighlightViewFactory()
         linkHighlightViewFactory.fillColor = UIColor.darkGray
         linkHighlightViewFactory.enableAnimations = false
 

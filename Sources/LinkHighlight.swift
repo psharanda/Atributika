@@ -15,7 +15,7 @@
         func createView(enclosingRects: [CGRect]) -> UIView & LinkHighlightViewProtocol
     }
 
-    public class RoundedRectLinkHighlightViewFactory: LinkHighlightViewFactoryProtocol {
+    public struct RoundedRectLinkHighlightViewFactory: LinkHighlightViewFactoryProtocol {
         private class HighlightView: UIView, LinkHighlightViewProtocol {
             private let enableAnimations: Bool
 
