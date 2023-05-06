@@ -1,0 +1,21 @@
+PODS:
+  - Atributika (5.0.0)
+  - AtributikaViews (5.0.0)
+
+DEPENDENCIES:
+  - Atributika (from `../../Atributika.podspec`)
+  - AtributikaViews (from `../../AtributikaViews.podspec`)
+
+EXTERNAL SOURCES:
+  Atributika:
+    :path: "../../Atributika.podspec"
+  AtributikaViews:
+    :path: "../../AtributikaViews.podspec"
+
+SPEC CHECKSUMS:
+  Atributika: 0831a2cb2d39838ab168112e0e5386a975bd594b
+  AtributikaViews: 22944440199a819b2359b9ef3dad6cd86f72ff9e
+
+PODFILE CHECKSUM: ad6dc83f0554d43b29ec698b215acc3e7a59b3d0
+
+COCOAPODS: 1.12.1

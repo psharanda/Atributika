@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
-  s.name         = "Atributika"
+  s.name         = "AtributikaViews"
   s.version      = "5.0.0"
-  s.summary      = "Convert text with HTML tags, hashtags, mentions, links into NSAttributedString."
+  s.summary      = "UILabel drop-in replacement."
   s.description  = <<-DESC
-    `Atributika` is an effortless to build NSAttributedString. It is able to detect HTML-like tags, links, phone numbers, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc.
+    `Atributika` comes with drop-in label replacement `AttributedLabel` which is able to make any detection clickable.
   DESC
   s.homepage     = "https://github.com/psharanda/Atributika"
   s.license      = { :type => "MIT", :file => "LICENSE" }
@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
   s.source       = { :git => "https://github.com/psharanda/Atributika.git", :tag => s.version.to_s }
-  s.source_files = "Sources/Core/**/*.swift"
+  s.source_files = "Sources/Views/**/*.swift"
 end

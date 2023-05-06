@@ -440,7 +440,7 @@ class AtributikaTests: XCTestCase {
         let test = AttributedStringBuilder(
             htmlString: "<div><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol><ol type=\"\"><li>Coffee</li><li>Tea</li><li>Milk</li></ol></div>",
             tags: [
-                "ol": TagTuner { _,_  in
+                "ol": TagTuner { _, _ in
                     counter = 0
                     return nil
                 },
@@ -603,12 +603,12 @@ class AtributikaTests: XCTestCase {
             }
         }
 
-        let prev = AtributikaConfig.htmlSpecialsProvider
+        let prev = AttributedStringBuilder.htmlSpecialsProvider
 
-        AtributikaConfig.htmlSpecialsProvider = TestSpecialProvider()
+        AttributedStringBuilder.htmlSpecialsProvider = TestSpecialProvider()
         XCTAssertEqual("&Tab;".detectTags().string, "\t")
 
-        AtributikaConfig.htmlSpecialsProvider = prev
+        AttributedStringBuilder.htmlSpecialsProvider = prev
     }
 
     func testSpecialCodes() {
@@ -840,7 +840,7 @@ class AtributikaTests: XCTestCase {
             .attributedString
 
         let reference = NSMutableAttributedString(string: "H World")
-        reference.addAttributes([.foregroundColor: UIColor.red], range: NSMakeRange(0, 1))
+        reference.addAttributes([.foregroundColor: Color.red], range: NSMakeRange(0, 1))
         XCTAssertEqual(test, reference)
     }
 }
