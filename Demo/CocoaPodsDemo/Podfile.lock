@@ -13,9 +13,9 @@ EXTERNAL SOURCES:
     :path: "../../AtributikaViews.podspec"
 
 SPEC CHECKSUMS:
-  Atributika: 0831a2cb2d39838ab168112e0e5386a975bd594b
-  AtributikaViews: 22944440199a819b2359b9ef3dad6cd86f72ff9e
+  Atributika: 90080b3a0de14d14ce746d04e2b6aa1c801a4a61
+  AtributikaViews: 140f7bab4d0961eedd943550d9e7401a61de3a09
 
-PODFILE CHECKSUM: ad6dc83f0554d43b29ec698b215acc3e7a59b3d0
+PODFILE CHECKSUM: 0d8dddd6178ac19bc5b6bb1435ad8eae24bf24d1
 
 COCOAPODS: 1.12.1

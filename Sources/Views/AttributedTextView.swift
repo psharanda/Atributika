@@ -29,7 +29,6 @@
                 }
             }
 
-            @available(iOS 10.0, *)
             var adjustsFontForContentSizeCategory: Bool {
                 set {
                     textView.adjustsFontForContentSizeCategory = newValue
@@ -77,11 +76,7 @@
                     if needsResetContentOffset && !didResetContentOffsetOnce {
                         needsResetContentOffset = false
                         didResetContentOffsetOnce = true
-                        if #available(iOS 11.0, *) {
-                            contentOffset = CGPoint(x: 0, y: -adjustedContentInset.top)
-                        } else {
-                            contentOffset = .zero
-                        }
+                        contentOffset = CGPoint(x: 0, y: -adjustedContentInset.top)
                     }
                 }
             }
@@ -149,7 +144,6 @@
             }
         }
 
-        @available(iOS 11.0, *)
         open var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior {
             get {
                 return _textView.contentInsetAdjustmentBehavior
@@ -173,11 +167,7 @@
         }
 
         open func resetContentOffset() {
-            if #available(iOS 11.0, *) {
-                _textView.contentOffset = CGPoint(x: 0, y: -_textView.adjustedContentInset.top)
-            } else {
-                _textView.contentOffset = .zero
-            }
+            _textView.contentOffset = CGPoint(x: 0, y: -_textView.adjustedContentInset.top)
         }
     }
 

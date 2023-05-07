@@ -10,10 +10,11 @@ Pod::Spec.new do |s|
   s.author             = { "Pavel Sharanda" => "psharanda@gmail.com" }
   s.social_media_url   = "https://twitter.com/psharanda"
   s.swift_version = '5.1'
-  s.ios.deployment_target = "9.0"
-  s.osx.deployment_target = "10.10"
+  s.ios.deployment_target = "11.0"
+  s.osx.deployment_target = "10.13"
   s.watchos.deployment_target = "2.0"
-  s.tvos.deployment_target = "9.0"
+  s.tvos.deployment_target = "11.0"
   s.source       = { :git => "https://github.com/psharanda/Atributika.git", :tag => s.version.to_s }
   s.source_files = "Sources/Views/**/*.swift"
 end
+

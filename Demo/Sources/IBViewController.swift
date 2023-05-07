@@ -10,20 +10,13 @@ class IBViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let font: UIFont
-        if #available(iOS 11.0, *) {
-            font = UIFont.preferredFont(forTextStyle: .body)
-        } else {
-            font = UIFont.systemFont(ofSize: 16)
-        }
+        let font = UIFont.preferredFont(forTextStyle: .body)
 
         let button = Attrs()
             .underlineStyle(.single)
             .font(font)
 
-        if #available(iOS 10.0, *) {
-            attributedLabel.adjustsFontForContentSizeCategory = true
-        }
+        attributedLabel.adjustsFontForContentSizeCategory = true
         attributedLabel.attributedText = "Hello! <button>Need to register?</button>"
             .style(tags: ["button": button])
             .styleBase(Attrs().font(.systemFont(ofSize: 12)))

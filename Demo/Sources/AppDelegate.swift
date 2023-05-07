@@ -12,57 +12,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tbc = UITabBarController()
         
         var tabs = [UIViewController]()
-
-        let vc1 = SnippetsViewController()
-        vc1.tabBarItem = UITabBarItem(
-            title: "Snippets",
-            image: UIImage(systemName: "list.clipboard"),
-            selectedImage: nil
-        )
-        tabs.append(vc1)
-
-        let vc2 = AttributedLabelDemoViewController()
-        vc2.tabBarItem = UITabBarItem(
-            title: "AttributedLabel",
-            image: UIImage(systemName: "list.bullet"),
-            selectedImage: nil
-        )
-        tabs.append(vc2)
-
-        let vc3 = UIStoryboard(name: "IB", bundle: nil).instantiateViewController(withIdentifier: "ib")
-        vc3.tabBarItem = UITabBarItem(
-            title: "Storyboard",
-            image: UIImage(systemName: "macwindow"),
-            selectedImage: nil
-        )
-        tabs.append(vc3)
-
-        let vc4 = BrowserViewController()
-        vc4.tabBarItem = UITabBarItem(
-            title: "Browser",
-            image: UIImage(systemName: "arrow.clockwise.icloud"),
-            selectedImage: nil
-        )
-        tabs.append(vc4)
-
-        let vc5: UIViewController
-        vc5 = SwiftUIDemoViewController(rootView: ContentView())
-        vc5.tabBarItem = UITabBarItem(
-            title: "SwiftUI",
-            image: UIImage(systemName: "swift"),
-            selectedImage: nil
-        )
-        tabs.append(vc5)
-
-        #if MARKDOWN
-        let vc6 = MarkdownViewController()
-        vc6.tabBarItem = UITabBarItem(
-            title: "Markdown",
-            image: UIImage(systemName: "text.alignleft"),
-            selectedImage: nil
-        )
-        tabs.append(vc6)
-        #endif
+        
+        func addTab(_ vc: UIViewController, name: String, iconName: String) {
+            let icon: UIImage?
+            
+            if #available(iOS 13.0, *) {
+                icon = UIImage(systemName: iconName)
+            } else {
+                icon = nil
+            }
+            
+            vc.tabBarItem = UITabBarItem(
+                title: name,
+                image: icon,
+                selectedImage: nil
+            )
+            tabs.append(UINavigationController(rootViewController: vc))
+        }
+        
+        addTab(SnippetsViewController(), name: "Snippets", iconName: "list.clipboard")
+        addTab(AttributedLabelDemoViewController(), name: "Snippets", iconName: "list.bullet")
+        addTab(UIStoryboard(name: "IB", bundle: nil).instantiateViewController(withIdentifier: "ib"), name: "Storyboard", iconName: "macwindow")
+        addTab(BrowserViewController(), name: "Browser", iconName: "arrow.clockwise.icloud")
+        
+        if #available(iOS 13.0, *) {
+            addTab(SwiftUIDemoViewController(rootView: ContentView()), name: "SwiftUI", iconName: "swift")
+        }
+        
+#if MARKDOWN
+        addTab(MarkdownViewController(), name: "Markdown", iconName: "text.alignleft")
+#endif
 
         tbc.viewControllers = tabs
 

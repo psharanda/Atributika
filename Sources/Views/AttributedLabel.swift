@@ -59,8 +59,7 @@
                     return label.numberOfLines
                 }
             }
-
-            @available(iOS 10.0, *)
+            
             var adjustsFontForContentSizeCategory: Bool {
                 set {
                     label.adjustsFontForContentSizeCategory = newValue

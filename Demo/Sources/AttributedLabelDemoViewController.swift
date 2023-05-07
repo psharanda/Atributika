@@ -214,9 +214,6 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
         attributedTextView.isSelectable = true
         attributedTextView.alwaysBounceVertical = true
         attributedTextView.numberOfLines = 0
-//        if #available(iOS 11.0, *) {
-//            attributedTextView.contentInsetAdjustmentBehavior = .always
-//        }
         attributedTextView.highlightedLinkAttributes = Attrs().underlineStyle(.single).foregroundColor(.white).attributes
         attributedTextView.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
 
@@ -236,20 +233,11 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
 
         attributedTextView.translatesAutoresizingMaskIntoConstraints = false
 
-//        if #available(iOS 11.0, *) {
-//            NSLayoutConstraint.activate([
-//                attributedTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//                attributedTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//                attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            ])
-//        } else {
         NSLayoutConstraint.activate([
-            attributedTextView.topAnchor.constraint(equalTo: view.topAnchor),
-            attributedTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            attributedTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            attributedTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             attributedTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             attributedTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-        // }
     }
 }

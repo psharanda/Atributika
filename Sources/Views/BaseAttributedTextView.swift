@@ -11,7 +11,6 @@
         var numberOfLines: Int { get set }
         var lineBreakMode: NSLineBreakMode { get set }
 
-        @available(iOS 10.0, *)
         var adjustsFontForContentSizeCategory: Bool { get set }
 
         var textOrigin: CGPoint { get }
@@ -223,7 +222,6 @@
             }
         }
 
-        @available(iOS 10.0, *)
         @IBInspectable open var adjustsFontForContentSizeCategory: Bool {
             set {
                 if _backend.adjustsFontForContentSizeCategory != newValue {
@@ -558,20 +556,16 @@
 
             result.endEditing()
 
-            if #available(iOS 10.0, *) {
-                let shouldAdjustsFontForContentSizeCategory = _backend.adjustsFontForContentSizeCategory
+            let shouldAdjustsFontForContentSizeCategory = _backend.adjustsFontForContentSizeCategory
 
-                if shouldAdjustsFontForContentSizeCategory {
-                    _backend.adjustsFontForContentSizeCategory = false
-                }
+            if shouldAdjustsFontForContentSizeCategory {
+                _backend.adjustsFontForContentSizeCategory = false
+            }
 
-                _backend.attributedText = result
+            _backend.attributedText = result
 
-                if shouldAdjustsFontForContentSizeCategory {
-                    _backend.adjustsFontForContentSizeCategory = true
-                }
-            } else {
-                _backend.attributedText = result
+            if shouldAdjustsFontForContentSizeCategory {
+                _backend.adjustsFontForContentSizeCategory = true
             }
         }
 
