@@ -10,18 +10,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let tbc = UITabBarController()
-        
+
         var tabs = [UIViewController]()
-        
+
         func addTab(_ vc: UIViewController, name: String, iconName: String) {
             let icon: UIImage?
-            
+
             if #available(iOS 13.0, *) {
                 icon = UIImage(systemName: iconName)
             } else {
                 icon = nil
             }
-            
+
             vc.tabBarItem = UITabBarItem(
                 title: name,
                 image: icon,
@@ -29,19 +29,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
             tabs.append(UINavigationController(rootViewController: vc))
         }
-        
+
         addTab(SnippetsViewController(), name: "Snippets", iconName: "list.clipboard")
         addTab(AttributedLabelDemoViewController(), name: "Snippets", iconName: "list.bullet")
         addTab(UIStoryboard(name: "IB", bundle: nil).instantiateViewController(withIdentifier: "ib"), name: "Storyboard", iconName: "macwindow")
         addTab(BrowserViewController(), name: "Browser", iconName: "arrow.clockwise.icloud")
-        
+
         if #available(iOS 13.0, *) {
             addTab(SwiftUIDemoViewController(rootView: ContentView()), name: "SwiftUI", iconName: "swift")
         }
-        
-#if MARKDOWN
-        addTab(MarkdownViewController(), name: "Markdown", iconName: "text.alignleft")
-#endif
+
+        #if MARKDOWN
+            addTab(MarkdownViewController(), name: "Markdown", iconName: "text.alignleft")
+        #endif
 
         tbc.viewControllers = tabs
 

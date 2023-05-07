@@ -287,7 +287,7 @@
             commonInit()
         }
 
-        required public init?(coder aDecoder: NSCoder) {
+        public required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
             commonInit()
         }
@@ -538,17 +538,19 @@
 
             result.beginEditing()
 
-            str.enumerateAttributes(in: NSMakeRange(0, length),
-                                    options: .longestEffectiveRangeNotRequired,
-                                    using: { attributes, range, _ in
-                                        result.addAttributes(attributes, range: range)
+            str.enumerateAttributes(
+                in: NSMakeRange(0, length),
+                options: .longestEffectiveRangeNotRequired,
+                using: { attributes, range, _ in
+                    result.addAttributes(attributes, range: range)
 
-                                        if attributes[.akaLink] != nil {
-                                            if !isEnabled, let attrs = disabledLinkAttributes {
-                                                result.addAttributes(attrs, range: range)
-                                            }
-                                        }
-                                    })
+                    if attributes[.akaLink] != nil {
+                        if !isEnabled, let attrs = disabledLinkAttributes {
+                            result.addAttributes(attrs, range: range)
+                        }
+                    }
+                }
+            )
 
             if let range = _highlightedLinkRange, let attrs = highlightedLinkAttributes {
                 result.addAttributes(attrs, range: range)

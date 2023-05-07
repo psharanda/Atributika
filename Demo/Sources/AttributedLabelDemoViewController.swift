@@ -9,7 +9,6 @@ import UIKit
 typealias TableViewCellStyle = UITableViewCell.CellStyle
 
 extension Attrs {
-
     func akaLink(_ link: String) -> Attrs {
         return attribute(.akaLink, link)
     }
@@ -150,28 +149,29 @@ class TweetCell: UITableViewCell {
         // tweetLabel.highlightedLinkAttributes = Attrs().underlineStyle(.single).attributes
         tweetLabel.disabledLinkAttributes = Attrs().foregroundColor(.lightGray).attributes
         tweetLabel.linkHighlightViewFactory = RoundedRectLinkHighlightViewFactory()
-        
+
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
         tweetLabel.addGestureRecognizer(lpgr)
     }
-    
+
     @objc private func handleLongPressGesture(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began,
            let linkValue = tweetLabel.highlightedLinkValue,
-           let link = linkValue as? String  {
+           let link = linkValue as? String
+        {
             let ac = UIAlertController(title: "Link", message: link, preferredStyle: .actionSheet)
             ac.addAction(UIAlertAction(title: "Copy", style: .default, handler: { _ in
-                
+
             }))
             ac.addAction(UIAlertAction(title: "Open", style: .default, handler: { _ in
-                
+
             }))
             ac.addAction(UIAlertAction(title: "Open in Safari", style: .default, handler: { _ in
-                
+
             }))
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            ac.popoverPresentationController?.sourceView = self;
-            self.window?.rootViewController?.present(ac, animated: true)
+            ac.popoverPresentationController?.sourceView = self
+            window?.rootViewController?.present(ac, animated: true)
         }
     }
 

@@ -3,8 +3,8 @@
 //
 
 import Atributika
-import AtributikaViews
 import AtributikaMarkdown
+import AtributikaViews
 import Markdown
 import UIKit
 

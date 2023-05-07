@@ -59,7 +59,7 @@
                     return label.numberOfLines
                 }
             }
-            
+
             var adjustsFontForContentSizeCategory: Bool {
                 set {
                     label.adjustsFontForContentSizeCategory = newValue
