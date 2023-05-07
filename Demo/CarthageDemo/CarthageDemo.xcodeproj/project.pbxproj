@@ -16,7 +16,6 @@
 		1B1F70B829F3C01A00DDA90D /* SnippetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1F70AF29F3C01A00DDA90D /* SnippetsViewController.swift */; };
 		1B1F70BB29F3C56E00DDA90D /* Atributika.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B1F70BA29F3C56E00DDA90D /* Atributika.xcframework */; };
 		1B1F70BC29F3C56E00DDA90D /* Atributika.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B1F70BA29F3C56E00DDA90D /* Atributika.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1B3A5E362A07B5040097D721 /* MarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A5E352A07B5040097D721 /* MarkdownViewController.swift */; };
 		1B3A5E9C2A07C5500097D721 /* AtributikaViews.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3A5E9B2A07C5500097D721 /* AtributikaViews.xcframework */; };
 		1B3A5E9D2A07C5500097D721 /* AtributikaViews.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3A5E9B2A07C5500097D721 /* AtributikaViews.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B9D8A5829FF21C00043426A /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5629FF21C00043426A /* BrowserViewController.swift */; };
@@ -49,7 +48,6 @@
 		1B1F70AD29F3C01900DDA90D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Sources/Assets.xcassets; sourceTree = "<group>"; };
 		1B1F70AF29F3C01A00DDA90D /* SnippetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnippetsViewController.swift; path = ../../Sources/SnippetsViewController.swift; sourceTree = "<group>"; };
 		1B1F70BA29F3C56E00DDA90D /* Atributika.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Atributika.xcframework; path = Carthage/Build/Atributika.xcframework; sourceTree = "<group>"; };
-		1B3A5E352A07B5040097D721 /* MarkdownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownViewController.swift; path = ../../Sources/MarkdownViewController.swift; sourceTree = "<group>"; };
 		1B3A5E9B2A07C5500097D721 /* AtributikaViews.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AtributikaViews.xcframework; path = Carthage/Build/AtributikaViews.xcframework; sourceTree = "<group>"; };
 		1B9D8A5629FF21C00043426A /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserViewController.swift; path = ../../Sources/BrowserViewController.swift; sourceTree = "<group>"; };
 		1B9D8A5729FF21C00043426A /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftUIDemoViewController.swift; path = ../../Sources/SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
@@ -88,7 +86,6 @@
 		1B1F709229F3BFFC00DDA90D /* CarthageDemo */ = {
 			isa = PBXGroup;
 			children = (
-				1B3A5E352A07B5040097D721 /* MarkdownViewController.swift */,
 				1B1F70A729F3C01800DDA90D /* AppDelegate.swift */,
 				1B1F70AD29F3C01900DDA90D /* Assets.xcassets */,
 				1B1F70AA29F3C01900DDA90D /* AttributedLabelDemoViewController.swift */,
@@ -185,7 +182,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B1F70B829F3C01A00DDA90D /* SnippetsViewController.swift in Sources */,
-				1B3A5E362A07B5040097D721 /* MarkdownViewController.swift in Sources */,
 				1B9D8A5929FF21C00043426A /* SwiftUIDemoViewController.swift in Sources */,
 				1B9D8A5829FF21C00043426A /* BrowserViewController.swift in Sources */,
 				1B1F70B429F3C01A00DDA90D /* Snippet.swift in Sources */,

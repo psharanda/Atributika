@@ -10,6 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let tbc = UITabBarController()
+        
+        var tabs = [UIViewController]()
 
         let vc1 = SnippetsViewController()
         vc1.tabBarItem = UITabBarItem(
@@ -17,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: UIImage(systemName: "list.clipboard"),
             selectedImage: nil
         )
+        tabs.append(vc1)
 
         let vc2 = AttributedLabelDemoViewController()
         vc2.tabBarItem = UITabBarItem(
@@ -24,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: UIImage(systemName: "list.bullet"),
             selectedImage: nil
         )
+        tabs.append(vc2)
 
         let vc3 = UIStoryboard(name: "IB", bundle: nil).instantiateViewController(withIdentifier: "ib")
         vc3.tabBarItem = UITabBarItem(
@@ -31,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: UIImage(systemName: "macwindow"),
             selectedImage: nil
         )
+        tabs.append(vc3)
 
         let vc4 = BrowserViewController()
         vc4.tabBarItem = UITabBarItem(
@@ -38,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: UIImage(systemName: "arrow.clockwise.icloud"),
             selectedImage: nil
         )
+        tabs.append(vc4)
 
         let vc5: UIViewController
         vc5 = SwiftUIDemoViewController(rootView: ContentView())
@@ -46,22 +52,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: UIImage(systemName: "swift"),
             selectedImage: nil
         )
+        tabs.append(vc5)
 
+        #if MARKDOWN
         let vc6 = MarkdownViewController()
         vc6.tabBarItem = UITabBarItem(
             title: "Markdown",
             image: UIImage(systemName: "text.alignleft"),
             selectedImage: nil
         )
+        tabs.append(vc6)
+        #endif
 
-        tbc.viewControllers = [
-            UINavigationController(rootViewController: vc1),
-            UINavigationController(rootViewController: vc2),
-            UINavigationController(rootViewController: vc3),
-            UINavigationController(rootViewController: vc4),
-            UINavigationController(rootViewController: vc5),
-            UINavigationController(rootViewController: vc6),
-        ]
+        tbc.viewControllers = tabs
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tbc

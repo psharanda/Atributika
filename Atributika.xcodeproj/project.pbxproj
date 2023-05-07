@@ -54,7 +54,6 @@
 		1BA640812A07AAEC000A7D32 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA640752A07AAEC000A7D32 /* Snippet.swift */; };
 		1BA640822A07AAEC000A7D32 /* SwiftUIDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA640762A07AAEC000A7D32 /* SwiftUIDemoViewController.swift */; };
 		1BA640832A07AAEC000A7D32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BA640772A07AAEC000A7D32 /* Assets.xcassets */; };
-		1BA640842A07AAEC000A7D32 /* MarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA640782A07AAEC000A7D32 /* MarkdownViewController.swift */; };
 		1BA640852A07AAEC000A7D32 /* IBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA640792A07AAEC000A7D32 /* IBViewController.swift */; };
 		1BA640862A07AAEC000A7D32 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA6407A2A07AAEC000A7D32 /* BrowserViewController.swift */; };
 		1BA640872A07AAEC000A7D32 /* SnippetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA6407B2A07AAEC000A7D32 /* SnippetsViewController.swift */; };
@@ -145,7 +144,6 @@
 		1BA640752A07AAEC000A7D32 /* Snippet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
 		1BA640762A07AAEC000A7D32 /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
 		1BA640772A07AAEC000A7D32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1BA640782A07AAEC000A7D32 /* MarkdownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownViewController.swift; sourceTree = "<group>"; };
 		1BA640792A07AAEC000A7D32 /* IBViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBViewController.swift; sourceTree = "<group>"; };
 		1BA6407A2A07AAEC000A7D32 /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		1BA6407B2A07AAEC000A7D32 /* SnippetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnippetsViewController.swift; sourceTree = "<group>"; };
@@ -287,7 +285,6 @@
 				1BA640752A07AAEC000A7D32 /* Snippet.swift */,
 				1BA640762A07AAEC000A7D32 /* SwiftUIDemoViewController.swift */,
 				1BA640772A07AAEC000A7D32 /* Assets.xcassets */,
-				1BA640782A07AAEC000A7D32 /* MarkdownViewController.swift */,
 				1BA640792A07AAEC000A7D32 /* IBViewController.swift */,
 				1BA6407A2A07AAEC000A7D32 /* BrowserViewController.swift */,
 				1BA6407B2A07AAEC000A7D32 /* SnippetsViewController.swift */,
@@ -726,7 +723,6 @@
 				1BA640862A07AAEC000A7D32 /* BrowserViewController.swift in Sources */,
 				1BA640872A07AAEC000A7D32 /* SnippetsViewController.swift in Sources */,
 				1BA640802A07AAEC000A7D32 /* AttributedLabelDemoViewController.swift in Sources */,
-				1BA640842A07AAEC000A7D32 /* MarkdownViewController.swift in Sources */,
 				1BA640822A07AAEC000A7D32 /* SwiftUIDemoViewController.swift in Sources */,
 				1BA640812A07AAEC000A7D32 /* Snippet.swift in Sources */,
 			);

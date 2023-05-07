@@ -4,8 +4,8 @@
 
 import Atributika
 import AtributikaViews
-//import AtributikaMarkdown
-//import Markdown
+import AtributikaMarkdown
+import Markdown
 import UIKit
 
 class MarkdownViewController: UIViewController {
@@ -122,14 +122,14 @@ class MarkdownViewController: UIViewController {
 //            .styleBase(base)
 //            .attributedString
 
-//        let document = Document(parsing: markdownString)
-//
-//        var markdownosaur = Markdownosaur()
-//        let attributedText = markdownosaur.attributedString(from: document)
-//
-//        DispatchQueue.main.async {
-//            self.attributedTextView.attributedText = attributedText
-//            self.attributedTextView.resetContentOffset()
-//        }
+        let document = Document(parsing: markdownString)
+
+        var markdownosaur = Markdownosaur()
+        let attributedText = markdownosaur.attributedString(from: document)
+
+        DispatchQueue.main.async {
+            self.attributedTextView.attributedText = attributedText
+            self.attributedTextView.resetContentOffset()
+        }
     }
 }

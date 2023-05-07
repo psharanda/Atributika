@@ -16,7 +16,6 @@
 		1B1F704F29F3B87D00DDA90D /* IB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B1F704729F3B87D00DDA90D /* IB.storyboard */; };
 		1B9D8A5429FF20D20043426A /* SwiftUIDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5229FF20D20043426A /* SwiftUIDemoViewController.swift */; };
 		1B9D8A5529FF20D20043426A /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5329FF20D20043426A /* BrowserViewController.swift */; };
-		1BA6408C2A07B0C5000A7D32 /* MarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA6408B2A07B0C5000A7D32 /* MarkdownViewController.swift */; };
 		AF9926E4397C525452BA71E2 /* Pods_CocoaPodsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC3CC8AB549DA5DD1C19027 /* Pods_CocoaPodsDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,7 +32,6 @@
 		1B1F704729F3B87D00DDA90D /* IB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IB.storyboard; sourceTree = "<group>"; };
 		1B9D8A5229FF20D20043426A /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
 		1B9D8A5329FF20D20043426A /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
-		1BA6408B2A07B0C5000A7D32 /* MarkdownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownViewController.swift; sourceTree = "<group>"; };
 		3BC3CC8AB549DA5DD1C19027 /* Pods_CocoaPodsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CocoaPodsDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6C49C0E0DDFA64DA67BDD5E /* Pods-CocoaPodsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CocoaPodsDemo.debug.xcconfig"; path = "Target Support Files/Pods-CocoaPodsDemo/Pods-CocoaPodsDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,7 +77,6 @@
 		1B1F702B29F3B51600DDA90D /* CocoaPodsDemo */ = {
 			isa = PBXGroup;
 			children = (
-				1BA6408B2A07B0C5000A7D32 /* MarkdownViewController.swift */,
 				1B1F704529F3B87D00DDA90D /* AppDelegate.swift */,
 				1B1F704029F3B87D00DDA90D /* Assets.xcassets */,
 				1B1F704429F3B87D00DDA90D /* AttributedLabelDemoViewController.swift */,
@@ -219,7 +216,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B1F704C29F3B87D00DDA90D /* AttributedLabelDemoViewController.swift in Sources */,
-				1BA6408C2A07B0C5000A7D32 /* MarkdownViewController.swift in Sources */,
 				1B9D8A5529FF20D20043426A /* BrowserViewController.swift in Sources */,
 				1B9D8A5429FF20D20043426A /* SwiftUIDemoViewController.swift in Sources */,
 				1B1F704B29F3B87D00DDA90D /* SnippetsViewController.swift in Sources */,
