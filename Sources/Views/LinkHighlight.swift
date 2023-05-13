@@ -18,9 +18,12 @@
     public struct RoundedRectLinkHighlightViewFactory: LinkHighlightViewFactoryProtocol {
         private class HighlightView: UIView, LinkHighlightViewProtocol {
             private let enableAnimations: Bool
-
-            init(enableAnimations: Bool) {
+            private let touchDownAnimationDuration: CGFloat
+            private let touchUpAnimationDuration: CGFloat
+            init(enableAnimations: Bool, touchDownAnimationDuration: CGFloat, touchUpAnimationDuration: CGFloat) {
                 self.enableAnimations = enableAnimations
+                self.touchDownAnimationDuration = touchDownAnimationDuration
+                self.touchUpAnimationDuration = touchUpAnimationDuration
                 super.init(frame: .zero)
             }
 
@@ -32,7 +35,7 @@
             func didAdd(to _: BaseAttributedTextView) {
                 if enableAnimations {
                     alpha = 0
-                    UIView.animate(withDuration: 0.2) {
+                    UIView.animate(withDuration: touchDownAnimationDuration) {
                         self.alpha = 1
                     }
                 }
@@ -40,7 +43,7 @@
 
             func removeFrom(textView _: BaseAttributedTextView) {
                 if enableAnimations {
-                    UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState]) {
+                    UIView.animate(withDuration: touchUpAnimationDuration, delay: 0, options: [.beginFromCurrentState]) {
                         self.alpha = 0
                     } completion: { _ in
                         self.removeFromSuperview()
@@ -55,11 +58,15 @@
         public var cornerRadius: CGFloat = 2
         public var inset: CGSize = .init(width: 2, height: 2)
         public var enableAnimations = true
+        public var touchDownAnimationDuration = 0.1
+        public var touchUpAnimationDuration = 0.3
 
         public init() {}
 
         public func createView(enclosingRects: [CGRect]) -> UIView & LinkHighlightViewProtocol {
-            let view = HighlightView(enableAnimations: enableAnimations)
+            let view = HighlightView(enableAnimations: enableAnimations,
+                                     touchDownAnimationDuration: touchDownAnimationDuration,
+                                     touchUpAnimationDuration: touchUpAnimationDuration)
             view.isUserInteractionEnabled = false
 
             let path = UIBezierPath()
