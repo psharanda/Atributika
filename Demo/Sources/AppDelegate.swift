@@ -39,9 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             addTab(SwiftUIDemoViewController(rootView: ContentView()), name: "SwiftUI", iconName: "swift")
         }
 
-        #if MARKDOWN
+        if #available(iOS 13.0, *) {
             addTab(MarkdownViewController(), name: "Markdown", iconName: "text.alignleft")
-        #endif
+        }
 
         tbc.viewControllers = tabs
 

@@ -20,6 +20,8 @@
 		1B3A5E9D2A07C5500097D721 /* AtributikaViews.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3A5E9B2A07C5500097D721 /* AtributikaViews.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B9D8A5829FF21C00043426A /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5629FF21C00043426A /* BrowserViewController.swift */; };
 		1B9D8A5929FF21C00043426A /* SwiftUIDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9D8A5729FF21C00043426A /* SwiftUIDemoViewController.swift */; };
+		1BCBD0EA2A193AC4001BA6DF /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 1BCBD0E92A193AC4001BA6DF /* Markdown */; };
+		1BCBD0EC2A193ADA001BA6DF /* MarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBD0EB2A193ADA001BA6DF /* MarkdownViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +53,7 @@
 		1B3A5E9B2A07C5500097D721 /* AtributikaViews.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AtributikaViews.xcframework; path = Carthage/Build/AtributikaViews.xcframework; sourceTree = "<group>"; };
 		1B9D8A5629FF21C00043426A /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserViewController.swift; path = ../../Sources/BrowserViewController.swift; sourceTree = "<group>"; };
 		1B9D8A5729FF21C00043426A /* SwiftUIDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftUIDemoViewController.swift; path = ../../Sources/SwiftUIDemoViewController.swift; sourceTree = "<group>"; };
+		1BCBD0EB2A193ADA001BA6DF /* MarkdownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownViewController.swift; path = ../../Sources/MarkdownViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BCBD0EA2A193AC4001BA6DF /* Markdown in Frameworks */,
 				1B3A5E9C2A07C5500097D721 /* AtributikaViews.xcframework in Frameworks */,
 				1B1F70BB29F3C56E00DDA90D /* Atributika.xcframework in Frameworks */,
 			);
@@ -86,6 +90,7 @@
 		1B1F709229F3BFFC00DDA90D /* CarthageDemo */ = {
 			isa = PBXGroup;
 			children = (
+				1BCBD0EB2A193ADA001BA6DF /* MarkdownViewController.swift */,
 				1B1F70A729F3C01800DDA90D /* AppDelegate.swift */,
 				1B1F70AD29F3C01900DDA90D /* Assets.xcassets */,
 				1B1F70AA29F3C01900DDA90D /* AttributedLabelDemoViewController.swift */,
@@ -126,6 +131,9 @@
 			dependencies = (
 			);
 			name = CarthageDemo;
+			packageProductDependencies = (
+				1BCBD0E92A193AC4001BA6DF /* Markdown */,
+			);
 			productName = CarthageDemo;
 			productReference = 1B1F709029F3BFFC00DDA90D /* CarthageDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -155,6 +163,9 @@
 				Base,
 			);
 			mainGroup = 1B1F708729F3BFFC00DDA90D;
+			packageReferences = (
+				1BCBD0E82A193AC4001BA6DF /* XCRemoteSwiftPackageReference "swift-markdown" */,
+			);
 			productRefGroup = 1B1F709129F3BFFC00DDA90D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -182,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B1F70B829F3C01A00DDA90D /* SnippetsViewController.swift in Sources */,
+				1BCBD0EC2A193ADA001BA6DF /* MarkdownViewController.swift in Sources */,
 				1B9D8A5929FF21C00043426A /* SwiftUIDemoViewController.swift in Sources */,
 				1B9D8A5829FF21C00043426A /* BrowserViewController.swift in Sources */,
 				1B1F70B429F3C01A00DDA90D /* Snippet.swift in Sources */,
@@ -391,6 +403,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1BCBD0E82A193AC4001BA6DF /* XCRemoteSwiftPackageReference "swift-markdown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-markdown.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1BCBD0E92A193AC4001BA6DF /* Markdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BCBD0E82A193AC4001BA6DF /* XCRemoteSwiftPackageReference "swift-markdown" */;
+			productName = Markdown;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1B1F708829F3BFFC00DDA90D /* Project object */;
 }
