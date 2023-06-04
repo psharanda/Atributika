@@ -4,7 +4,7 @@
 </p>
 <br>
 
-**V5 is now released!**
+**🚨V5 is now released!🚨**
 
 `Atributika` is a Swift library that provides a simple way to build NSAttributedString from HTML-like text, by identifying and styling tags, links, phone numbers, hashtags, and so on. 
 
@@ -45,9 +45,9 @@ AtributikaViews
 + Custom text styles for `normal/highlighted/disabled` states.
 + Supports custom highlighting.
 
-## Version 5
+## V5
 
-Version 5 is a significant rewrite of the project, executed in early 2023. It's not fully compatible with the previous version and requires some manual migration. The introduction of breaking changes was necessary for the project's further evolution.
+V5 is a major rewrite of the project, executed in early 2023. It's not fully compatible with the previous version and requires some manual migration. The introduction of breaking changes was necessary for the project's further evolution.
 
 Here's what's new:
 
