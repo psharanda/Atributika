@@ -4,6 +4,9 @@ target 'CocoaPodsDemo' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
+  # pod "Atributika"
+  # pod "AtributikaViews"
+
   pod 'Atributika', :path => '../../Atributika.podspec'
   pod 'AtributikaViews', :path => '../../AtributikaViews.podspec'
 
