@@ -6,15 +6,16 @@
 
 
 `Atributika` is a Swift library that provides a simple way to build NSAttributedString from HTML-like text, by identifying and styling tags, links, phone numbers, hashtags, and so on. 
+
 A standalone `AtributikaViews` library offers UILabel/UITextView drop-in replacements capable of displaying highlightable and clickable links, rich customization, and solid accessibility support. 
 
-## Introduction
-While NSAttributedString is undoubtedly powerful, it's also a low-level API that demands a considerable amount of setup work. If your string is a template and the actual content is only known at runtime, this becomes particularly tedious. When dealing with localizations, constructing NSAttributedString isn't straightforward either. 
+## Intro
+While NSAttributedString is undoubtedly powerful, it's also a low-level API that demands a considerable amount of setup work. If your string is a template and the actual content is only known at runtime, this becomes complicated. When dealing with localizations, constructing NSAttributedString isn't straightforward either. 
 
 But wait, `Atributika` comes to your rescue!
 
 ```swift
-let b = Attrs.font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
+let b = Attrs().font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
         
 label.attributedText = "Hello <b>World</b>!!!".style(tags: ["b": b]).attributedString
 ```
@@ -71,11 +72,11 @@ New examples have been added to the Demo application, including:
 
 ```swift
 let redColor = UIColor(red:(0xD0 / 255.0), green: (0x02 / 255.0), blue:(0x1B / 255.0), alpha:1.0)
-let a = Attrs.foregroundColor(redColor)
+let a = Attrs().foregroundColor(redColor)
 
 let font = UIFont(name: "AvenirNext-Regular", size: 24)!
 let grayColor = UIColor(white: 0x66 / 255.0, alpha: 1)
-let base = Attrs.font(font).foregroundColor(grayColor)
+let base = Attrs().font(font).foregroundColor(grayColor)
 
 let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
     .style(tags: ["a": a])
@@ -89,8 +90,8 @@ let str = "<a>&lt;a&gt;</a>tributik<a>&lt;/a&gt;</a>"
 
 ```swift
 let str = "#Hello @World!!!"
-    .styleHashtags(Attrs.font(.boldSystemFont(ofSize: 45)))
-    .styleMentions(Attrs.foregroundColor(.red))
+    .styleHashtags(Attrs().font(.boldSystemFont(ofSize: 45)))
+    .styleMentions(Attrs().foregroundColor(.red))
     .attributedString
 ```
 
@@ -101,7 +102,7 @@ let str = "#Hello @World!!!"
 
 ```swift
 let str = "Check this website http://google.com"
-    .styleLinks(Attrs.foregroundColor(.blue))
+    .styleLinks(Attrs().foregroundColor(.blue))
     .attributedString
 ```
 
@@ -111,7 +112,7 @@ let str = "Check this website http://google.com"
 
 ```swift
 let str = "Call me (888)555-5512"
-    .stylePhoneNumbers(Attrs.foregroundColor(.red))
+    .stylePhoneNumbers(Attrs().foregroundColor(.red))
     .attributedString
 ```
 
@@ -120,37 +121,25 @@ let str = "Call me (888)555-5512"
 ### Uber String
 
 ```swift
-    let links = Attrs.foregroundColor(.blue)
-    let phoneNumbers = Attrs.backgroundColor(.yellow)
-    let mentions = Attrs.font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
-    let b = Attrs.font(.boldSystemFont(ofSize: 12))
-    let u = Attrs.underlineStyle(.single)
+let links = Attrs().foregroundColor(.blue)
+let phoneNumbers = Attrs().backgroundColor(.yellow)
+let mentions = Attrs().font(.italicSystemFont(ofSize: 12)).foregroundColor(.black)
+let b = Attrs().font(.boldSystemFont(ofSize: 12))
+let u = Attrs().underlineStyle(.single)
 
-    let base = Attrs.font(.systemFont(ofSize: 12)).foregroundColor(.gray)
+let base = Attrs().font(.systemFont(ofSize: 12)).foregroundColor(.gray)
 
-    let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
-        .style(tags: ["u": u, "b": b])
-        .styleMentions(mentions)
-        .styleHashtags(links)
-        .styleLinks(links)
-        .stylePhoneNumbers(phoneNumbers)
-        .styleBase(base)
-        .attributedString
-
-    return str
+let str = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
+    .style(tags: ["u": u, "b": b])
+    .styleMentions(mentions)
+    .styleHashtags(links)
+    .styleLinks(links)
+    .stylePhoneNumbers(phoneNumbers)
+    .styleBase(base)
+    .attributedString
 ```    
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_uber.png" alt="" width="342" />
-
-## Attributes / Attrs
-
-## AttributedStringBuilder
-
-## AttributesProvider
-
-## TagTuning
-
-## DetectionTuning
 
 ## AttributedLabel
 `AttributedLabel` displays `NSAttributedString` and makes links clickable. Links needs to be added as attribute using `.attributedLabelLink` key. Value for this key can be of any type, conventional builder using String. 
@@ -202,17 +191,15 @@ view.addSubview(tweetLabel)
 ```
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_attributedlabel.png" alt="" width="361" />
 
-## Demo
-
 ## Requirements
 
 Current version is compatible with:
 
 * Swift 5.0+
-* iOS 9.0 or later
-* tvOS 9.0 or later
+* iOS 11.0 or later
+* tvOS 11.0 or later
 * watchOS 2.0 or later
-* macOS 10.10 or later
+* macOS 10.13 or later
 
 Note: `AttributedLabel` / `AttributedTextView` are available only on iOS
 
