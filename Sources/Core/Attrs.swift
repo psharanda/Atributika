@@ -152,6 +152,11 @@ public final class Attrs: AttributesProvider {
     public func link(_ value: URL) -> Self {
         return attribute(.link, value)
     }
+    
+    @discardableResult
+    public func akaLink(_ link: String) -> Attrs {
+        return attribute(NSAttributedString.Key("Atributika.Link"), link)
+    }
 
     @discardableResult
     public func link(_ value: String) -> Self {

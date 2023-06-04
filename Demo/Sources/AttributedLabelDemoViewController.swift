@@ -8,12 +8,6 @@ import UIKit
 
 typealias TableViewCellStyle = UITableViewCell.CellStyle
 
-extension Attrs {
-    func akaLink(_ link: String) -> Attrs {
-        return attribute(.akaLink, link)
-    }
-}
-
 extension String {
     func styleAsTweet() -> AttributedStringBuilder {
         let baseLinkAttrs = Attrs().foregroundColor(.blue)
