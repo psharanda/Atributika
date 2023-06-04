@@ -4,12 +4,14 @@
 </p>
 <br>
 
-`Atributika` is an easy and painless way to build NSAttributedString. It is able to detect HTML-like tags, links, phone numbers, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc. `Atributika` comes with drop-in label replacement `AttributedLabel` which is able to make any detection clickable
 
-## Intro
-NSAttributedString is really powerful but still a low level API which requires a lot of work to setup things. It is especially painful if string is template and real content is known only in runtime. If you are dealing with localizations, it is also not easy to build NSAttributedString. 
+`Atributika` is a Swift library that provides a simple way to build NSAttributedString from HTML-like text, by identifying and styling tags, links, phone numbers, hashtags, and so on. 
+A standalone `AtributikaViews` library offers UILabel/UITextView drop-in replacements capable of displaying highlightable and clickable links, rich customization, and solid accessibility support. 
 
-Oh wait, but you can use Atributika!
+## Introduction
+While NSAttributedString is undoubtedly powerful, it's also a low-level API that demands a considerable amount of setup work. If your string is a template and the actual content is only known at runtime, this becomes particularly tedious. When dealing with localizations, constructing NSAttributedString isn't straightforward either. 
+
+But wait, `Atributika` comes to your rescue!
 
 ```swift
 let b = Attrs.font(.boldSystemFont(ofSize: 20)).foregroundColor(.red)
@@ -19,43 +21,49 @@ label.attributedText = "Hello <b>World</b>!!!".style(tags: ["b": b]).attributedS
 
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/main.png" alt="" width="139" />
 
-Yeah, that's much better. Atributika is easy, declarative, flexible and covers all the raw edges for you.
+Indeed, that's much simpler. `Atributika` is easy-to-use, declarative, flexible, and handles the rough edges for you.
 
 
 ## Features
 
-+ AttributedLabel` is a drop-in label replacement which **makes detections clickable** and style them dynamically for `normal/highlighted/disabled` states.
-+ detect and style HTML-like **tags** using custom speedy parser
-+ detect and style **hashtags** and **mentions** (i.e. #something and @someone)
-+ detect and style **links** and **phone numbers**
-+ detect and style regex and NSDataDetector patterns
-+ style whole string or just particular ranges
-+ ... and you can chain all above to parse some uber strings!
-+ clean and expressive api to build styles
-+ separate set of detection utils, in case you want to use just them
-+ `+` operator to concatenate NSAttributedString with other attributed or regular strings
-+ works on iOS, tvOS, watchOS, macOS
+Atributika
++ NSAttributedString builder.
++ Detects and styles HTML-like **tags** using a custom high-speed parser.
++ Detects and styles **hashtags** and **mentions** (i.e., #something and @someone).
++ Identifies and styles **links** and **phone numbers**.
++ Detects and styles regexes and NSDataDetector patterns.
++ Styles the entire string or just specified ranges.
++ Allows all the above to be chained together to parse complex strings!
++ Provides a clean and expressive API to construct styles.
++ Offers a separate set of detection utilities for standalone use.
++ Compatible with iOS, tvOS, watchOS, and macOS.
 
-## V5
+AtributikaViews
++ Custom views with **highlightable and clickable** links. 
++ Custom text styles for `normal/highlighted/disabled` states.
++ Supports custom highlighting.
 
-V5 is a major rewrite of the project happened at Spring 2023 
+## Version 5
 
-NSAttributedString building
-+ HTML parser completely rewritten, supports more edge cases
-+ Text transforming and attributes fine tuning depening from detected text
+Version 5 is a significant rewrite of the project, executed in early 2023. It's not fully compatible with the previous version and requires some manual migration. The introduction of breaking changes was necessary for the project's further evolution.
+
+Here's what's new:
+
+NSAttributedString Building
++ Completely rewritten HTML parser, which fixed a multitude of bugs and improved handling of edge cases.
++ More generic and robust Text transforming and attribute fine-tuning APIs.
 
 AttributedLabel / AttributedTextView
-+ proper accessibility support
-+ doesn't depend from the string building code and classes
-+ better performance and touch handling
-+ subclass off UIControl
-+ AttributedLabel based on UILabel (more lightweight, text is centered vertically), AttributedTextView based on UITextView (supports scrolling and text selections, text is aligned to the top of the frame)
++ Moved to a standalone library, independent of Atributika.
++ Offers proper accessibility support.
++ Reworked API for improved performance and touch handling.
++ AttributedLabel is based on UILabel (lightweight, with vertically-centered text).
++ AttributedTextView is based on UITextView (supports scrolling and text selection, with text aligned to the top of the frame).
 
-`Style("xxx").`/`Style.` -> `Attr.`
-`styleAll` -> `styleBase`
-
-AttributedLabel api is reworked a lot see updated example below
-
+New examples have been added to the Demo application, including:
++ Basic web browser powered by Atributika
++ SwiftUI integration
++ Highlightable links for Markdown documents
 
 ## Examples
 
@@ -152,25 +160,27 @@ let str = "Call me (888)555-5512"
 let tweetLabel = AttributedLabel()
 
 tweetLabel.numberOfLines = 0
-tweetLabel.highlightedLinkAttributes = Attrs.foregroundColor(.red)
+tweetLabel.highlightedLinkAttributes = Attrs().foregroundColor(.red).attributes
 
-let a = TagTuner { tag in
-    Attrs.foregroundColor(.blue).attributedLabelLink(tag.attributes["href"] ?? "")
+let baseLinkAttrs = Attrs().foregroundColor(.blue)
+
+let a = TagTuner {
+    Attrs(baseLinkAttrs).akaLink($0.tag.attributes["href"] ?? "")
 }
 
-let hashtag = DetectionTuner { d in
-    Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/hashtag/\(d.text.replacingOccurrences(of: "#", with: ""))")
+let hashtag = DetectionTuner {
+    Attrs(baseLinkAttrs).akaLink("https://twitter.com/hashtag/\($0.text.replacingOccurrences(of: "#", with: ""))")
 }
 
-let mention = DetectionTuner { d in
-    Attrs.foregroundColor(.blue).attributedLabelLink("https://twitter.com/\(d.text.replacingOccurrences(of: "@", with: ""))")
+let mention = DetectionTuner {
+    Attrs(baseLinkAttrs).akaLink("https://twitter.com/\($0.text.replacingOccurrences(of: "@", with: ""))")
 }
 
-let link = DetectionTuner { d in
-    Attrs.foregroundColor(.blue).attributedLabelLink(d.text)
+let link = DetectionTuner {
+    Attrs(baseLinkAttrs).akaLink($0.text)
 }
 
-let tweet = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika" 
+let tweet = "@all I found <u>really</u> nice framework to manage attributed strings. It is called <b>Atributika</b>. Call me if you want to know more (123)456-7890 #swift #nsattributedstring https://github.com/psharanda/Atributika"
 
 tweetLabel.attributedText = tweet
     .style(tags: ["a": a])
@@ -179,13 +189,13 @@ tweetLabel.attributedText = tweet
     .styleLinks(link)
     .attributedString
 
-    tweetLabel.onLinkTouchUpInside = { _, val in
-        if let linkStr = val as? String {
-            if let url = URL(string: linkStr) {
-                UIApplication.shared.openURL(url)
-            }
+tweetLabel.onLinkTouchUpInside = { _, val in
+    if let linkStr = val as? String {
+        if let url = URL(string: linkStr) {
+            UIApplication.shared.openURL(url)
         }
     }
+}
 
 view.addSubview(tweetLabel)
 
@@ -217,7 +227,7 @@ Add dependency to `Package.swift` file.
 
 ```swift
   dependencies: [
-    .package(url: "https://github.com/psharanda/Atributika.git", .exact("5.0.0"))
+    .package(url: "https://github.com/psharanda/Atributika.git", .upToNextMajor(from: "5.0.0"))
   ]
 ```
 
@@ -231,6 +241,7 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod "Atributika"
+pod "AtributikaViews"
 ```
 
 ### Manual
