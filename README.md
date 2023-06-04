@@ -3,7 +3,7 @@
   <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/logo@2x.png" alt="" width="392" />
 </p>
 <br>
-
+**V5 is now released!**
 
 `Atributika` is a Swift library that provides a simple way to build NSAttributedString from HTML-like text, by identifying and styling tags, links, phone numbers, hashtags, and so on. 
 
