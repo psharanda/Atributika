@@ -6,12 +6,12 @@
 
 **🚨V5 is now released!🚨**
 
-`Atributika` is a Swift library that provides a simple way to build NSAttributedString from HTML-like text, by identifying and styling tags, links, phone numbers, hashtags, and so on. 
+`Atributika` is a Swift library that provides a simple way to build NSAttributedString from HTML-like text, by identifying and styling tags, links, phone numbers, hashtags etc. 
 
-A standalone `AtributikaViews` library offers UILabel/UITextView drop-in replacements capable of displaying highlightable and clickable links, rich customization, and solid accessibility support. 
+A standalone `AtributikaViews` library offers UILabel/UITextView drop-in replacements capable of displaying highlightable and clickable links, with rich customization, and proper accessibility support. 
 
 ## Intro
-While NSAttributedString is undoubtedly powerful, it's also a low-level API that demands a considerable amount of setup work. If your string is a template and the actual content is only known at runtime, this becomes complicated. When dealing with localizations, constructing NSAttributedString isn't straightforward either. 
+While NSAttributedString is undoubtedly powerful, it's also a low-level API that needs a considerable amount of setup work. If your string is a template and the actual content is only known at runtime, this becomes complicated. When dealing with localizations, constructing NSAttributedString isn't straightforward either. 
 
 But wait, `Atributika` comes to your rescue!
 
@@ -53,17 +53,17 @@ Here's what's new:
 
 NSAttributedString Building
 + Completely rewritten HTML parser, which fixed a multitude of bugs and improved handling of edge cases.
-+ More generic and robust Text transforming and attribute fine-tuning APIs.
++ More generic and robust text transforming and attribute fine-tuning APIs.
 
 AttributedLabel / AttributedTextView
 + Moved to a standalone library, independent of Atributika.
 + Offers proper accessibility support.
-+ Reworked API for improved performance and touch handling.
++ Improved performance and touch handling.
 + AttributedLabel is based on UILabel (lightweight, with vertically-centered text).
 + AttributedTextView is based on UITextView (supports scrolling and text selection, with text aligned to the top of the frame).
 
 New examples have been added to the Demo application, including:
-+ Basic web browser powered by Atributika
++ Basic web browser powered by AttributedTextView
 + SwiftUI integration
 + Highlightable links for Markdown documents
 
@@ -143,7 +143,6 @@ let str = "@all I found <u>really</u> nice framework to manage attributed string
 <img src="https://raw.githubusercontent.com/psharanda/Atributika/master/README/test_uber.png" alt="" width="342" />
 
 ## AttributedLabel
-`AttributedLabel` displays `NSAttributedString` and makes links clickable. Links needs to be added as attribute using `.attributedLabelLink` key. Value for this key can be of any type, conventional builder using String. 
 
 ```swift
 
