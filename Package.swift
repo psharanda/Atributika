@@ -13,12 +13,12 @@ let package = Package(
     ],
     products: [
         .library(name: "Atributika", targets: ["Atributika"]),
-        .library(name: "AtributikaViews", targets: ["AtributikaViews"])
+        .library(name: "AtributikaViews", targets: ["AtributikaViews"]),
     ],
     targets: [
         .target(name: "Atributika", path: "Sources/Core"),
         .target(name: "AtributikaViews", path: "Sources/Views"),
-        .testTarget(name: "AtributikaTests", dependencies: ["Atributika"])
+        .testTarget(name: "AtributikaTests", dependencies: ["Atributika"]),
     ],
     swiftLanguageVersions: [.v5]
 )

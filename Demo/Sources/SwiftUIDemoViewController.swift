@@ -75,7 +75,7 @@ struct ContentView: View {
             ForEach(tweets, id: \.self) { item in
                 HorizontalGeometryReader { width in
                     AttrLabel(
-                        attributedString: item.styleAsTweet().attributedString,
+                        attributedString: item.styleAsTweet(),
                         preferredMaxLayoutWidth: width
                     )
                     .padding(5)

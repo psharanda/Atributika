@@ -9,7 +9,7 @@ import UIKit
 typealias TableViewCellStyle = UITableViewCell.CellStyle
 
 extension String {
-    func styleAsTweet() -> AttributedStringBuilder {
+    func styleAsTweet() -> NSAttributedString {
         let baseLinkAttrs = Attrs().foregroundColor(.blue)
 
         let a = TagTuner {
@@ -17,25 +17,44 @@ extension String {
         }
 
         let hashtag = DetectionTuner {
-            Attrs(baseLinkAttrs).akaLink("https://twitter.com/hashtag/\($0.text.replacingOccurrences(of: "#", with: ""))")
+            // ignore detection if akaLink was set for its range beforehand
+            if $0.firstExistingAttributeValue(for: .akaLink) != nil {
+                return Attrs()
+            } else {
+                return Attrs(baseLinkAttrs).akaLink("https://twitter.com/hashtag/\($0.text.replacingOccurrences(of: "#", with: ""))")
+            }
         }
 
         let mention = DetectionTuner {
-            Attrs(baseLinkAttrs).akaLink("https://twitter.com/\($0.text.replacingOccurrences(of: "@", with: ""))")
+            // ignore detection if akaLink was set for its range beforehand
+            if $0.firstExistingAttributeValue(for: .akaLink) != nil {
+                return Attrs()
+            } else {
+                return Attrs(baseLinkAttrs).akaLink("https://twitter.com/\($0.text.replacingOccurrences(of: "@", with: ""))")
+            }
         }
 
         let link = DetectionTuner {
-            Attrs(baseLinkAttrs).akaLink($0.text)
+            // ignore detection if akaLink was set for its range beforehand
+            if $0.firstExistingAttributeValue(for: .akaLink) != nil {
+                return Attrs()
+            } else {
+                return Attrs(baseLinkAttrs).akaLink($0.text)
+            }
         }
 
         return style(tags: ["a": a])
             .styleHashtags(hashtag)
             .styleMentions(mention)
             .styleLinks(link)
+            .attributedString
     }
 }
 
 var tweets: [String] = [
+    "Test <a href=\"https://www.muppets.com\">muppets.com</a> and www.kermit.com",
+    "Test <a href=\"https://instagram.com/hashtag/hashtag\">#hashtag</a> and #hashtag",
+    "Teat <a href=\"https://instagram.com/mention\">@mention</a> and @mention",
     "Thank you for everything. My last ask is the same",
     "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link</a>",
     "@e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars😊 https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link that won't detect click here If only Bradley's arm was longer. Best photo ever</a>",
@@ -180,7 +199,7 @@ class TweetCell: UITableViewCell {
                 return
             }
 
-            tweetLabel.attributedText = tweet.styleAsTweet().attributedString
+            tweetLabel.attributedText = tweet.styleAsTweet()
         }
     }
 }
@@ -194,7 +213,7 @@ class AttributedLabelDemoDetailsViewController: UIViewController {
                 return
             }
 
-            attributedTextView.attributedText = tweet.styleAsTweet().attributedString
+            attributedTextView.attributedText = tweet.styleAsTweet()
         }
     }
 

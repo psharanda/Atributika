@@ -120,9 +120,19 @@ public final class AttributedStringBuilder {
     public func style(ranges: [Range<String.Index>], attributes: DetectionTuning) -> Self {
         currentMaxLevel += 1
         let info = ranges.map { range in
-            AttributesRangeInfo(attributes: attributes.style(detection: Detection(range: range, text: String(string[range]))),
-                                range: range,
-                                level: currentMaxLevel)
+            let detectionContext = DetectionContext(
+                range: range,
+                text: String(string[range]),
+                existingAttributes: attributesRangeInfo.compactMap {
+                    $0.range.clamped(to: range) == range ? $0.attributes : nil
+                }
+            )
+
+            return AttributesRangeInfo(
+                attributes: attributes.style(context: detectionContext),
+                range: range,
+                level: currentMaxLevel
+            )
         }
 
         attributesRangeInfo.append(contentsOf: info)
