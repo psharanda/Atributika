@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "AtributikaViews"
-  s.version      = "5.0.0"
+  s.version      = "5.0.2"
   s.summary      = "UILabel drop-in replacement."
   s.description  = <<-DESC
     `Atributika` comes with drop-in label replacement `AttributedLabel` which is able to make any detection clickable.

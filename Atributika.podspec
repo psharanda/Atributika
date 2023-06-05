@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Atributika"
-  s.version      = "5.0.0"
+  s.version      = "5.0.2"
   s.summary      = "Convert text with HTML tags, hashtags, mentions, links into NSAttributedString."
   s.description  = <<-DESC
     `Atributika` is an effortless to build NSAttributedString. It is able to detect HTML-like tags, links, phone numbers, hashtags, any regex or even standard ios data detectors and style them with various attributes like font, color, etc.
