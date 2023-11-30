@@ -517,6 +517,7 @@
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = textAlignment
+            paragraphStyle.lineBreakMode = lineBreakMode
             paragraphStyle.lineBreakStrategy = lineBreakStrategy
 
             var inheritedAttributes: [NSAttributedString.Key: Any] = [

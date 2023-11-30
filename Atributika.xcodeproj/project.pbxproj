@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -125,7 +125,6 @@
 /* Begin PBXFileReference section */
 		1B2F838D1E5C98A4009AFBCA /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B3A5E532A07C2A00097D721 /* AtributikaViews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AtributikaViews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B3A5E542A07C2A00097D721 /* Atributika-iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Atributika-iOS copy-Info.plist"; path = "/Users/psharanda/Github/Atributika/Atributika-iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		1B3A5E552A07C3730097D721 /* AtributikaViews.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AtributikaViews.plist; sourceTree = "<group>"; };
 		1B3A5E5E2A07C4A60097D721 /* TextUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextUtils.swift; sourceTree = "<group>"; };
 		1B3A5E5F2A07C4A60097D721 /* LinkHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHighlight.swift; sourceTree = "<group>"; };
@@ -325,7 +324,6 @@
 				1B2F838E1E5C98A4009AFBCA /* Demo */,
 				52D6D97D1BEFF229002C0205 /* Products */,
 				1BB55AC11E5C6F2400CE6EAD /* Tests */,
-				1B3A5E542A07C2A00097D721 /* Atributika-iOS copy-Info.plist */,
 				1B3A5E562A07C3C60097D721 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -880,7 +878,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEVELOPMENT_TEAM = QXF4AH2XT9;
 				INFOPLIST_FILE = Demo/Sources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -902,7 +900,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEVELOPMENT_TEAM = QXF4AH2XT9;
 				INFOPLIST_FILE = Demo/Sources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
