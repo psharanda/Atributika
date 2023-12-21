@@ -8,17 +8,23 @@ public final class AttributedStringBuilder {
     public let string: String
     public private(set) var baseAttributes: AttributesProvider
 
-    private struct AttributesRangeInfo {
-        let attributes: AttributesProvider
-        let range: Range<String.Index>
-        let level: Int
+    public struct AttributesRangeInfo {
+        public let attributes: AttributesProvider
+        public let range: Range<String.Index>
+        public let level: Int
+
+        public init(attributes: AttributesProvider, range: Range<String.Index>, level: Int) {
+            self.attributes = attributes
+            self.range = range
+            self.level = level
+        }
     }
 
     private var currentMaxLevel: Int = 0
 
-    private var attributesRangeInfo: [AttributesRangeInfo]
+    public private(set) var attributesRangeInfo: [AttributesRangeInfo]
 
-    private init(string: String, attributesRangeInfo: [AttributesRangeInfo], baseAttributes: AttributesProvider) {
+    public init(string: String, attributesRangeInfo: [AttributesRangeInfo], baseAttributes: AttributesProvider) {
         self.string = string
         self.attributesRangeInfo = attributesRangeInfo
         self.baseAttributes = baseAttributes
