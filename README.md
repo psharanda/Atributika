@@ -10,6 +10,11 @@
 
 A standalone `AtributikaViews` library offers UILabel/UITextView drop-in replacements capable of displaying highlightable and clickable links, with rich customization, and proper accessibility support. 
 
+> [!NOTE]
+> Try my new library for doing Auto Layout, a typesafe reimagination of Visual Format Language:
+> https://github.com/psharanda/FixFlex
+
+
 ## Intro
 While NSAttributedString is undoubtedly powerful, it's also a low-level API that needs a considerable amount of setup work. If your string is a template and the actual content is only known at runtime, this becomes complicated. When dealing with localizations, constructing NSAttributedString isn't straightforward either. 
 
