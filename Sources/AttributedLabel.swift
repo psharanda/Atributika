@@ -224,9 +224,9 @@ import UIKit
         button.accessibilityLabel = text
         button.isAccessibilityElement = true
         #if swift(>=4.2)
-        button.accessibilityTraits = UIAccessibilityTraits.button
+        button.accessibilityTraits = UIAccessibilityTraits.link
         #else
-        button.accessibilityTraits = UIAccessibilityTraitButton
+        button.accessibilityTraits = UIAccessibilityTraitLink
         #endif
         
         button.isUserInteractionEnabled = state.isEnabled
