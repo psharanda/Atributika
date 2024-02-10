@@ -36,17 +36,24 @@
             }
 
             var attributedText: NSAttributedString? {
-                set {
-                    label.attributedText = newValue
+                didSet {
+                    label.attributedText = attributedText.flatMap {
+                        let res = NSMutableAttributedString(attributedString: $0)
+                        res.enumerateAttribute(.paragraphStyle, in: NSRange(location: 0, length: $0.length), options: []) { value, range, _ in
+                            if let existingParagraphStyle = value as? NSParagraphStyle {
+                                let newParagraphStyle = existingParagraphStyle.mutableCopy() as! NSMutableParagraphStyle
+                                newParagraphStyle.lineBreakMode = lineBreakMode
+                                res.addAttribute(.paragraphStyle, value: newParagraphStyle, range: range)
+                            }
+                        }
+                        return res
+                    }
 
-                    if let attributedString = newValue {
+                    if let attributedString = attributedText {
                         textEngine?.textStorage.setAttributedString(attributedString)
                     } else {
                         textEngine?.textStorage.setAttributedString(NSAttributedString())
                     }
-                }
-                get {
-                    return label.attributedText
                 }
             }
 
