@@ -232,8 +232,8 @@ Atributika is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "Atributika"
-pod "AtributikaViews"
+pod 'Atributika'
+pod 'AtributikaViews'
 ```
 
 ### Manual
